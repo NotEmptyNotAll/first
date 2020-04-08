@@ -271,6 +271,7 @@
         },
         data: () => ({
             paramtrs: [],
+            serviceApi:'https://springeng.herokuapp.com/',
             elemParameters: [],
             paramNameAndUnits: [],
             elements: [],
@@ -294,7 +295,7 @@
         mounted() {
             axios({
                 method: 'GET',
-                url: 'http://localhost:5050/start',
+                url:this.serviceApi+'start',
                 data: this.searchData,
                 responseType: 'json'
             }).then(resp => {
@@ -306,7 +307,7 @@
             async getParamtrs(number) {
                 await axios({
                     method: 'POST',
-                    url: 'http://localhost:5050/getParameters',
+                    url: this.serviceApi+'getParameters',
                     data: {id: number},
                     responseType: 'json'
                 }).then(resp => {
@@ -318,7 +319,7 @@
             async getParamName(number) {
                 await axios({
                     method: 'GET',
-                    url: 'http://localhost:5050/paramNameAndUnits',
+                    url: this.serviceApi+'paramNameAndUnits',
                     data: {id: number},
                     responseType: 'json'
                 }).then(resp => {
@@ -330,7 +331,7 @@
             async getElements(number) {
                 await axios({
                     method: 'POST',
-                    url: 'http://localhost:5050/getElements',
+                    url: this.serviceApi+'getElements',
                     data: {id: number},
                     responseType: 'json'
                 }).then(resp => {
@@ -342,7 +343,7 @@
             async submitChanges(dat) {
                 await axios({
                     method: 'POST',
-                    url: 'http://localhost:5050/getAutoEngine',
+                    url: this.serviceApi+'getAutoEngine',
                     data: this.searchData,
                     responseType: 'json'
                 }).then(resp => {
