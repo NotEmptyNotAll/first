@@ -188,39 +188,40 @@
         </div>
         <!--engine data table. By clicking on row m we open the engine tree, where we can find out its parameters-->
         <div class="container shadow-lg p-3  bg-white rounded" id="contTable">
-            <table class="table table-hover">
-                <thead class="thead-light">
-                <tr>
-                    <th>Тип двигуна</th>
-                    <th>модель</th>
-                    <th>Виробник двигуна</th>
-                    <th>Виробник авто</th>
-                    <th>К-ть клапанів</th>
-                    <th>Діаметр поршня</th>
-                    <th>Хід поршня</th>
-                    <th>Об’єм двигуна</th>
-                    <th>кінськ.сил</th>
-                    <th>kWt</th>
-                    <th>Рік випуску (з)</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="current in dataEng" v-bind:key="current" data-toggle="collapse" href="#collapse"
-                    role="button" aria-expanded="false" aria-controls="collapse" v-on:click="getElements(current.id)">
-                    <td>{{current.engineType}}</td>
-                    <td>{{current.modelName}}</td>
-                    <td>{{current.engineManufacture}}</td>
-                    <td>{{current.autoManufacture}}</td>
-                    <td>{{current.flapNumber}}</td>
-                    <td>{{current.pistonDiameter}}</td>
-                    <td>{{current.pistonStoke}}</td>
-                    <td>{{current.engineCapacity}}</td>
-                    <td>{{current.horsepower}}</td>
-                    <td>{{current.powerKWT}}</td>
-                    <td>{{current.releaseYearFrom}}</td>
-                </tr>
-                </tbody>
-            </table>
+                <table class="table table-hover">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>Тип двигуна</th>
+                        <th>модель</th>
+                        <th>Виробник двигуна</th>
+                        <th>Виробник авто</th>
+                        <th>К-ть клапанів</th>
+                        <th>Діаметр поршня</th>
+                        <th>Хід поршня</th>
+                        <th>Об’єм двигуна</th>
+                        <th>кінськ.сил</th>
+                        <th>kWt</th>
+                        <th>Рік випуску (з)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="current in dataEng" v-bind:key="current" data-toggle="collapse" href="#collapse"
+                        role="button" aria-expanded="false" aria-controls="collapse"
+                        v-on:click="getElements(current.id)">
+                        <td>{{current.engineType}}</td>
+                        <td>{{current.modelName}}</td>
+                        <td>{{current.engineManufacture}}</td>
+                        <td>{{current.autoManufacture}}</td>
+                        <td>{{current.flapNumber}}</td>
+                        <td>{{current.pistonDiameter}}</td>
+                        <td>{{current.pistonStoke}}</td>
+                        <td>{{current.engineCapacity}}</td>
+                        <td>{{current.horsepower}}</td>
+                        <td>{{current.powerKWT}}</td>
+                        <td>{{current.releaseYearFrom}}</td>
+                    </tr>
+                    </tbody>
+                </table>
         </div>
         <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
              aria-hidden="true">
@@ -396,7 +397,9 @@
         width: 1300px;
     }
 
-
+table{
+    size: auto;
+}
     .container:hover {
         transform: scale(1.05);
     }
