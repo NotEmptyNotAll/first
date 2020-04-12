@@ -26,7 +26,8 @@
                            placeholder="Номер двигуна"
                            aria-describedby="button-addon2">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" v-on:click="choiceData={model:'engineNumber',data:startData.engineNumber}"
+                        <button class="btn btn-outline-secondary"
+                                v-on:click="choiceData={model:'engineNumber',data:startData.engineNumber}"
                                 type="button" data-toggle="modal"
                                 data-target="#choiceModal"> Обрати
                         </button>
@@ -162,8 +163,9 @@
                                     </datalist>
                                     <div class="input-group-append">
                                         <button class="btn btn-outline-secondary"
-                                                v-on:click="choiceData={id:index,model:'paramName',data:paramNameAndUnits.paramName}" type="button"
-                                                data-toggle="modal" id="button-addon4"  data-target="#choiceModal">
+                                                v-on:click="choiceData={id:index,model:'paramName',data:paramNameAndUnits.paramName}"
+                                                type="button"
+                                                data-toggle="modal" id="button-addon4" data-target="#choiceModal">
                                             <span>обрати</span>
                                         </button>
                                     </div>
@@ -335,15 +337,16 @@
                                 <span class="input-group-text" id="basic-addon1">пошук</span>
                             </div>
                             <input type="text" class="form-control"
-                                   aria-describedby="basic-addon1" id="myInput"  v-on:keyup="searchByList(1)"
+                                   aria-describedby="basic-addon1" id="myInput" v-on:keyup="searchByList(1)"
                                    placeholder="назва" title="Type in a name"
                             >
                         </div>
                         <ul id="myUL" class="list-group ">
                             <li class="searchList list-group-item" v-for="current in choiceData.data"
                                 v-bind:key="current"
-                                data-dismiss="modal" type="button"  v-on:click="setModel(choiceData.model,current,choiceData.id)"
-                                style="text-align: center"
+                                data-dismiss="modal" type="button"
+                                v-on:click="setModel(choiceData.model,current,choiceData.id)"
+                                style="text-align: center; display: none"
                             ><a>{{current}}</a>
 
                             </li>
@@ -433,13 +436,13 @@
             })
         },
         methods: {
-            setModel(model,current,id) {
+            setModel(model, current, id) {
                 if (model == 'engineType')
-                    this.searchData.engineType=current;
+                    this.searchData.engineType = current;
                 else if (model == 'engineNumber')
-                    this.searchData.numberEng=current;
+                    this.searchData.numberEng = current;
                 else if (model == 'paramName')
-                    this.searchData.paramList[id].parameterName=current
+                    this.searchData.paramList[id].parameterName = current
             },
             searchByList(number) {
 
@@ -448,13 +451,15 @@
                 filter = input.value.toUpperCase();
                 ul = document.getElementById("myUL");
                 li = ul.getElementsByClassName("searchList");
-                for (i = 0; i < li.length; i++) {
-                    a = li[i].getElementsByTagName("a")[0];
-                    txtValue = a.textContent || a.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1 && txtValue!="") {
-                        li[i].style.display = "";
-                    } else {
-                        li[i].style.display = "none";
+                if(filter!='') {
+                    for (i = 0; i < li.length; i++) {
+                        a = li[i].getElementsByTagName("a")[0];
+                        txtValue = a.textContent || a.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1 && txtValue != "") {
+                            li[i].style.display = "";
+                        } else {
+                            li[i].style.display = "none";
+                        }
                     }
                 }
                 console.log(number)
@@ -468,14 +473,14 @@
                 console.log(number)
             },
             //request for initial data
-            async getParamtrs(nav,number) {
+            async getParamtrs(nav, number) {
                 await axios({
                     method: 'POST',
                     url: this.serviceApi + 'getParameters',
                     data: {id: number},
                     responseType: 'json'
                 }).then(resp => {
-                    this.choiceParam.push({name:nav,paramtrs:resp.data})
+                    this.choiceParam.push({name: nav, paramtrs: resp.data})
                 });
                 console.log(number)
             },
