@@ -292,7 +292,6 @@
                                                 <th>мін</th>
                                                 <th>макс</th>
                                                 <th>значення</th>
-                                                <th>текст</th>
                                                 <th>автор</th>
                                                 <th>джерело</th>
                                             </tr>
@@ -303,7 +302,6 @@
                                                 <td>{{current.doubleMin}}</td>
                                                 <td>{{current.doubleMax}}</td>
                                                 <td>{{current.doubleNum}}</td>
-                                                <td>{{current.textData}}</td>
                                                 <td>{{current.author}}</td>
                                                 <td>{{current.source}}</td>
                                             </tr>
