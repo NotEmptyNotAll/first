@@ -2,36 +2,38 @@
     <div class="v-addNewItem">
         <div class="container shadow-lg p-3 mb-5 bg-white rounded" style="text-align: center">
             <h3>двигуни</h3>
+
             <br/>
             <!--fields for entering search data.
              Fill with the initial parameters that you get from the backend
               Use a v-model to populate data.-->
             <div class="row ">
                 <div class="input-group col-md-6">
-                    <input name="engType" v-model="searchData.engineType" autocomplete="on" type="text"
+                    <input id="engineType"
+                           v-on:input="searchData.engineType = $event.target.value"
+
+                           autocomplete="on" type="text"
                            class="form-control"
                            placeholder="Тип двигуна"
-                           aria-describedby="button-addon1">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary"
-                                v-on:click="choiceData={model:'engineType',data:startData.engineType}"
-                                type="button" data-toggle="modal"
-                                data-target="#choiceModal"> Обрати
-                        </button>
+                           aria-describedby="button-addon1" list="listEn">
+                    <datalist id="listEn">
+                        <option v-for="current in startData.engineType" v-bind:key="current" :value="current"
+                                :label="current"/>
+                    </datalist>
 
-                    </div>
                 </div>
+
                 <div class="input-group col-md-6">
-                    <input v-model="searchData.numberEng" autocomplete="on" type="text" class="form-control"
+                    <input v-on:input="searchData.numberEng = $event.target.value"
+                           autocomplete="on" type="text" class="form-control"
                            placeholder="Номер двигуна"
-                           aria-describedby="button-addon2">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary"
-                                v-on:click="choiceData={model:'engineNumber',data:startData.engineNumber}"
-                                type="button" data-toggle="modal"
-                                data-target="#choiceModal"> Обрати
-                        </button>
-                    </div>
+                           v-on:change="getAutoEnByNum(1)"
+                           aria-describedby="button-addon2" list="listNum">
+                    <datalist id="listNum">
+                        <option v-for="current in startData.engineNumber" v-bind:key="current" :value="current"
+                                :label="current"/>
+                    </datalist>
+
                 </div>
             </div>
             <div class="row pad">
@@ -63,14 +65,14 @@
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="inputGroupSelect01">Марка авт.</label>
                     </div>
-                    <select v-model="searchData.engineManufacturer" aria-describedby="button-addon3"
+                    <select v-model="searchData.autoManufacturer" aria-describedby="button-addon3"
                             id="inputGroupSelect01"
                             class="custom-select form-control">
                         <option v-for="current in startData.engineManufacture" v-bind:key="current">{{current}}
                         </option>
                     </select>
                     <div class="input-group-append">
-                        <button class="btn btn-outline-danger" v-on:click="searchData.engineManufacturer=''"
+                        <button class="btn btn-outline-danger" v-on:click="searchData.autoManufacturer=''"
                                 type="button" id="button-addon3">
                             <span>&#10008;</span>
                         </button>
@@ -147,28 +149,20 @@
                         <div class="card card-body">
                             <!--here we enter data for an improved search, which the user measures-->
 
-                            <div v-for="(param,index) in searchData.paramList" v-bind:key="param" class="row">
+                            <div v-for="(param) in searchData.paramList" v-bind:key="param" class="row">
                                 <div class="input-group col-md-5">
                                     <div class="input-group-prepend">
                                         <label class="input-group-text" for="inputGroupSelect2">Параметр</label>
                                     </div>
 
-                                    <input list="listParam" id="inputGroupSelect2" v-model="param.parameterName"
+                                    <input list="listParam" id="inputGroupSelect2"
+                                           v-on:input="param.parameterName = $event.target.value"
                                            class="form-control">
-                                    <datalist id="listParam"
-                                              aria-describedby="button-addon4">
-                                        <option v-for="current in paramNameAndUnits.parameterName" v-bind:key="current">
-                                            {{current.fullName}}
-                                        </option>
+                                    <datalist id="listParam">
+                                        <option v-for="current in paramNameAndUnits.paramName" v-bind:key="current"
+                                                :value="current"
+                                                :label="current"/>
                                     </datalist>
-                                    <div class="input-group-append">
-                                        <button class="btn btn-outline-secondary"
-                                                v-on:click="choiceData={id:index,model:'paramName',data:paramNameAndUnits.paramName}"
-                                                type="button"
-                                                data-toggle="modal" id="button-addon4" data-target="#choiceModal">
-                                            <span>обрати</span>
-                                        </button>
-                                    </div>
                                 </div>
                                 <div class="input-group col-md-4">
                                     <div class="input-group-prepend">
@@ -190,7 +184,7 @@
                                     </div>
                                 </div>
                                 <div class="col col-md-2">
-                                    <input v-model="param.parameterName" class="form-control" type="number"
+                                    <input v-model="param.parameterNumber" class="form-control" type="number"
                                            value="" placeholder="Значення"
                                     >
                                 </div>
@@ -212,7 +206,7 @@
         </div>
 
         <!--engine data table. By clicking on row m we open the engine tree, where we can find out its parameters-->
-        <div class="container shadow-lg p-3  bg-white rounded" id="contTable">
+        <div class="container shadow-lg p-3 tab  bg-white rounded" id="contTable">
             <table class="table table-hover">
                 <thead class="thead-light">
                 <tr>
@@ -269,95 +263,34 @@
                         </div>
                     </div>
                     <div class="col-md-9">
-
-                        <div class="accordion" id="accord">
-                            <div v-for="current in choiceParam" v-bind:key="current">
-                                <div class="card">
-                                    <div class="card-header" :id="current.name+'1'">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link" type="button" data-toggle="collapse"
-                                                    :data-target="'#'+current.name"
-                                                    :aria-controls="current.name">
-                                                {{current.name}}
-                                            </button>
-                                        </h2>
-                                    </div>
-                                </div>
-
-                                <div :id="current.name" class="collapse show" :aria-labelledby="current.name+'1'"
-                                     data-parent="#accord">
-                                    <div class="card-body">
-                                        <table class="table table-hover">
-                                            <thead class="thead-light">
-                                            <tr>
-                                                <th>Од. вим</th>
-                                                <th>мін</th>
-                                                <th>макс</th>
-                                                <th>значення</th>
-                                                <th>автор</th>
-                                                <th>джерело</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr v-for="current in current.paramtrs" v-bind:key="current">
-                                                <td>{{current.measurementUnits}}</td>
-                                                <td>{{current.doubleMin}}</td>
-                                                <td>{{current.doubleMax}}</td>
-                                                <td>{{current.doubleNum}}</td>
-                                                <td>{{current.author}}</td>
-                                                <td>{{current.source}}</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                        <table class="table table-hover">
+                            <thead class="thead-light">
+                            <tr>
+                                <th>Од. вим</th>
+                                <th>мін</th>
+                                <th>макс</th>
+                                <th>значення</th>
+                                <th>автор</th>
+                                <th>джерело</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="current in choiceParam" v-bind:key="current">
+                                <td>{{current.measurementUnits}}</td>
+                                <td>{{current.doubleMin}}</td>
+                                <td>{{current.doubleMax}}</td>
+                                <td>{{current.doubleNum}}</td>
+                                <td>{{current.author}}</td>
+                                <td>{{current.source}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Modal -->
-        <div class="modal fade" id="choiceModal" tabindex="-1" role="dialog" aria-labelledby="choiceModal"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="choiceModalLable">виберіть елемент</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">пошук</span>
-                            </div>
-                            <input type="text" class="form-control"
-                                   aria-describedby="basic-addon1" id="myInput" v-on:keyup="searchByList(1)"
-                                   placeholder="назва" title="Type in a name"
-                            >
-                        </div>
-                        <ul id="myUL" class="list-group ">
-                            <li class="searchList list-group-item" v-for="current in choiceData.data"
-                                v-bind:key="current"
-                                data-dismiss="modal" type="button"
-                                v-on:click="setModel(choiceData.model,current,choiceData.id)"
-                                style="text-align: center; display: none"
-                            ><a>{{current}}</a>
-
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="modal-footer">
-
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <button type="button " class="btn btn-primary" id="openModal" data-toggle="modal" data-target="#errorModal"
                 style="visibility: hidden">
@@ -368,13 +301,13 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Помилка</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        {{errorMessage}}
+                        <h5>{{errorMessage}}</h5>
                     </div>
                     <div class="modal-footer">
                     </div>
@@ -393,7 +326,6 @@
         name: "v-addNewItem",
 
         components: {
-
             tree
         },
         data: () => ({
@@ -414,7 +346,7 @@
                     parameterNumber: ''
                 }],
                 engineType: null,
-                enginManufacturer: null,
+                autoManufacturer: null,
                 autoModel: null,
                 produceYear: null,
                 numberEng: null,
@@ -422,7 +354,8 @@
                 powerKWt: null,
                 engineCapacity: null
             },
-            choiceData: []
+            choiceData: [],
+            test: null
         }),
         //All requests will be transferred to the vuex for convenience.
         mounted() {
@@ -436,40 +369,32 @@
             })
         },
         methods: {
-            setModel(model, current, id) {
-                if (model == 'engineType')
-                    this.searchData.engineType = current;
-                else if (model == 'engineNumber')
-                    this.searchData.numberEng = current;
-                else if (model == 'paramName')
-                    this.searchData.paramList[id].parameterName = current
-            },
-            searchByList(number) {
-
-                var input, filter, ul, li, a, i, txtValue;
-                input = document.getElementById("myInput");
-                filter = input.value.toUpperCase();
-                ul = document.getElementById("myUL");
-                li = ul.getElementsByClassName("searchList");
-                if(filter!='') {
-                    for (i = 0; i < li.length; i++) {
-                        a = li[i].getElementsByTagName("a")[0];
-                        txtValue = a.textContent || a.innerText;
-                        if (txtValue.toUpperCase().indexOf(filter) > -1 && txtValue != "") {
-                            li[i].style.display = "";
-                        } else {
-                            li[i].style.display = "none";
-                        }
-                    }
-                }
-                console.log(number)
-            },
             addParam(number) {
                 this.searchData.paramList.push({
                     parameterName: '',
                     unitsFullName: '',
                     parameterNumber: ''
                 });
+                console.log(number)
+            },
+            async getAutoEnByNum(number) {
+                await axios({
+                    method: 'POST',
+                    url: this.serviceApi + 'getAutoEng',
+                    data: this.searchData,
+                    responseType: 'json'
+                }).then(resp => {
+                    if (resp.data.powerKwt != undefined) {
+                        this.searchData.powerKWt = resp.data.powerKwt;
+                        document.getElementById('engineType').value = resp.data.engineType;
+                        this.searchData.fuelType = resp.data.fuelType;
+                        this.searchData.engineCapacity = resp.data.engineCapacity;
+                    } else {
+                        this.errorMessage = 'відсутній номер двигуна';
+                        document.getElementById('openModal').click();
+                    }
+                });
+
                 console.log(number)
             },
             //request for initial data
@@ -480,7 +405,8 @@
                     data: {id: number},
                     responseType: 'json'
                 }).then(resp => {
-                    this.choiceParam.push({name: nav, paramtrs: resp.data})
+                    if (resp.data != null)
+                        this.choiceParam.push(resp.data)
                 });
                 console.log(number)
             },
@@ -537,7 +463,7 @@
 
 <style>
     #contTable {
-        min-height: 50vh;
+        min-height: 20vh;
     }
 
     .row, .container {
@@ -559,6 +485,7 @@
         margin-bottom: 30px;
         transition: 0.8s;
     }
+
 
     li:hover {
         background-color: lightgray;

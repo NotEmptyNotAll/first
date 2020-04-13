@@ -8,7 +8,8 @@
                 {{ item.name }}
                 <span v-if="isFolder">[{{ isOpen ? '-' : '+' }}]</span>
             </span>
-                <button type="button" class="btn posLeft btn-success" @click="getParamtrs(nav,item.id)">&#x2b;</button>
+            <button type="button" v-if="!isPressed" v-on:click="pressed" class="btn posLeft btn-success"  @click="getParamtrs(nav,item.id)">&#x2b;</button>
+            <button type="button" v-if="isPressed"  class="btn posLeft btn-secondary disabled" >&#x2b;</button>
         </div>
         <div class="list-group  left" v-show="isOpen" v-if="isFolder">
             <tree-item
@@ -34,12 +35,13 @@
         components: {},
         props: {
             item: Object,
-            nav:String,
+            nav: String,
             choiceParam: Object
         },
         data: function () {
             return {
-                isOpen: false
+                isOpen: false,
+                isPressed:false
             };
         },
         computed: {
@@ -48,9 +50,13 @@
             }
         },
         methods: {
-           async getParamtrs(nav,number){
-               this.$emit("get-paramtrs",nav, number);
-               console.log(number)
+             getParamtrs(nav, number) {
+                 this.$emit("get-paramtrs", nav, number)
+            },
+            pressed(){
+                if (!this.isPressed) {
+                    this.isPressed = !this.isPressed;
+                }
             },
             toggle: function () {
                 if (this.isFolder) {
