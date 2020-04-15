@@ -1,28 +1,29 @@
 <template>
 
-    <div>
-        <div class="list-group-item left"
+    <ul>
+        <li class="list-group-item border-white left"
              :class="{bold: isFolder}"
         >
             <span @click="toggle">
-                {{ item.name }}
+                {{ space+item.name }}
                 <span v-if="isFolder">[{{ isOpen ? '-' : '+' }}]</span>
             </span>
             <button type="button" v-if="!isPressed" v-on:click="pressed" class="btn posLeft btn-success"  @click="getParamtrs(nav,item.id)">&#x2b;</button>
             <button type="button" v-if="isPressed"  class="btn posLeft btn-secondary disabled" >&#x2b;</button>
-        </div>
-        <div class="list-group  left" v-show="isOpen" v-if="isFolder">
+        </li>
+        <ul class="list-group border-white left" v-show="isOpen" v-if="isFolder">
             <tree-item
                     class="item"
                     v-for="(child, index) in item.elementsCh"
                     :key="index"
                     :item="child"
                     :choice-param="choiceParam"
-                    :nav="nav.concat(' \\ '+child.name)"
+                    :nav="child.name"
+                    :space="space.concat('')"
                     @get-paramtrs="getParamtrs"
             ></tree-item>
-        </div>
-    </div>
+        </ul>
+    </ul>
 
 </template>
 
@@ -34,6 +35,7 @@
         name: "tree-item",
         components: {},
         props: {
+            space:String,
             item: Object,
             nav: String,
             choiceParam: Object

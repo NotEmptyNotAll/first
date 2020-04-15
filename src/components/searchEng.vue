@@ -9,6 +9,9 @@
               Use a v-model to populate data.-->
             <div class="row ">
                 <div class="input-group col-md-6">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="engineType">тип двигуна</label>
+                    </div>
                     <input id="engineType"
                            v-on:input="searchData.engineType = $event.target.value"
 
@@ -20,50 +23,43 @@
                         <option v-for="current in startData.engineType" v-bind:key="current" :value="current"
                                 :label="current"/>
                     </datalist>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-danger" onclick="document.getElementById('engineType').value =''"
+                                type="button" id="button-addon4">
+                            <span>&#10008;</span>
+                        </button>
+                    </div>
 
                 </div>
 
                 <div class="input-group col-md-6">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="engNum">номер двигуна</label>
+                    </div>
                     <input v-on:input="searchData.numberEng = $event.target.value"
                            autocomplete="on" type="text" class="form-control"
                            placeholder="Номер двигуна"
+                           id="engNum"
                            v-on:change="getAutoEnByNum(1)"
                            aria-describedby="button-addon2" list="listNum">
                     <datalist id="listNum">
                         <option v-for="current in startData.engineNumber" v-bind:key="current" :value="current"
                                 :label="current"/>
                     </datalist>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-danger" onclick="document.getElementById('engNum').value =''"
+                                type="button" id="button-addon6">
+                            <span>&#10008;</span>
+                        </button>
+                    </div>
 
                 </div>
             </div>
-            <div class="row pad">
-                <div class="col">
-                    <div class="collapse multi-collapse" id="engineTypeList">
-                        <div class="card card-body">
-                            <ul class="list-group">
-                                <li v-for="current in startData.engineType" v-bind:key="current"
-                                    v-on:click="searchData.engineType=current"
-                                    class="list-group-item">{{current}}
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="collapse multi-collapse" id="AutoNumberList">
-                        <div class="card card-body">
-                            <li v-for="current in startData.engineNumber" v-bind:key="current"
-                                v-on:click="searchData.numberEng=current"
-                                class="list-group-item">{{current}}
-                            </li>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
             <div class="row ">
                 <div class="input-group col-md-4">
                     <div class="input-group-prepend">
-                        <label class="input-group-text" for="inputGroupSelect01">Марка авт.</label>
+                        <label class="input-group-text" for="inputGroupSelect01">марка авт.</label>
                     </div>
                     <select v-model="searchData.autoManufacturer" aria-describedby="button-addon3"
                             id="inputGroupSelect01"
@@ -114,29 +110,65 @@
             </div>
             <div class="row ">
 
-                <div class="col col-md-3">
+                <div class="col input-group col-md-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="engCap">об’єм двигуна</label>
+                    </div>
                     <input v-model="searchData.engineCapacity" min="0" step="0.01" class="form-control"
-                           type="number" value=""
+                           type="number" value="" id="engCap"
                            placeholder="Об’єм двигуна">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-danger" v-on:click="searchData.engineCapacity=''"
+                                type="button" id="button-addon7">
+                            <span>&#10008;</span>
+                        </button>
+                    </div>
                 </div>
-                <div class="col col-md-3">
+                <div class="col input-group col-md-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="engPowerKWt">потужність(kWt)</label>
+                    </div>
                     <input v-model="searchData.powerKWt" class="form-control" step="0.01" min="0" type="number"
                            value=""
+                           id="engPowerKWt"
                            placeholder="Потужність(kWt)">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-danger" v-on:click="searchData.powerKWt=''"
+                                type="button" id="button-addon8">
+                            <span>&#10008;</span>
+                        </button>
+                    </div>
                 </div>
 
-                <div class="col col-md-2">
+                <div class="col input-group col-md-2">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="engY">рік випуску</label>
+                    </div>
                     <input v-model="searchData.produceYear" class="form-control" min="1885" max="2020"
                            placeholder="Рік випуску" step="1"
+                           id="engY"
                            type="number" value="">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-danger" v-on:click="searchData.produceYear=''"
+                                type="button" id="button-addon9">
+                            <span>&#10008;</span>
+                        </button>
+                    </div>
                 </div>
 
-                <div class="col col-md-4">
+                <div class="col input-group col-md-2">
                     <button type="submit" @click="submitChanges('submit')"
                             class="btn  btn-block btn-outline-primary">
                         пошук
                     </button>
                 </div>
+                <div class="col input-group col-md-2">
+                    <button class="btn btn-block btn-outline-danger" v-on:click="clear"
+                            type="button" id="button-addon10">
+                        <span>очистити всі поля</span>
+                    </button>
+                </div>
+
             </div>
             <div class="row">
                 <div class="col col-md-12">
@@ -145,24 +177,32 @@
                             data-target="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch">
                         покращити пошук
                     </button>
-                    <div class="collapse" id="collapseSearch">
-                        <div class="card card-body">
+                    <div class="collapse " id="collapseSearch">
+                        <div class="card border-white card-body">
                             <!--here we enter data for an improved search, which the user measures-->
 
-                            <div v-for="(param) in searchData.paramList" v-bind:key="param" class="row">
+                            <div v-for="(param,index) in searchData.paramList" v-bind:key="param" class="row">
                                 <div class="input-group col-md-5">
                                     <div class="input-group-prepend">
-                                        <label class="input-group-text" for="inputGroupSelect2">Параметр</label>
+                                        <label class="input-group-text" :for="'param'+index">Параметр</label>
                                     </div>
 
-                                    <input list="listParam" id="inputGroupSelect2"
-                                           v-on:input="param.parameterName = $event.target.value"
-                                           class="form-control">
+                                    <input list="listParam"
+                                           v-model="param.parameterName"
+                                           class="form-control"
+                                           :id="'param'+index"
+                                    >
                                     <datalist id="listParam">
                                         <option v-for="current in paramNameAndUnits.paramName" v-bind:key="current"
                                                 :value="current"
                                                 :label="current"/>
                                     </datalist>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-danger" v-on:click="param.parameterName=''"
+                                                type="button" id="button-addon11">
+                                            <span>&#10008;</span>
+                                        </button>
+                                    </div>
                                 </div>
                                 <div class="input-group col-md-4">
                                     <div class="input-group-prepend">
@@ -177,7 +217,7 @@
                                     </select>
                                     <div class="input-group-append">
                                         <button class="btn btn-outline-danger"
-                                                v-on:click="searchData.unitsFullName=''" type="button"
+                                                v-on:click="param.unitsFullName=''" type="button"
                                                 id="button-addon5">
                                             <span>&#10008;</span>
                                         </button>
@@ -258,6 +298,7 @@
                                     :item="elements"
                                     :nav="elements.name"
                                     :choice-param="choiceParam"
+                                    :space="''"
                                     @get-paramtrs="getParamtrs"
                             ></tree>
                         </div>
@@ -266,7 +307,8 @@
                         <table class="table table-hover">
                             <thead class="thead-light">
                             <tr>
-                                <th>Од. вим</th>
+                                <th>ім'я</th>
+                                <th>од. вим</th>
                                 <th>мін</th>
                                 <th>макс</th>
                                 <th>значення</th>
@@ -276,6 +318,7 @@
                             </thead>
                             <tbody>
                             <tr v-for="current in choiceParam" v-bind:key="current">
+                                <td>{{current.name}}</td>
                                 <td>{{current.measurementUnits}}</td>
                                 <td>{{current.doubleMin}}</td>
                                 <td>{{current.doubleMax}}</td>
@@ -369,6 +412,23 @@
             })
         },
         methods: {
+            clear(){
+                this.searchData.produceYear=''
+                this.searchData.powerKWt=''
+                this.searchData.engineCapacity=''
+                this.searchData.autoManufacturer=''
+                this.searchData.fuelType=''
+                this.searchData.paramList=[{
+                    parameterName: '',
+                    unitsFullName: '',
+                    parameterNumber: ''
+                }]
+                this.searchData.autoModel=''
+                this.searchData.engineType=''
+                this.searchData.numberEng=''
+                document.getElementById('engineType').value =''
+                document.getElementById('engNum').value =''
+            },
             addParam(number) {
                 this.searchData.paramList.push({
                     parameterName: '',
@@ -406,7 +466,7 @@
                     responseType: 'json'
                 }).then(resp => {
                     if (resp.data != null)
-                        this.choiceParam.push(resp.data)
+                        this.choiceParam=resp.data
                 });
                 console.log(number)
             },
