@@ -3,13 +3,14 @@
     <ul>
         <li class="list-group-item border-white left"
              :class="{bold: isFolder}"
+            v-if="isFolder"
         >
             <span @click="toggle">
                 {{ space+item.name }}
                 <span v-if="isFolder">[{{ isOpen ? '-' : '+' }}]</span>
             </span>
-            <button type="button" v-if="!isPressed" v-on:click="pressed" class="btn posLeft btn-success"  @click="getParamtrs(nav,item.id)">&#x2b;</button>
-            <button type="button" v-if="isPressed"  class="btn posLeft btn-secondary disabled" >&#x2b;</button>
+            <button type="button" v-if="!linkOnThisButt.isPressed" v-on:click="pressed" class="btn posLeft btn-success"  @click="getParamtrs(nav,item.id,linkOnThisButt)">&#x2b;</button>
+            <button type="button" v-if="linkOnThisButt.isPressed"  class="btn posLeft btn-secondary disabled" >&#x2b;</button>
         </li>
         <ul class="list-group border-white left" v-show="isOpen" v-if="isFolder">
             <tree-item
@@ -35,6 +36,7 @@
         name: "tree-item",
         components: {},
         props: {
+            nowPressed:Object,
             space:String,
             item: Object,
             nav: String,
@@ -43,7 +45,9 @@
         data: function () {
             return {
                 isOpen: false,
-                isPressed:false
+                linkOnThisButt:{
+                    isPressed:false
+                }
             };
         },
         computed: {
@@ -52,13 +56,14 @@
             }
         },
         methods: {
-             getParamtrs(nav, number) {
-                 this.$emit("get-paramtrs", nav, number)
+             getParamtrs(nav, number,link) {
+                 this.$emit("get-paramtrs", nav, number,link)
             },
             pressed(){
-                if (!this.isPressed) {
-                    this.isPressed = !this.isPressed;
+                if (! this.linkOnThisButt.isPressed) {
+                    this.linkOnThisButt.isPressed=true;
                 }
+
             },
             toggle: function () {
                 if (this.isFolder) {

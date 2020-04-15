@@ -17,7 +17,7 @@
 
                            autocomplete="on" type="text"
                            class="form-control"
-                           placeholder="Тип двигуна"
+                           placeholder="дані..."
                            aria-describedby="button-addon1" list="listEn">
                     <datalist id="listEn">
                         <option v-for="current in startData.engineType" v-bind:key="current" :value="current"
@@ -38,7 +38,7 @@
                     </div>
                     <input v-on:input="searchData.numberEng = $event.target.value"
                            autocomplete="on" type="text" class="form-control"
-                           placeholder="Номер двигуна"
+                           placeholder="дані..."
                            id="engNum"
                            v-on:change="getAutoEnByNum(1)"
                            aria-describedby="button-addon2" list="listNum">
@@ -116,7 +116,7 @@
                     </div>
                     <input v-model="searchData.engineCapacity" min="0" step="0.01" class="form-control"
                            type="number" value="" id="engCap"
-                           placeholder="Об’єм двигуна">
+                           placeholder="дані...">
                     <div class="input-group-append">
                         <button class="btn btn-outline-danger" v-on:click="searchData.engineCapacity=''"
                                 type="button" id="button-addon7">
@@ -131,7 +131,7 @@
                     <input v-model="searchData.powerKWt" class="form-control" step="0.01" min="0" type="number"
                            value=""
                            id="engPowerKWt"
-                           placeholder="Потужність(kWt)">
+                           placeholder="дані...">
                     <div class="input-group-append">
                         <button class="btn btn-outline-danger" v-on:click="searchData.powerKWt=''"
                                 type="button" id="button-addon8">
@@ -145,7 +145,7 @@
                         <label class="input-group-text" for="engY">рік випуску</label>
                     </div>
                     <input v-model="searchData.produceYear" class="form-control" min="1885" max="2020"
-                           placeholder="Рік випуску" step="1"
+                           placeholder="дані..." step="1"
                            id="engY"
                            type="number" value="">
                     <div class="input-group-append">
@@ -251,9 +251,7 @@
                 <thead class="thead-light">
                 <tr>
                     <th>Тип двигуна</th>
-                    <th>модель</th>
                     <th>Виробник двигуна</th>
-                    <th>Виробник авто</th>
                     <th>К-ть клапанів</th>
                     <th>Діаметр поршня</th>
                     <th>Розміщення циліндрів</th>
@@ -270,9 +268,7 @@
                     role="button" aria-expanded="false" aria-controls="collapse"
                     v-on:click="getElements(current.id)">
                     <td>{{current.engineType}}</td>
-                    <td>{{current.modelName}}</td>
                     <td>{{current.engineManufacture}}</td>
-                    <td>{{current.autoManufacture}}</td>
                     <td>{{current.flapNumber}}</td>
                     <td>{{current.pistonDiameter}}</td>
                     <td>{{current.pistonDiameter}}</td>
@@ -299,6 +295,7 @@
                                     :nav="elements.name"
                                     :choice-param="choiceParam"
                                     :space="''"
+                                    :nowPressed=nowPressed
                                     @get-paramtrs="getParamtrs"
                             ></tree>
                         </div>
@@ -320,9 +317,9 @@
                             <tr v-for="current in choiceParam" v-bind:key="current">
                                 <td>{{current.name}}</td>
                                 <td>{{current.measurementUnits}}</td>
-                                <td>{{current.doubleMin}}</td>
-                                <td>{{current.doubleMax}}</td>
-                                <td>{{current.doubleNum}}</td>
+                                <td>{{current.doubleMin.toFixed(4)}}</td>
+                                <td>{{current.doubleMax.toFixed(4)}}</td>
+                                <td>{{current.doubleNum.toFixed(4)}}</td>
                                 <td>{{current.author}}</td>
                                 <td>{{current.source}}</td>
                             </tr>
@@ -375,13 +372,18 @@
             paramtrs: [],
             choiceParam: [],
             paramIndex: 1,
-            serviceApi: 'https://springeng.herokuapp.com/',
+            serviceApi: 'http://localhost:5050/',
             elemParameters: [],
             errorMessage: '',
             paramNameAndUnits: [],
             elements: [],
             dataEng: [],
             startData: [],
+            nowPressed:{
+                linkOnButt:{
+                    isPressed:false
+                }
+            },
             searchData: {
                 paramList: [{
                     parameterName: '',
@@ -445,6 +447,9 @@
                     responseType: 'json'
                 }).then(resp => {
                     if (resp.data.powerKwt != undefined) {
+                        this.searchData.autoModel=resp.data.autoModel;
+                        this.searchData.autoManufacturer=resp.data.autoManufacture;
+                        this.searchData.produceYear=resp.data.produceYear;
                         this.searchData.powerKWt = resp.data.powerKwt;
                         document.getElementById('engineType').value = resp.data.engineType;
                         this.searchData.fuelType = resp.data.fuelType;
@@ -458,7 +463,9 @@
                 console.log(number)
             },
             //request for initial data
-            async getParamtrs(nav, number) {
+            async getParamtrs(nav, number,link) {
+                this.nowPressed.linkOnButt.isPressed=false;
+                this.nowPressed.linkOnButt=link;
                 await axios({
                     method: 'POST',
                     url: this.serviceApi + 'getParameters',
@@ -468,6 +475,7 @@
                     if (resp.data != null)
                         this.choiceParam=resp.data
                 });
+
                 console.log(number)
             },
             //request for parameters
