@@ -314,17 +314,18 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="current in choiceParam" v-bind:key="current">
+                            <tr v-for="current in listParam" v-bind:key="current">
                                 <td>{{current.name}}</td>
                                 <td>{{current.measurementUnits}}</td>
-                                <td>{{current.doubleMin.toFixed(4)}}</td>
-                                <td>{{current.doubleMax.toFixed(4)}}</td>
-                                <td>{{current.doubleNum.toFixed(4)}}</td>
+                                <td>{{Number(current.doubleMin).toFixed(4)}}</td>
+                                <td>{{Number(current.doubleMax).toFixed(4)}}</td>
+                                <td>{{Number(current.doubleNum).toFixed(4)}}</td>
                                 <td>{{current.author}}</td>
                                 <td>{{current.source}}</td>
                             </tr>
                             </tbody>
                         </table>
+
                     </div>
                 </div>
             </div>
@@ -370,6 +371,7 @@
         },
         data: () => ({
             paramtrs: [],
+            listParam:[],
             choiceParam: [],
             paramIndex: 1,
             serviceApi: 'http://springeng.herokuapp.com/',
@@ -473,7 +475,7 @@
                     responseType: 'json'
                 }).then(resp => {
                     if (resp.data != null)
-                        this.choiceParam=resp.data
+                        this.listParam=resp.data;
                 });
 
                 console.log(number)
@@ -504,8 +506,9 @@
             },
             //request for data about the auto engine
             async submitChanges(dat) {
-                if ((Number.isInteger(this.searchData.produceYear) || this.searchData.produceYear < 1885 || this.searchData.produceYear > 2020) && !this.searchData.produceYear == 0) {
+                if ((!Number.isInteger(Number(this.searchData.produceYear)) || (this.searchData.produceYear < 1885 || this.searchData.produceYear > 2020)) && !this.searchData.produceYear == 0) {
                     this.errorMessage = "Ви некоректно ввели рік";
+                  alert(111);
                     document.getElementById('openModal').click();
                 } else {
                     await axios({
