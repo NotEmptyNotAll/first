@@ -284,8 +284,7 @@
         </div>
 
         <!--recursive tree of objects. Most likely it will look different-->
-        <div class="collapse" id="collapse">
-            <div class="container shadow-lg   bg-white rounded">
+            <div class="container shadow-lg   bg-white rounded" id="contParam" style="visibility: hidden">
                 <div class="row">
                     <div class="col-md-3">
                         <div class="list-group">
@@ -329,7 +328,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+
 
         <!-- Modal -->
 
@@ -374,7 +373,7 @@
             listParam:[],
             choiceParam: [],
             paramIndex: 1,
-            serviceApi: 'http://springeng.herokuapp.com/',
+            serviceApi: 'https://springeng.herokuapp.com/',
             elemParameters: [],
             errorMessage: '',
             paramNameAndUnits: [],
@@ -417,6 +416,7 @@
         },
         methods: {
             clear(){
+                document.getElementById('contParam').style.visibility='hidden'
                 this.searchData.produceYear=''
                 this.searchData.powerKWt=''
                 this.searchData.engineCapacity=''
@@ -432,6 +432,9 @@
                 this.searchData.numberEng=''
                 document.getElementById('engineType').value =''
                 document.getElementById('engNum').value =''
+                this.dataEng= []
+                this.listParam= []
+                this.elements= []
             },
             addParam(number) {
                 this.searchData.paramList.push({
@@ -502,6 +505,7 @@
                 }).then(resp => {
                     this.elements = resp.data
                 });
+                document.getElementById('contParam').style.visibility='visible';
                 console.log(number)
             },
             //request for data about the auto engine
