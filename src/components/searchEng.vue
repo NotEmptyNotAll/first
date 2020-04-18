@@ -250,17 +250,20 @@
             <table class="table table-hover">
                 <thead class="thead-light">
                 <tr>
-                    <th>Тип двигуна</th>
-                    <th>Виробник двигуна</th>
-                    <th>К-ть клапанів</th>
-                    <th>Діаметр поршня</th>
-                    <th>Розміщення циліндрів</th>
-                    <th>кількість циліндрів</th>
-                    <th>Хід поршня</th>
-                    <th>Об’єм двигуна</th>
-                    <th>кінськ.сил</th>
-                    <th>kWt</th>
-                    <th>Рік випуску (з)</th>
+                    <th>тип двигуна</th>
+                    <th>виробник двигуна</th>
+                    <th>розміщення циліндрів</th>
+                    <th>вид палива</th>
+                    <th>к-ть циліндрів</th>
+                    <th>к-ть клапанів</th>
+                    <th>діаметр циліндра</th>
+                    <th>хід поршня</th>
+                    <th>об’єм двигуна</th>
+                    <th>потужність kWt</th>
+                    <th>потужність кінськ.сил</th>
+                    <th>Ступінь зжаття</th>
+                    <th>Вид наддуву</th>
+                    <th>рік випуску</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -269,15 +272,18 @@
                     v-on:click="getElements(current.id)">
                     <td>{{current.engineType}}</td>
                     <td>{{current.engineManufacture}}</td>
-                    <td>{{current.flapNumber}}</td>
-                    <td>{{current.pistonDiameter}}</td>
-                    <td>{{current.pistonDiameter}}</td>
                     <td>{{current.cylinderPlace}}</td>
-                    <td>{{current.pistonStoke}}</td>
+                    <td>{{current.fuelType}}</td>
+                    <td>{{current.cylindersNumber}}</td>
+                    <td>{{current.flapNumber}}</td>
+                    <td>{{Number(current.pistonDiameter).toFixed(4)}}</td>
+                    <td>{{Number(current.pistonStoke).toFixed(4)}}</td>
                     <td>{{current.engineCapacity}}</td>
-                    <td>{{current.horsepower}}</td>
                     <td>{{current.powerKWT}}</td>
-                    <td>{{current.releaseYearFrom}}</td>
+                    <td>{{current.horsepower}}</td>
+                    <td>{{current.degreeCompression}}</td>
+                    <td>{{current.superchargedType}}</td>
+                    <td>{{current.releaseYearFrom+'-'+current.releaseYearBy}}</td>
                 </tr>
                 </tbody>
             </table>
@@ -370,19 +376,19 @@
         },
         data: () => ({
             paramtrs: [],
-            listParam:[],
+            listParam: [],
             choiceParam: [],
             paramIndex: 1,
-            serviceApi: 'https://springeng.herokuapp.com/',
+            serviceApi: 'http://localhost:5050/',
             elemParameters: [],
             errorMessage: '',
             paramNameAndUnits: [],
             elements: [],
             dataEng: [],
             startData: [],
-            nowPressed:{
-                linkOnButt:{
-                    isPressed:false
+            nowPressed: {
+                linkOnButt: {
+                    isPressed: false
                 }
             },
             searchData: {
@@ -415,9 +421,9 @@
             })
         },
         methods: {
-            clear(){
-                document.getElementById('contParam').style.display='none'
-                this.searchData= {
+            clear() {
+                document.getElementById('contParam').style.display = 'none'
+                this.searchData = {
                     paramList: [{
                         parameterName: '',
                         unitsFullName: '',
@@ -432,11 +438,11 @@
                     powerKWt: null,
                     engineCapacity: null
                 }
-                document.getElementById('engineType').value =''
-                document.getElementById('engNum').value =''
-                this.dataEng= []
-                this.listParam= []
-                this.elements= []
+                document.getElementById('engineType').value = ''
+                document.getElementById('engNum').value = ''
+                this.dataEng = []
+                this.listParam = []
+                this.elements = []
             },
             addParam(number) {
                 this.searchData.paramList.push({
@@ -454,9 +460,9 @@
                     responseType: 'json'
                 }).then(resp => {
                     if (resp.data.powerKwt != undefined) {
-                        this.searchData.autoModel=resp.data.autoModel;
-                        this.searchData.autoManufacturer=resp.data.autoManufacture;
-                        this.searchData.produceYear=resp.data.produceYear;
+                        this.searchData.autoModel = resp.data.autoModel;
+                        this.searchData.autoManufacturer = resp.data.autoManufacture;
+                        this.searchData.produceYear = resp.data.produceYear;
                         this.searchData.powerKWt = resp.data.powerKwt;
                         document.getElementById('engineType').value = resp.data.engineType;
                         this.searchData.fuelType = resp.data.fuelType;
@@ -470,9 +476,9 @@
                 console.log(number)
             },
             //request for initial data
-            async getParamtrs(nav, number,link) {
-                this.nowPressed.linkOnButt.isPressed=false;
-                this.nowPressed.linkOnButt=link;
+            async getParamtrs(nav, number, link) {
+                this.nowPressed.linkOnButt.isPressed = false;
+                this.nowPressed.linkOnButt = link;
                 await axios({
                     method: 'POST',
                     url: this.serviceApi + 'getParameters',
@@ -480,7 +486,7 @@
                     responseType: 'json'
                 }).then(resp => {
                     if (resp.data != null)
-                        this.listParam=resp.data;
+                        this.listParam = resp.data;
                 });
 
                 console.log(number)
@@ -507,7 +513,7 @@
                 }).then(resp => {
                     this.elements = resp.data
                 });
-                document.getElementById('contParam').style.display='block'
+                document.getElementById('contParam').style.display = 'block'
                 console.log(number)
             },
             //request for data about the auto engine
