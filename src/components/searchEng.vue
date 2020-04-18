@@ -281,7 +281,7 @@
                     <td>{{current.engineCapacity}}</td>
                     <td>{{current.powerKWT}}</td>
                     <td>{{current.horsepower}}</td>
-                    <td>{{current.degreeCompression}}</td>
+                    <td>{{Number(current.degreeCompression).toFixed(4)}}</td>
                     <td>{{current.superchargedType}}</td>
                     <td>{{current.releaseYearFrom+'-'+current.releaseYearBy}}</td>
                 </tr>
@@ -379,7 +379,7 @@
             listParam: [],
             choiceParam: [],
             paramIndex: 1,
-            serviceApi: 'http://localhost:5050/',
+            serviceApi: 'https://engservice.herokuapp.com/',
             elemParameters: [],
             errorMessage: '',
             paramNameAndUnits: [],
