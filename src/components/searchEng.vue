@@ -416,20 +416,22 @@
         },
         methods: {
             clear(){
-                document.getElementById('contParam').style.visibility='hidden'
-                this.searchData.produceYear=''
-                this.searchData.powerKWt=''
-                this.searchData.engineCapacity=''
-                this.searchData.autoManufacturer=''
-                this.searchData.fuelType=''
-                this.searchData.paramList=[{
-                    parameterName: '',
-                    unitsFullName: '',
-                    parameterNumber: ''
-                }]
-                this.searchData.autoModel=''
-                this.searchData.engineType=''
-                this.searchData.numberEng=''
+                document.getElementById('contParam').style.display='none'
+                this.searchData= {
+                    paramList: [{
+                        parameterName: '',
+                        unitsFullName: '',
+                        parameterNumber: ''
+                    }],
+                    engineType: null,
+                    autoManufacturer: null,
+                    autoModel: null,
+                    produceYear: null,
+                    numberEng: null,
+                    fuelType: null,
+                    powerKWt: null,
+                    engineCapacity: null
+                }
                 document.getElementById('engineType').value =''
                 document.getElementById('engNum').value =''
                 this.dataEng= []
