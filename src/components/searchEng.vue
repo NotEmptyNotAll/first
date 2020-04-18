@@ -284,50 +284,50 @@
         </div>
 
         <!--recursive tree of objects. Most likely it will look different-->
-            <div class="container shadow-lg   bg-white rounded" id="contParam" style="visibility: hidden">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="list-group">
-                            <tree
-                                    class="item"
-                                    :item="elements"
-                                    :nav="elements.name"
-                                    :choice-param="choiceParam"
-                                    :space="''"
-                                    :nowPressed=nowPressed
-                                    @get-paramtrs="getParamtrs"
-                            ></tree>
-                        </div>
-                    </div>
-                    <div class="col-md-9">
-                        <table class="table table-hover">
-                            <thead class="thead-light">
-                            <tr>
-                                <th>ім'я</th>
-                                <th>од. вим</th>
-                                <th>мін</th>
-                                <th>макс</th>
-                                <th>значення</th>
-                                <th>автор</th>
-                                <th>джерело</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr v-for="current in listParam" v-bind:key="current">
-                                <td>{{current.name}}</td>
-                                <td>{{current.measurementUnits}}</td>
-                                <td>{{Number(current.doubleMin).toFixed(4)}}</td>
-                                <td>{{Number(current.doubleMax).toFixed(4)}}</td>
-                                <td>{{Number(current.doubleNum).toFixed(4)}}</td>
-                                <td>{{current.author}}</td>
-                                <td>{{current.source}}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-
+        <div class="container shadow-lg   bg-white rounded" id="contParam" style="display: none">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="list-group">
+                        <tree
+                                class="item"
+                                :item="elements"
+                                :nav="elements.name"
+                                :choice-param="choiceParam"
+                                :space="''"
+                                :nowPressed=nowPressed
+                                @get-paramtrs="getParamtrs"
+                        ></tree>
                     </div>
                 </div>
+                <div class="col-md-9">
+                    <table class="table table-hover">
+                        <thead class="thead-light">
+                        <tr>
+                            <th>ім'я</th>
+                            <th>од. вим</th>
+                            <th>мін</th>
+                            <th>макс</th>
+                            <th>значення</th>
+                            <th>автор</th>
+                            <th>джерело</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="current in listParam" v-bind:key="current">
+                            <td>{{current.name}}</td>
+                            <td>{{current.measurementUnits}}</td>
+                            <td>{{Number(current.doubleMin).toFixed(4)}}</td>
+                            <td>{{Number(current.doubleMax).toFixed(4)}}</td>
+                            <td>{{Number(current.doubleNum).toFixed(4)}}</td>
+                            <td>{{current.author}}</td>
+                            <td>{{current.source}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
             </div>
+        </div>
 
 
         <!-- Modal -->
@@ -507,14 +507,14 @@
                 }).then(resp => {
                     this.elements = resp.data
                 });
-                document.getElementById('contParam').style.visibility='visible';
+                document.getElementById('contParam').style.display='block'
                 console.log(number)
             },
             //request for data about the auto engine
             async submitChanges(dat) {
                 if ((!Number.isInteger(Number(this.searchData.produceYear)) || (this.searchData.produceYear < 1885 || this.searchData.produceYear > 2020)) && !this.searchData.produceYear == 0) {
                     this.errorMessage = "Ви некоректно ввели рік";
-                  alert(111);
+                    alert(111);
                     document.getElementById('openModal').click();
                 } else {
                     await axios({
