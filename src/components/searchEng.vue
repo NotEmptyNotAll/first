@@ -128,7 +128,7 @@
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="engPowerKWt">потужність(kWt)</label>
                     </div>
-                    <input v-model="searchData.powerKWt" class="form-control" step="0.01" min="0" type="number"
+                    <input v-model="searchData.powerKWt" class="form-control"  type="text"
                            value=""
                            id="engPowerKWt"
                            placeholder="дані...">
