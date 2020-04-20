@@ -465,6 +465,7 @@
                         this.searchData.produceYear = resp.data.produceYear;
                         this.searchData.powerKWt = resp.data.powerKwt;
                         document.getElementById('engineType').value = resp.data.engineType;
+                        this.searchData.engineType=resp.data.engineType;
                         this.searchData.fuelType = resp.data.fuelType;
                         this.searchData.engineCapacity = resp.data.engineCapacity;
                     } else {
