@@ -24,7 +24,7 @@
                                 :label="current"/>
                     </datalist>
                     <div class="input-group-append">
-                        <button class="btn btn-outline-danger" onclick="document.getElementById('engineType').value =''"
+                        <button class="btn btn-outline-danger" onclick="document.getElementById('engineType').value =null"
                                 type="button" id="button-addon4">
                             <span>&#10008;</span>
                         </button>
@@ -47,7 +47,7 @@
                                 :label="current"/>
                     </datalist>
                     <div class="input-group-append">
-                        <button class="btn btn-outline-danger" onclick="document.getElementById('engNum').value =''"
+                        <button class="btn btn-outline-danger" onclick="document.getElementById('engNum').value =null"
                                 type="button" id="button-addon6">
                             <span>&#10008;</span>
                         </button>
@@ -68,7 +68,7 @@
                         </option>
                     </select>
                     <div class="input-group-append">
-                        <button class="btn btn-outline-danger" v-on:click="searchData.autoManufacturer=''"
+                        <button class="btn btn-outline-danger" v-on:click="searchData.autoManufacturer=null"
                                 type="button" id="button-addon3">
                             <span>&#10008;</span>
                         </button>
@@ -85,7 +85,7 @@
                         </option>
                     </select>
                     <div class="input-group-append">
-                        <button class="btn btn-outline-danger" v-on:click="searchData.autoModel=''" type="button"
+                        <button class="btn btn-outline-danger" v-on:click="searchData.autoModel=null" type="button"
                                 id="button-addon">
                             <span>&#10008;</span>
                         </button>
@@ -101,7 +101,7 @@
                         </option>
                     </select>
                     <div class="input-group-append">
-                        <button class="btn btn-outline-danger" v-on:click="searchData.fuelType=''" type="button"
+                        <button class="btn btn-outline-danger" v-on:click="searchData.fuelType=null" type="button"
                                 id="button-addon2">
                             <span>&#10008;</span>
                         </button>
@@ -118,7 +118,7 @@
                            type="number" value="" id="engCap"
                            placeholder="дані...">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-danger" v-on:click="searchData.engineCapacity=''"
+                        <button class="btn btn-outline-danger" v-on:click="searchData.engineCapacity=null"
                                 type="button" id="button-addon7">
                             <span>&#10008;</span>
                         </button>
@@ -133,7 +133,7 @@
                            id="engPowerKWt"
                            placeholder="дані...">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-danger" v-on:click="searchData.powerKWt=''"
+                        <button class="btn btn-outline-danger" v-on:click="searchData.powerKWt=null"
                                 type="button" id="button-addon8">
                             <span>&#10008;</span>
                         </button>
@@ -149,7 +149,7 @@
                            id="engY"
                            type="number" value="">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-danger" v-on:click="searchData.produceYear=''"
+                        <button class="btn btn-outline-danger" v-on:click="searchData.produceYear=null"
                                 type="button" id="button-addon9">
                             <span>&#10008;</span>
                         </button>
@@ -198,7 +198,7 @@
                                                 :label="current"/>
                                     </datalist>
                                     <div class="input-group-append">
-                                        <button class="btn btn-outline-danger" v-on:click="param.parameterName=''"
+                                        <button class="btn btn-outline-danger" v-on:click="param.parameterName=null"
                                                 type="button" id="button-addon11">
                                             <span>&#10008;</span>
                                         </button>
@@ -217,7 +217,7 @@
                                     </select>
                                     <div class="input-group-append">
                                         <button class="btn btn-outline-danger"
-                                                v-on:click="param.unitsFullName=''" type="button"
+                                                v-on:click="param.unitsFullName=null" type="button"
                                                 id="button-addon5">
                                             <span>&#10008;</span>
                                         </button>
@@ -379,7 +379,7 @@
             listParam: [],
             choiceParam: [],
             paramIndex: 1,
-            serviceApi: 'https://engservice.herokuapp.com/',
+            serviceApi: 'http://engservice.herokuapp.com/',
             elemParameters: [],
             errorMessage: '',
             paramNameAndUnits: [],
