@@ -379,7 +379,7 @@
             listParam: [],
             choiceParam: [],
             paramIndex: 1,
-            serviceApi: 'http://engservice.herokuapp.com/',
+            serviceApi: 'https://engservice.herokuapp.com/',
             elemParameters: [],
             errorMessage: '',
             paramNameAndUnits: [],
@@ -521,7 +521,6 @@
             async submitChanges(dat) {
                 if ((!Number.isInteger(Number(this.searchData.produceYear)) || (this.searchData.produceYear < 1885 || this.searchData.produceYear > 2020)) && !this.searchData.produceYear == 0) {
                     this.errorMessage = "Ви некоректно ввели рік";
-                    alert(111);
                     document.getElementById('openModal').click();
                 } else {
                     await axios({
