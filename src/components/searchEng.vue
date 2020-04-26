@@ -1,7 +1,10 @@
 <template>
+
     <div class="v-addNewItem">
+
         <div class="container shadow-lg p-3 mb-5 bg-white rounded" style="text-align: center">
             <h3>двигуни</h3>
+
 
             <br/>
             <!--fields for entering search data.
@@ -13,8 +16,7 @@
                         <label class="input-group-text" for="engineType">тип двигуна</label>
                     </div>
                     <input id="engineType"
-                           v-on:input="searchData.engineType = $event.target.value"
-
+                           v-model="searchData.engineType"
                            autocomplete="on" type="text"
                            class="form-control"
                            placeholder="дані..."
@@ -24,7 +26,8 @@
                                 :label="current"/>
                     </datalist>
                     <div class="input-group-append">
-                        <button class="btn btn-outline-danger" onclick="document.getElementById('engineType').value =null"
+                        <button class="btn btn-outline-danger"
+                                v-on:click="searchData.engineType=null"
                                 type="button" id="button-addon4">
                             <span>&#10008;</span>
                         </button>
@@ -128,7 +131,7 @@
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="engPowerKWt">потужність(kWt)</label>
                     </div>
-                    <input v-model="searchData.powerKWt" class="form-control"  type="text"
+                    <input v-model="searchData.powerKWt" class="form-control" type="text"
                            value=""
                            id="engPowerKWt"
                            placeholder="дані...">
@@ -283,7 +286,9 @@
                     <td>{{current.horsepower}}</td>
                     <td>{{Number(current.degreeCompression).toFixed(4)}}</td>
                     <td>{{current.superchargedType}}</td>
-                    <td>{{current.releaseYearFrom+'-'+current.releaseYearBy}}</td>
+                    <td v-if="current.releaseYearFrom!=null && current.releaseYearBy!=null">{{current.releaseYearFrom+'-'+current.releaseYearBy}}</td>
+                    <td v-if="current.releaseYearFrom!=null ">{{current.releaseYearFrom}}</td>
+                    <td v-if="current.releaseYearBy!=null">{{current.releaseYearFrom}}</td>
                 </tr>
                 </tbody>
             </table>
@@ -330,7 +335,6 @@
                         </tr>
                         </tbody>
                     </table>
-
                 </div>
             </div>
         </div>
@@ -379,7 +383,7 @@
             listParam: [],
             choiceParam: [],
             paramIndex: 1,
-            serviceApi: 'https://newenginedb.herokuapp.com/',
+            serviceApi: 'http://newenginedb.herokuapp.com/',
             elemParameters: [],
             errorMessage: '',
             paramNameAndUnits: [],
@@ -407,7 +411,8 @@
                 engineCapacity: null
             },
             choiceData: [],
-            test: null
+            test: null,
+            load: false
         }),
         //All requests will be transferred to the vuex for convenience.
         mounted() {
@@ -465,7 +470,7 @@
                         this.searchData.produceYear = resp.data.produceYear;
                         this.searchData.powerKWt = resp.data.powerKwt;
                         document.getElementById('engineType').value = resp.data.engineType;
-                        this.searchData.engineType=resp.data.engineType;
+                        this.searchData.engineType = resp.data.engineType;
                         this.searchData.fuelType = resp.data.fuelType;
                         this.searchData.engineCapacity = resp.data.engineCapacity;
                     } else {
@@ -519,6 +524,7 @@
             },
             //request for data about the auto engine
             async submitChanges(dat) {
+                this.load = true;
                 if ((!Number.isInteger(Number(this.searchData.produceYear)) || (this.searchData.produceYear < 1885 || this.searchData.produceYear > 2020)) && !this.searchData.produceYear == 0) {
                     this.errorMessage = "Ви некоректно ввели рік";
                     document.getElementById('openModal').click();
@@ -531,13 +537,19 @@
                     }).then(resp => {
                         if (resp.data.status == null) {
                             this.dataEng = resp.data
+                            if (this.dataEng[0]==null) {
+                                this.errorMessage = "в базі немає записів";
+                                document.getElementById('openModal').click();
+                            }
                         } else {
                             this.errorMessage = resp.data.status;
                             document.getElementById('openModal').click();
                         }
+
                     });
                     console.log(dat)
                 }
+                this.load = false;
             }
         }
     }
