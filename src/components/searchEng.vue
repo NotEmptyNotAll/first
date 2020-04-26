@@ -383,7 +383,7 @@
             listParam: [],
             choiceParam: [],
             paramIndex: 1,
-            serviceApi: 'http://newenginedb.herokuapp.com/',
+            serviceApi: 'https://newenginedb.herokuapp.com/',
             elemParameters: [],
             errorMessage: '',
             paramNameAndUnits: [],
