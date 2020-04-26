@@ -387,7 +387,7 @@
             listParam: [],
             choiceParam: [],
             paramIndex: 1,
-            serviceApi: 'http://localhost:5050/',
+            serviceApi: 'https://newenginedb.herokuapp.com/',
             elemParameters: [],
             errorMessage: '',
             paramNameAndUnits: [],
