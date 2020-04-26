@@ -379,7 +379,7 @@
             listParam: [],
             choiceParam: [],
             paramIndex: 1,
-            serviceApi: 'https://engservice.herokuapp.com/',
+            serviceApi: 'https://newenginedb.herokuapp.com/',
             elemParameters: [],
             errorMessage: '',
             paramNameAndUnits: [],
