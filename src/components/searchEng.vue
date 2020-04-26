@@ -292,6 +292,8 @@
                 </tr>
                 </tbody>
             </table>
+            <load v-if="load" style="position: absolute; right:40%; left:45%; bottom: 20%"></load>
+
         </div>
 
         <!--recursive tree of objects. Most likely it will look different-->
@@ -371,19 +373,21 @@
 
     import axios from "axios";
     import tree from "@/components/tree.vue";
+    import load from "./load";
 
     export default {
         name: "v-addNewItem",
 
         components: {
-            tree
+            tree,
+            load
         },
         data: () => ({
             paramtrs: [],
             listParam: [],
             choiceParam: [],
             paramIndex: 1,
-            serviceApi: 'https://newenginedb.herokuapp.com/',
+            serviceApi: 'http://localhost:5050/',
             elemParameters: [],
             errorMessage: '',
             paramNameAndUnits: [],
@@ -524,6 +528,9 @@
             },
             //request for data about the auto engine
             async submitChanges(dat) {
+                this.dataEng = [];
+                this.listParam = [];
+                this.elements = [];
                 this.load = true;
                 if ((!Number.isInteger(Number(this.searchData.produceYear)) || (this.searchData.produceYear < 1885 || this.searchData.produceYear > 2020)) && !this.searchData.produceYear == 0) {
                     this.errorMessage = "Ви некоректно ввели рік";
@@ -558,7 +565,7 @@
 
 <style>
     #contTable {
-        min-height: 20vh;
+        min-height: 25vh;
     }
 
     .row, .container {
