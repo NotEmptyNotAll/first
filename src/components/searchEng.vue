@@ -292,8 +292,7 @@
                 </tr>
                 </tbody>
             </table>
-            <load v-if="load" style="position: absolute; right:40%; left:45%; bottom: 20%"></load>
-
+            <load v-if="load"  style="position: absolute;left: 43%; right: 40%; bottom: 20%"></load>
         </div>
 
         <!--recursive tree of objects. Most likely it will look different-->
@@ -565,7 +564,7 @@
 
 <style>
     #contTable {
-        min-height: 25vh;
+        min-height: 20vh;
     }
 
     .row, .container {
