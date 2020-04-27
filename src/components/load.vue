@@ -1,11 +1,9 @@
 <template>
-<div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-
-</div>
+    <div>
+        <div id="escapingBallG">
+            <div id="escapingBall_1" class="escapingBallG"></div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -15,15 +13,9 @@
 
         name: "load-item",
         components: {},
-        props: {
-
-        },
-        computed: {
-
-        },
-        methods: {
-
-        },
+        props: {},
+        computed: {},
+        methods: {},
         watch: {},
         mounted() {
         }
@@ -33,51 +25,192 @@
 
 <style>
 
-    /* Balls */
-    div.circle {
-        border-radius: 50%;
-        background: #fff;
-        width: 13px;
-        height: 13px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-    }
-    /* First Ball */
-    div.circle:first-child {
-        animation: upload 0.8s cubic-bezier(0.39, 0.56, 0.57, 1) 0s infinite alternate-reverse;
-        background-color: #2d2a2a;
-        margin-right: 20px;
-    }
-    /* Second Ball */
-    div.circle:nth-child(2) {
-        animation: upload 1.3s cubic-bezier(0.39, 0.56, 0.57, 1) 0s infinite alternate-reverse;
-        background-color: #2d2a2a;
-        margin-right: 20px;
+    #escapingBallG{
+        position:relative;
+        width:125px;
+        height:25px;
+        margin:auto;
     }
 
-    /* Third Ball */
-    div.circle:nth-child(3) {
-        animation: upload 1.1s cubic-bezier(0.39, 0.56, 0.57, 1) 0s infinite alternate-reverse;
-        background-color: #2d2a2a;
-        margin-left: 20px;
+    .escapingBallG{
+        background-color:rgb(0,0,0);
+        position:absolute;
+        top:0;
+        left:0;
+        width:30px;
+        height:30px;
+        border-radius:21px;
+        -o-border-radius:21px;
+        -ms-border-radius:21px;
+        -webkit-border-radius:21px;
+        -moz-border-radius:21px;
+        animation-name:bounce_escapingBallG;
+        -o-animation-name:bounce_escapingBallG;
+        -ms-animation-name:bounce_escapingBallG;
+        -webkit-animation-name:bounce_escapingBallG;
+        -moz-animation-name:bounce_escapingBallG;
+        animation-duration:1.5s;
+        -o-animation-duration:1.5s;
+        -ms-animation-duration:1.5s;
+        -webkit-animation-duration:1.5s;
+        -moz-animation-duration:1.5s;
+        animation-iteration-count:infinite;
+        -o-animation-iteration-count:infinite;
+        -ms-animation-iteration-count:infinite;
+        -webkit-animation-iteration-count:infinite;
+        -moz-animation-iteration-count:infinite;
+        animation-timing-function:linear;
+        -o-animation-timing-function:linear;
+        -ms-animation-timing-function:linear;
+        -webkit-animation-timing-function:linear;
+        -moz-animation-timing-function:linear;
+        animation-delay:0s;
+        -o-animation-delay:0s;
+        -ms-animation-delay:0s;
+        -webkit-animation-delay:0s;
+        -moz-animation-delay:0s;
+        transform:scale(0.5, 1);
+        -o-transform:scale(0.5, 1);
+        -ms-transform:scale(0.5, 1);
+        -webkit-transform:scale(0.5, 1);
+        -moz-transform:scale(0.5, 1);
     }
-    /* Fourth Ball */
-    div.circle:last-child {
-        animation: upload 1.5s cubic-bezier(0.39, 0.56, 0.57, 1) 0s infinite alternate-reverse;
-        background-color: #2d2a2a;
-        margin-left: 20px;
+
+
+
+    @keyframes bounce_escapingBallG{
+        0%{
+            left:0px;
+            transform:scale(0.5, 1);
+        }
+
+        25%{
+            left:41px;
+            transform:scale(1, 0.5);
+        }
+
+        50%{
+            left:103px;
+            transform:scale(0.5, 1);
+        }
+
+        75%{
+            left:41px;
+            transform:scale(1, 0.5);
+        }
+
+        100%{
+            left:0px;
+            transform:scale(0.5, 1);
+        }
     }
-    /*--- Animation Keyframes ---*/
-    /*-- Page Upload --*/
-    @keyframes body-opacity-change {
-        from { opacity: 0; background-color: transparent; }
-        to { opacity: 1; background-color: #2d2a2a; }
+
+    @-o-keyframes bounce_escapingBallG{
+        0%{
+            left:0px;
+            -o-transform:scale(0.5, 1);
+        }
+
+        25%{
+            left:41px;
+            -o-transform:scale(1, 0.5);
+        }
+
+        50%{
+            left:103px;
+            -o-transform:scale(0.5, 1);
+        }
+
+        75%{
+            left:41px;
+            -o-transform:scale(1, 0.5);
+        }
+
+        100%{
+            left:0px;
+            -o-transform:scale(0.5, 1);
+        }
     }
-    /*-- Balls Animation --*/
-    @keyframes upload {
-        from { transform: translateY(35px); }
-        to { transform: translateY(-35px); }
+
+    @-ms-keyframes bounce_escapingBallG{
+        0%{
+            left:0px;
+            -ms-transform:scale(0.5, 1);
+        }
+
+        25%{
+            left:41px;
+            -ms-transform:scale(1, 0.5);
+        }
+
+        50%{
+            left:103px;
+            -ms-transform:scale(0.5, 1);
+        }
+
+        75%{
+            left:41px;
+            -ms-transform:scale(1, 0.5);
+        }
+
+        100%{
+            left:0px;
+            -ms-transform:scale(0.5, 1);
+        }
+    }
+
+    @-webkit-keyframes bounce_escapingBallG{
+        0%{
+            left:0px;
+            -webkit-transform:scale(0.5, 1);
+        }
+
+        25%{
+            left:41px;
+            -webkit-transform:scale(1, 0.5);
+        }
+
+        50%{
+            left:103px;
+            -webkit-transform:scale(0.5, 1);
+        }
+
+        75%{
+            left:41px;
+            -webkit-transform:scale(1, 0.5);
+        }
+
+        100%{
+            left:0px;
+            -webkit-transform:scale(0.5, 1);
+        }
+    }
+
+    @-moz-keyframes bounce_escapingBallG{
+        0%{
+            left:0px;
+            -moz-transform:scale(0.5, 1);
+        }
+
+        25%{
+            left:41px;
+            -moz-transform:scale(1, 0.5);
+        }
+
+        50%{
+            left:103px;
+            -moz-transform:scale(0.5, 1);
+        }
+
+        75%{
+            left:41px;
+            -moz-transform:scale(1, 0.5);
+        }
+
+        100%{
+            left:0px;
+            -moz-transform:scale(0.5, 1);
+        }
     }
 
 </style>
