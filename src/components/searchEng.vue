@@ -297,6 +297,7 @@
                     </td>
                     <td v-if="current.releaseYearFrom!=null ">{{current.releaseYearFrom}}</td>
                     <td v-if="current.releaseYearBy!=null">{{current.releaseYearFrom}}</td>
+                    <td v-if="current.releaseYearFrom==null && current.releaseYearBy==null"></td>
                 </tr>
                 </tbody>
             </table>
