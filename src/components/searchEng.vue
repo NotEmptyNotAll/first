@@ -2,7 +2,7 @@
 
     <div class="v-addNewItem">
 
-        <div class="container shadow-lg p-3 mb-5 bg-white rounded" style="text-align: center">
+        <div class="container shadow-lg p-3 mb-5 bg-white rounded" id="searchCont" style="text-align: center">
             <h3>двигуни</h3>
 
 
@@ -173,15 +173,19 @@
                 </div>
 
             </div>
-            <div class="row">
+            <div class="row" style="padding-bottom: 5px">
                 <div class="col col-md-12">
                     <button class="btn btn-outline-secondary" type="button" data-toggle="collapse"
                             v-on:click="getParamName(1)"
                             data-target="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch">
                         покращити пошук
                     </button>
+                </div>
+            </div>
+            <div class="row" style="padding-top: 0px;padding-bottom:0px ">
+                <div class="col col-md-12  ">
                     <div class="collapse " id="collapseSearch">
-                        <div class="card border-white card-body">
+                        <div class="card   border-white card-body" style="position: relative;right: 2%; ">
                             <!--here we enter data for an improved search, which the user measures-->
 
                             <div v-for="(param,index) in searchData.paramList" v-bind:key="param" class="row">
@@ -226,7 +230,7 @@
                                         </button>
                                     </div>
                                 </div>
-                                <div class="col col-md-2">
+                                <div class="col col-md-3">
                                     <input v-model="param.parameterNumber" class="form-control" type="number"
                                            value="" placeholder="Значення"
                                     >
@@ -234,7 +238,7 @@
 
                             </div>
                             <div class="row">
-                                <div class="col col-md-11">
+                                <div class="col col-md-12">
                                     <button class="btn form-control btn-block btn-outline-secondary" type="button"
                                             v-on:click="addParam(1)">
                                         додати елемент
@@ -243,9 +247,11 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
 
             </div>
+
         </div>
 
         <!--engine data table. By clicking on row m we open the engine tree, where we can find out its parameters-->
@@ -286,13 +292,15 @@
                     <td>{{current.horsepower}}</td>
                     <td>{{Number(current.degreeCompression).toFixed(4)}}</td>
                     <td>{{current.superchargedType}}</td>
-                    <td v-if="current.releaseYearFrom!=null && current.releaseYearBy!=null">{{current.releaseYearFrom+'-'+current.releaseYearBy}}</td>
+                    <td v-if="current.releaseYearFrom!=null && current.releaseYearBy!=null">
+                        {{current.releaseYearFrom+'-'+current.releaseYearBy}}
+                    </td>
                     <td v-if="current.releaseYearFrom!=null ">{{current.releaseYearFrom}}</td>
                     <td v-if="current.releaseYearBy!=null">{{current.releaseYearFrom}}</td>
                 </tr>
                 </tbody>
             </table>
-            <load v-if="load"  style="position: absolute;left: 43%; right: 40%; bottom: 20%"></load>
+            <load v-if="load" style="position: absolute;left: 43%; right: 40%; bottom: 20%"></load>
         </div>
 
         <!--recursive tree of objects. Most likely it will look different-->
@@ -498,10 +506,11 @@
                         this.listParam = resp.data;
                 });
 
-                console.log(number)
+                console.log(number);
             },
             //request for parameters
             async getParamName(number) {
+
                 await axios({
                     method: 'GET',
                     url: this.serviceApi + 'paramNameAndUnits',
@@ -510,10 +519,12 @@
                 }).then(resp => {
                     this.paramNameAndUnits = resp.data
                 });
-                console.log(number)
+                console.log(number);
             },
             //query to get a list of parameter names
             async getElements(number) {
+                this.listParam = [];
+                this.nowPressed.linkOnButt.isPressed = false;
                 await axios({
                     method: 'POST',
                     url: this.serviceApi + 'getElements',
@@ -527,6 +538,7 @@
             },
             //request for data about the auto engine
             async submitChanges(dat) {
+                document.getElementById('contParam').style.display = 'none';
                 this.dataEng = [];
                 this.listParam = [];
                 this.elements = [];
@@ -543,7 +555,7 @@
                     }).then(resp => {
                         if (resp.data.status == null) {
                             this.dataEng = resp.data
-                            if (this.dataEng[0]==null) {
+                            if (this.dataEng[0] == null) {
                                 this.errorMessage = "в базі немає записів";
                                 document.getElementById('openModal').click();
                             }
@@ -567,6 +579,7 @@
         min-height: 20vh;
     }
 
+
     .row, .container {
         padding: 20px;
         min-width: 95vw;
@@ -580,6 +593,7 @@
     .pad {
         padding: 0;
     }
+
 
     .container {
         margin-top: 10px;
