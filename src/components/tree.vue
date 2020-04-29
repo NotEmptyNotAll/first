@@ -2,15 +2,21 @@
 
     <ul>
         <li class="list-group-item border-white left"
-             :class="{bold: isFolder}"
+            :class="{bold: isFolder}"
             v-if="isFolder"
         >
             <span @click="toggle">
                 {{ space+item.name }}
                 <span v-if="isFolder">[{{ isOpen ? '-' : '+' }}]</span>
             </span>
-            <button type="button" v-if="!linkOnThisButt.isPressed" v-on:click="pressed" class="btn posLeft btn-success"  @click="getParamtrs(nav,item.id,linkOnThisButt)">&#x2b;</button>
-            <button type="button" v-if="linkOnThisButt.isPressed"  class="btn posLeft btn-secondary disabled" >&#x2b;</button>
+
+                <button type="button" v-if="!linkOnThisButt.isPressed && item.parametersIsExistInChild" v-on:click="pressed"
+                        class="btn posLeft btn-success" @click="getParamtrs(nav,item.id,linkOnThisButt)">&#x2b;
+                </button>
+                <button type="button" v-if="linkOnThisButt.isPressed && item.parametersIsExistInChild" class="btn posLeft btn-secondary disabled">
+                    &#x2b;
+                </button>
+
         </li>
         <ul class="list-group border-white left" v-show="isOpen" v-if="isFolder">
             <tree-item
@@ -36,8 +42,8 @@
         name: "tree-item",
         components: {},
         props: {
-            nowPressed:Object,
-            space:String,
+            nowPressed: Object,
+            space: String,
             item: Object,
             nav: String,
             choiceParam: Object
@@ -45,8 +51,8 @@
         data: function () {
             return {
                 isOpen: false,
-                linkOnThisButt:{
-                    isPressed:false
+                linkOnThisButt: {
+                    isPressed: false
                 }
             };
         },
@@ -56,12 +62,12 @@
             }
         },
         methods: {
-             getParamtrs(nav, number,link) {
-                 this.$emit("get-paramtrs", nav, number,link)
+            getParamtrs(nav, number, link) {
+                this.$emit("get-paramtrs", nav, number, link)
             },
-            pressed(){
-                if (! this.linkOnThisButt.isPressed) {
-                    this.linkOnThisButt.isPressed=true;
+            pressed() {
+                if (!this.linkOnThisButt.isPressed) {
+                    this.linkOnThisButt.isPressed = true;
                 }
 
             },
