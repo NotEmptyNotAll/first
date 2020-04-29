@@ -158,19 +158,19 @@
                         </button>
                     </div>
                 </div>
-
-                <div class="col input-group col-md-2">
-                    <button type="submit" @click="submitChanges('submit')"
-                            class="btn  btn-block btn-outline-primary">
-                        пошук
-                    </button>
-                </div>
                 <div class="col input-group col-md-2">
                     <button class="btn btn-block btn-outline-danger" v-on:click="clear"
                             type="button" id="button-addon10">
                         <span>очистити всі поля</span>
                     </button>
                 </div>
+                <div class="col input-group col-md-2">
+                    <button type="submit" @click="submitChanges('submit')"
+                            class="btn  btn-block btn-outline-primary">
+                        пошук
+                    </button>
+                </div>
+
 
             </div>
             <div class="row" style="padding-bottom: 5px">
@@ -188,54 +188,59 @@
                         <div class="card   border-white card-body" style="position: relative;right: 2%; ">
                             <!--here we enter data for an improved search, which the user measures-->
 
-                            <div v-for="(param,index) in searchData.paramList" v-bind:key="param" class="row">
-                                <div class="input-group col-md-5">
-                                    <div class="input-group-prepend">
-                                        <label class="input-group-text" :for="'param'+index">Параметр</label>
+                            <load v-if="loadParam" style="position: absolute;left: 43%; right: 40%; bottom: 20%"></load>
+                            <div v-if="!loadParam">
+
+                                <div v-for="(param,index) in searchData.paramList" v-bind:key="param" class="row">
+                                    <div class="input-group col-md-5">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" :for="'param'+index">Параметр</label>
+                                        </div>
+
+                                        <input list="listParam"
+                                               v-model="param.parameterName"
+                                               class="form-control"
+                                               :id="'param'+index"
+                                        >
+                                        <datalist id="listParam">
+                                            <option v-for="current in paramNameAndUnits.paramName" v-bind:key="current"
+                                                    :value="current"
+                                                    :label="current"/>
+                                        </datalist>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-danger" v-on:click="param.parameterName=null"
+                                                    type="button" id="button-addon11">
+                                                <span>&#10008;</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="input-group col-md-4">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="inputGroupSelect3">одиниця
+                                                виміру</label>
+                                        </div>
+                                        <select v-model="param.unitsFullName" aria-describedby="button-addon5"
+                                                id="inputGroupSelect3"
+                                                class="custom-select form-control">
+                                            <option v-for="current in paramNameAndUnits.units" v-bind:key="current">
+                                                {{current.fullName}}
+                                            </option>
+                                        </select>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-danger"
+                                                    v-on:click="param.unitsFullName=null" type="button"
+                                                    id="button-addon5">
+                                                <span>&#10008;</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col col-md-3">
+                                        <input v-model="param.parameterNumber" class="form-control" type="number"
+                                               value="" placeholder="Значення"
+                                        >
                                     </div>
 
-                                    <input list="listParam"
-                                           v-model="param.parameterName"
-                                           class="form-control"
-                                           :id="'param'+index"
-                                    >
-                                    <datalist id="listParam">
-                                        <option v-for="current in paramNameAndUnits.paramName" v-bind:key="current"
-                                                :value="current"
-                                                :label="current"/>
-                                    </datalist>
-                                    <div class="input-group-append">
-                                        <button class="btn btn-outline-danger" v-on:click="param.parameterName=null"
-                                                type="button" id="button-addon11">
-                                            <span>&#10008;</span>
-                                        </button>
-                                    </div>
                                 </div>
-                                <div class="input-group col-md-4">
-                                    <div class="input-group-prepend">
-                                        <label class="input-group-text" for="inputGroupSelect3">одиниця виміру</label>
-                                    </div>
-                                    <select v-model="param.unitsFullName" aria-describedby="button-addon5"
-                                            id="inputGroupSelect3"
-                                            class="custom-select form-control">
-                                        <option v-for="current in paramNameAndUnits.units" v-bind:key="current">
-                                            {{current.fullName}}
-                                        </option>
-                                    </select>
-                                    <div class="input-group-append">
-                                        <button class="btn btn-outline-danger"
-                                                v-on:click="param.unitsFullName=null" type="button"
-                                                id="button-addon5">
-                                            <span>&#10008;</span>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="col col-md-3">
-                                    <input v-model="param.parameterNumber" class="form-control" type="number"
-                                           value="" placeholder="Значення"
-                                    >
-                                </div>
-
                             </div>
                             <div class="row">
                                 <div class="col col-md-12">
@@ -395,7 +400,7 @@
             listParam: [],
             choiceParam: [],
             paramIndex: 1,
-            serviceApi: 'https://newenginedb.herokuapp.com/',
+            serviceApi: 'http://localhost:5050/',
             elemParameters: [],
             errorMessage: '',
             paramNameAndUnits: [],
@@ -424,6 +429,7 @@
             },
             choiceData: [],
             test: null,
+            loadParam: false,
             load: false
         }),
         //All requests will be transferred to the vuex for convenience.
