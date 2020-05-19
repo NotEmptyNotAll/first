@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div id="savePage">
+        <div id="savePage" v-if="currentUser">
             <div class="row mainRow">
                 <add-engine-data-panel class="col-md-12"
                                        :name-panel="$ml.get('word.engine')"
@@ -98,6 +98,9 @@
         },
         props: {},
         computed: {
+            currentUser() {
+                return this.$store.state.auth.user;
+            },
             ...mapGetters([
                 'STARTPARAM',
                 'LOAD_SAVE',
