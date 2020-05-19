@@ -26,6 +26,9 @@ export default {
     LOADPARAM(state) {
         return state.loadParam;
     },
+    LOAD_PARAM_FOR_TREE(state) {
+        return state.loadParamForTree;
+    },
     LISTNEWELEM(state) {
         return state.listNewElem;
     },

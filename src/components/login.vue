@@ -45,7 +45,7 @@
                 <div class="form-group login-pad">
                     <button class="btn btn-primary btn-block" :disabled="loading">
                         <span class="spinner-border spinner-border-sm" v-show="loading"></span>
-                        <span>Login</span>
+                        <span>{{$ml.get('word.loginOnButton')}}</span>
                     </button>
                 </div>
 

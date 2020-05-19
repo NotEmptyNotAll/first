@@ -61,6 +61,7 @@
                                 </tr>
                                 </tbody>
                             </table>
+                            <div v-if="LOAD_PARAM_FOR_TREE" class="lds-dual-ring" style="margin-left: 50%; margin-right: 50% "></div>
                         </div>
                     </div>
                 </div>
@@ -96,7 +97,8 @@
         computed: {
             ...mapGetters([
                 'LISTPARAM',
-                'ELEMENTS'
+                'ELEMENTS',
+                'LOAD_PARAM_FOR_TREE'
             ])
         },
         methods: {

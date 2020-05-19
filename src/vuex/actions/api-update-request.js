@@ -1,7 +1,7 @@
 import axios from "axios";
 
-let urlApi = 'https://newenginedb.herokuapp.com/update';
-//let urlApi = 'http://localhost:5050/update';
+//let urlApi = 'https://newenginedb.herokuapp.com/update';
+let urlApi = 'http://localhost:5050/update';
 
 export default {
     async UPDATE_ENGINE_MANUFACTURE({commit}, updateDataObj) {

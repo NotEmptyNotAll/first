@@ -2,7 +2,7 @@
     <div class="save-elem-tree-page">
         <div class="search-border container rad">
             <div class="search-logo">
-                <div class="deepshd " style="text-align: center"><h2>дерево</h2></div>
+                <div class="deepshd " style="text-align: center"><h2>{{$ml.get('word.tree')}}</h2></div>
             </div>
             <br/>
             <br/>
@@ -10,7 +10,7 @@
                 <div class="col-md-2"/>
                 <vue-datalist
                         class="col-md-4 "
-                        title-input="виберіть корінь для зміни"
+                        :title-input="$ml.get('word.changeRoot')"
                         :items="TREE_ROOT_NAMES"
                         :update-obj="updateDataObj"
                         index="id"
@@ -22,7 +22,7 @@
                             class="btn buttonanim btn-block btn-primary"
                             @click="getElements(1)"
                     >
-                        <span>обрати</span>
+                        <span>{{$ml.get('word.choose')}}</span>
                     </button>
                 </div>
                 <div class="col-md-2">

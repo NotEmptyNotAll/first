@@ -58,8 +58,11 @@ export default new MLCreate({
                 advancedSearch: "advanced search",
                 clearAllField: "clear all field",
                 parameter:'parameter',
-                deleteR:'delete'
-
+                deleteR:'delete',
+                changeRoot: 'select root to change',
+                tree:'tree',
+                loginOnButton:'login',
+                choose:'choose'
             },
             msg: {
                 passwordErr: 'password is required!',
@@ -119,7 +122,11 @@ export default new MLCreate({
                 advancedSearch: "улучшить поиск",
                 clearAllField: "очистить все поля",
                 parameter:'параметр',
-                deleteR:'удалить'
+                deleteR:'удалить',
+                changeRoot: "выберите корень для изменения",
+                tree:'дерево',
+                loginOnButton:'авторизоваться',
+                choose:'выбрать'
 
             },
             msg: {
@@ -180,7 +187,11 @@ export default new MLCreate({
                 advancedSearch: 'покращити пошук',
                 clearAllField: 'очистити всі поля',
                 parameter:'параметр',
-                deleteR:'видалити'
+                deleteR:'видалити',
+                changeRoot:'виберіть корінь для зміни',
+                tree:'дерево',
+                loginOnButton:'вхід',
+                choose:'вибрати'
 
             },
             msg: {

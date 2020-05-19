@@ -44,6 +44,9 @@ export default {
     SET_LOADPARAM: (state, loadParam) => {
         state.loadParam = loadParam;
     },
+    SET_LOAD_PARAM_FOR_TREE(state, loadParame) {
+        state.loadParamForTree = loadParame;
+    },
     SET_LOAD_UPDATE_PARAMETERS: (state, loadSave) => {
         state.loadUpdate.parameters = loadSave;
     },

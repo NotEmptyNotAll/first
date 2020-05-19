@@ -164,7 +164,6 @@
         position: absolute;
         left: 34%;
         background: white;
-        opacity: 95%;
         z-index: 999;
         padding: 0;
         margin: 0;
