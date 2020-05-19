@@ -1,0 +1,156 @@
+<template>
+    <div class="two-param-save-panel">
+        <div id="addData">
+            <div class="card  rad" id="mainContainer">
+                <br/>
+                <h4 class="deepshd" style="text-align: center">{{namePanel}}</h4>
+                <div class="panelBody">
+                    <navig>
+                        <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link active" :id="'nav-add-tab'+namePanel" data-toggle="tab"
+                               :href="'#nav-add'+namePanel"
+                               role="tab" :aria-controls="'nav-add'+namePanel" aria-selected="true">{{$ml.get('word.add')}}</a>
+                            <a class="nav-item nav-link" :id="'nav-update-tab'+namePanel" data-toggle="tab"
+                               :href="'#nav-update'+namePanel"
+                               role="tab" :aria-controls="'nav-update'+namePanel" aria-selected="false">{{$ml.get('word.update')}}</a>
+                            <a class="nav-item nav-link" :id="'nav-file-tab'+namePanel" data-toggle="tab"
+                               :href="'#nav-file'+namePanel"
+                               role="tab"
+                               :aria-controls="'nav-file'+namePanel" aria-selected="false">{{$ml.get('word.file')}}</a>
+                        </div>
+                    </navig>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class=" tab-pane fade show active" :id="'nav-add'+namePanel" role="tabpanel"
+                             :aria-labelledby="'nav-add-tab'+namePanel">
+                            <div class="input-group panelRow ">
+                                <input id="saveEngManufacture"
+                                       v-model="saveDataObj.saveData_primary"
+                                       type="text"
+                                       class="form-control col-md-8"
+                                       :placeholder="title_one"
+                                       aria-describedby="button-addon1">
+                                <input id="saveE"
+                                       v-model="saveDataObj.saveData_secondary"
+                                       type="text"
+                                       class="form-control col-md-4"
+                                       :placeholder="title_two"
+                                       aria-describedby="button-addon1">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-danger"
+                                            v-on:click="saveDataObj.saveData_primary=null"
+                                            @click="saveDataObj.saveData_secondary=null"
+                                            type="button">
+                                        <span>&#10008;</span>
+                                    </button>
+                                </div>
+                            </div>
+
+
+                            <div class="col input-group panelRow col-md-12">
+                                <button v-if="loadStatus" type="submit" @click="saveEngManufacture(1)"
+                                        class="btn  btn-block btn-success">
+                                    <span><div class="lds-dual-ring loadPos"></div></span>
+                                </button>
+
+                                <button v-else type="submit" @click="saveEngManufacture(1)"
+                                        class="btn buttonanim btn-block btn-success">
+                                    <span>{{$ml.get('word.save')}}</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class=" tab-pane fade" :id="'nav-update'+namePanel" role="tabpanel"
+                             :aria-labelledby="'nav-update-tab'+namePanel">
+                            <vue-datalist
+                                    class="panelRow"
+                                    title-input="дані для зміни"
+                                    :items="dataList"
+                                    :update-obj="updateDataObj"
+                                    index="objToBeChanged"
+                            />
+                            <div class="input-group panelRow">
+                                <input
+                                        v-model="updateDataObj.saveData_primary"
+                                        type="text"
+                                        class="form-control  col-md-8"
+                                        :placeholder="title_one"
+                                        aria-describedby="button-addon1">
+                                <input
+                                        v-model="updateDataObj.saveData_secondary"
+                                        type="text"
+                                        class="form-control  col-md-4"
+                                        :placeholder="title_two"
+                                        aria-describedby="button-addon1">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-danger"
+                                            v-on:click="updateDataObj.saveData_primary=null"
+                                            @click="updateDataObj.saveData_secondary=null"
+                                            type="button">
+                                        <span>&#10008;</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col input-group panelRow col-md-12">
+                                <button v-if="loadStatus" type="submit" @click="saveEngManufacture(1)"
+                                        class="btn  btn-block btn-success">
+                                    <span><div class="lds-dual-ring loadPos"></div></span>
+                                </button>
+
+                                <button v-else type="submit" @click="saveEngManufacture(1)"
+                                        class="btn buttonanim btn-block btn-success">
+                                    <span>{{$ml.get('word.update')}}</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" :id="'nav-file'+namePanel" role="tabpanel"
+                             :aria-labelledby="'nav-file-tab'+namePanel">
+                        </div>
+                    </div>
+                </div>
+                <br/>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+    import VueDatalist from "./vue-datalist";
+
+    export default {
+        name: "two-param-save-panel",
+        components: {VueDatalist},
+        data: () => ({
+            saveDataObj: {
+                saveData_primary: null,
+                saveData_secondary: null
+            },
+            updateDataObj: {
+                objToBeChanged: null,
+                saveData_primary: null,
+                saveData_secondary: null
+            }
+        }),
+        props: {
+            namePanel: String,
+            dataList: null,
+            loadStatus: null,
+            title_one: String,
+            title_two: String
+        },
+        computed: {},
+        methods: {
+            async saveEngManufacture(number) {
+                if (this.saveDataObj.saveData != null) {
+                    this.$emit("save-data-api", this.saveDataObj)
+                }
+                console.log(number)
+            }
+        },
+        watch: {},
+        mounted() {
+        }
+    }
+</script>
+
+<style scoped>
+
+</style>

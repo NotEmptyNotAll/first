@@ -1,0 +1,60 @@
+<template>
+    <div class="input-field">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <label class="input-group-text  text-white bg-dark" for="fuelTypeFk">
+                    {{nameInput}}
+                    <div v-if="loadStatus" class="lds-dual-ring"></div>
+                </label>
+            </div>
+            <input id="fuelTypeFk"
+                   v-model="saveParameters"
+                   autocomplete="on" type="text"
+                   class="form-control"
+                   :placeholder="$ml.get('word.data')"
+                   aria-describedby="button-addon1">
+            <div class="input-group-append">
+                <button class="btn btn-outline-danger"
+                        v-on:click="saveParameters=null"
+                        type="button">
+                    <span>&#10008;</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+</template>
+
+<script>
+    export default {
+        name: "input-field",
+        components: {},
+        data: () => ({
+            saveDataObj: {
+                saveData: null
+            }
+        }),
+        props: {
+            nameInput: String,
+            dataList: [],
+            loadStatus: null,
+            saveParameters: null
+        },
+        computed: {},
+        methods: {
+            async saveEngManufacture(number) {
+                if (this.saveDataObj.saveData != null) {
+                    this.$emit("save-data-api", this.saveDataObj)
+                }
+                console.log(number)
+            }
+        },
+        watch: {},
+        mounted() {
+        }
+    }
+</script>
+
+<style scoped>
+
+</style>

@@ -1,59 +1,88 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import axios from 'axios'
+
+import apiRequset from './actions/api-requests'
+import apiRequsetSave from './actions/api-save-requests'
+import apiRequsetUpdate from './actions/api-update-request'
+import getters from "./getters/getters";
+import mutations from "./mutations/mutations"
+import {auth} from './auth.module';
+const actions = {...apiRequset, ...apiRequsetSave, ...apiRequsetUpdate}
 
 Vue.use(Vuex);
-
 let store = new Vuex.Store({
+    modules: {
+        auth
+    },
     state: {
-        engData:[],
-        startParam:[]
-    },
-    mutations: {
-        SET_ENGDATA:(state,engData)=>{
-            state.engData=engData;
+        showLoad: false,
+        autoEngine: [],
+        autoEngineLoad: false,
+        loadTreeUpdate: false,
+        engData: [],
+        startParam: [],
+        listParam: [],
+        listNewElem: [],
+        elementsAndMaxId: null,
+        paramNameAndUnits: [],
+        elements: null,
+        treeRootNames: [],
+        loadParam: false,
+        allAdditionalData: [],
+        allAdditionalDataLoad: false,
+        loadSave: {
+            parameters: false,
+            measurementUnits: false,
+            cylinders: false,
+            parameterName: false,
+            engineManufacture: false,
+            autoManufacturer: false,
+            autoModel: false,
+            fuelType: false,
+            engine: false,
+            engineNumber: false,
+            automobileEngine: false,
+            elements: false,
+            superchargedType: false
         },
-        SET_STARTPARAM:(state,startParam)=>{
-            state.startParam=startParam;
-        }
-    },
-    actions: {
-         GET_PRODUCTS_FROM_API({commit}) {
-            return axios('http://localhost:5050/start', {
-            method:'GET'
-            })
-                .then((startParam) => {
-                    commit('SET_STARTPARAM', startParam.data)
-                    return startParam;
-                })
-                .catch((error) => {
-                    console.log(error);
-                    return error
-                })
+        updateDataObj: {
+            engineType: null,
+            engineManufacturerFk: null,
+            cylindersPlacementFk: null,
+            fuelTypeFk: null,
+            superchargedTypeFk: null,
+            cylindersNumber: null,
+            flapNumber: null,
+            pistonDiameter: null,
+            pistonStroke: null,
+            engineCapacity: null,
+            powerKwt: null,
+            degreeCompression: null,
+            releaseYearFrom: null,
+            releaseYearBy: null,
+            horsepower: null
         },
-        GET_AUTOENG({commit},dat) {
-            return axios.post('http://localhost:5050/show', {
-               body:dat.data
-            })
-                .then((engData) => {
-                    commit('SET_ENGDATA', engData.data)
-                    return engData
-                })
-                .catch((error) => {
-                    console.log(error)
-                    return error
-                })
-        }
-    },
-    getters: {
-        ENGDATA(state) {
-            return state.engData;
+        loadUpdate: {
+            parameters: false,
+            measurementUnits: false,
+            cylinders: false,
+            parameterName: false,
+            engineManufacture: false,
+            autoManufacturer: false,
+            autoModel: false,
+            fuelType: false,
+            engine: false,
+            engineNumber: false,
+            automobileEngine: false,
+            elements: false,
+            superchargedType: false
         },
-        STARTPARAM(state) {
-            return state.startParam;
-        }
-    }
-
+        saveStatus: null,
+        searchData: []
+    },
+    mutations,
+    actions,
+    getters
 });
 
 export default store;
