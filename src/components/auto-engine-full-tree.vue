@@ -29,6 +29,7 @@
                                         :choice-param="choiceParam"
                                         :space="''"
                                         :nowPressed=nowPressed
+                                        :show-edit-param="{show:true}"
                                         @get-paramtrs="getParamtrs"
                                 />
                             </div>

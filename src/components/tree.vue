@@ -170,8 +170,12 @@
                 console.log(number);
             },
             getParamtrs(nav, number, link) {
-                this.showEditParam.show=true;
+                if(this.showEditParam.show){
+
                 this.$emit("get-paramtrs", nav, number, link)
+                }else {
+                    this.showEditParam.show=true;
+                }
             },
             pressed() {
                 if (!this.linkOnThisButt.isPressed) {
