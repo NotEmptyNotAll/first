@@ -29,7 +29,7 @@
                                        class="form-control col-md-8"
                                        :placeholder="title_one"
                                        aria-describedby="button-addon1">
-                                <input id="saveE"
+                                <input  id="saveE"
                                        v-model="saveDataObj.saveData_secondary"
                                        type="text"
                                        class="form-control col-md-4"
@@ -62,7 +62,7 @@
                              :aria-labelledby="'nav-update-tab'+namePanel">
                             <vue-datalist
                                     class="panelRow"
-                                    title-input="дані для зміни"
+                                    :title-input="$ml.get('word.data')"
                                     :items="dataList"
                                     :update-obj="updateDataObj"
                                     index="objToBeChanged"
@@ -130,6 +130,8 @@
             }
         }),
         props: {
+            listParamTwo:null,
+            listParamOnSave:Boolean,
             namePanel: String,
             dataList: null,
             loadStatus: null,

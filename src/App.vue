@@ -141,6 +141,7 @@
         animation: lds-dual-ring 1.2s linear infinite;
     }
 
+
     .bg-dark {
         background: #272e38;
     }
@@ -158,6 +159,7 @@
             transform: rotate(360deg);
         }
     }
+
 
     .deepshd {
         color: #e0dfdc;

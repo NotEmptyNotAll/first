@@ -70,6 +70,7 @@
                 <save-data-panel class="col-md-3"
                                  :name-panel="$ml.get('word.engineNumber')"
                                  :load-status="LOAD_SAVE.engineNumber"
+                                 :data-list="ADDITIONAL_DATA.engineNumber"
                                  @save-data-api="SAVE_DATA_CYLINDERS"
                                  @update-data-api="UPDATE_DATA_CYLINDERS"
                 />

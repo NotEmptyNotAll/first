@@ -1,6 +1,6 @@
 import axios from "axios";
 
-let urlApi = 'https://newenginedb.herokuapp.com/save';
+let urlApi = 'https://newenginedb.herokuapp.com/save/';
 //let urlApi = 'http://localhost:5050/save/';
 
 export default {

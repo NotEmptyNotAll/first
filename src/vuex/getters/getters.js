@@ -29,6 +29,9 @@ export default {
     LOAD_PARAM_FOR_TREE(state) {
         return state.loadParamForTree;
     },
+    LOAD_SAVE_AUTOMOBILE_ENGINE(state){
+      return  state.loadSave.automobileEngine;
+    },
     LISTNEWELEM(state) {
         return state.listNewElem;
     },

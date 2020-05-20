@@ -81,7 +81,7 @@
                         <div class="row rowCenter">
                             <div class="col-md-4"></div>
                             <div class="col-md-4">
-                                <button v-if="loadStatus" type="submit"
+                                <button v-if="LOAD_SAVE_AUTOMOBILE_ENGINE" type="submit"
                                         class="btn  btn-block btn-success">
                                     <span><div class="lds-dual-ring loadPos"></div></span>
                                 </button>
@@ -257,19 +257,19 @@
                 'ADDITIONAL_DATA',
                 'AUTO_ENGINE_LOAD',
                 'AUTO_ENGINE',
+                'LOAD_SAVE_AUTOMOBILE_ENGINE'
 
             ])
         },
         methods: {
             ...mapActions([
                 'SAVE_DATA_AUTOMOBILE_ENGINE',
-                'GET_AUTOENG_BY_PARAM_UPDATE'
+                'GET_AUTOENG_BY_PARAM_UPDATE',
 
             ]),
             async saveEngManufacture(number) {
 
                     this.SAVE_DATA_AUTOMOBILE_ENGINE(this.saveDataObj)
-
                 console.log(number)
             },
             updateOldParam(current) {
