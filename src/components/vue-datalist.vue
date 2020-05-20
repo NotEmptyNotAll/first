@@ -172,7 +172,6 @@
         overflow: auto;
         width: 93%;
         top: 100%;
-        opacity: 95%;
     }
 
     .autocomplete-result {
