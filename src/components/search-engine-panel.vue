@@ -181,7 +181,7 @@
                 </button>
             </div>
             <div class="col input-group col-md-2">
-                <button class="btn btn-block btn-danger buttonanim" v-on:click="clear"
+                <button class="btn btn-block btn-danger buttonanim" v-on:click="clear(1)"
                         type="button" id="button-addon10">
                     <span>{{$ml.get('word.clearAllField')}}</span>
                 </button>
@@ -333,29 +333,25 @@
                 setElements: 'SET_ELEMENTS',
 
             }),
-            clear() {
-                document.getElementById('contParam').style.display = 'none'
-                this.searchData = {
+            clear(number) {
+                this.searchData= {
                     paramList: [{
                         parameterName: '',
                         unitsFullName: '',
                         parameterNumber: ''
                     }],
-                    engineType: null,
-                    autoManufacturer: null,
-                    autoModel: null,
-                    produceYear: null,
-                    numberEng: null,
-                    fuelType: null,
-                    powerKWt: null,
-                    engineCapacity: null
-                }
+                        engineType: null,
+                        autoManufacturer: null,
+                        autoModel: null,
+                        produceYear: null,
+                        numberEng: null,
+                        fuelType: null,
+                        powerKWt: null,
+                        engineCapacity: null
+                };
                 document.getElementById('engineType').value = ''
                 document.getElementById('engNum').value = ''
-                this.dataEng = []
-                this.listParam = []
-                this.elements = []
-                this.getEngDataByParam(1)
+                console.log(number)
             }
             ,
             addParam(number) {
@@ -446,5 +442,8 @@
 </script>
 
 <style>
-
+    .input-group-text{
+        background: #272e38;
+        color: #e0dfdc;
+    }
 </style>

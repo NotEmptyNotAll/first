@@ -89,6 +89,9 @@ export default {
     SET_LOAD_SAVE_MEASUREMENT_UNITS: (state, loadSave) => {
         state.loadSave.measurementUnits = loadSave;
     },
+    SET_LOAD_SAVE_PARAM_NAME: (state, loadSave) => {
+        state.loadSave.paramName = loadSave;
+    },
     SET_LOAD_SAVE_AUTOMOBILE_ENGINE: (state, loadSave) => {
         state.loadSave.automobileEngine = loadSave;
     },

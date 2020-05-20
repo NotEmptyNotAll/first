@@ -62,7 +62,7 @@
                                 </tr>
                                 </tbody>
                             </table>
-                            <div v-if="LOAD_PARAM_FOR_TREE" class="lds-dual-ring" style="margin-left: 50%; margin-right: 50% "></div>
+                            <div v-if="LOAD_PARAM_FOR_TREE" class="lds-dual-ring-black" style="margin-left: 50%; margin-right: 50% "></div>
                         </div>
                     </div>
                 </div>

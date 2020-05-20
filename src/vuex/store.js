@@ -33,6 +33,7 @@ let store = new Vuex.Store({
         allAdditionalData: [],
         allAdditionalDataLoad: false,
         loadSave: {
+            paramName:false,
             parameters: false,
             measurementUnits: false,
             cylinders: false,

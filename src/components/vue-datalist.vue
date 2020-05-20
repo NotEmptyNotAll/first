@@ -1,7 +1,7 @@
 <template>
     <div class="input-group ">
         <div v-if="!hideTitle" class="input-group-prepend ">
-            <label class="input-group-text  text-white bg-dark"
+            <label class="input-group-text   bg-dark"
                    :for="'vue-list-input'+titleInput"
             >
                 {{titleInput}}
@@ -25,19 +25,19 @@
                 v-show="isOpen"
                 class="autocomplete-results"
         >
-            <li
-                    class="loading"
-                    v-if="isLoading"
+            <li style="text-align: center"
+                class="loading"
+                v-if="isLoading"
             >
                 Loading results...
             </li>
-            <li
-                    v-else
-                    v-for="(result, i) in results"
-                    :key="i"
-                    @click="setResult(result)"
-                    class="autocomplete-result"
-                    :class="{ 'is-active': i === arrowCounter }"
+            <li style="text-align: center"
+                v-else
+                v-for="(result, i) in results"
+                :key="i"
+                @click="setResult(result)"
+                class="autocomplete-result"
+                :class="{ 'is-active': i === arrowCounter }"
             >
                 {{ result.data }}
             </li>
@@ -74,6 +74,7 @@
                 required: false,
                 default: false,
             },
+            tp: []
         },
 
         data() {
@@ -107,6 +108,7 @@
                 this.results = this.items.filter((item) => {
                     return item.data.toLowerCase().indexOf(this.search.toLowerCase()) > -1;
                 });
+
             },
             setResult(result) {
                 this.search = result.data;
@@ -162,16 +164,15 @@
     .autocomplete-results {
         color: #272e38;
         position: absolute;
-        left: 34%;
         background: white;
         z-index: 999;
         padding: 0;
-        margin: 0;
         border: 1px solid #eeeeee;
         height: 120px;
         overflow: auto;
-        width: 63%;
+        width: 93%;
         top: 100%;
+        opacity: 95%;
     }
 
     .autocomplete-result {

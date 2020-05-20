@@ -3,13 +3,15 @@
 
         <div class="card  rad" id="mainBigContainer">
             <br/>
-            <h4 class="deepshd" style="text-align: center">{{namePanel}}</h4>
+            <span v-if="LOAD_SAVE_AUTOMOBILE_ENGINE" ><div class="lds-dual-ring loadPos"></div></span>
+            <h4 v-if="!LOAD_SAVE_AUTOMOBILE_ENGINE" class="deepshd" style="text-align: center">{{namePanel}}</h4>
             <div class="panelBody">
                 <navig>
                     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                         <a class="nav-item nav-link active" :id="'nav-add-tab'+namePanel" data-toggle="tab"
                            :href="'#nav-add'+namePanel"
-                           role="tab" :aria-controls="'nav-add'+namePanel" aria-selected="true">{{$ml.get('word.add')}}</a>
+                           role="tab" :aria-controls="'nav-add'+namePanel"
+                           aria-selected="true">{{$ml.get('word.add')}}</a>
                         <a class="nav-item nav-link" :id="'nav-update-tab'+namePanel" data-toggle="tab"
                            :href="'#nav-update'+namePanel"
                            role="tab" :aria-controls="'nav-update'+namePanel" aria-selected="false">{{$ml.get('word.update')}}</a>
@@ -23,6 +25,13 @@
                     <div class=" tab-pane fade show active" :id="'nav-add'+namePanel" role="tabpanel"
                          :aria-labelledby="'nav-add-tab'+namePanel">
                         <div class="row rowCenter">
+                           <!-- <input-field
+                                    class="col-md-3"
+                                    :name-input="$ml.get('word.engineNumber')"
+                                    :save-parameters="saveDataEngParam"
+                                    index="saveData"
+
+                            />-->
                             <vue-datalist
                                     class="col-md-3"
                                     :title-input="$ml.get('word.engine')"
@@ -79,19 +88,19 @@
                             </div>
                         </div>
                         <div class="row rowCenter">
-                            <div class="col-md-4"></div>
-                            <div class="col-md-4">
+                            <div class="col-md-5"></div>
+                            <div class="col-md-2">
                                 <button v-if="LOAD_SAVE_AUTOMOBILE_ENGINE" type="submit"
                                         class="btn  btn-block btn-success">
                                     <span><div class="lds-dual-ring loadPos"></div></span>
                                 </button>
 
                                 <button v-else type="submit" @click="saveEngManufacture(1)"
-                                        class="btn buttonanim btn-block btn-success">
+                                        class="btn btn-outline-dark btn-block">
                                     <span>{{$ml.get('word.save')}}</span>
                                 </button>
                             </div>
-                            <div class="col-md-4"></div>
+                            <div class="col-md-2"></div>
                         </div>
                     </div>
                     <div class=" tab-pane fade" :id="'nav-update'+namePanel" role="tabpanel"
@@ -182,7 +191,7 @@
                         <div style="margin-left: 40%; width: 20%;margin-right: 40%;">
                             <button v-show="AUTO_ENGINE.length>0"
                                     type="submit"
-                                    class="btn buttonanim btn-block btn-success"
+                                    class="btn  btn-blockbtn-outline-dark"
                                     @click="updateListParam()"
                                     v-text="$ml.get('word.update')"
                             >
@@ -206,11 +215,15 @@
     import {mapGetters, mapActions} from "vuex";
     import SearchEnginePanel from "./search-engine-panel";
     import VueDatalist from "./vue-datalist";
+    //import InputField from "./input-field";
 
 
     export default {
-        components: {SearchEnginePanel, VueDatalist},
+        components: { SearchEnginePanel, VueDatalist},
         data: () => ({
+            saveDataEngParam: {
+                saveData: null
+            },
             updateListParam: [
                 {
                     id: 1,
@@ -265,11 +278,13 @@
             ...mapActions([
                 'SAVE_DATA_AUTOMOBILE_ENGINE',
                 'GET_AUTOENG_BY_PARAM_UPDATE',
+                'SAVE_DATA_ENGINE_NUMBER'
 
             ]),
             async saveEngManufacture(number) {
 
-                    this.SAVE_DATA_AUTOMOBILE_ENGINE(this.saveDataObj)
+                this.SAVE_DATA_AUTOMOBILE_ENGINE(this.saveDataObj);
+              //  this.SAVE_DATA_ENGINE_NUMBER(this.saveDataEngParam);
                 console.log(number)
             },
             updateOldParam(current) {

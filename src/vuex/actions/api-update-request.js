@@ -1,7 +1,7 @@
 import axios from "axios";
 
-let urlApi = 'https://newenginedb.herokuapp.com/update/';
-//let urlApi = 'http://localhost:5050/update/';
+//let urlApi = 'https://newenginedb.herokuapp.com/update/';
+let urlApi = 'http://localhost:5050/update/';
 
 export default {
     async UPDATE_ENGINE_MANUFACTURE({commit}, updateDataObj) {
@@ -37,6 +37,24 @@ export default {
             .catch((error) => {
                 console.log(error);
                 commit('SET_LOAD_UPDATE_AUTO_MODEL', false);
+                return error
+            })
+    },
+    async UPDATE_PARAM_NAME({commit}, saveDataObj) {
+        commit('SET_LOAD_SAVE_PARAM_NAME', true);
+        return await axios({
+            method: 'POST',
+            url: urlApi + 'updateParameterName',
+            data: saveDataObj,
+            responseType: 'json'
+        }).then(resp => {
+            commit('SET_SAVE_STATUS', resp.data)
+            commit('SET_LOAD_SAVE_PARAM_NAME', false);
+            return resp;
+        })
+            .catch((error) => {
+                console.log(error);
+                commit('SET_LOAD_SAVE_PARAM_NAME', false);
                 return error
             })
     },

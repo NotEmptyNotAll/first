@@ -1,7 +1,7 @@
 import axios from "axios";
 
-let urlApi = 'https://newenginedb.herokuapp.com/';
-//let urlApi = 'http://localhost:5050/';
+//let urlApi = 'https://newenginedb.herokuapp.com/';
+let urlApi = 'http://localhost:5050/';
 
 export default {
     GET_START_PARAM({commit}) {

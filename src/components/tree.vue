@@ -1,10 +1,10 @@
 <template>
 
     <ul>
-        <li class="list-group-item border-white left"
+        <li class="border-white list-group-item   left"
             :class="{bold: isFolder}"
             v-if="isFolder"
-            style="position: relative; width: 24vw;padding: 0px"
+            style="position: relative; width: 24vw;padding: 0px;"
         >
             <div class="row" style="min-width: 22vw;max-width: 22vw; padding: 15px">
                 <div class="col-md-8">
@@ -13,7 +13,6 @@
                 <span v-if="isFolder">[{{ isOpen ? '-' : '+' }}]</span>
             </span>
                 </div>
-
                 <inputList
                         class="col-md-8"
                         v-show="item.name===''"
@@ -24,8 +23,6 @@
                         index="paramNameFk"
                         :hide-title="true"
                 />
-
-
                 <div class="col-md-4">
                     <button v-show="item.name===''"
                             type="button"
@@ -34,12 +31,12 @@
                     >
                         <span>&#10004;</span>
                     </button>
-
-                    <div class=" btn-group pos-left"  >
+                    <div class=" btn-group pos-left">
                         <button v-show="changeMod==='off'" type="button"
                                 v-if=" !linkOnThisButt.isPressed && item.parametersIsExistInChild"
                                 v-on:click="pressed"
-                                class="btn posLeft  btn-posit btn-success" @click="getParamtrs(nav,item.id,linkOnThisButt)">
+                                class="btn posLeft  btn-posit btn-success"
+                                @click="getParamtrs(nav,item.id,linkOnThisButt)">
                             <span>&#x2b;</span>
                         </button>
                         <button v-show="changeMod==='off'" type="button"
@@ -48,7 +45,10 @@
                             <span>&#x2b;</span>
                         </button>
                     </div>
+
+
                     <div class=" btn-group pos-left" v-show="item.name!=''" role="group">
+
 
                         <button v-show="changeMod==='on'" type="button " v-if=" !linkOnThisButt.isPressed "
                                 v-on:click="pressed"
@@ -99,7 +99,7 @@
             inputList
         },
         props: {
-            showEditParam:Boolean,
+            showEditParam: Boolean,
             idParentElem: null,
             changeMod: String,
             nowPressed: Object,
@@ -141,7 +141,7 @@
                 setMaxId: 'SET_MAX_ID'
             }),
             addElement: function (number) {
-                this.isOpen=true;
+                this.isOpen = true;
                 this.item.elementsCh.push({
                         id: this.ELEMENTS_AND_MAX_ID.maxId,
                         elementsCh: [{
@@ -170,11 +170,11 @@
                 console.log(number);
             },
             getParamtrs(nav, number, link) {
-                if(this.showEditParam.show){
+                if (this.showEditParam.show) {
 
-                this.$emit("get-paramtrs", nav, number, link)
-                }else {
-                    this.showEditParam.show=true;
+                    this.$emit("get-paramtrs", nav, number, link)
+                } else {
+                    this.showEditParam.show = true;
                 }
             },
             pressed() {
@@ -199,14 +199,15 @@
 
 <style>
 
-    .btn-posit{
+    .btn-posit {
         position: absolute;
         right: 1vw;
     }
+
     .pos-left {
         position: absolute;
         right: 0px;
-        bottom: 1vh;
+        bottom: 0.3vh;
     }
 
 
@@ -239,6 +240,7 @@
         bottom: 5px;
         top: 2.1vh;
     }
+
 
 
 </style>

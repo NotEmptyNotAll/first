@@ -3,7 +3,9 @@
         <div id="addData">
             <div class="card  rad" id="mainContainer">
                 <br/>
-                <h4 class="deepshd" style="text-align: center">{{namePanel}}</h4>
+                <span v-if="loadStatus"  ><div class="lds-dual-ring loadPos"></div></span>
+
+                <h4  v-if="!loadStatus" class="deepshd" style="text-align: center">{{namePanel}}</h4>
                 <div class="panelBody">
                     <navig>
                         <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
@@ -47,13 +49,8 @@
 
 
                             <div class="col input-group panelRow col-md-12">
-                                <button v-if="loadStatus" type="submit" @click="saveEngManufacture(1)"
-                                        class="btn  btn-block btn-success">
-                                    <span><div class="lds-dual-ring loadPos"></div></span>
-                                </button>
-
-                                <button v-else type="submit" @click="saveEngManufacture(1)"
-                                        class="btn buttonanim btn-block btn-success">
+                                <button  type="submit" @click="saveEngManufacture(1)"
+                                        class="btn btn-outline-dark btn-block ">
                                     <span>{{$ml.get('word.save')}}</span>
                                 </button>
                             </div>
@@ -66,6 +63,8 @@
                                     :items="dataList"
                                     :update-obj="updateDataObj"
                                     index="objToBeChanged"
+                                    :hide-title="true"
+
                             />
                             <div class="input-group panelRow">
                                 <input
@@ -90,13 +89,9 @@
                                 </div>
                             </div>
                             <div class="col input-group panelRow col-md-12">
-                                <button v-if="loadStatus" type="submit" @click="saveEngManufacture(1)"
-                                        class="btn  btn-block btn-success">
-                                    <span><div class="lds-dual-ring loadPos"></div></span>
-                                </button>
 
-                                <button v-else type="submit" @click="saveEngManufacture(1)"
-                                        class="btn buttonanim btn-block btn-success">
+                                <button  type="submit" @click="update(1)"
+                                        class="btn  btn-block btn-outline-dark">
                                     <span>{{$ml.get('word.update')}}</span>
                                 </button>
                             </div>
@@ -141,8 +136,14 @@
         computed: {},
         methods: {
             async saveEngManufacture(number) {
-                if (this.saveDataObj.saveData != null) {
+                if (this.saveDataObj.saveData_primary != null) {
                     this.$emit("save-data-api", this.saveDataObj)
+                }
+                console.log(number)
+            },
+            async update(number) {
+                if (this.saveDataObj.saveData_primary != null) {
+                    this.$emit("update-data-api", this.updateDataObj)
                 }
                 console.log(number)
             }

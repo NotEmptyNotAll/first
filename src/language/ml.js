@@ -62,7 +62,9 @@ export default new MLCreate({
                 changeRoot: 'select root to change',
                 tree: 'tree',
                 loginOnButton: 'login',
-                choose: 'choose'
+                choose: 'choose',
+                title: 'name',
+                mark: 'mark'
             },
             msg: {
                 passwordErr: 'password is required!',
@@ -132,7 +134,10 @@ export default new MLCreate({
                 changeRoot: "выберите корень для изменения",
                 tree: 'дерево',
                 loginOnButton: 'авторизоваться',
-                choose: 'выбрать'
+                choose: 'выбрать',
+                title: 'название',
+                mark: "Обозначение"
+
 
             },
             msg: {
@@ -203,7 +208,10 @@ export default new MLCreate({
                 changeRoot: 'виберіть корінь для зміни',
                 tree: 'дерево',
                 loginOnButton: 'вхід',
-                choose: 'вибрати'
+                choose: 'вибрати',
+                title:'назва',
+                mark:'Позначення'
+
 
             },
             msg: {

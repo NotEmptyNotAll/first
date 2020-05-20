@@ -14,7 +14,7 @@
         </div>
         <!--engine data table. By clicking on row m we open the engine tree, where we can find out its parameters-->
         <div class="container tab  search-border bg-white rad" id="contTable" style="position: relative; ">
-            <table class="table search-tab table-hover">
+            <table class="table search-tab table-hover" >
                 <thead class="thead-light-dark ">
                 <tr>
                     <th>{{$ml.get('word.engine')}}</th>
@@ -59,7 +59,7 @@
                 </tr>
                 </tbody>
             </table>
-            <div v-if="SHOW_LOAD" class="lds-dual-ring" style="margin-left: 50%; margin-right: 50% ;top: -1vw"></div>
+            <div v-if="SHOW_LOAD" class="lds-dual-ring-black" style="margin-left: 50%; margin-right: 50% ;top: -1vw"></div>
         </div>
 
         <!--recursive tree of objects. Most likely it will look different-->
@@ -160,31 +160,6 @@
                 'GET_AUTOENG_BY_PARAM'
             ]),
 
-            clear() {
-                document.getElementById('contParam').style.display = 'none'
-                this.searchData = {
-                    paramList: [{
-                        parameterName: '',
-                        unitsFullName: '',
-                        parameterNumber: ''
-                    }],
-                    engineType: null,
-                    autoManufacturer: null,
-                    autoModel: null,
-                    produceYear: null,
-                    numberEng: null,
-                    fuelType: null,
-                    powerKWt: null,
-                    engineCapacity: null
-                }
-                document.getElementById('engineType').value = ''
-                document.getElementById('engNum').value = ''
-                this.dataEng = []
-                this.listParam = []
-                this.elements = []
-                this.getEngDataByParam(1)
-            }
-            ,
             addParam(number) {
                 this.searchData.paramList.push({
                     parameterName: '',
@@ -381,10 +356,11 @@
     }
 
     .search-tab {
+        text-align: center;
+        horiz-align: center;
+        min-width: 94%;
         position: relative;
-        top: -35px;
-        left: 3%;
-        width: 94%;
+        top: -32px;
         border: 1px solid black; /* Рамка вокруг таблицы */
     }
 

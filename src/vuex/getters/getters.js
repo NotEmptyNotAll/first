@@ -50,6 +50,9 @@ export default {
     LOAD_SAVE: (state) => {
         return state.loadSave;
     },
+    LOAD_SAVE_PARAM_NAME: (state, ) => {
+       return  state.loadSave.paramName;
+    },
     LOAD_UPLOAD: (state) => {
         return state.loadUpdate;
     },

@@ -1,7 +1,7 @@
 <template>
     <div id="error-page">
 
-        <div class="error-content  ">
+        <div class="error-content  " >
 
             <div class="container search-border rad">
                 <div class="err-logo">

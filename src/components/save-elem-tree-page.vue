@@ -42,7 +42,7 @@
                 </div>
                 <hr style="color: lightgray; position: center; width: 90%"/>
                 <br/>
-                <div v-if="LOAD_TREE_UPDATE" class="lds-dual-ring" style="margin-left: 50%; margin-right: 50% "></div>
+                <div v-if="LOAD_TREE_UPDATE" class="lds-dual-ring-black" style="margin-left: 50%; margin-right: 50% "></div>
                 <div v-show="ELEMENTS_AND_MAX_ID!=null" class="row rowCenter">
                     <div class="col-md-3">
                         <div class="list-group" v-if="ELEMENTS_AND_MAX_ID!=null">

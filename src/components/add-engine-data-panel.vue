@@ -3,7 +3,8 @@
 
         <div class="card   rad" id="mainBigContainer">
             <br/>
-            <h4 class="deepshd" style="text-align: center">{{namePanel}}</h4>
+            <h4 v-if="!loadStatus" class="deepshd" style="text-align: center">{{namePanel}}</h4>
+            <span v-if="loadStatus" ><div class="lds-dual-ring loadPos"></div></span>
             <div class="panelBody">
                 <navig>
                     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
@@ -139,20 +140,18 @@
                             </div>
                         </div>
                         <div class="row rowCenter">
-                            <div class="col-md-4"></div>
-                            <div class="col-md-4">
-                                <button v-if="loadStatus"
-                                        class="btn  btn-block btn-success">
-                                    <span><div class="lds-dual-ring loadPos"></div></span>
-                                </button>
+                            <div class="col-md-5">
 
-                                <button v-else type="submit" @click="saveEngManufacture(1)"
-                                        class="btn buttonanim btn-block btn-success">
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" @click="saveEngManufacture(1)"
+                                        class="btn btn-outline-dark btn-block ">
                                     <span>{{$ml.get('word.save')}}</span>
                                 </button>
                             </div>
-                            <div class="col-md-4"></div>
+                            <div class="col-md-5"></div>
                         </div>
+
                     </div>
                     <div class=" tab-pane fade" :id="'nav-update'+namePanel" role="tabpanel"
                          :aria-labelledby="'nav-update-tab'+namePanel">
@@ -167,13 +166,9 @@
                                     :show-title="false"
                             />
                             <div class="col-md-3">
-                                <button v-if="loadStatus" type="submit" @click="saveEngManufacture(1)"
-                                        class="btn  btn-block btn-success">
-                                    <span><div class="lds-dual-ring loadPos"></div></span>
-                                </button>
 
-                                <button v-else type="submit" @click="saveEngManufacture(1)"
-                                        class="btn buttonanim btn-block btn-success">
+                                <button v- type="submit" @click="saveEngManufacture(1)"
+                                        class="btn  btn-block btn-outline-dark">
                                     <span>{{$ml.get('word.update')}}</span>
                                 </button>
                             </div>

@@ -136,11 +136,28 @@
         height: 30px;
         margin: 8px;
         border-radius: 50%;
-        border: 6px solid black;
-        border-color: black transparent black transparent;
+        border: 6px solid #e0dfdc;
+        border-color: #e0dfdc transparent #e0dfdc transparent;
         animation: lds-dual-ring 1.2s linear infinite;
     }
 
+    .lds-dual-ring-black {
+        display: inline-block;
+        width: 35px;
+        height: 47px;
+    }
+
+    .lds-dual-ring-black:after {
+        content: " ";
+        display: block;
+        width: 30px;
+        height: 30px;
+        margin: 8px;
+        border-radius: 50%;
+        border: 6px solid #272e38;
+        border-color: #272e38 transparent  #272e38 transparent;
+        animation: lds-dual-ring 1.2s linear infinite;
+    }
 
     .bg-dark {
         background: #272e38;

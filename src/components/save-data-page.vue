@@ -4,81 +4,96 @@
                 v-if="!currentUser"
         />
         <div id="savePage" v-if="currentUser">
-            <div class="row mainRow" >
-                <add-engine-data-panel class="col-md-12"
-                                       :name-panel="$ml.get('word.engine')"
-                                       :load-status="LOAD_SAVE.engine"
-                                       @save-data-api="SAVE_DATA_ENGINE"
-                                       @update-data-api="UPDATE_DATA_ENGINE"
+            <div class="row mainRow">
+                <add-engine-data-panel
+                        class="col-md-12"
+                        :name-panel="$ml.get('word.engine')"
+                        :load-status="LOAD_SAVE.engine"
+                        @save-data-api="SAVE_DATA_ENGINE"
+                        @update-data-api="UPDATE_DATA_ENGINE"
                 />
             </div>
             <div class="row mainRow">
-                <save-data-panel class="col-md-3"
-                                 :name-panel="$ml.get('word.cylinders')"
-                                 :load-status="LOAD_SAVE.cylinders"
-                                 :data-list="ADDITIONAL_DATA.cylinders"
-                                 @save-data-api="SAVE_DATA_CYLINDERS"
-                                 @update-data-api="UPDATE_DATA_CYLINDERS"
+                <save-data-panel
+                        class="col-md-3"
+                        :name-panel="$ml.get('word.cylinders')"
+                        :load-status="LOAD_SAVE.cylinders"
+                        :data-list="ADDITIONAL_DATA.cylinders"
+                        @save-data-api="SAVE_DATA_CYLINDERS"
+                        @update-data-api="UPDATE_DATA_CYLINDERS"
                 />
-                <save-data-panel class="col-md-3"
-                                 :name-panel="$ml.get('word.fuelType')"
-                                 :load-status="LOAD_SAVE.fuelType"
-                                 :data-list="ADDITIONAL_DATA.fuelType"
-                                 @save-data-api="SAVE_DATA_FUEL_TYPE"
-                                 @update-data-api="UPDATE_DATA_FUEL_TYPE"
+                <save-data-panel
+                        class="col-md-3"
+                        :name-panel="$ml.get('word.fuelType')"
+                        :load-status="LOAD_SAVE.fuelType"
+                        :data-list="ADDITIONAL_DATA.fuelType"
+                        @save-data-api="SAVE_DATA_FUEL_TYPE"
+                        @update-data-api="UPDATE_DATA_FUEL_TYPE"
                 />
 
-                <two-param-save-panel class="col-md-3"
-                                      :name-panel="$ml.get('word.superchargedType')"
-                                      title_one="Назва"
-                                      title_two="Позначення"
-                                      :data-list="ADDITIONAL_DATA.superchargeType"
-                                      :load-status="LOAD_SAVE.superchargedType"
-                                      @save-data-api="SAVE_DATA_SUPERCHARGE_TYPE"
-                                      @update-data-api="UPDATE_DATA_SUPERCHARGE_TYPE"
+                <two-param-save-panel
+                        class="col-md-3"
+                        :name-panel="$ml.get('word.superchargedType')"
+                        :title_one="$ml.get('word.title')"
+                        :title_two="$ml.get('word.mark')"
+                        :data-list="ADDITIONAL_DATA.superchargeType"
+                        :load-status="LOAD_SAVE.superchargedType"
+                        @save-data-api="SAVE_DATA_SUPERCHARGE_TYPE"
+                        @update-data-api="UPDATE_DATA_SUPERCHARGE_TYPE"
                 />
-                <save-data-panel class="col-md-3"
-                                 :name-panel="$ml.get('word.engineManufacture')"
-                                 :data-list="ADDITIONAL_DATA.engineManufacture"
-                                 :load-status="LOAD_SAVE.engineManufacture"
-                                 @save-data-api="SAVE_ENGINE_MANUFACTURE"
-                                 @update-data-api="UPDATE_ENGINE_MANUFACTURE"
+                <save-data-panel
+                        class="col-md-3"
+                        :name-panel="$ml.get('word.engineManufacture')"
+                        :data-list="ADDITIONAL_DATA.engineManufacture"
+                        :load-status="LOAD_SAVE.engineManufacture"
+                        @save-data-api="SAVE_ENGINE_MANUFACTURE"
+                        @update-data-api="UPDATE_ENGINE_MANUFACTURE"
                 />
 
             </div>
             <div class="row mainRow">
-                <add-auto-engine-data-panel class="col-md-12"
-                                            :name-panel="$ml.get('word.autoEngine')"
-                                            :load-status="LOAD_SAVE.engine"
+                <add-auto-engine-data-panel
+                        class="col-md-12"
+                        :name-panel="$ml.get('word.autoEngine')"
+                        :load-status="LOAD_SAVE.engine"
                 />
             </div>
             <div class="row mainRow">
-                <save-data-panel class="col-md-3"
-                                 :name-panel="$ml.get('word.autoManufacturer')"
-                                 :data-list="ADDITIONAL_DATA.autoManufacture"
-                                 :load-status="LOAD_SAVE.autoManufacturer"
-                                 @save-data-api="SAVE_DATA_AUTO_MANUFACTURE"
-                                 @update-data-api="UPDATE_DATA_AUTO_MANUFACTURE"
+                <save-data-panel
+                        class="col-md-3"
+                        :name-panel="$ml.get('word.autoManufacturer')"
+                        :data-list="ADDITIONAL_DATA.autoManufacture"
+                        :load-status="LOAD_SAVE.autoManufacturer"
+                        @save-data-api="SAVE_DATA_AUTO_MANUFACTURE"
+                        @update-data-api="UPDATE_DATA_AUTO_MANUFACTURE"
                 />
-                <save-data-panel class="col-md-3"
-                                 :name-panel="$ml.get('word.autoModel')"
-                                 :load-status="LOAD_SAVE.autoModel"
-                                 :data-list="ADDITIONAL_DATA.autoModel"
-                                 @save-data-api="SAVE_DATA_AUTO_MODEL"
-                                 @update-data-api="UPDATE_DATA_AUTO_MODEL"
+                <save-data-panel
+                        class="col-md-3"
+                        :name-panel="$ml.get('word.autoModel')"
+                        :load-status="LOAD_SAVE.autoModel"
+                        :data-list="ADDITIONAL_DATA.autoModel"
+                        @save-data-api="SAVE_DATA_AUTO_MODEL"
+                        @update-data-api="UPDATE_DATA_AUTO_MODEL"
                 />
-                <save-data-panel class="col-md-3"
-                                 :name-panel="$ml.get('word.engineNumber')"
-                                 :load-status="LOAD_SAVE.engineNumber"
-                                 :data-list="ADDITIONAL_DATA.engineNumber"
-                                 @save-data-api="SAVE_DATA_CYLINDERS"
-                                 @update-data-api="UPDATE_DATA_CYLINDERS"
+                <two-param-save-panel
+                        class="col-md-3"
+                        :name-panel="$ml.get('word.units')"
+                        :title_one="$ml.get('word.title')"
+                        :title_two="$ml.get('word.mark')"
+                        :data-list="ADDITIONAL_DATA.units"
+                        :load-status="LOAD_SAVE.measurementUnits"
+                        @save-data-api="SAVE_DATA_MEASUREMENT_UNITS"
+                        @update-data-api="UPDATE_DATA_MEASUREMENT_UNITS"
                 />
-                <save-data-panel class="col-md-3"
-                                 :name-panel="$ml.get('word.nameElements')"
-                                 :load-status="LOAD_SAVE.parameterName"
-                                 @save-data-api="SAVE_DATA_CYLINDERS"
-                                 @update-data-api="UPDATE_DATA_CYLINDERS"
+                <two-param-save-panel
+                        class="col-md-3"
+                        :title_one="$ml.get('word.title')"
+                        :title_two="$ml.get('word.mark')"
+                        :name-panel="$ml.get('word.nameElements')"
+                        :data-list="ADDITIONAL_DATA.parameterName"
+                        :load-status="LOAD_SAVE.parameterName"
+                        @save-data-api="SAVE_PARAM_NAME"
+                        @update-data-api="UPDATE_PARAM_NAME"
                 />
             </div>
         </div>
@@ -145,6 +160,8 @@
                 'UPDATE_DATA_AUTO_MANUFACTURE',
                 'UPDATE_DATA_CYLINDERS',
                 'UPDATE_DATA_SUPERCHARGE_TYPE',
+                'SAVE_PARAM_NAME',
+                'UPDATE_PARAM_NAME'
             ]),
         },
         watch: {},
@@ -158,6 +175,8 @@
 
 
 <style>
+
+
     .card {
         transition: 0.5s;
     }
