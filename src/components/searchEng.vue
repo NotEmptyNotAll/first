@@ -59,7 +59,7 @@
                 </tr>
                 </tbody>
             </table>
-            <div v-if="SHOW_LOAD" class="lds-dual-ring" style="margin-left: 50%; margin-right: 50% ;top:3vh"></div>
+            <div v-if="SHOW_LOAD" class="lds-dual-ring" style="margin-left: 50%; margin-right: 50% ;top: -1vw"></div>
         </div>
 
         <!--recursive tree of objects. Most likely it will look different-->
