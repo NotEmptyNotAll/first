@@ -8,14 +8,14 @@
                 </label>
             </div>
             <input id="fuelTypeFk"
-                   v-model="saveParameters"
+                   v-model="saveParameters[index]"
                    autocomplete="on" type="text"
                    class="form-control"
                    :placeholder="$ml.get('word.data')"
                    aria-describedby="button-addon1">
             <div class="input-group-append">
                 <button class="btn btn-outline-danger"
-                        v-on:click="saveParameters=null"
+                        v-on:click="saveParameters[index]=null"
                         type="button">
                     <span>&#10008;</span>
                 </button>
@@ -38,7 +38,8 @@
             nameInput: String,
             dataList: [],
             loadStatus: null,
-            saveParameters: null
+            saveParameters:Object,
+            index:String
         },
         computed: {},
         methods: {

@@ -57,17 +57,23 @@ export default new MLCreate({
                 newData: "new data",
                 advancedSearch: "advanced search",
                 clearAllField: "clear all field",
-                parameter:'parameter',
-                deleteR:'delete',
+                parameter: 'parameter',
+                deleteR: 'delete',
                 changeRoot: 'select root to change',
-                tree:'tree',
-                loginOnButton:'login',
-                choose:'choose'
+                tree: 'tree',
+                loginOnButton: 'login',
+                choose: 'choose'
             },
             msg: {
                 passwordErr: 'password is required!',
                 usernamedErr: 'Username is required!',
                 authErr: "Authorization Error"
+            },
+            errPage: {
+                logoText: 'error',
+                oopsRow: 'Oops! This page Could Not Be Found!',
+                SorryRow: 'Sorry bit the page you are looking for does not exist, have been removed or name changed.',
+                buttonText: 'Go to homepage'
             }
         }),
 
@@ -121,18 +127,24 @@ export default new MLCreate({
                 newData: "новые данные",
                 advancedSearch: "улучшить поиск",
                 clearAllField: "очистить все поля",
-                parameter:'параметр',
-                deleteR:'удалить',
+                parameter: 'параметр',
+                deleteR: 'удалить',
                 changeRoot: "выберите корень для изменения",
-                tree:'дерево',
-                loginOnButton:'авторизоваться',
-                choose:'выбрать'
+                tree: 'дерево',
+                loginOnButton: 'авторизоваться',
+                choose: 'выбрать'
 
             },
             msg: {
                 passwordErr: "Пароль необходим!",
                 userNamedErr: "Имя пользователя необходимо!",
                 authErr: "Ошибка авторизации"
+            },
+            errPage: {
+                logoText: 'ошибка',
+                oopsRow: "Ой! Эту страницу не удалось найти!",
+                SorryRow: 'К сожалению, искомая страница не существует, была удалена или изменено имя.',
+                buttonText: 'Перейти на домашнюю страницу'
             }
         }),
 
@@ -186,18 +198,24 @@ export default new MLCreate({
                 newData: 'нові дані',
                 advancedSearch: 'покращити пошук',
                 clearAllField: 'очистити всі поля',
-                parameter:'параметр',
-                deleteR:'видалити',
-                changeRoot:'виберіть корінь для зміни',
-                tree:'дерево',
-                loginOnButton:'вхід',
-                choose:'вибрати'
+                parameter: 'параметр',
+                deleteR: 'видалити',
+                changeRoot: 'виберіть корінь для зміни',
+                tree: 'дерево',
+                loginOnButton: 'вхід',
+                choose: 'вибрати'
 
             },
             msg: {
                 passwordErr: 'Пароль необхідний!',
                 userNamedErr: 'Ім\'я користувача обов\'язкове!',
                 authErr: 'Помилка авторизації'
+            },
+            errPage: {
+                logoText: 'помилка',
+                oopsRow: "На жаль! Цю сторінку не вдалося знайти! ",
+                SorryRow: "Вибачте, що сторінки, яку ви шукаєте, не існує, її видалено або змінено ім'я.",
+                buttonText: "Перейти на головну сторінку"
             }
 
         })

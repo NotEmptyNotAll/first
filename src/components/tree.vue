@@ -80,6 +80,7 @@
                     :change-mod="changeMod"
                     :space="space.concat('')"
                     @get-paramtrs="getParamtrs"
+                    :show-edit-param="showEditParam"
             ></tree-item>
         </ul>
     </ul>
@@ -98,6 +99,7 @@
             inputList
         },
         props: {
+            showEditParam:Boolean,
             idParentElem: null,
             changeMod: String,
             nowPressed: Object,
@@ -155,7 +157,6 @@
                         parametersIsExistInChilda: true
                     }
                 );
-                this.setMaxId(this.ELEMENTS_AND_MAX_ID.maxId + 1);
                 console.log(number);
             },
             saveElem(number) {
@@ -169,6 +170,7 @@
                 console.log(number);
             },
             getParamtrs(nav, number, link) {
+                this.showEditParam.show=true;
                 this.$emit("get-paramtrs", nav, number, link)
             },
             pressed() {

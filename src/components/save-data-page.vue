@@ -1,7 +1,10 @@
 <template>
     <div>
+        <error-page
+                v-if="!currentUser"
+        />
         <div id="savePage" v-if="currentUser">
-            <div class="row mainRow">
+            <div class="row mainRow" >
                 <add-engine-data-panel class="col-md-12"
                                        :name-panel="$ml.get('word.engine')"
                                        :load-status="LOAD_SAVE.engine"
@@ -87,10 +90,12 @@
     import AddEngineDataPanel from "./add-engine-data-panel";
     import AddAutoEngineDataPanel from "./add-auto-engine-panel";
     import TwoParamSavePanel from "./two-param-save-panel";
+    import ErrorPage from "./error-page";
 
     export default {
         name: "savePage",
         components: {
+            ErrorPage,
             TwoParamSavePanel,
             AddAutoEngineDataPanel,
             AddEngineDataPanel,

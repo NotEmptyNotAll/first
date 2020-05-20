@@ -81,7 +81,7 @@
                         <div class="row rowCenter">
                             <div class="col-md-4"></div>
                             <div class="col-md-4">
-                                <button v-if="loadStatus" type="submit" @click="saveEngManufacture(1)"
+                                <button v-if="loadStatus" type="submit"
                                         class="btn  btn-block btn-success">
                                     <span><div class="lds-dual-ring loadPos"></div></span>
                                 </button>
@@ -267,9 +267,9 @@
 
             ]),
             async saveEngManufacture(number) {
-                if (this.saveDataObj.saveData != null) {
+
                     this.SAVE_DATA_AUTOMOBILE_ENGINE(this.saveDataObj)
-                }
+
                 console.log(number)
             },
             updateOldParam(current) {

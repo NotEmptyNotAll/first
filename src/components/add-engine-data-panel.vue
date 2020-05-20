@@ -26,7 +26,8 @@
                         <div class="row rowCenter">
                             <input-field class="col-md-3"
                                          :name-input="$ml.get('word.engine')"
-                                         :save-parameters="saveDataObj.cylindersPlacementFk"
+                                         :save-parameters="saveDataObj"
+                                         index="engineType"
                             />
                             <vue-datalist
                                     class="col-md-3"
@@ -61,37 +62,48 @@
 
                             <input-field class="col-md-2"
                                          :name-input="$ml.get('word.pistonStroke')"
-                                         :save-parameters="saveDataObj.pistonStroke"
+                                         :save-parameters="saveDataObj"
+                                         index="pistonStroke"
                             />
                             <input-field class="col-md-2"
                                          :name-input="$ml.get('word.engineCapacity')"
-                                         :save-parameters="saveDataObj.engineCapacity"
+                                         :save-parameters="saveDataObj"
+                                         index="engineCapacity"
+
                             />
                             <input-field class="col-md-2"
                                          :name-input="$ml.get('word.powerKwt')"
-                                         :save-parameters="saveDataObj.powerKwt"
+                                         :save-parameters="saveDataObj"
+                                         index="powerKwt"
+
                             />
                             <input-field class="col-md-2"
                                          :name-input="$ml.get('word.horsepower')"
-                                         :save-parameters="saveDataObj.horsepower"
+                                         :save-parameters="saveDataObj"
+                                         index="horsepower"
                             />
                         </div>
                         <div class="row rowCenter">
                             <input-field class="col-md-2"
                                          :name-input="$ml.get('word.cylindersNumber')"
-                                         :save-parameters="saveDataObj.cylindersNumber"
+                                         :save-parameters="saveDataObj"
+                                         index="cylindersNumber"
                             />
                             <input-field class="col-md-2"
                                          :name-input="$ml.get('word.flapNumber')"
-                                         :save-parameters="saveDataObj.flapNumber"
+                                         :save-parameters="saveDataObj"
+                                         index="flapNumber"
                             />
                             <input-field class="col-md-2"
                                          :name-input="$ml.get('word.degreeCompression')"
-                                         :save-parameters="saveDataObj.degreeCompression"
+                                         :save-parameters="saveDataObj"
+                                         index="degreeCompression"
+
                             />
                             <input-field class="col-md-2"
                                          :name-input="$ml.get('word.pistonDiameter')"
-                                         :save-parameters="saveDataObj.pistonDiameter"
+                                         :save-parameters="saveDataObj"
+                                         index="pistonDiameter"
                             />
                             <div class="input-group col-md-4">
                                 <div class="input-group-prepend">
@@ -129,7 +141,7 @@
                         <div class="row rowCenter">
                             <div class="col-md-4"></div>
                             <div class="col-md-4">
-                                <button v-if="loadStatus" type="submit" @click="saveEngManufacture(1)"
+                                <button v-if="loadStatus"
                                         class="btn  btn-block btn-success">
                                     <span><div class="lds-dual-ring loadPos"></div></span>
                                 </button>
@@ -201,38 +213,46 @@
                             />
                             <input-field class="col-md-2"
                                          :name-input="$ml.get('word.pistonStroke')"
-                                         :save-parameters="updateDataObj.pistonStroke"
+                                         :save-parameters="updateDataObj"
+                                         index="pistonStroke"
                             />
                             <input-field class="col-md-2"
                                          :name-input="$ml.get('word.engineCapacity')"
-                                         :save-parameters="updateDataObj.engineCapacity"
+                                         :save-parameters="updateDataObj"
+                                         index="engineCapacity"
                             />
 
                             <input-field class="col-md-2"
                                          :name-input="$ml.get('word.powerKwt')"
-                                         :save-parameters="updateDataObj.powerKwt"
+                                         :save-parameters="updateDataObj"
+                                         index="powerKwt"
                             />
                             <input-field class="col-md-2"
                                          :name-input="$ml.get('word.horsepower')"
-                                         :save-parameters="updateDataObj.horsepower"
+                                         :save-parameters="updateDataObj"
+                                         index="horsepower"
                             />
                         </div>
                         <div class="row rowCenter">
                             <input-field class="col-md-2"
                                          :name-input="$ml.get('word.cylindersNumber')"
-                                         :save-parameters="updateDataObj.cylindersNumber"
+                                         :save-parameters="updateDataObj"
+                                         index="cylindersNumber"
                             />
                             <input-field class="col-md-2"
                                          :name-input="$ml.get('word.flapNumber')"
-                                         :save-parameters="updateDataObj.flapNumber"
+                                         :save-parameters="updateDataObj"
+                                         index="flapNumber"
                             />
                             <input-field class="col-md-2"
                                          :name-input="$ml.get('word.degreeCompression')"
-                                         :save-parameters="updateDataObj.degreeCompression"
+                                         :save-parameters="updateDataObj"
+                                         index="degreeCompression"
                             />
                             <input-field class="col-md-2"
-                                         :name-input="$ml.get('word.pistonDiameter')"
+                                         :name-input="$ml.get('word')"
                                          :save-parameters="updateDataObj.pistonDiameter"
+                                         index="horsepower"
                             />
                             <div class="input-group col-md-4">
                                 <div class="input-group-prepend">
@@ -348,9 +368,8 @@
                 alert(id)
             },
             async saveEngManufacture(number) {
-                if (this.saveDataObj.saveData != null) {
                     this.$emit("save-data-api", this.saveDataObj)
-                }
+
                 console.log(number)
             }
         },
