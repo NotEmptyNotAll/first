@@ -22,6 +22,8 @@
                         :update-obj="saveElemData"
                         index="paramNameFk"
                         :hide-title="true"
+                        :holder-num=0
+
                 />
                 <div class="col-md-4">
                     <button v-show="item.name===''"
