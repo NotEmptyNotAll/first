@@ -41,6 +41,9 @@ export default {
     SET_SEARCH_DATA: (state, searchData) => {
         state.searchData = searchData;
     },
+    SET_ENGINE: (state, engine) => {
+        return  state.engine=engine;
+    },
     SET_LOADPARAM: (state, loadParam) => {
         state.loadParam = loadParam;
     },

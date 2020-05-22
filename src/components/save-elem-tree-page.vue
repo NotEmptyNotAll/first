@@ -18,6 +18,7 @@
                             :items="TREE_ROOT_NAMES"
                             :update-obj="updateDataObj"
                             index="id"
+                            :holder-num=0
                     />
 
                     <div class="col-md-2">
@@ -100,6 +101,8 @@
                                             :update-obj="updateObj"
                                             index="units"
                                             :hide-title="true"
+                                            :holder-num=0
+
                                     />
                                 </td>
                                 <td v-if="!current.editRow">{{Number(current.doubleMin).toFixed(4)}}</td>
@@ -152,6 +155,8 @@
                                             :update-obj="current"
                                             index="units"
                                             :hide-title="true"
+                                            :holder-num=0
+
                                     />
                                 </td>
                                 <td v-if="!current.editRow">{{Number(current.doubleMin).toFixed(4)}}</td>
@@ -360,11 +365,12 @@
                 console.log(number)
             },
             getParamtrs(nav, number, link) {
-                this.elemId = number;
                 this.nowPressed.linkOnButt.isPressed = false;
                 this.nowPressed.linkOnButt = link;
                 this.GET_PARAMTRS(number);
+                this.elemId = number;
                 console.log(number);
+
             },
             async saveElemParam(number) {
                 this.saveElemParamV = {

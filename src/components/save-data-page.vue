@@ -91,7 +91,7 @@
                         :title_two="$ml.get('word.mark')"
                         :name-panel="$ml.get('word.nameElements')"
                         :data-list="ADDITIONAL_DATA.parameterName"
-                        :load-status="LOAD_SAVE.parameterName"
+                        :load-status="LOAD_SAVE.paramName"
                         @save-data-api="SAVE_PARAM_NAME"
                         @update-data-api="UPDATE_PARAM_NAME"
                 />

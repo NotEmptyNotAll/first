@@ -1,7 +1,7 @@
 import axios from "axios";
 
-let urlApi = 'https://newenginedb.herokuapp.com/';
-//let urlApi = 'http://localhost:5050/';
+//let urlApi = 'https://newenginedb.herokuapp.com/';
+let urlApi = 'http://localhost:5050/';
 
 export default {
     GET_START_PARAM({commit}) {
@@ -17,6 +17,7 @@ export default {
                 return error
             })
     },
+
     async GET_AUTOENG_BY_PARAM({commit}, searchData) {
         commit('SET_SHOW_LOAD', true);
         return await axios({
@@ -32,6 +33,24 @@ export default {
             .catch((error) => {
                 console.log(error);
                 commit('SET_SHOW_LOAD', false);
+                return error
+            })
+    },
+    async GET_ENG({commit}, searchData) {
+        commit('SET_LOAD_SAVE_ENGINE', true);
+        return await axios({
+            method: 'POST',
+            url: urlApi + 'getEng',
+            data: searchData,
+            responseType: 'json'
+        }).then(engData => {
+            commit('SET_ENGINE', engData.data)
+            commit('SET_LOAD_SAVE_ENGINE', false);
+            return engData;
+        })
+            .catch((error) => {
+                console.log(error);
+                commit('SET_LOAD_SAVE_ENGINE', false);
                 return error
             })
     },

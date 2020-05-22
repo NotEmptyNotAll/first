@@ -53,6 +53,9 @@ export default {
     LOAD_SAVE_PARAM_NAME: (state, ) => {
        return  state.loadSave.paramName;
     },
+    ENGINE: (state, ) => {
+        return  state.engine;
+    },
     LOAD_UPLOAD: (state) => {
         return state.loadUpdate;
     },

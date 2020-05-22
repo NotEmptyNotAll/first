@@ -1,7 +1,7 @@
 import axios from "axios";
 
-let urlApi = 'https://newenginedb.herokuapp.com/save/';
-//let urlApi = 'http://localhost:5050/save/';
+//let urlApi = 'https://newenginedb.herokuapp.com/save/';
+let urlApi = 'http://localhost:5050/save/';
 
 export default {
     async SAVE_ENGINE_MANUFACTURE({commit}, saveDataObj) {
@@ -13,12 +13,12 @@ export default {
             responseType: 'json'
         }).then(resp => {
             commit('SET_SAVE_STATUS', resp.data)
-            commit(' SET_LOAD_SAVE_ENGINE_MANUFACTURE', false);
+            commit('SET_LOAD_SAVE_ENGINE_MANUFACTURE', false);
             return resp;
         })
             .catch((error) => {
                 console.log(error);
-                commit(' SET_LOAD_SAVE_ENGINE_MANUFACTURE', false);
+                commit('SET_LOAD_SAVE_ENGINE_MANUFACTURE', false);
                 return error
             })
     },

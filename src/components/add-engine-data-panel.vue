@@ -4,7 +4,7 @@
         <div class="card   rad" id="mainBigContainer">
             <br/>
             <h4 v-if="!loadStatus" class="deepshd" style="text-align: center">{{namePanel}}</h4>
-            <span v-if="loadStatus" ><div class="lds-dual-ring loadPos"></div></span>
+            <span v-if="loadStatus"><div class="lds-dual-ring loadPos"></div></span>
             <div class="panelBody">
                 <navig>
                     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
@@ -36,6 +36,7 @@
                                     :items="ADDITIONAL_DATA.fuelType"
                                     :update-obj="saveDataObj"
                                     index="fuelTypeFk"
+                                    :holder-num=0
                             />
                             <vue-datalist
                                     class="col-md-3"
@@ -43,6 +44,8 @@
                                     :items="ADDITIONAL_DATA.engineManufacture"
                                     :update-obj="saveDataObj"
                                     index="engineManufacturerFk"
+                                    :holder-num=0
+
                             />
                             <vue-datalist
                                     class="col-md-3"
@@ -50,6 +53,7 @@
                                     :items="ADDITIONAL_DATA.superchargeType"
                                     :update-obj="saveDataObj"
                                     index="superchargedTypeFk"
+                                    :holder-num=0
                             />
                         </div>
                         <div class="row rowCenter">
@@ -58,6 +62,7 @@
                                     :title-input="$ml.get('word.cylinders')"
                                     :items="ADDITIONAL_DATA.cylinders"
                                     :update-obj="saveDataObj"
+                                    :holder-num=0
                                     index="cylindersPlacementFk"
                             />
 
@@ -139,9 +144,9 @@
                                 </div>
                             </div>
                         </div>
+                        <hr style="position: center; width: 70%"/>
                         <div class="row rowCenter">
                             <div class="col-md-5">
-
                             </div>
                             <div class="col-md-2">
                                 <button type="submit" @click="saveEngManufacture(1)"
@@ -151,50 +156,68 @@
                             </div>
                             <div class="col-md-5"></div>
                         </div>
-
                     </div>
                     <div class=" tab-pane fade" :id="'nav-update'+namePanel" role="tabpanel"
                          :aria-labelledby="'nav-update-tab'+namePanel">
                         <div class="row rowCenter">
-                            <div class="col-md-2"/>
+                            <div class="col-md-1"/>
                             <vue-datalist
                                     class="col-md-5"
                                     :title-input="$ml.get('word.changeTypeOfEngine')"
                                     :items="ADDITIONAL_DATA.engine"
                                     :update-obj="updateDataObj"
-                                    index="engineType"
+                                    index="objToBeChanged"
+                                    :holder-num=0
                                     :show-title="false"
-                            />
-                            <div class="col-md-3">
 
-                                <button v- type="submit" @click="saveEngManufacture(1)"
+                            />
+                            <div class="col-md-2">
+                                <button type="submit"
+                                        class="btn btn-outline-dark btn-block "
+                                        @click="getEng(1)"
+                                >
+                                    <span>{{$ml.get('word.choose')}}</span>
+                                </button>
+                            </div>
+                            <div class="col-md-2">
+
+                                <button v- type="submit" @click="update(1)"
                                         class="btn  btn-block btn-outline-dark">
                                     <span>{{$ml.get('word.update')}}</span>
                                 </button>
                             </div>
-                            <div class="col-md-2"/>
+                            <div class="col-md-1"/>
                         </div>
                         <hr style="color: lightgray"/>
                         <div class="row rowCenter">
+                            <input-field
+                                    class="col-md-3"
+                                    :name-input="$ml.get('word.engine')"
+                                    :save-parameters="updateDataObj"
+                                    index="engineType"
+                            />
                             <vue-datalist
-                                    class="col-md-4"
+                                    class="col-md-3"
                                     :title-input="$ml.get('word.cylinders')"
                                     :items="ADDITIONAL_DATA.cylinders"
                                     :update-obj="updateDataObj"
+                                    :holderNum="tempData.cylindersPlacementFk"
                                     index="cylindersPlacementFk"
                             />
                             <vue-datalist
-                                    class="col-md-4"
+                                    class="col-md-3"
                                     :title-input="$ml.get('word.engineManufacture')"
                                     :items="ADDITIONAL_DATA.engineManufacture"
                                     :update-obj="updateDataObj"
+                                    :holderNum="tempData.engineManufacturerFk"
                                     index="engineManufacturerFk"
                             />
                             <vue-datalist
-                                    class="col-md-4"
+                                    class="col-md-3"
                                     :title-input="$ml.get('word.superchargedType')"
                                     :items="ADDITIONAL_DATA.superchargeType"
                                     :update-obj="updateDataObj"
+                                    :holderNum="tempData.superchargedTypeFk"
                                     index="superchargedTypeFk"
                             />
                         </div>
@@ -204,6 +227,7 @@
                                     :title-input="$ml.get('word.fuelType')"
                                     :items="ADDITIONAL_DATA.fuelType"
                                     :update-obj="updateDataObj"
+                                    :holderNum="tempData.fuelTypeFk"
                                     index="fuelTypeFk"
                             />
                             <input-field class="col-md-2"
@@ -245,9 +269,9 @@
                                          index="degreeCompression"
                             />
                             <input-field class="col-md-2"
-                                         :name-input="$ml.get('word')"
-                                         :save-parameters="updateDataObj.pistonDiameter"
-                                         index="horsepower"
+                                         :name-input="$ml.get('word.pistonDiameter')"
+                                         :save-parameters="updateDataObj"
+                                         index="pistonDiameter"
                             />
                             <div class="input-group col-md-4">
                                 <div class="input-group-prepend">
@@ -298,7 +322,7 @@
 
 <script>
     import InputField from "./input-field";
-    import {mapGetters, mapMutations} from "vuex";
+    import {mapGetters, mapMutations, mapActions} from "vuex";
     import VueDatalist from "./vue-datalist";
 
     export default {
@@ -322,7 +346,25 @@
                 releaseYearBy: null,
                 horsepower: null
             },
+            tempData:{
+                engineType: null,
+                engineManufacturerFk: null,
+                cylindersPlacementFk: null,
+                fuelTypeFk: null,
+                superchargedTypeFk: null,
+                cylindersNumber: null,
+                flapNumber: null,
+                pistonDiameter: null,
+                pistonStroke: null,
+                engineCapacity: null,
+                powerKwt: null,
+                degreeCompression: null,
+                releaseYearFrom: null,
+                releaseYearBy: null,
+                horsepower: null
+            },
             updateDataObj: {
+                objToBeChanged: null,
                 engineType: null,
                 engineManufacturerFk: null,
                 cylindersPlacementFk: null,
@@ -349,10 +391,14 @@
         computed: {
             ...mapGetters([
                 'ADDITIONAL_DATA',
-                'UPDATE_ENGINE'
+                'UPDATE_ENGINE',
+                'ENGINE'
             ])
         },
         methods: {
+            ...mapActions([
+                'GET_ENG'
+            ]),
             ...mapMutations({
                 cylindersPlacementFk: 'SET_UPDATE_CYLINDERS'
             }),
@@ -362,9 +408,34 @@
             test(id) {
                 alert(id)
             },
+             async getEng(number) {
+               await this.GET_ENG({id: this.updateDataObj.objToBeChanged});
+                    this.tempData=this.ENGINE;
+                 this.updateDataObj.objToBeChanged=this.ENGINE.id
+                 this.updateDataObj.engineType=this.ENGINE.engineType
+                 this.updateDataObj.engineManufacturerFk=this.ENGINE.engineManufacturerFk
+                 this.updateDataObj.cylindersPlacementFk=this.ENGINE.cylindersPlacementFk
+                 this.updateDataObj.fuelTypeFk=this.ENGINE.fuelTypeFk
+                 this.updateDataObj.superchargedTypeFk= this.ENGINE.superchargedTypeFk
+                 this.updateDataObj.cylindersNumber= this.ENGINE.cylindersNumber
+                 this.updateDataObj.flapNumber=this.ENGINE.flapNumber
+                 this.updateDataObj.pistonDiameter= this.ENGINE.pistonDiameter
+                 this.updateDataObj.pistonStroke= this.ENGINE.pistonStroke
+                 this.updateDataObj.engineCapacity= this.ENGINE.engineCapacity
+                 this.updateDataObj.powerKwt= this.ENGINE.powerKwt
+                 this.updateDataObj.degreeCompression= this.ENGINE.degreeCompression
+                 this.updateDataObj.releaseYearFrom= this.ENGINE.releaseYearFrom
+                 this.updateDataObj.releaseYearBy= this.ENGINE.releaseYearBy
+                 this.updateDataObj.horsepower= this.ENGINE.horsepower
+                 console.log(number)
+             },
             async saveEngManufacture(number) {
-                    this.$emit("save-data-api", this.saveDataObj)
+                this.$emit("save-data-api", this.saveDataObj)
 
+                console.log(number)
+            },
+            async update(number) {
+                this.$emit("update-data-api", this.updateDataObj)
                 console.log(number)
             }
         },

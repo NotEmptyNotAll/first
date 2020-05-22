@@ -48,8 +48,6 @@
 
 
                     <div class=" btn-group pos-left" v-show="item.name!=''" role="group">
-
-
                         <button v-show="changeMod==='on'" type="button " v-if=" !linkOnThisButt.isPressed "
                                 v-on:click="pressed"
                                 class="btn btn-group posLeft btn-warning"
@@ -171,9 +169,9 @@
             },
             getParamtrs(nav, number, link) {
                 if (this.showEditParam.show) {
-
                     this.$emit("get-paramtrs", nav, number, link)
                 } else {
+                    this.$emit("get-paramtrs", nav, number, link)
                     this.showEditParam.show = true;
                 }
             },

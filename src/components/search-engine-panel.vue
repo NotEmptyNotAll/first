@@ -224,7 +224,7 @@
                     <div class="input-group col-md-4">
                         <div class="input-group-prepend">
                             <label class="input-group-text" for="inputGroupSelect3">{{$ml.get('word.units')}}
-                                </label>
+                            </label>
                         </div>
                         <select v-model="param.unitsFullName" aria-describedby="button-addon5"
                                 id="inputGroupSelect3"
@@ -260,12 +260,14 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col col-md-12">
+                    <div class="col col-md-3"></div>
+                    <div class="col col-md-6">
                         <button class="btn form-control btn-block btn-outline-secondary" type="button"
                                 v-on:click="addParam(1)">
                             {{$ml.get('word.add')}}
                         </button>
                     </div>
+                    <div class="col col-md-3"></div>
                 </div>
             </div>
         </transition>
@@ -334,20 +336,20 @@
 
             }),
             clear(number) {
-                this.searchData= {
+                this.searchData = {
                     paramList: [{
                         parameterName: '',
                         unitsFullName: '',
                         parameterNumber: ''
                     }],
-                        engineType: null,
-                        autoManufacturer: null,
-                        autoModel: null,
-                        produceYear: null,
-                        numberEng: null,
-                        fuelType: null,
-                        powerKWt: null,
-                        engineCapacity: null
+                    engineType: null,
+                    autoManufacturer: null,
+                    autoModel: null,
+                    produceYear: null,
+                    numberEng: null,
+                    fuelType: null,
+                    powerKWt: null,
+                    engineCapacity: null
                 };
                 document.getElementById('engineType').value = ''
                 document.getElementById('engNum').value = ''
@@ -442,7 +444,7 @@
 </script>
 
 <style>
-    .input-group-text{
+    .input-group-text {
         background: #272e38;
         color: #e0dfdc;
     }

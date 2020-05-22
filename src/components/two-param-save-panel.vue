@@ -64,6 +64,7 @@
                                     :update-obj="updateDataObj"
                                     index="objToBeChanged"
                                     :hide-title="true"
+                                    :holder-num=0
 
                             />
                             <div class="input-group panelRow">
@@ -109,6 +110,7 @@
 
 <script>
     import VueDatalist from "./vue-datalist";
+    import {mapActions} from "vuex";
 
     export default {
         name: "two-param-save-panel",
@@ -135,15 +137,20 @@
         },
         computed: {},
         methods: {
+            ...mapActions([
+                'GET_ALL_ADDITIONAL_DATA'
+            ]),
             async saveEngManufacture(number) {
                 if (this.saveDataObj.saveData_primary != null) {
-                    this.$emit("save-data-api", this.saveDataObj)
+                    this.$emit("save-data-api", this.saveDataObj);
+                    this.GET_ALL_ADDITIONAL_DATA();
                 }
                 console.log(number)
             },
             async update(number) {
-                if (this.saveDataObj.saveData_primary != null) {
-                    this.$emit("update-data-api", this.updateDataObj)
+                if (this.updateDataObj.objToBeChanged != null) {
+                    this.$emit("update-data-api", this.updateDataObj);
+                    this.GET_ALL_ADDITIONAL_DATA();
                 }
                 console.log(number)
             }

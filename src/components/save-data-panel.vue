@@ -4,9 +4,9 @@
         <div id="addData">
             <div class="card  rad" id="mainContainer">
                 <br/>
-                <span v-if="loadStatus"  ><div class="lds-dual-ring loadPos"></div></span>
+                <span v-if="loadStatus"><div class="lds-dual-ring loadPos"></div></span>
 
-                <h4 v-if="!loadStatus"  class="deepshd" style="text-align: center">{{namePanel}}</h4>
+                <h4 v-if="!loadStatus" class="deepshd" style="text-align: center">{{namePanel}}</h4>
                 <div class="panelBody">
                     <navig>
                         <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
@@ -42,7 +42,7 @@
                             </div>
                             <div class="col input-group panelRow col-md-12">
 
-                                <button  type="submit" @click="saveEngManufacture(1)"
+                                <button type="submit" @click="save(1)"
                                         class="btn  btn-outline-dark btn-block ">
                                     <span>{{$ml.get('word.save')}}</span>
                                 </button>
@@ -57,10 +57,11 @@
                                     :update-obj="updateDataObj"
                                     :hide-title="true"
                                     index="objToBeChanged"
+                                    :holder-num=0
                             />
                             <div class="input-group panelRow col-md-12">
                                 <input
-                                        v-model="updateDataObj.saveData"
+                                        v-model="updateDataObj.updateData"
                                         type="text"
                                         class="form-control"
                                         :placeholder="$ml.get('word.newData')"
@@ -75,7 +76,7 @@
                             </div>
                             <div class="col input-group panelRow col-md-12">
 
-                                <button  type="submit" @click="saveEngManufacture(1)"
+                                <button type="submit" @click="update(1)"
                                         class="btn  btn-outline-dark btn-block">
                                     <span>{{$ml.get('word.update')}}</span>
                                 </button>
@@ -94,6 +95,7 @@
 
 <script>
     import VueDatalist from "./vue-datalist";
+    import {mapActions} from "vuex";
 
     export default {
         name: "addData",
@@ -104,7 +106,7 @@
             },
             updateDataObj: {
                 objToBeChanged: null,
-                saveData: null
+                updateData: null
             }
         }),
         props: {
@@ -114,12 +116,24 @@
         },
         computed: {},
         methods: {
-            async saveEngManufacture(number) {
+            ...mapActions([
+                'GET_ALL_ADDITIONAL_DATA'
+            ]),
+            async save(number) {
                 if (this.saveDataObj.saveData != null) {
-                    this.$emit("save-data-api", this.saveDataObj)
+                    this.$emit("save-data-api", this.saveDataObj);
+                    this.GET_ALL_ADDITIONAL_DATA();
+                }
+                console.log(number)
+            },
+            async update(number) {
+                if (this.updateDataObj.objToBeChanged != null) {
+                    this.$emit("update-data-api", this.updateDataObj);
+                    this.GET_ALL_ADDITIONAL_DATA();
                 }
                 console.log(number)
             }
+
         },
         watch: {},
         mounted() {

@@ -3,8 +3,10 @@
 
         <div class="card  rad" id="mainBigContainer">
             <br/>
-            <span v-if="LOAD_SAVE_AUTOMOBILE_ENGINE" ><div class="lds-dual-ring loadPos"></div></span>
-            <h4 v-if="!LOAD_SAVE_AUTOMOBILE_ENGINE" class="deepshd" style="text-align: center">{{namePanel}}</h4>
+            <span v-if="LOAD_SAVE_AUTOMOBILE_ENGINE || AUTO_ENGINE_LOAD"><div
+                    class="lds-dual-ring loadPos"></div></span>
+            <h4 v-if="!LOAD_SAVE_AUTOMOBILE_ENGINE && !AUTO_ENGINE_LOAD" class="deepshd" style="text-align: center">
+                {{namePanel}}</h4>
             <div class="panelBody">
                 <navig>
                     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
@@ -25,19 +27,21 @@
                     <div class=" tab-pane fade show active" :id="'nav-add'+namePanel" role="tabpanel"
                          :aria-labelledby="'nav-add-tab'+namePanel">
                         <div class="row rowCenter">
-                           <!-- <input-field
-                                    class="col-md-3"
-                                    :name-input="$ml.get('word.engineNumber')"
-                                    :save-parameters="saveDataEngParam"
-                                    index="saveData"
+                            <!-- <input-field
+                                     class="col-md-3"
+                                     :name-input="$ml.get('word.engineNumber')"
+                                     :save-parameters="saveDataEngParam"
+                                     index="saveData"
 
-                            />-->
+                             />-->
                             <vue-datalist
                                     class="col-md-3"
                                     :title-input="$ml.get('word.engine')"
                                     :items="ADDITIONAL_DATA.engine"
                                     :update-obj="saveDataObj"
                                     index="engineFk"
+                                    :holder-num=0
+
                             />
                             <vue-datalist
                                     class="col-md-3"
@@ -45,6 +49,8 @@
                                     :items="ADDITIONAL_DATA.autoModel"
                                     :update-obj="saveDataObj"
                                     index="autoModelFk"
+                                    :holder-num=0
+
                             />
                             <vue-datalist
                                     class="col-md-3"
@@ -52,6 +58,8 @@
                                     :items="ADDITIONAL_DATA.autoManufacture"
                                     :update-obj="saveDataObj"
                                     index="autoManufactureFk"
+                                    :holder-num=0
+
                             />
                             <div class="input-group col-md-3">
                                 <div class="input-group-prepend">
@@ -87,15 +95,12 @@
                                 </div>
                             </div>
                         </div>
+                        <hr style="position: center; width: 70%"/>
                         <div class="row rowCenter">
                             <div class="col-md-5"></div>
                             <div class="col-md-2">
-                                <button v-if="LOAD_SAVE_AUTOMOBILE_ENGINE" type="submit"
-                                        class="btn  btn-block btn-success">
-                                    <span><div class="lds-dual-ring loadPos"></div></span>
-                                </button>
 
-                                <button v-else type="submit" @click="saveEngManufacture(1)"
+                                <button  type="submit" @click="saveEngManufacture(1)"
                                         class="btn btn-outline-dark btn-block">
                                     <span>{{$ml.get('word.save')}}</span>
                                 </button>
@@ -113,7 +118,7 @@
                         <br/>
 
 
-                        <table class="table" style="text-align: center">
+                        <table class="table" style="text-align: center; z-index: 0;">
                             <thead>
                             <tr>
                                 <th scope="col" v-text="$ml.get('word.autoManufacturer')"></th>
@@ -135,6 +140,7 @@
                                             :update-obj="current"
                                             index="autoManufactureFk"
                                             :hide-title="true"
+                                            :holder-num=0
                                     />
                                 </td>
                                 <td v-if="!current.editRow">{{ADDITIONAL_DATA.autoModel.find(elem=>
@@ -146,6 +152,7 @@
                                             :update-obj="current"
                                             index="autoModelFk"
                                             :hide-title="true"
+                                            :holder-num=0
                                     />
                                 </td>
                                 <td v-if="!current.editRow">{{ADDITIONAL_DATA.engine.find(elem=>
@@ -157,6 +164,8 @@
                                             :update-obj="current"
                                             index="engineFk"
                                             :hide-title="true"
+                                            :holder-num=0
+
                                     />
                                 </td>
                                 <td v-if="!current.editRow">{{current.releaseYearFrom}}</td>
@@ -178,21 +187,28 @@
                                             type="button"
                                             class="btn  btn-success "
                                             @click="current.editRow=!current.editRow"
-                                            v-on:click="updateListParam(current)"
+                                            v-on:click="updateOldParam(current)"
                                     >
                                         <span>&#10004;</span>
                                     </button>
                                 </td>
                             </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td height="80">
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
                             </tbody>
                         </table>
-                        <br/>
-                        <div style="margin-left:45vw " v-if="AUTO_ENGINE_LOAD" class="lds-dual-ring"></div>
                         <div style="margin-left: 40%; width: 20%;margin-right: 40%;">
                             <button v-show="AUTO_ENGINE.length>0"
                                     type="submit"
-                                    class="btn  btn-blockbtn-outline-dark"
-                                    @click="updateListParam()"
+                                    class="btn  btn-block btn-outline-dark"
+                                    @click="update(1)"
                                     v-text="$ml.get('word.update')"
                             >
                                 <span></span>
@@ -219,31 +235,12 @@
 
 
     export default {
-        components: { SearchEnginePanel, VueDatalist},
+        components: {SearchEnginePanel, VueDatalist},
         data: () => ({
             saveDataEngParam: {
                 saveData: null
             },
-            updateListParam: [
-                {
-                    id: 1,
-                    engineFk: 1,
-                    autoManufactureFk: 1,
-                    autoModelFk: 1,
-                    releaseYearFrom: 1,
-                    releaseYearBy: 1,
-                    elemId: 1
-                },
-                {
-                    id: 2,
-                    engineFk: 1,
-                    autoManufactureFk: 1,
-                    autoModelFk: 1,
-                    releaseYearFrom: 1,
-                    releaseYearBy: 1,
-                    elemId: 1
-                },
-            ],
+            updateListParam: [],
             saveDataObj: {
                 engineFk: null,
                 autoModelFk: null,
@@ -258,6 +255,16 @@
                 releaseYearFrom: null,
                 releaseYearBy: null,
             },
+            lol: {
+                id: 1,
+                autoManufactureFk: null,
+                autoModelFk: null,
+                engineFk: null,
+                releaseYearFrom: null,
+                releaseYearBy: null,
+                elemId: null,
+                editRow: null,
+            },
             tempObj: null
         }),
         props: {
@@ -270,7 +277,7 @@
                 'ADDITIONAL_DATA',
                 'AUTO_ENGINE_LOAD',
                 'AUTO_ENGINE',
-                'LOAD_SAVE_AUTOMOBILE_ENGINE'
+                'LOAD_SAVE_AUTOMOBILE_ENGINE',
 
             ])
         },
@@ -278,13 +285,21 @@
             ...mapActions([
                 'SAVE_DATA_AUTOMOBILE_ENGINE',
                 'GET_AUTOENG_BY_PARAM_UPDATE',
-                'SAVE_DATA_ENGINE_NUMBER'
+                'SAVE_DATA_ENGINE_NUMBER',
+                'UPDATE_AUTO_ENGINE'
 
             ]),
             async saveEngManufacture(number) {
 
                 this.SAVE_DATA_AUTOMOBILE_ENGINE(this.saveDataObj);
-              //  this.SAVE_DATA_ENGINE_NUMBER(this.saveDataEngParam);
+                //  this.SAVE_DATA_ENGINE_NUMBER(this.saveDataEngParam);
+                console.log(number)
+            },
+            async update(number) {
+
+                this.UPDATE_AUTO_ENGINE(this.updateListParam);
+                this.updateListParam = [];
+                //  this.SAVE_DATA_ENGINE_NUMBER(this.saveDataEngParam);
                 console.log(number)
             },
             updateOldParam(current) {
@@ -307,6 +322,7 @@
                         releaseYearFrom: current.releaseYearFrom,
                         releaseYearBy: current.releaseYearBy,
                         editRow: current.editRow
+
                     });
                 }
                 console.log(1)

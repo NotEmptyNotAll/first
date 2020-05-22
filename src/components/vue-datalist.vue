@@ -8,11 +8,25 @@
                 <div v-if="LOADPARAM" class="lds-dual-ring"></div>
             </label>
         </div>
-        <input :id="'vue-list-input'+titleInput"
+        <input v-if="holderNum===0"
+                :id="'vue-list-input'+titleInput"
                autocomplete="off"
                class="form-control"
                type="text"
-               :placeholder="$ml.get('word.data')"
+               placeholder=" "
+               @input="onChange"
+               @click="onChange"
+               v-model="search"
+               @keydown.down="onArrowDown"
+               @keydown.up="onArrowUp"
+               @keydown.enter="onEnter"
+        />
+        <input  v-if="holderNum!==0"
+                :id="'vue-list-input'+titleInput"
+               autocomplete="off"
+               class="form-control"
+               type="text"
+               :placeholder="items.find(e=>e.id===holderNum).data"
                @input="onChange"
                @click="onChange"
                v-model="search"
@@ -60,6 +74,7 @@
         name: 'autocomplete',
 
         props: {
+            holderNum:Number,
             hideTitle: Boolean,
             titleInput: String,
             updateObj: Object,
@@ -91,7 +106,7 @@
 
             onChange() {
                 // Let's warn the parent that a change was made
-                this.$emit('input', this.search);
+               // this.$emit('input', this.search);
 
                 // Is the data given by an outside ajax request?
                 if (this.isAsync) {
@@ -126,7 +141,7 @@
                 }
             },
             onEnter() {
-                this.search = this.results[this.arrowCounter];
+                this.search = this.results[this.arrowCounter].data;
                 this.isOpen = false;
                 this.arrowCounter = -1;
             },
@@ -138,6 +153,7 @@
             }
         },
         watch: {
+
             items: function (val, oldValue) {
                 // actually compare them
                 if (val.length !== oldValue.length) {
@@ -147,6 +163,10 @@
             },
         },
         mounted() {
+            if(this.holderNum===null || this.holderNum===undefined){
+                this.holderNum=0;
+            }
+
             if (this.hideTitle == null) {
                 this.hideTitle = false;
             }

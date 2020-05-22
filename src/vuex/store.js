@@ -16,6 +16,7 @@ let store = new Vuex.Store({
     },
     state: {
         showEditParam:false,
+        engine:null,
         loadParamForTree:false,
         showLoad: false,
         autoEngine: [],
