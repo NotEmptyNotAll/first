@@ -71,6 +71,7 @@
 
         <auto-engine-full-tree
                 v-if="!currentUser"
+                :auto_id="auto_id"
                 ref="contParam" v-show="ELEMENTS!=null"/>
 
 

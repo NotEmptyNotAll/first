@@ -6,15 +6,20 @@
         <div class="panelBody">
             <navig>
                 <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                    <a v-for="current in ELEMENTS.elementsCh" v-bind:key="current" class="nav-item nav-link "
+                    <a v-for="current in ELEMENTS.elementsCh" v-bind:key="current"
+                       class="nav-item nav-link "
                        :id="'nav-add-tab'+current.name" data-toggle="tab"
-                       :href="'#nav-add'+namePanel"
-                       role="tab" :aria-controls="'nav-add'+current.name" aria-selected="true" style="max-width: 30vw">{{current.name}}</a>
+                       :href="'#nav-add'+current.name"
+                       role="tab" :aria-controls="'nav-add'+current.name" aria-selected="true"
+                       style="max-width: 30vw"
+                       v-on:click="setListParam(null)"
+                    >{{current.name}}</a>
+
                 </div>
             </navig>
             <div class="tab-content  bg-white" id="nav-tabContent">
                 <div v-for="current in ELEMENTS.elementsCh" v-bind:key="current"
-                     class=" tab-pane fade " :id="'nav-add'+current.name"
+                     class="  tab-pane fade " :id="'nav-add'+current.name"
                      :aria-labelledby="'nav-add-tab'+current.name">
                     <div class="row rowCenter">
                         <div class="col-md-3">
@@ -27,6 +32,7 @@
                                         change-mod="off"
                                         :nav="treeItem.name"
                                         :choice-param="choiceParam"
+                                        :id-parent-elem="current.id"
                                         :space="''"
                                         :nowPressed=nowPressed
                                         :show-edit-param="{show:true}"
@@ -79,6 +85,9 @@
     export default {
         name: "auto-engine-full-tree",
         components: {TreeItem},
+        props:{
+            auto_id:Number
+        },
         data: () => ({
             choiceData: [],
             nowPressed: {
@@ -104,7 +113,7 @@
             async getParamtrs(nav, number, link) {
                 this.nowPressed.linkOnButt.isPressed = false;
                 this.nowPressed.linkOnButt = link;
-                this.GET_PARAMTRS(number);
+                this.GET_PARAMTRS({id: number, auto_id: this.auto_id});
                 console.log(number);
             }
 
