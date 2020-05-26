@@ -13,7 +13,7 @@
             <div class="col-md-2"></div>
             <vue-datalist
                     class="col-md-5"
-                    :title-input="$ml.get('word.engine')"
+                    :title-input="$ml.get('word.newBlockText')"
                     :items="PARAM_NAME_AND_UNITS.paramName"
                     :update-obj="newBlock"
                     index="data"

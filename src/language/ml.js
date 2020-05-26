@@ -64,7 +64,9 @@ export default new MLCreate({
                 loginOnButton: 'login',
                 choose: 'choose',
                 title: 'name',
-                mark: 'mark'
+                mark: 'mark',
+                newBlockText:'add new block'
+
             },
             msg: {
                 passwordErr: 'password is required!',
@@ -136,7 +138,8 @@ export default new MLCreate({
                 loginOnButton: 'авторизоваться',
                 choose: 'выбрать',
                 title: 'название',
-                mark: "Обозначение"
+                mark: "Обозначение",
+                newBlockText:'додати новий блок'
 
 
             },
@@ -211,7 +214,7 @@ export default new MLCreate({
                 choose: 'вибрати',
                 title:'назва',
                 mark:'Позначення',
-                newBlockText:''
+                newBlockText:'додати новий блок'
 
 
             },
