@@ -27,7 +27,7 @@ export default {
         state.elementsAndMaxId = elementsAndMaxId;
     },
     SET_MAX_ID: (state, elementsAndMaxId) => {
-        state.elementsAndMaxId.maxId = elementsAndMaxId;
+        state.elements.maxId = elementsAndMaxId;
     },
     SET_LOAD_TREE_UPDATE: (state, loadTreeUpdate) => {
         state.loadTreeUpdate = loadTreeUpdate;

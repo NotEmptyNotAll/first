@@ -142,6 +142,7 @@
             },
             onEnter() {
                 this.search = this.results[this.arrowCounter].data;
+                this.updateObj[this.index] = this.results[this.arrowCounter].id;
                 this.isOpen = false;
                 this.arrowCounter = -1;
             },

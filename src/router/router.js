@@ -3,7 +3,6 @@ import Router from 'vue-router'
 
 import searchEng from '../components/searchEng'
 import saveDataPage from '../components/save-data-page'
-import elemTree from '../components/save-elem-tree-page'
 import login from '../components/login'
 import registration from '../components/Register'
 
@@ -18,10 +17,6 @@ let router = new Router({
         {
             path: '/addData',
             component: saveDataPage
-        },
-        {
-            path: '/elemTree',
-            component: elemTree
         },
         {
             path: '/login',

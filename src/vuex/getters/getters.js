@@ -29,8 +29,8 @@ export default {
     LOAD_PARAM_FOR_TREE(state) {
         return state.loadParamForTree;
     },
-    LOAD_SAVE_AUTOMOBILE_ENGINE(state){
-      return  state.loadSave.automobileEngine;
+    LOAD_SAVE_AUTOMOBILE_ENGINE(state) {
+        return state.loadSave.automobileEngine;
     },
     LISTNEWELEM(state) {
         return state.listNewElem;
@@ -50,11 +50,14 @@ export default {
     LOAD_SAVE: (state) => {
         return state.loadSave;
     },
-    LOAD_SAVE_PARAM_NAME: (state, ) => {
-       return  state.loadSave.paramName;
+    LOAD_SAVE_PARAM_NAME: (state,) => {
+        return state.loadSave.paramName;
     },
-    ENGINE: (state, ) => {
-        return  state.engine;
+    ENGINE: (state,) => {
+        return state.engine;
+    },
+    LOAD_SAVE_ELEMENTS: (state) => {
+        return state.loadSave.elements;
     },
     LOAD_UPLOAD: (state) => {
         return state.loadUpdate;

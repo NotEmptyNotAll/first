@@ -9,11 +9,10 @@
                     <a class="nav-link fontbranco" href="/#/addData"
                        v-if="currentUser">{{$ml.get('word.updateData')}}</a>
                 </li>
-                <li class="nav-elem nav-hov" style="margin-right: 5px;">
+                <!--<li class="nav-elem nav-hov" style="margin-right: 5px;">
                     <a class="nav-link fontbranco" href="/#/elemTree"
                        v-if="currentUser">{{$ml.get('word.treeElem')}}</a>
-                </li>
-
+                </li>-->
                 <li class=" nav-elem dropdown " style="position: absolute; right: 7vw">
                     <a class="nav-link dropdown-toggle fontbranco" href="#" id="navbarDropdown" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

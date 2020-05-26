@@ -1,7 +1,7 @@
 import axios from "axios";
 
-let urlApi = 'https://newenginedb.herokuapp.com/';
-//let urlApi = 'http://localhost:5050/';
+//let urlApi = 'https://newenginedb.herokuapp.com/';
+let urlApi = 'http://localhost:5050/';
 
 export default {
     GET_START_PARAM({commit}) {
@@ -77,7 +77,7 @@ export default {
         return await axios({
             method: 'POST',
             url: urlApi + 'getParameters',
-            data: {id: number},
+            data: number,
             responseType: 'json'
         }).then(listParam => {
             commit('SET_LOAD_PARAM_FOR_TREE', false);

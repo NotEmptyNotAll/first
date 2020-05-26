@@ -6,7 +6,7 @@
         <div class="panelBody">
             <navig>
                 <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                    <a v-for="current in ELEMENTS.elementsCh" v-bind:key="current" class="nav-item nav-link active"
+                    <a v-for="current in ELEMENTS.elementsCh" v-bind:key="current" class="nav-item nav-link "
                        :id="'nav-add-tab'+current.name" data-toggle="tab"
                        :href="'#nav-add'+namePanel"
                        role="tab" :aria-controls="'nav-add'+current.name" aria-selected="true" style="max-width: 30vw">{{current.name}}</a>
@@ -14,7 +14,7 @@
             </navig>
             <div class="tab-content  bg-white" id="nav-tabContent">
                 <div v-for="current in ELEMENTS.elementsCh" v-bind:key="current"
-                     class=" tab-pane fade show active " :id="'nav-add'+current.name"
+                     class=" tab-pane fade " :id="'nav-add'+current.name"
                      :aria-labelledby="'nav-add-tab'+current.name">
                     <div class="row rowCenter">
                         <div class="col-md-3">
@@ -53,7 +53,7 @@
                                 <tbody>
                                 <tr v-for="current in LISTPARAM" v-bind:key="current">
                                     <td>{{current.name}}</td>
-                                    <td>{{current.measurementUnits}}</td>
+                                    <td>{{current.units}}</td>
                                     <td>{{Number(current.doubleMin).toFixed(4)}}</td>
                                     <td>{{Number(current.doubleMax).toFixed(4)}}</td>
                                     <td>{{Number(current.doubleNum).toFixed(4)}}</td>
@@ -65,12 +65,6 @@
                             <div v-if="LOAD_PARAM_FOR_TREE" class="lds-dual-ring-black" style="margin-left: 50%; margin-right: 50% "></div>
                         </div>
                     </div>
-                </div>
-                <div class=" tab-pane fade" :id="'nav-update'+namePanel" role="tabpanel"
-                     :aria-labelledby="'nav-update-tab'+namePanel">
-                </div>
-                <div class="tab-pane fade" :id="'nav-file'+namePanel" role="tabpanel"
-                     :aria-labelledby="'nav-file-tab'+namePanel">
                 </div>
             </div>
         </div>

@@ -210,7 +210,8 @@ export default new MLCreate({
                 loginOnButton: 'вхід',
                 choose: 'вибрати',
                 title:'назва',
-                mark:'Позначення'
+                mark:'Позначення',
+                newBlockText:''
 
 
             },

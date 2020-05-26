@@ -14,7 +14,7 @@
         </div>
         <!--engine data table. By clicking on row m we open the engine tree, where we can find out its parameters-->
         <div class="container tab  search-border bg-white rad" id="contTable" style="position: relative; ">
-            <table class="table search-tab table-hover" >
+            <table class="table search-tab table-hover">
                 <thead class="thead-light-dark ">
                 <tr>
                     <th>{{$ml.get('word.engine')}}</th>
@@ -59,11 +59,19 @@
                 </tr>
                 </tbody>
             </table>
-            <div v-if="SHOW_LOAD" class="lds-dual-ring-black" style="margin-left: 50%; margin-right: 50% ;top: -1vw"></div>
+            <div v-if="SHOW_LOAD" class="lds-dual-ring-black"
+                 style="margin-left: 50%; margin-right: 50% ;top: 4vw"></div>
         </div>
 
         <!--recursive tree of objects. Most likely it will look different-->
-        <auto-engine-full-tree ref="contParam" v-show="ELEMENTS!=null"/>
+        <save-elem-tree-page
+                :auto_id="auto_id"
+                v-if="currentUser"
+        />
+
+        <auto-engine-full-tree
+                v-if="!currentUser"
+                ref="contParam" v-show="ELEMENTS!=null"/>
 
 
         <!-- Modal -->
@@ -97,11 +105,13 @@
     import {mapActions, mapGetters} from 'vuex'
     import SearchEnginePanel from "./search-engine-panel";
     import AutoEngineFullTree from "./auto-engine-full-tree";
+    import SaveElemTreePage from "./save-elem-tree-page";
 
     export default {
         name: "searchEng",
 
         components: {
+            SaveElemTreePage,
             AutoEngineFullTree,
             SearchEnginePanel
         },
@@ -131,15 +141,21 @@
                 powerKWt: null,
                 engineCapacity: null
             },
+            auto_id: null,
             choiceData: [],
             test: null,
             advanceSearch: false
         }),
         //All requests will be transferred to the vuex for convenience.
         mounted() {
-            this.GET_START_PARAM()
+            this.GET_START_PARAM();
+            this.GET_PARAM_NAME();
+
         },
         computed: {
+            currentUser() {
+                return this.$store.state.auth.user;
+            },
             ...mapGetters([
                 'STARTPARAM',
                 'ENGDATA',
@@ -223,6 +239,7 @@
             async getElements(number) {
                 this.listParam = [];
                 this.nowPressed.linkOnButt.isPressed = false;
+                this.auto_id = number;
                 this.GET_ELEMENTS(number);
                 document.getElementById('contParam').style.display = 'block'
                 console.log(number)
@@ -261,6 +278,10 @@
 <style>
     #contTable {
         min-height: 20vh;
+        border-style: solid;
+        border-left-color: #272e38;
+        border-right-color: #272e38;
+        border-width: 15px 15px 0px 15px;
     }
 
 
@@ -358,9 +379,11 @@
     .search-tab {
         text-align: center;
         horiz-align: center;
-        min-width: 94%;
-        position: relative;
-        top: -32px;
+        min-width: 95.6vw;
+        right: -10px;
+        left: -1px;
+        position: absolute;
+        top: -4px;
         border: 1px solid black; /* Рамка вокруг таблицы */
     }
 

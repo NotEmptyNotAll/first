@@ -33,6 +33,7 @@
                     >
                         <span>&#10004;</span>
                     </button>
+
                     <div class=" btn-group pos-left">
                         <button v-show="changeMod==='off'" type="button"
                                 v-if=" !linkOnThisButt.isPressed && item.parametersIsExistInChild"
@@ -76,7 +77,7 @@
                     :item="child"
                     :choice-param="choiceParam"
                     :nav="child.name"
-                    :id-parent-elem="child.id"
+                    :id-parent-elem="item.id"
                     :change-mod="changeMod"
                     :space="space.concat('')"
                     @get-paramtrs="getParamtrs"
@@ -128,7 +129,8 @@
             ...mapGetters([
                 'PARAM_NAME_AND_UNITS',
                 'LISTNEWELEM',
-                'ELEMENTS_AND_MAX_ID'
+                'ELEMENTS_AND_MAX_ID',
+                'ELEMENTS'
             ]),
             isFolder: function () {
                 return this.elementsCh && this.item.elementsCh.length;
@@ -143,9 +145,9 @@
             addElement: function (number) {
                 this.isOpen = true;
                 this.item.elementsCh.push({
-                        id: this.ELEMENTS_AND_MAX_ID.maxId,
+                        id: this.ELEMENTS.maxId,
                         elementsCh: [{
-                            id: 1,
+                            id: 0,
                             elementsCh: [],
                             name: '',
                             paramIsNotEmpty: true,
@@ -162,11 +164,13 @@
             saveElem(number) {
                 this.item.name = this.PARAM_NAME_AND_UNITS.paramName.find(item => item.id === this.saveElemData.paramNameFk).data;
                 this.saveElemData.parentId = this.idParentElem;
-                this.saveElemData.elemId = this.ELEMENTS_AND_MAX_ID.maxId;
+                this.saveElemData.elemId = this.ELEMENTS.maxId+1;
+                this.item.id=this.ELEMENTS.maxId+1;
                 this.listNewElem = this.LISTNEWELEM;
                 this.listNewElem.push(this.saveElemData);
                 this.setListNewElem(this.listNewElem);
-                this.setMaxId(this.ELEMENTS_AND_MAX_ID.maxId + 1);
+                this.setMaxId(this.ELEMENTS.maxId + 1);
+                this.listElem.push(this.saveElemData)
                 console.log(number);
             },
             getParamtrs(nav, number, link) {
@@ -190,7 +194,7 @@
             }
         },
         mounted() {
-            this.maxId = this.ELEMENTS_AND_MAX_ID.maxId;
+            this.maxId = this.ELEMENTS.maxId;
             this.elementsCh = this.item.elementsCh;
         }
     }

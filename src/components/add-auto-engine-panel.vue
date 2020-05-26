@@ -2,6 +2,7 @@
     <div class="add--auto-engine-data-panel">
 
         <div class="card  rad" id="mainBigContainer">
+
             <br/>
             <span v-if="LOAD_SAVE_AUTOMOBILE_ENGINE || AUTO_ENGINE_LOAD"><div
                     class="lds-dual-ring loadPos"></div></span>
@@ -110,14 +111,10 @@
                     </div>
                     <div class=" tab-pane fade" :id="'nav-update'+namePanel" role="tabpanel"
                          :aria-labelledby="'nav-update-tab'+namePanel">
-
                         <search-engine-panel
                                 @submit-function="GET_AUTOENG_BY_PARAM_UPDATE" style="position: relative;right: 1vw"
                         />
-
                         <br/>
-
-
                         <table class="table" style="text-align: center; z-index: 0;">
                             <thead>
                             <tr>
