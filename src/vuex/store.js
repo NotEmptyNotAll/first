@@ -25,6 +25,7 @@ let store = new Vuex.Store({
         engData: [],
         startParam: [],
         listParam: [],
+        listParamUp: [],
         listNewElem: [],
         elementsAndMaxId: null,
         paramNameAndUnits: [],

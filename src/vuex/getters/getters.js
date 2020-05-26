@@ -11,6 +11,9 @@ export default {
     LISTPARAM(state) {
         return state.listParam;
     },
+    LISTPARAMUP(state) {
+        return state.listParamUp;
+    },
     PARAM_NAME_AND_UNITS(state) {
         return state.paramNameAndUnits;
     },
