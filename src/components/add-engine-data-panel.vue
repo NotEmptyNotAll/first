@@ -25,6 +25,12 @@
                     <div class=" tab-pane fade show active" :id="'nav-add'+namePanel" role="tabpanel"
                          :aria-labelledby="'nav-add-tab'+namePanel">
                         <div class="row rowCenter">
+                            <div v-if="showErr" class="alert alert-danger" role="alert" style="text-align:center; width: 100%">
+                                {{$ml.get('msg.duplicateValue')}}
+                            </div>
+
+                        </div>
+                        <div class="row rowCenter">
                             <input-field class="col-md-3"
                                          :name-input="$ml.get('word.engine')"
                                          :save-parameters="saveDataObj"
@@ -329,6 +335,7 @@
         name: "add-engine-data-panel",
         components: {VueDatalist, InputField},
         data: () => ({
+            showErr: false,
             saveDataObj: {
                 engineType: null,
                 engineManufacturerFk: null,
@@ -346,7 +353,7 @@
                 releaseYearBy: null,
                 horsepower: null
             },
-            tempData:{
+            tempData: {
                 engineType: null,
                 engineManufacturerFk: null,
                 cylindersPlacementFk: null,
@@ -408,30 +415,38 @@
             test(id) {
                 alert(id)
             },
-             async getEng(number) {
-               await this.GET_ENG({id: this.updateDataObj.objToBeChanged});
-                    this.tempData=this.ENGINE;
-                 this.updateDataObj.objToBeChanged=this.ENGINE.id
-                 this.updateDataObj.engineType=this.ENGINE.engineType
-                 this.updateDataObj.engineManufacturerFk=this.ENGINE.engineManufacturerFk
-                 this.updateDataObj.cylindersPlacementFk=this.ENGINE.cylindersPlacementFk
-                 this.updateDataObj.fuelTypeFk=this.ENGINE.fuelTypeFk
-                 this.updateDataObj.superchargedTypeFk= this.ENGINE.superchargedTypeFk
-                 this.updateDataObj.cylindersNumber= this.ENGINE.cylindersNumber
-                 this.updateDataObj.flapNumber=this.ENGINE.flapNumber
-                 this.updateDataObj.pistonDiameter= this.ENGINE.pistonDiameter
-                 this.updateDataObj.pistonStroke= this.ENGINE.pistonStroke
-                 this.updateDataObj.engineCapacity= this.ENGINE.engineCapacity
-                 this.updateDataObj.powerKwt= this.ENGINE.powerKwt
-                 this.updateDataObj.degreeCompression= this.ENGINE.degreeCompression
-                 this.updateDataObj.releaseYearFrom= this.ENGINE.releaseYearFrom
-                 this.updateDataObj.releaseYearBy= this.ENGINE.releaseYearBy
-                 this.updateDataObj.horsepower= this.ENGINE.horsepower
-                 console.log(number)
-             },
+            async getEng(number) {
+                await this.GET_ENG({id: this.updateDataObj.objToBeChanged});
+                this.tempData = this.ENGINE;
+                this.updateDataObj.objToBeChanged = this.ENGINE.id
+                this.updateDataObj.engineType = this.ENGINE.engineType
+                this.updateDataObj.engineManufacturerFk = this.ENGINE.engineManufacturerFk
+                this.updateDataObj.cylindersPlacementFk = this.ENGINE.cylindersPlacementFk
+                this.updateDataObj.fuelTypeFk = this.ENGINE.fuelTypeFk
+                this.updateDataObj.superchargedTypeFk = this.ENGINE.superchargedTypeFk
+                this.updateDataObj.cylindersNumber = this.ENGINE.cylindersNumber
+                this.updateDataObj.flapNumber = this.ENGINE.flapNumber
+                this.updateDataObj.pistonDiameter = this.ENGINE.pistonDiameter
+                this.updateDataObj.pistonStroke = this.ENGINE.pistonStroke
+                this.updateDataObj.engineCapacity = this.ENGINE.engineCapacity
+                this.updateDataObj.powerKwt = this.ENGINE.powerKwt
+                this.updateDataObj.degreeCompression = this.ENGINE.degreeCompression
+                this.updateDataObj.releaseYearFrom = this.ENGINE.releaseYearFrom
+                this.updateDataObj.releaseYearBy = this.ENGINE.releaseYearBy
+                this.updateDataObj.horsepower = this.ENGINE.horsepower
+                console.log(number)
+            },
             async saveEngManufacture(number) {
-                this.$emit("save-data-api", this.saveDataObj)
+                let temp = this.ADDITIONAL_DATA.engine.find(item =>
+                    item.data === this.saveDataObj.engineType
+                );
+                if (temp === undefined) {
+                    this.showErr = false
+                    this.$emit("save-data-api", this.saveDataObj)
+                } else {
+                    this.showErr = true;
 
+                }
                 console.log(number)
             },
             async update(number) {

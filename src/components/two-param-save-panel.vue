@@ -3,9 +3,9 @@
         <div id="addData">
             <div class="card  rad" id="mainContainer">
                 <br/>
-                <span v-if="loadStatus"  ><div class="lds-dual-ring loadPos"></div></span>
+                <span v-if="loadStatus"><div class="lds-dual-ring loadPos"></div></span>
 
-                <h4  v-if="!loadStatus" class="deepshd" style="text-align: center">{{namePanel}}</h4>
+                <h4 v-if="!loadStatus" class="deepshd" style="text-align: center">{{namePanel}}</h4>
                 <div class="panelBody">
                     <navig>
                         <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
@@ -30,8 +30,9 @@
                                        type="text"
                                        class="form-control col-md-8"
                                        :placeholder="title_one"
+                                       @click="showErr=false"
                                        aria-describedby="button-addon1">
-                                <input  id="saveE"
+                                <input id="saveE"
                                        v-model="saveDataObj.saveData_secondary"
                                        type="text"
                                        class="form-control col-md-4"
@@ -46,10 +47,12 @@
                                     </button>
                                 </div>
                             </div>
-
+                            <div v-if="showErr" class="alert alert-danger" role="alert" style="margin-left: 4%">
+                                {{$ml.get('msg.duplicateValue')}}
+                            </div>
 
                             <div class="col input-group panelRow col-md-12">
-                                <button  type="submit" @click="saveEngManufacture(1)"
+                                <button type="submit" @click="saveEngManufacture(1)"
                                         class="btn btn-outline-dark btn-block ">
                                     <span>{{$ml.get('word.save')}}</span>
                                 </button>
@@ -91,7 +94,7 @@
                             </div>
                             <div class="col input-group panelRow col-md-12">
 
-                                <button  type="submit" @click="update(1)"
+                                <button type="submit" @click="update(1)"
                                         class="btn  btn-block btn-outline-dark">
                                     <span>{{$ml.get('word.update')}}</span>
                                 </button>
@@ -116,6 +119,7 @@
         name: "two-param-save-panel",
         components: {VueDatalist},
         data: () => ({
+            showErr: null,
             saveDataObj: {
                 saveData_primary: null,
                 saveData_secondary: null
@@ -127,8 +131,8 @@
             }
         }),
         props: {
-            listParamTwo:null,
-            listParamOnSave:Boolean,
+            listParamTwo: null,
+            listParamOnSave: Boolean,
             namePanel: String,
             dataList: null,
             loadStatus: null,
@@ -141,9 +145,16 @@
                 'GET_ALL_ADDITIONAL_DATA'
             ]),
             async saveEngManufacture(number) {
-                if (this.saveDataObj.saveData_primary != null) {
-                    this.$emit("save-data-api", this.saveDataObj);
-                    this.GET_ALL_ADDITIONAL_DATA();
+                let temp = this.dataList.find(item =>
+                    item.data === this.saveDataObj.saveData_primary
+                );
+                if (temp === undefined) {
+                    if (this.saveDataObj.saveData_primary != null) {
+                        this.$emit("save-data-api", this.saveDataObj);
+                        this.GET_ALL_ADDITIONAL_DATA();
+                    }
+                }else {
+                    this.showErr=true;
                 }
                 console.log(number)
             },

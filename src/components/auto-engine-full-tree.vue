@@ -49,20 +49,30 @@
                                 <tr>
                                     <th>{{$ml.get('word.name')}}</th>
                                     <th>{{$ml.get('word.units')}}</th>
-                                    <th>{{$ml.get('word.min')}}</th>
-                                    <th>{{$ml.get('word.max')}}</th>
+                                    <th>{{$ml.get('word.from')}}</th>
+                                    <th>{{$ml.get('word.by')}}</th>
                                     <th>{{$ml.get('word.value')}}</th>
-                                    <th>{{$ml.get('word.author')}}</th>
+                                    <th>{{$ml.get('word.status')}}</th>
                                     <th>{{$ml.get('word.source')}}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr v-for="current in LISTPARAM" v-bind:key="current">
                                     <td>{{current.name}}</td>
-                                    <td>{{current.units}}</td>
-                                    <td>{{Number(current.doubleMin).toFixed(4)}}</td>
-                                    <td>{{Number(current.doubleMax).toFixed(4)}}</td>
-                                    <td>{{Number(current.doubleNum).toFixed(4)}}</td>
+                                    <td>{{PARAM_NAME_AND_UNITS.units.find(unit=>
+                                        unit.id===current.units).data}}</td>
+                                    <td>
+                                        <span v-if="current.doubleMin!==null">{{Number(current.doubleMin).toFixed(4)}}</span>
+                                        <span v-else></span>
+                                    </td>
+                                    <td>
+                                        <span v-if="current.doubleMax!==null">{{Number(current.doubleMax).toFixed(4)}}</span>
+                                        <span v-else></span>
+                                    </td>
+                                    <td>
+                                        <span v-if="current.doubleNum!==null">{{Number(current.doubleNum).toFixed(4)}}</span>
+                                        <span v-else></span>
+                                    </td>
                                     <td>{{current.author}}</td>
                                     <td>{{current.source}}</td>
                                 </tr>
@@ -102,7 +112,8 @@
             ...mapGetters([
                 'LISTPARAM',
                 'ELEMENTS',
-                'LOAD_PARAM_FOR_TREE'
+                'LOAD_PARAM_FOR_TREE',
+                'PARAM_NAME_AND_UNITS'
             ])
         },
         methods: {

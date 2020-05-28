@@ -30,6 +30,7 @@
                                        v-model="saveDataObj.saveData"
                                        type="text"
                                        class="form-control"
+                                       @click="showErr=false"
                                        :placeholder="$ml.get('word.data')"
                                        aria-describedby="button-addon1">
                                 <div class="input-group-append">
@@ -39,6 +40,9 @@
                                         <span>&#10008;</span>
                                     </button>
                                 </div>
+                            </div>
+                            <div v-if="showErr" class="alert alert-danger" role="alert" style="margin-left: 4%">
+                                {{$ml.get('msg.duplicateValue')}}
                             </div>
                             <div class="col input-group panelRow col-md-12">
 
@@ -101,6 +105,7 @@
         name: "addData",
         components: {VueDatalist},
         data: () => ({
+            showErr:false,
             saveDataObj: {
                 saveData: null
             },
@@ -120,9 +125,16 @@
                 'GET_ALL_ADDITIONAL_DATA'
             ]),
             async save(number) {
-                if (this.saveDataObj.saveData != null) {
-                    this.$emit("save-data-api", this.saveDataObj);
-                    this.GET_ALL_ADDITIONAL_DATA();
+                let temp = this.dataList.find(item =>
+                    item.data === this.saveDataObj.saveData
+                );
+                if (temp === undefined) {
+                    if (this.saveDataObj.saveData != null) {
+                        this.$emit("save-data-api", this.saveDataObj);
+                        this.GET_ALL_ADDITIONAL_DATA();
+                    }
+                }else {
+                    this.showErr=true;
                 }
                 console.log(number)
             },
@@ -253,6 +265,7 @@
         max-width: 100%;
         min-width: 100%;
     }
+
 
 
 </style>

@@ -65,13 +65,14 @@ export default new MLCreate({
                 choose: 'choose',
                 title: 'name',
                 mark: 'mark',
-                newBlockText:'add new block'
-
+                newBlockText:'add new block',
+                status:'status'
             },
             msg: {
                 passwordErr: 'password is required!',
                 usernamedErr: 'Username is required!',
-                authErr: "Authorization Error"
+                authErr: "Authorization Error",
+                duplicateValue:'duplicate value'
             },
             errPage: {
                 logoText: 'error',
@@ -139,14 +140,15 @@ export default new MLCreate({
                 choose: 'выбрать',
                 title: 'название',
                 mark: "Обозначение",
-                newBlockText:'додати новий блок'
-
+                newBlockText:'додати новий блок',
+                status:'статус'
 
             },
             msg: {
                 passwordErr: "Пароль необходим!",
                 userNamedErr: "Имя пользователя необходимо!",
-                authErr: "Ошибка авторизации"
+                authErr: "Ошибка авторизации",
+                duplicateValue:'дублированное значение'
             },
             errPage: {
                 logoText: 'ошибка',
@@ -214,14 +216,16 @@ export default new MLCreate({
                 choose: 'вибрати',
                 title:'назва',
                 mark:'Позначення',
-                newBlockText:'додати новий блок'
+                newBlockText:'додати новий блок',
+                status:'статус'
 
 
             },
             msg: {
                 passwordErr: 'Пароль необхідний!',
                 userNamedErr: 'Ім\'я користувача обов\'язкове!',
-                authErr: 'Помилка авторизації'
+                authErr: 'Помилка авторизації',
+                duplicateValue:'повторюване значення'
             },
             errPage: {
                 logoText: 'помилка',

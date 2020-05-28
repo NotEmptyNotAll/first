@@ -1,9 +1,7 @@
 <template>
 
     <ul>
-        <li class="border-white list-group-item   left"
-            :class="{bold: isFolder}"
-            v-if="isFolder"
+        <li class="border-white bold list-group-item   left"
             style="position: relative; width: 24vw;padding: 0px;"
         >
             <div class="row" style="min-width: 22vw;max-width: 22vw; padding: 15px">

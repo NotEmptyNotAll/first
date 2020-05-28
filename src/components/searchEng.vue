@@ -13,14 +13,16 @@
             />
         </div>
         <!--engine data table. By clicking on row m we open the engine tree, where we can find out its parameters-->
-        <div class="container tab  search-border bg-white rad" id="contTable" style="position: relative; ">
+        <div class="container tab   bg-white rad" id="contTable" style="position: relative; ">
             <table class="table search-tab table-hover">
                 <thead class="thead-light-dark ">
                 <tr>
                     <th>{{$ml.get('word.engine')}}</th>
-                    <th>{{$ml.get('word.engineManufacture')}}</th>
-                    <th>{{$ml.get('word.cylinders')}}</th>
+                    <th>{{$ml.get('word.autoManufacturer')}}</th>
+                    <th>{{$ml.get('word.autoModel')}}</th>
+                    <th>{{$ml.get('word.releaseYear')}}</th>
                     <th>{{$ml.get('word.fuelType')}}</th>
+                    <th>{{$ml.get('word.cylinders')}}</th>
                     <th>{{$ml.get('word.cylindersNumber')}}</th>
                     <th>{{$ml.get('word.flapNumber')}}</th>
                     <th>{{$ml.get('word.pistonDiameter')}}</th>
@@ -28,34 +30,39 @@
                     <th>{{$ml.get('word.engineCapacity')}}</th>
                     <th>{{$ml.get('word.powerKwt')}}</th>
                     <th>{{$ml.get('word.horsepower')}}</th>
-                    <th>{{$ml.get('word.degreeCompression')}}</th>
                     <th>{{$ml.get('word.superchargedType')}}</th>
-                    <th>{{$ml.get('word.releaseYear')}}</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr v-for="current in ENGDATA" v-bind:key="current" data-toggle="collapse" href="#collapse"
-                    role="button" aria-expanded="false" aria-controls="collapse"
-                    v-on:click="getElements(current.id)">
+                    role="button" aria-expanded="false" :class="{trActive: current.active}" aria-controls="collapse"
+                    v-on:click="getElements(current)">
                     <td>{{current.engineType}}</td>
-                    <td>{{current.engineManufacture}}</td>
-                    <td>{{current.cylinderPlace}}</td>
-                    <td>{{current.fuelType}}</td>
-                    <td>{{current.cylindersNumber}}</td>
-                    <td>{{current.flapNumber}}</td>
-                    <td>{{Number(current.pistonDiameter).toFixed(4)}}</td>
-                    <td>{{Number(current.pistonStoke).toFixed(4)}}</td>
-                    <td>{{current.engineCapacity}}</td>
-                    <td>{{current.powerKWT}}</td>
-                    <td>{{current.horsepower}}</td>
-                    <td>{{Number(current.degreeCompression).toFixed(4)}}</td>
-                    <td>{{current.superchargedType}}</td>
+                    <td>{{current.autoManufacture}}</td>
+                    <td>{{current.modelName}}</td>
                     <td v-if="current.releaseYearFrom!=null && current.releaseYearBy!=null">
                         {{current.releaseYearFrom+'-'+current.releaseYearBy}}
                     </td>
                     <td v-if="current.releaseYearFrom!=null ">{{current.releaseYearFrom}}</td>
                     <td v-if="current.releaseYearBy!=null">{{current.releaseYearFrom}}</td>
                     <td v-if="current.releaseYearFrom==null && current.releaseYearBy==null"></td>
+                    <td>{{current.fuelType}}</td>
+                    <td>{{current.cylinderPlace}}</td>
+                    <td>{{current.cylindersNumber}}</td>
+                    <td>{{current.flapNumber}}</td>
+                    <td>
+                        <span v-if="current.pistonDiameter!==null">{{Number(current.pistonDiameter).toFixed(4)}}</span>
+                        <span v-else></span>
+                    </td>
+                    <td>
+                        <span v-if="current.pistonStoke!==null">{{Number(current.pistonStoke).toFixed(4)}}</span>
+                        <span v-else></span>
+                    </td>
+                    <td>{{current.engineCapacity}}</td>
+                    <td>{{current.powerKWT}}</td>
+                    <td>{{current.horsepower}}</td>
+                    <td>{{current.superchargedType}}</td>
+
                 </tr>
                 </tbody>
             </table>
@@ -237,13 +244,14 @@
             }
             ,
             //query to get a list of parameter names
-            async getElements(number) {
+            async getElements(current) {
+                current.active = true;
                 this.listParam = [];
                 this.nowPressed.linkOnButt.isPressed = false;
-                this.auto_id = number;
-                this.GET_ELEMENTS(number);
+                this.auto_id = current.id;
+                this.GET_ELEMENTS(current.id);
                 document.getElementById('contParam').style.display = 'block'
-                console.log(number)
+                console.log(current.id)
             }
             ,
             //request for data about the auto engine
@@ -279,10 +287,6 @@
 <style>
     #contTable {
         min-height: 20vh;
-        border-style: solid;
-        border-left-color: #272e38;
-        border-right-color: #272e38;
-        border-width: 15px 15px 0px 15px;
     }
 
 
@@ -380,19 +384,25 @@
     .search-tab {
         text-align: center;
         horiz-align: center;
-        min-width: 95.6vw;
-        right: -10px;
-        left: -1px;
+        width: 97.05vw;
+        left: 0px;
         position: absolute;
         top: -4px;
-        border: 1px solid black; /* Рамка вокруг таблицы */
+        border-style: solid;
+        border-top-color: #272e38;
+        border-width: 1px 0px 0px 0px;
     }
+
 
     .search-border {
         border-style: solid;
         border-top-color: #272e38;
         border-width: 15px 0px 0px 0px;
 
+    }
+
+    .trActive {
+        background: lightgray;
     }
 
 </style>

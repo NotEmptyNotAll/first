@@ -4,170 +4,40 @@
          Fill with the initial parameters that you get from the backend
           Use a v-model to populate data.-->
         <div class="row  ">
-            <div class="input-group col-md-3">
-                <div class="input-group-prepend">
-                    <label class="input-group-text" for="engineType">
-                        {{$ml.get('word.engine')}}
-                        <div v-if="LOADPARAM" class="lds-dual-ring"></div>
-                    </label>
-                </div>
-                <input id="engineType"
-                       v-model="searchData.engineType"
-                       v-on:change="getEngDataByParam(1)"
-                       autocomplete="on" type="text"
-                       class="form-control"
-                       :placeholder="$ml.get('word.data')"
-                       aria-describedby="button-addon1" list="listEn">
-                <datalist id="listEn">
-                    <option v-for="current in STARTPARAM.engineType" v-bind:key="current"
-                            :value="current"
-                            :label="current"/>
-                </datalist>
-                <div class="input-group-append">
-                    <button class="btn btn-outline-danger"
-                            v-on:click="clrEngTypeAndGetEngDataByParam(1)"
-                            type="button" id="button-addon4">
-                        <span>&#10008;</span>
-                    </button>
-                </div>
-            </div>
-            <div class="input-group col-md-3">
-                <div class="input-group-prepend">
-                    <label class="input-group-text" for="engNum">{{$ml.get('word.engineNumber')}}</label>
-                </div>
-                <input v-on:input="searchData.numberEng = $event.target.value"
-                       autocomplete="on" type="text" class="form-control"
-                       :placeholder="$ml.get('word.data')"
-                       id="engNum"
-                       v-on:change="getAutoEnByNum(1)"
-                       aria-describedby="button-addon2" list="listNum">
-                <datalist id="listNum">
-                    <option v-for="current in STARTPARAM.engineNumber" v-bind:key="current" :value="current"
-                            :label="current"/>
-                </datalist>
-                <div class="input-group-append">
-                    <button class="btn btn-outline-danger" onclick="document.getElementById('engNum').value =null"
-                            type="button" id="button-addon6">
-                        <span>&#10008;</span>
-                    </button>
-                </div>
+            <vue-datalist
+                    class="col-md-3"
+                    :title-input="$ml.get('word.autoManufacturer')"
+                    :items="STARTPARAM.engineManufacture"
+                    :update-obj="searchData"
+                    :holderNum="0"
+                    index="autoManufacturer"
+                    @change-meth="getEngDataByParam"
 
-            </div>
-            <div class="col input-group col-md-3">
-                <div class="input-group-prepend">
-                    <label class="input-group-text" for="engCap">{{$ml.get('word.engineCapacity')}}</label>
-                </div>
-                <input v-model="searchData.engineCapacity" min="0" step="0.01" class="form-control"
-                       type="number" value="" id="engCap"
-                       :placeholder="$ml.get('word.data')">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-danger" v-on:click="searchData.engineCapacity=null"
-                            type="button" id="button-addon7">
-                        <span>&#10008;</span>
-                    </button>
-                </div>
-            </div>
-            <div class="col input-group col-md-3">
-                <div class="input-group-prepend">
-                    <label class="input-group-text" for="engPowerKWt">{{$ml.get('word.powerKwt')}}</label>
-                </div>
-                <input v-model="searchData.powerKWt" class="form-control" type="text"
-                       value=""
-                       id="engPowerKWt"
-                       :placeholder="$ml.get('word.data')">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-danger" v-on:click="searchData.powerKWt=null"
-                            type="button" id="button-addon8">
-                        <span>&#10008;</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="row ">
-            <div class="input-group col-md-3">
-                <div class="input-group-prepend">
-                    <label class="input-group-text" for="inputGroupSelect01">
-                        {{$ml.get('word.autoManufacturer')}}
-                        <div v-if="LOADPARAM" class="lds-dual-ring"></div>
-                    </label>
+            />
+            <vue-datalist
+                    class="col-md-3"
+                    :title-input="$ml.get('word.autoModel')"
+                    :items="STARTPARAM.autoModel"
+                    :update-obj="searchData"
+                    :holderNum="0"
+                    index="autoModel"
+                    @change-meth="getEngDataByParam"
 
-                </div>
-                <select v-model="searchData.autoManufacturer" aria-describedby="button-addon3"
-                        id="inputGroupSelect01"
-                        v-on:change="getEngDataByParam(1)"
-                        class="custom-select form-control">
-                    <option v-for="current in STARTPARAM.engineManufacture" v-bind:key="current">{{current}}
-                    </option>
-                </select>
-                <div class="input-group-append">
-                    <button class="btn btn-outline-danger"
-                            v-on:click="clrAutoManufAndGetEngDataByParam(1)"
-                            type="button" id="button-addon3">
-                        <span>&#10008;</span>
-                    </button>
-                </div>
-            </div>
-            <div class="input-group col-md-3">
-                <div class="input-group-prepend">
-                    <label class="input-group-text" for="modelAuto">
-                        {{$ml.get('word.autoModel')}}
-                        <div v-if="LOADPARAM" class="lds-dual-ring"></div>
-                    </label>
-                </div>
-                <input id="modelAuto"
-                       v-model="searchData.autoModel"
-                       autocomplete="on" type="text"
-                       class="form-control"
-                       v-on:change="getEngDataByParam(1)"
-                       :placeholder="$ml.get('word.data')"
-                       aria-describedby="button-addon1" list="listModel">
-                <datalist id="listModel">
-                    <option v-for="current in STARTPARAM.autoModel" v-bind:key="current" :value="current"
-                            :label="current"/>
-                </datalist>
-                <div class="input-group-append">
-                    <button class="btn btn-outline-danger" v-on:click="clrAutoModelAndGetEngDataByParam(1)"
-                            type="button"
-                            id="button-addon">
-                        <span>&#10008;</span>
-                    </button>
-                </div>
-            </div>
-            <div class="input-group col-md-3">
-                <div class="input-group-prepend">
-                    <label class="input-group-text" for="inputGroupSelect03">
-                        {{$ml.get('word.fuelType')}}
-                        <div v-if="LOADPARAM" class="lds-dual-ring"></div>
-                    </label>
-                </div>
-                <select ref="fuelType" v-model="searchData.fuelType" v-on:change="getEngDataByParam(1)"
-                        aria-describedby="button-addon2" id="inputGroupSelect03"
-                        class="custom-select form-control">
-                    <option v-for="current in STARTPARAM.fuelType" v-bind:key="current">{{current}}
-                    </option>
-                </select>
-                <div class="input-group-append">
-                    <button class="btn btn-outline-danger" v-on:click="clrFuelAndGetEngDataByParam(1)" type="button"
-                            id="button-addon2">
-                        <span>&#10008;</span>
-                    </button>
-                </div>
-            </div>
-            <div class="col input-group col-md-3">
-                <div class="input-group-prepend">
-                    <label class="input-group-text" for="engY">{{$ml.get('word.releaseYear')}}</label>
-                </div>
-                <input v-model="searchData.produceYear" class="form-control" min="1885" max="2020"
-                       :placeholder="$ml.get('word.data')" step="1"
-                       id="engY"
-                       type="number" value="">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-danger" v-on:click="searchData.produceYear=null"
-                            type="button" id="button-addon9">
-                        <span>&#10008;</span>
-                    </button>
-                </div>
-            </div>
+            />
+            <vue-datalist
+                    class="col-md-3"
+                    :title-input="$ml.get('word.engine')"
+                    :items="STARTPARAM.engineType"
+                    :update-obj="searchData"
+                    :holderNum="0"
+                    @change-meth="getEngDataByParam"
+                    index="engineType"
+            />
+            <input-field class="col-md-3"
+                         :name-input="$ml.get('word.releaseYear')"
+                         :save-parameters="searchData"
+                         index="produceYear"
+            />
         </div>
         <hr style="position: center; width: 70%"/>
         <div class="row ">
@@ -198,6 +68,39 @@
         <transition name="slide-fade">
             <!--here we enter data for an improved search, which the user measures-->
             <div v-if="advanceSearch">
+                <div class="row ">
+                    <vue-datalist
+                            class="col-md-3"
+                            :title-input="$ml.get('word.engineNumber')"
+                            :items="STARTPARAM.engineNumber"
+                            :update-obj="searchData"
+                            :holderNum="0"
+                            index="numberEng"
+                            @change-meth="getAutoEnByNum"
+
+                    />
+                    <vue-datalist
+                            class="col-md-3"
+                            :title-input="$ml.get('word.fuelType')"
+                            :items="STARTPARAM.fuelType"
+                            :update-obj="searchData"
+                            :holderNum="0"
+                            index="fuelType"
+                            @change-meth="getEngDataByParam"
+
+                    />
+                    <input-field class="col-md-3"
+                                 :name-input="$ml.get('word.engineCapacity')"
+                                 :save-parameters="searchData"
+                                 index="engineCapacity"
+                    />
+                    <input-field class="col-md-3"
+                                 :name-input="$ml.get('word.powerKwt')"
+                                 :save-parameters="searchData"
+                                 index="powerKWt"
+                    />
+                </div>
+                <hr/>
                 <div v-for="(param,index) in searchData.paramList" v-bind:key="param" class="row">
                     <div class="input-group col-md-5">
                         <div class="input-group-prepend">
@@ -252,7 +155,6 @@
                             <span>{{$ml.get('word.deleteR')}}</span>
                         </button>
                     </div>
-
                     <div v-if="searchData.paramList.length===1" class="col col-md-3">
                         <input v-model="param.parameterNumber" class="form-control" type="number"
                                value="" :placeholder="$ml.get('word.data')"
@@ -260,14 +162,14 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col col-md-3"></div>
-                    <div class="col col-md-6">
+                    <div class="col col-md-4"></div>
+                    <div class="col col-md-4">
                         <button class="btn form-control btn-block btn-outline-secondary" type="button"
                                 v-on:click="addParam(1)">
                             {{$ml.get('word.add')}}
                         </button>
                     </div>
-                    <div class="col col-md-3"></div>
+                    <div class="col col-md-4"></div>
                 </div>
             </div>
         </transition>
@@ -277,9 +179,13 @@
 
 <script>
     import {mapActions, mapGetters, mapMutations} from "vuex";
+    import InputField from "./input-field";
+    import VueDatalist from "./vue-datalist";
+
 
     export default {
         name: "search-engine-panel",
+        components: {VueDatalist, InputField},
         data: () => ({
             paramtrs: [],
             choiceParam: [],
@@ -427,6 +333,7 @@
                 } else {
                     this.$emit('submit-function', this.searchData);
                     // this.GET_AUTOENG_BY_PARAM(this.searchData);
+
                     if (this.ENGDATA.status == null) {
                         if (this.ENGDATA.dataEng[0] == null) {
                             this.errorMessage = "в базі немає записів";

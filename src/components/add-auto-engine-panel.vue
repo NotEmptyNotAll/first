@@ -28,6 +28,12 @@
                     <div class=" tab-pane fade show active" :id="'nav-add'+namePanel" role="tabpanel"
                          :aria-labelledby="'nav-add-tab'+namePanel">
                         <div class="row rowCenter">
+                            <div v-if="showErr" class="alert alert-danger" role="alert" style="text-align:center; width: 100%">
+                                {{$ml.get('msg.duplicateValue')}}
+                            </div>
+
+                        </div>
+                        <div class="row rowCenter">
                             <!-- <input-field
                                      class="col-md-3"
                                      :name-input="$ml.get('word.engineNumber')"
@@ -101,7 +107,7 @@
                             <div class="col-md-5"></div>
                             <div class="col-md-2">
 
-                                <button  type="submit" @click="saveEngManufacture(1)"
+                                <button type="submit" @click="saveEngManufacture(1)"
                                         class="btn btn-outline-dark btn-block">
                                     <span>{{$ml.get('word.save')}}</span>
                                 </button>
@@ -234,6 +240,7 @@
     export default {
         components: {SearchEnginePanel, VueDatalist},
         data: () => ({
+            showErr: false,
             saveDataEngParam: {
                 saveData: null
             },
@@ -287,8 +294,22 @@
 
             ]),
             async saveEngManufacture(number) {
+                let dupAutoM = this.ADDITIONAL_DATA.autoManufacture.find(item =>
+                    item.id === this.saveDataObj.engineType
+                );
+                let dupAutoModel = this.ADDITIONAL_DATA.autoModel.find(item =>
+                    item.id === this.saveDataObj.engineType
+                );
+                let dupEngine = this.ADDITIONAL_DATA.engine.find(item =>
+                    item.id === this.saveDataObj.engineType
+                );
 
-                this.SAVE_DATA_AUTOMOBILE_ENGINE(this.saveDataObj);
+                if (dupAutoM === undefined && dupAutoModel === undefined && dupEngine === undefined) {
+                    this.showErr = false
+                    this.SAVE_DATA_AUTOMOBILE_ENGINE(this.saveDataObj);
+                } else {
+                    this.showErr = true;
+                }
                 //  this.SAVE_DATA_ENGINE_NUMBER(this.saveDataEngParam);
                 console.log(number)
             },

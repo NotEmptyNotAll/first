@@ -8,31 +8,34 @@
                 <div v-if="LOADPARAM" class="lds-dual-ring"></div>
             </label>
         </div>
-        <input v-if="holderNum===0"
-                :id="'vue-list-input'+titleInput"
+       <input
+               v-if="holderNum===0"
+               v-model="search"
+               v-on:change="chMeth"
+               :id="'vue-list-input'+titleInput"
                autocomplete="off"
                class="form-control"
                type="text"
                placeholder=" "
-               @input="onChange"
-               @click="onChange"
-               v-model="search"
-               @keydown.down="onArrowDown"
-               @keydown.up="onArrowUp"
-               @keydown.enter="onEnter"
+               v-on:input="onChange"
+               v-on:click="onChange"
+               v-on:keydown.down="onArrowDown"
+               v-on:keydown.up="onArrowUp"
+               v-on:keydown.enter="onEnter"
         />
-        <input  v-if="holderNum!==0"
-                :id="'vue-list-input'+titleInput"
+        <input v-if="holderNum!==0"
+               :id="'vue-list-input'+titleInput"
                autocomplete="off"
                class="form-control"
                type="text"
                :placeholder="items.find(e=>e.id===holderNum).data"
-               @input="onChange"
-               @click="onChange"
+               v-on:change="chMeth"
                v-model="search"
-               @keydown.down="onArrowDown"
-               @keydown.up="onArrowUp"
-               @keydown.enter="onEnter"
+               v-on:input="onChange"
+               v-on:click="onChange"
+               v-on:keydown.down="onArrowDown"
+               v-on:keydown.up="onArrowUp"
+               v-on:keydown.enter="onEnter"
         />
         <ul
                 id="autocomplete-results"
@@ -59,7 +62,7 @@
 
         <div class="input-group-append">
             <button class="btn btn-outline-danger"
-                    v-on:click="search=null"
+                    v-on:click="clear"
                     type="button">
                 <span>&#10008;</span>
             </button>
@@ -69,12 +72,13 @@
 
 </template>
 <script>
+    import {mapGetters} from "vuex";
 
     export default {
         name: 'autocomplete',
 
         props: {
-            holderNum:Number,
+            holderNum: Number,
             hideTitle: Boolean,
             titleInput: String,
             updateObj: Object,
@@ -101,12 +105,22 @@
                 arrowCounter: 0,
             };
         },
-
+        computed: {
+            ...mapGetters(['LOADPARAM'])
+        },
         methods: {
 
+            async clear(){
+                this.updateObj[this.index] = null;
+                this.search='';
+                this.$emit("change-meth", 1);
+            },
+            async chMeth() {
+                this.$emit("change-meth", 1);
+            },
             onChange() {
                 // Let's warn the parent that a change was made
-               // this.$emit('input', this.search);
+                // this.$emit('input', this.search);
 
                 // Is the data given by an outside ajax request?
                 if (this.isAsync) {
@@ -129,6 +143,7 @@
                 this.search = result.data;
                 this.updateObj[this.index] = result.id;
                 this.isOpen = false;
+                this.$emit("change-meth", 1);
             },
             onArrowDown() {
                 if (this.arrowCounter < this.results.length) {
@@ -141,6 +156,7 @@
                 }
             },
             onEnter() {
+                this.$emit("change-meth", 1);
                 this.search = this.results[this.arrowCounter].data;
                 this.updateObj[this.index] = this.results[this.arrowCounter].id;
                 this.isOpen = false;
@@ -164,8 +180,8 @@
             },
         },
         mounted() {
-            if(this.holderNum===null || this.holderNum===undefined){
-                this.holderNum=0;
+            if (this.holderNum === null || this.holderNum === undefined) {
+                this.holderNum = 0;
             }
 
             if (this.hideTitle == null) {
@@ -189,7 +205,7 @@
         z-index: 999;
         padding: 0;
         border: 1px solid #eeeeee;
-        height: 120px;
+        height: 130px;
         overflow: auto;
         width: 93%;
         top: 100%;

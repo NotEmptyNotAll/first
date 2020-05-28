@@ -5,7 +5,7 @@
             <div class="head-text deepshd ">
                  <span v-if="LOAD_SAVE_ELEMENTS"><div
                          class="lds-dual-ring " style="margin-left: 47%"></div></span>
-                <h4  v-if="!LOAD_SAVE_ELEMENTS">{{ELEMENTS.name}}</h4></div>
+                <h4 v-if="!LOAD_SAVE_ELEMENTS">{{ELEMENTS.name}}</h4></div>
         </div>
         <br/>
         <br/>
@@ -90,10 +90,10 @@
                                 <tr>
                                     <th>{{$ml.get('word.name')}}</th>
                                     <th>{{$ml.get('word.units')}}</th>
-                                    <th>{{$ml.get('word.min')}}</th>
-                                    <th>{{$ml.get('word.max')}}</th>
+                                    <th>{{$ml.get('word.from')}}</th>
+                                    <th>{{$ml.get('word.by')}}</th>
                                     <th>{{$ml.get('word.value')}}</th>
-                                    <th>{{$ml.get('word.author')}}</th>
+                                    <th>{{$ml.get('word.status')}}</th>
                                     <th>{{$ml.get('word.source')}}</th>
                                     <th>{{$ml.get('word.action')}}</th>
                                 </tr>
@@ -114,15 +114,24 @@
 
                                         />
                                     </td>
-                                    <td v-if="!current.editRow">{{Number(current.doubleMin).toFixed(4)}}</td>
+                                    <td v-if="!current.editRow">
+                                        <span v-if="current.doubleMin!==null">{{Number(current.doubleMin).toFixed(4)}}</span>
+                                        <span v-else></span>
+                                    </td>
                                     <td v-if="current.editRow">
                                         <input type="text" class="form-control" v-model="current.doubleMin">
                                     </td>
-                                    <td v-if="!current.editRow">{{Number(current.doubleMax).toFixed(4)}}</td>
+                                    <td v-if="!current.editRow">
+                                        <span v-if="current.doubleMax!==null">{{Number(current.doubleMax).toFixed(4)}}</span>
+                                        <span v-else></span>
+                                    </td>
                                     <td v-if="current.editRow">
                                         <input type="text" class="form-control" v-model="current.doubleMax">
                                     </td>
-                                    <td v-if="!current.editRow">{{Number(current.doubleNum).toFixed(4)}}</td>
+                                    <td v-if="!current.editRow">
+                                        <span v-if="current.doubleNum!==null">{{Number(current.doubleNum).toFixed(4)}}</span>
+                                        <span v-else></span>
+                                    </td>
                                     <td v-if="current.editRow">
                                         <input type="text" class="form-control" v-model="current.doubleNum">
                                     </td>
@@ -179,16 +188,23 @@
 
                                         />
                                     </td>
-                                    <td v-if="!current.editRow">{{Number(current.doubleMin).toFixed(4)}}</td>
+                                    <td v-if="!current.editRow">
+                                        <span v-if="current.doubleMin!==null">{{Number(current.doubleMin).toFixed(4)}}</span>
+                                        <span v-else></span></td>
                                     <td v-if="current.editRow">
                                         <input type="text" class="form-control" v-model="current.doubleMin">
                                     </td>
-                                    <td v-if="!current.editRow">{{Number(current.doubleMin).toFixed(4)}}</td>
+                                    <td v-if="!current.editRow">
+                                        <span v-if="current.doubleMax!==null">{{Number(current.doubleMax).toFixed(4)}}</span>
+                                        <span v-else></span></td>
                                     <td v-if="current.editRow">
                                         <input type="text" class="form-control" v-model="current.doubleMax">
 
                                     </td>
-                                    <td v-if="!current.editRow">{{Number(current.doubleNum).toFixed(4)}}</td>
+                                    <td v-if="!current.editRow">
+                                        <span v-if="current.doubleNum!==null">{{Number(current.doubleNum).toFixed(4)}}</span>
+                                        <span v-else></span>
+                                    </td>
                                     <td v-if="current.editRow">
                                         <input type="text" class="form-control" v-model="current.doubleNum">
 
@@ -285,7 +301,7 @@
             showEditParam: {
                 show: false
             },
-            listNewElem:[],
+            listNewElem: [],
             test: null,
             elemId: null
         }),
@@ -412,7 +428,7 @@
 
                 //this.setElemTree(elmTreeTemp);
 
-             //   this.setMaxId(this.ELEMENTS.maxId + 1);
+                //   this.setMaxId(this.ELEMENTS.maxId + 1);
                 console.log(1);
             },
             saveElem(number) {
@@ -464,9 +480,9 @@
                 );
                 this.listNewElem = this.LISTNEWELEM;
                 this.listNewElem.push({
-                    parentId:0,
-                    elemId:this.ELEMENTS.maxId,
-                    paramNameFk:this.newBlock.data
+                    parentId: 0,
+                    elemId: this.ELEMENTS.maxId,
+                    paramNameFk: this.newBlock.data
                 });
                 this.setElemTree(elmTreeTemp);
                 this.setListNewElem(this.listNewElem);
