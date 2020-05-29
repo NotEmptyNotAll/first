@@ -35,6 +35,7 @@
             }
         }),
         props: {
+
             nameInput: String,
             dataList: [],
             loadStatus: null,

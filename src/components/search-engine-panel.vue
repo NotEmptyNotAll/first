@@ -3,7 +3,7 @@
         <!--fields for entering search data.
          Fill with the initial parameters that you get from the backend
           Use a v-model to populate data.-->
-        <div class="row  ">
+        <div class="savePageRow row  ">
             <vue-datalist
                     class="col-md-3"
                     :title-input="$ml.get('word.autoManufacturer')"
@@ -68,7 +68,7 @@
         <transition name="slide-fade">
             <!--here we enter data for an improved search, which the user measures-->
             <div v-if="advanceSearch">
-                <div class="row ">
+                <div class="savePageRow row  ">
                     <vue-datalist
                             class="col-md-3"
                             :title-input="$ml.get('word.engineNumber')"
@@ -101,7 +101,7 @@
                     />
                 </div>
                 <hr/>
-                <div v-for="(param,index) in searchData.paramList" v-bind:key="param" class="row">
+                <div v-for="(param,index) in searchData.paramList" v-bind:key="param" class="savePageRow row ">
                     <div class="input-group col-md-5">
                         <div class="input-group-prepend">
                             <label class="input-group-text" :for="'param'+index">{{$ml.get('word.parameter')}}</label>
@@ -161,7 +161,7 @@
                         >
                     </div>
                 </div>
-                <div class="row">
+                <div class="savePageRow row ">
                     <div class="col col-md-4"></div>
                     <div class="col col-md-4">
                         <button class="btn form-control btn-block btn-outline-secondary" type="button"
@@ -351,6 +351,10 @@
 </script>
 
 <style>
+     .savePageRow {
+        max-width: 70vw;
+        min-width: 70vw;
+    }
     .input-group-text {
         background: #272e38;
         color: #e0dfdc;

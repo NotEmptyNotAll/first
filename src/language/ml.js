@@ -10,7 +10,7 @@ export default new MLCreate({
         new MLanguage('english').create({
             word: {
                 engine: "engines",
-                cylinders: "arrangement of cylinders",
+                cylinders: "cylinders",
                 fuelType: "fuel type",
                 superchargedType: "supercharged types",
                 engineManufacture: "engine manufacturers",
@@ -66,7 +66,8 @@ export default new MLCreate({
                 title: 'name',
                 mark: 'mark',
                 newBlockText:'add new block',
-                status:'status'
+                status:'status',
+                shortName:'short name'
             },
             msg: {
                 passwordErr: 'password is required!',
@@ -85,7 +86,7 @@ export default new MLCreate({
         new MLanguage('russian').create({
             word: {
                 engine: "двигатели",
-                cylinders: "расположение цилиндров",
+                cylinders: "цилиндры",
                 fuelType: "вид топлива",
                 superchargedType: "виды наддува",
                 engineManufacture: "производители двигателей",
@@ -141,7 +142,8 @@ export default new MLCreate({
                 title: 'название',
                 mark: "Обозначение",
                 newBlockText:'додати новий блок',
-                status:'статус'
+                status:'статус',
+                shortName:'короткое назание'
 
             },
             msg: {
@@ -161,7 +163,7 @@ export default new MLCreate({
         new MLanguage('ukraine').create({
             word: {
                 engine: 'двигуни',
-                cylinders: 'розміщення циліндрів',
+                cylinders: 'циліндри',
                 fuelType: 'вид палива',
                 superchargedType: 'види наддуву',
                 engineManufacture: 'виробники двигунів',
@@ -217,8 +219,8 @@ export default new MLCreate({
                 title:'назва',
                 mark:'Позначення',
                 newBlockText:'додати новий блок',
-                status:'статус'
-
+                status:'статус',
+                shortName:'коротка назва'
 
             },
             msg: {

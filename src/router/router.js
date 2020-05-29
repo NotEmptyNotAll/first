@@ -2,9 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import searchEng from '../components/searchEng'
-import saveDataPage from '../components/save-data-page'
 import login from '../components/login'
 import registration from '../components/Register'
+import testSave from '../components/vue-save-update-page'
 
 Vue.use(Router)
 
@@ -16,7 +16,7 @@ let router = new Router({
         },
         {
             path: '/addData',
-            component: saveDataPage
+            component: testSave
         },
         {
             path: '/login',
@@ -25,6 +25,10 @@ let router = new Router({
         {
             path: '/registration',
             component: registration
+        },
+        {
+            path: '/test',
+            component: testSave
         }
     ]
 })

@@ -3,8 +3,9 @@
         <div class=" collapse navbar-collapse " id="conteudoNavbarSuportado">
             <ul class="navbar-nav mr-auto" style="font-family: 'Montserrat', sans-serif; ">
                 <li class="nav-elem " style="margin-right: 10px;">
-                    <a class="nav-link fontbranco" href="/#/">{{$ml.get('word.search')}}</a>
+                    <a class="nav-link fontbranco" href="/#/" >{{$ml.get('word.search')}}</a>
                 </li>
+
                 <li class="nav-elem nav-hov" style="margin-right: 5px;">
                     <a class="nav-link fontbranco" href="/#/addData"
                        v-if="currentUser">{{$ml.get('word.updateData')}}</a>

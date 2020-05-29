@@ -1,106 +1,110 @@
 <template>
 
     <div class="searchEng">
-
-        <div class="search-border container  bg-white rad" id="searchCont" style="text-align: center">
-            <div class="search-logo">
-                <div class="head-text deepshd "><h2>{{$ml.get('word.engine')}}</h2></div>
-            </div>
-            <br/>
-            <br/>
-            <search-engine-panel
-                    @submit-function="GET_AUTOENG_BY_PARAM"
-            />
-        </div>
-        <!--engine data table. By clicking on row m we open the engine tree, where we can find out its parameters-->
-        <div class="container tab   bg-white rad" id="contTable" style="position: relative; ">
-            <table class="table search-tab table-hover">
-                <thead class="thead-light-dark ">
-                <tr>
-                    <th>{{$ml.get('word.engine')}}</th>
-                    <th>{{$ml.get('word.autoManufacturer')}}</th>
-                    <th>{{$ml.get('word.autoModel')}}</th>
-                    <th>{{$ml.get('word.releaseYear')}}</th>
-                    <th>{{$ml.get('word.fuelType')}}</th>
-                    <th>{{$ml.get('word.cylinders')}}</th>
-                    <th>{{$ml.get('word.cylindersNumber')}}</th>
-                    <th>{{$ml.get('word.flapNumber')}}</th>
-                    <th>{{$ml.get('word.pistonDiameter')}}</th>
-                    <th>{{$ml.get('word.pistonStroke')}}</th>
-                    <th>{{$ml.get('word.engineCapacity')}}</th>
-                    <th>{{$ml.get('word.powerKwt')}}</th>
-                    <th>{{$ml.get('word.horsepower')}}</th>
-                    <th>{{$ml.get('word.superchargedType')}}</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="current in ENGDATA" v-bind:key="current" data-toggle="collapse" href="#collapse"
-                    role="button" aria-expanded="false" :class="{trActive: current.active}" aria-controls="collapse"
-                    v-on:click="getElements(current)">
-                    <td>{{current.engineType}}</td>
-                    <td>{{current.autoManufacture}}</td>
-                    <td>{{current.modelName}}</td>
-                    <td v-if="current.releaseYearFrom!=null && current.releaseYearBy!=null">
-                        {{current.releaseYearFrom+'-'+current.releaseYearBy}}
-                    </td>
-                    <td v-if="current.releaseYearFrom!=null ">{{current.releaseYearFrom}}</td>
-                    <td v-if="current.releaseYearBy!=null">{{current.releaseYearFrom}}</td>
-                    <td v-if="current.releaseYearFrom==null && current.releaseYearBy==null"></td>
-                    <td>{{current.fuelType}}</td>
-                    <td>{{current.cylinderPlace}}</td>
-                    <td>{{current.cylindersNumber}}</td>
-                    <td>{{current.flapNumber}}</td>
-                    <td>
-                        <span v-if="current.pistonDiameter!==null">{{Number(current.pistonDiameter).toFixed(4)}}</span>
-                        <span v-else></span>
-                    </td>
-                    <td>
-                        <span v-if="current.pistonStoke!==null">{{Number(current.pistonStoke).toFixed(4)}}</span>
-                        <span v-else></span>
-                    </td>
-                    <td>{{current.engineCapacity}}</td>
-                    <td>{{current.powerKWT}}</td>
-                    <td>{{current.horsepower}}</td>
-                    <td>{{current.superchargedType}}</td>
-
-                </tr>
-                </tbody>
-            </table>
-            <div v-if="SHOW_LOAD" class="lds-dual-ring-black"
-                 style="margin-left: 50%; margin-right: 50% ;top: 4vw"></div>
-        </div>
-
-        <!--recursive tree of objects. Most likely it will look different-->
-        <save-elem-tree-page
-                :auto_id="auto_id"
-                v-if="currentUser"
-        />
-
-        <auto-engine-full-tree
+        <error-page
                 v-if="!currentUser"
-                :auto_id="auto_id"
-                ref="contParam" v-show="ELEMENTS!=null"/>
+        />
+        <div  v-if="currentUser">
+            <div class="search-border container  bg-white rad" id="searchCont" style="text-align: center">
+                <div class="search-logo">
+                    <div class="head-text deepshd "><h2>{{$ml.get('word.engine')}}</h2></div>
+                </div>
+                <br/>
+                <br/>
+                <search-engine-panel
+                        @submit-function="GET_AUTOENG_BY_PARAM"
+                />
+            </div>
+            <!--engine data table. By clicking on row m we open the engine tree, where we can find out its parameters-->
+            <div class="container tab   bg-white rad" id="contTable" style="position: relative; ">
+                <table class="table search-tab table-hover">
+                    <thead class="thead-light-dark ">
+                    <tr>
+                        <th>{{$ml.get('word.engine')}}</th>
+                        <th>{{$ml.get('word.autoManufacturer')}}</th>
+                        <th>{{$ml.get('word.autoModel')}}</th>
+                        <th>{{$ml.get('word.releaseYear')}}</th>
+                        <th>{{$ml.get('word.fuelType')}}</th>
+                        <th>{{$ml.get('word.cylinders')}}</th>
+                        <th>{{$ml.get('word.cylindersNumber')}}</th>
+                        <th>{{$ml.get('word.flapNumber')}}</th>
+                        <th>{{$ml.get('word.pistonDiameter')}}</th>
+                        <th>{{$ml.get('word.pistonStroke')}}</th>
+                        <th>{{$ml.get('word.engineCapacity')}}</th>
+                        <th>{{$ml.get('word.powerKwt')}}</th>
+                        <th>{{$ml.get('word.horsepower')}}</th>
+                        <th>{{$ml.get('word.superchargedType')}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="current in ENGDATA" v-bind:key="current" data-toggle="collapse" href="#collapse"
+                        role="button" aria-expanded="false" :class="{trActive: current.active}" aria-controls="collapse"
+                        v-on:click="getElements(current)">
+                        <td>{{current.engineType}}</td>
+                        <td>{{current.autoManufacture}}</td>
+                        <td>{{current.modelName}}</td>
+                        <td v-if="current.releaseYearFrom!=null && current.releaseYearBy!=null">
+                            {{current.releaseYearFrom+'-'+current.releaseYearBy}}
+                        </td>
+                        <td v-if="current.releaseYearFrom!=null ">{{current.releaseYearFrom}}</td>
+                        <td v-if="current.releaseYearBy!=null">{{current.releaseYearFrom}}</td>
+                        <td v-if="current.releaseYearFrom==null && current.releaseYearBy==null"></td>
+                        <td>{{current.fuelType}}</td>
+                        <td>{{current.cylinderPlace}}</td>
+                        <td>{{current.cylindersNumber}}</td>
+                        <td>{{current.flapNumber}}</td>
+                        <td>
+                            <span v-if="current.pistonDiameter!==null">{{Number(current.pistonDiameter).toFixed(4)}}</span>
+                            <span v-else></span>
+                        </td>
+                        <td>
+                            <span v-if="current.pistonStoke!==null">{{Number(current.pistonStoke).toFixed(4)}}</span>
+                            <span v-else></span>
+                        </td>
+                        <td>{{current.engineCapacity}}</td>
+                        <td>{{current.powerKWT}}</td>
+                        <td>{{current.horsepower}}</td>
+                        <td>{{current.superchargedType}}</td>
+
+                    </tr>
+                    </tbody>
+                </table>
+                <div v-if="SHOW_LOAD" class="lds-dual-ring-black"
+                     style="margin-left: 50%; margin-right: 50% ;top: 4vw"></div>
+            </div>
+
+            <!--recursive tree of objects. Most likely it will look different-->
+            <save-elem-tree-page
+                    :auto_id="auto_id"
+                    v-if="currentUser"
+            />
+
+            <auto-engine-full-tree
+                    v-if="!currentUser"
+                    :auto_id="auto_id"
+                    ref="contParam" v-show="ELEMENTS!=null"/>
 
 
-        <!-- Modal -->
-        <button type="button " class="btn btn-primary" id="openModal" data-toggle="modal" data-target="#errorModal"
-                style="visibility: hidden">
-        </button>
-        <!-- Modal -->
-        <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Помилка</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <h5>{{errorMessage}}</h5>
-                    </div>
-                    <div class="modal-footer">
+            <!-- Modal -->
+            <button type="button " class="btn btn-primary" id="openModal" data-toggle="modal" data-target="#errorModal"
+                    style="visibility: hidden">
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Помилка</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <h5>{{errorMessage}}</h5>
+                        </div>
+                        <div class="modal-footer">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -290,9 +294,17 @@
     }
 
 
-    .row, .container {
+    .container {
         padding: 20px;
         min-width: 97vw;
+    }
+
+    .row {
+        position: center;
+        padding: 20px;
+        width: auto;
+        min-width: 17vw;
+        max-width: 97vw;
     }
 
     .input-group-prepend {
