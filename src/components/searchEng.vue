@@ -5,7 +5,7 @@
                 v-if="!currentUser"
         />
         <div  v-if="currentUser">
-            <div class="search-border container  bg-white rad" id="searchCont" style="text-align: center">
+            <div class="search-border container  bg-white rounded" id="searchCont" style="text-align: center">
                 <div class="search-logo">
                     <div class="head-text deepshd "><h2>{{$ml.get('word.engine')}}</h2></div>
                 </div>
@@ -16,9 +16,9 @@
                 />
             </div>
             <!--engine data table. By clicking on row m we open the engine tree, where we can find out its parameters-->
-            <div class="container tab   bg-white rad" id="contTable" style="position: relative; ">
-                <table class="table search-tab table-hover">
-                    <thead class="thead-light-dark ">
+            <div class="container tab  rounded bg-white rad" id="contTable" style="position: relative; ">
+                <table class="table rounded search-tab table-hover">
+                    <thead class="thead-light ">
                     <tr>
                         <th>{{$ml.get('word.engine')}}</th>
                         <th>{{$ml.get('word.autoManufacturer')}}</th>
@@ -321,6 +321,8 @@
         font-family: 'Allerta', Helvetica, Arial, sans-serif;
         font-size: 50px;
         line-height: 55px;
+        width: 100%;
+        position: center;
     }
 
 
@@ -343,7 +345,7 @@
     }
 
     .btn-danger span:after {
-        content: '\2716';
+        content: '\2718';
         position: absolute;
         opacity: 0;
         right: -20px;
@@ -388,7 +390,7 @@
         top: 0px;
         width: 20%;
         height: 50px;
-        background: #272e38;
+        background:lightslategrey;
         border-bottom-right-radius: 90px;
         border-bottom-left-radius: 90px;
     }
@@ -399,7 +401,7 @@
         width: 97.05vw;
         left: 0px;
         position: absolute;
-        top: -4px;
+        top: -5px;
         border-style: solid;
         border-top-color: #272e38;
         border-width: 1px 0px 0px 0px;
@@ -408,7 +410,7 @@
 
     .search-border {
         border-style: solid;
-        border-top-color: #272e38;
+        border-top-color: lightslategrey;
         border-width: 15px 0px 0px 0px;
 
     }

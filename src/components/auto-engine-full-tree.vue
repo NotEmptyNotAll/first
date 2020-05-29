@@ -1,5 +1,5 @@
 <template>
-    <div class="card  rad" id="auto-engine-full-tree" style="width: 98vw">
+    <div class="card rounded rad" id="auto-engine-full-tree" style="width: 98vw">
 
         <br/>
         <h4 class="deepshd" style="text-align: center">{{ELEMENTS.name}}</h4>

@@ -8,54 +8,60 @@
                         <div class="collapse navbar-collapse" id="navbar" style="width: 100%;">
                             <!-- Вертикальное меню -->
 
-                            <!-- <li class="nav-item">
-                                    <a class="nav-link menu-item" href="#link-1">
-                                        <span></span>
-                                        {{$ml.get('word.engine')}}</a>
-                                </li>-->
-                            <ul class="nav nav-tabs tabs-right sideways">
-                                <li class="bord nav-item"><a class="nav-link menu-item " href="#engine"
+                            <ul class="nav  nav-tabs tabs-right sideways" style="width: 100%">
+                                <li class="   nav-item"><a class="nav-link menu-item " href="#engine"
                                                              data-toggle="tab">
                                     <span></span>
                                     {{$ml.get('word.engine')}}</a>
                                 </li>
+                                <hr style="position: center; width: 100%;"/>
                                 <li class="nav-item"><a class="nav-link menu-item " href="#cylinders" data-toggle="tab">
                                     <span></span>
                                     {{$ml.get('word.cylinders')}}</a>
                                 </li>
+                                <hr style="position: center; width: 100%;"/>
+
                                 <li class="nav-item"><a class="nav-link menu-item " href="#fuelType" data-toggle="tab">
                                     <span></span>
                                     {{$ml.get('word.fuelType')}}</a>
                                 </li>
+                                <hr style="position: center; width: 100%;"/>
                                 <li class="nav-item"><a class="nav-link menu-item " href="#superchargedType"
                                                         data-toggle="tab">
                                     <span></span>
                                     {{$ml.get('word.superchargedType')}}</a>
                                 </li>
+                                <hr style="position: center; width: 100%;"/>
                                 <li class="nav-item"><a class="nav-link menu-item " href="#autoEngine"
                                                         data-toggle="tab">
                                     <span></span>
                                     {{$ml.get('word.autoEngine')}}</a>
                                 </li>
+                                <hr style="position: center; width: 100%;"/>
                                 <li class="nav-item"><a class="nav-link menu-item " href="#engineManufacture"
                                                         data-toggle="tab">
                                     <span></span>
                                     {{$ml.get('word.engineManufacture')}}</a>
                                 </li>
+                                <hr style="position: center; width: 100%;"/>
                                 <li class="nav-item"><a class="nav-link menu-item " href="#autoManufacturer"
                                                         data-toggle="tab">
                                     <span></span>
                                     {{$ml.get('word.autoManufacturer')}}</a></li>
+                                <hr style="position: center; width: 100%;"/>
+
                                 <li class="nav-item"><a class="nav-link menu-item " href="#autoModel"
                                                         data-toggle="tab">
                                     <span></span>
                                     {{$ml.get('word.autoModel')}}
                                 </a></li>
+                                <hr style="position: center; width: 100%;"/>
                                 <li class="nav-item"><a class="nav-link menu-item " href="#units"
                                                         data-toggle="tab">
                                     <span></span>
                                     {{$ml.get('word.units')}}
                                 </a></li>
+                                <hr style="position: center; width: 100%;"/>
                                 <li class="nav-item"><a class="nav-link menu-item " href="#nameElements"
                                                         data-toggle="tab">
                                     <span></span>
@@ -65,8 +71,8 @@
                         </div>
                     </nav>
                 </div>
-                <div class="col-md-10 col-lg-10 rounded content-container shadow-lg bg-white"
-                     style="background-color: #ffe0b2">
+                <div class="col-md-10 col-lg-10 rounded content-container shadow-lg bg-white">
+                    <br/>
                     <div class="col-xs-9">
                         <!-- Tab panes -->
                         <div class="tab-content bg-white" style="border: white">
@@ -253,11 +259,9 @@
     #nav-panel {
         background: white;
     }
-
-
     .nav-item {
-        color: black;
-
+        color: lightgray;
+        width: auto;
     }
 
     @media (min-width: 768px) {
@@ -305,6 +309,8 @@
 
         }
 
+
+
         .menu-item {
             width: 100%;
             display: inline-block;
@@ -314,6 +320,10 @@
             color: black;
             font-size: 1.2em;
 
+        }
+
+        li{
+            border-color: #272e38;
         }
 
 

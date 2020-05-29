@@ -17,9 +17,11 @@
         <div class="tab-content" id="myTabContentengine" style="border: white">
             <div class="tab-pane fade show active" :id="'h'+nameTitle" role="tabpanel"
                  aria-labelledby="home-tab">
-                <table class="table" style="text-align: center; z-index: 0; border-radius: 0px">
+                <br/>
+                <br/>
+                <table class="table table-hover  " style="text-align: center; z-index: 0; border-radius: 0px; ">
                     <thead>
-                    <tr>
+                    <tr >
                         <th scope="col">id</th>
                         <th scope="col">{{$ml.get('word.engine')}}</th>
                         <th scope="col">{{$ml.get('word.cylinders')}}</th>
@@ -63,6 +65,8 @@
             </div>
             <div class="tab-pane fade" :id="'p'+nameTitle" role="tabpanel"
                  aria-labelledby="profile-tab">
+                <br/>
+                <br/>
                 <div class="savePageRow  row ">
                     <div v-if="showErr" class="alert alert-danger" role="alert" style="text-align:center; width: 100%">
                         {{$ml.get('msg.duplicateValue')}}
@@ -212,6 +216,8 @@
             </div>
             <div class="tab-pane fade" :id="'c'+nameTitle" role="tabpanel"
                  aria-labelledby="contact-tab">
+                <br/>
+                <br/>
                 <div class="savePageRow row">
                     <vue-datalist
                             class="col-md-8"
@@ -371,8 +377,8 @@
 </template>
 
 <script>
-    import VueDatalist from "./vue-datalist";
-    import InputField from "./input-field";
+    import VueDatalist from "../vue-datalist";
+    import InputField from "../input-field";
     import {mapActions, mapGetters, mapMutations} from "vuex";
 
     export default {
@@ -506,6 +512,12 @@
 </script>
 
 <style scoped>
+    a{
+        padding-left: 3vw;
+        padding-right: 3vw;
+        color: #272e38;
+        font-weight: bold;
+    }
     .savePageRow {
         max-width: 75vw;
         min-width: 75vw;

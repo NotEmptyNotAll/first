@@ -1,11 +1,11 @@
 <template>
     <div class="input-group ">
         <div v-if="!hideTitle" class="input-group-prepend ">
-            <label class="input-group-text   bg-dark"
+            <label class="input-group-text   "
                    :for="'vue-list-input'+titleInput"
             >
                 {{titleInput}}
-                <div v-if="LOADPARAM" class="lds-dual-ring"></div>
+                <div v-if="LOADPARAM" class="lds-dual-ring-black"></div>
             </label>
         </div>
        <input

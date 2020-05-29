@@ -1,16 +1,18 @@
 <template>
-    <div class=" card bg-white search-border  rad" id="save-elem-tree-page" style="width: 98vw">
+    <div class=" card bg-white search-border  rounded" id="save-elem-tree-page" style="width: 98vw">
         <br/>
         <div class="search-logo" id="treelogo">
             <div class="head-text deepshd ">
                  <span v-if="LOAD_SAVE_ELEMENTS"><div
                          class="lds-dual-ring " style="margin-left: 47%"></div></span>
-                <h4 v-if="!LOAD_SAVE_ELEMENTS">{{ELEMENTS.name}}</h4></div>
+                <h4 v-if="!LOAD_SAVE_ELEMENTS"
+                    style="width: 60%; margin-left: 20%; margin-right: 20%;text-align: center">{{ELEMENTS.name}}</h4>
+            </div>
         </div>
         <br/>
         <br/>
-        <div class="row rowCenter">
-            <div class="col-md-2"></div>
+        <div class="treeRow row " style="width: 100vw">
+            <div class="col-md-1"></div>
             <vue-datalist
                     class="col-md-5"
                     :title-input="$ml.get('word.newBlockText')"
@@ -33,10 +35,12 @@
                     <span>{{$ml.get('word.update')}}</span>
                 </button>
             </div>
+            <div class="col-md-1"></div>
+
         </div>
-        <hr style="position: center; width: 80%;"/>
+        <hr style="position: center; width: 100%;"/>
         <br/>
-        <div class="panelBody">
+        <div class="panelBody"  style="width: 100%">
             <navig>
                 <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                     <a v-for="current in ELEMENTS.elementsCh" v-bind:key="current"
@@ -54,6 +58,8 @@
                 <div v-for="current in ELEMENTS.elementsCh" v-bind:key="current"
                      class="  tab-pane fade " :id="'nav-add'+current.name"
                      :aria-labelledby="'nav-add-tab'+current.name">
+                    <br/>
+                    <br/>
                     <div class="row rowCenter">
                         <div class="col-md-3">
                             <div class="list-group">
@@ -86,7 +92,7 @@
                         </div>
                         <div class="col-md-8">
                             <table class="table table-hover" style="min-height: 10vh">
-                                <thead class="thead-light-dark">
+                                <thead class="thead-light">
                                 <tr>
                                     <th>{{$ml.get('word.name')}}</th>
                                     <th>{{$ml.get('word.units')}}</th>
@@ -535,6 +541,16 @@
 </script>
 
 <style>
+    .treeRow {
+        width: 90%;
+    }
+    a{
+        padding-left: 3vw;
+        padding-right: 3vw;
+        color: #272e38;
+        font-weight: bold;
+    }
+
     #treelogo {
         position: absolute;
         left: 25%;
@@ -542,7 +558,7 @@
         width: 50%;
         top: 0px;
         height: 50px;
-        background: #272e38;
+        background: lightslategrey;
         border-bottom-right-radius: 90px;
         border-bottom-left-radius: 90px;
 

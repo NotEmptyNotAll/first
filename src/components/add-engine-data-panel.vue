@@ -588,7 +588,7 @@
     }
 
     .deepshd {
-        color: #e0dfdc;
+        color: #272e38;
         letter-spacing: .1em;
     }
 

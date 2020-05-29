@@ -19,7 +19,6 @@
 
 <style>
     #app {
-        font-family: Avenir, Helvetica, Arial, sans-serif;
 
     }
 
@@ -40,8 +39,6 @@
     }
 
     .container:hover {
-        border-top-left-radius: 45px;
-        border-top-right-radius: 45px;
         -webkit-box-shadow: 0px 6px 66px -12px rgba(0, 0, 0, 0.75);
         -moz-box-shadow: 0px 6px 66px -12px rgba(0, 0, 0, 0.75);
         box-shadow: 0px 6px 66px -12px rgba(0, 0, 0, 0.75);
@@ -60,12 +57,10 @@
     }
 
     body {
-        background-color: #f1ecec;
+        background-color: #F0F8FF;
     }
 
     table {
-        border-top-left-radius: 30px;
-        border-top-right-radius: 30px;
         overflow: hidden;
         padding-top: 15px;
         size: auto;
@@ -180,7 +175,8 @@
 
 
     .deepshd {
-        color: #e0dfdc;
+        color: white;
+
         letter-spacing: .1em;
     }
 

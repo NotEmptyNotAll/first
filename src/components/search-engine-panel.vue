@@ -356,7 +356,8 @@
         min-width: 70vw;
     }
     .input-group-text {
-        background: #272e38;
-        color: #e0dfdc;
+        background: white;
+        color: #272e38;
+        font-weight: bold;
     }
 </style>

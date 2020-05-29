@@ -4,7 +4,7 @@ import Router from 'vue-router'
 import searchEng from '../components/searchEng'
 import login from '../components/login'
 import registration from '../components/Register'
-import testSave from '../components/vue-save-update-page'
+import testSave from '../components/AddDadaPage/vue-save-update-page'
 
 Vue.use(Router)
 
