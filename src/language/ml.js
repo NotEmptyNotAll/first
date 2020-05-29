@@ -9,6 +9,7 @@ export default new MLCreate({
     languages: [
         new MLanguage('english').create({
             word: {
+                table:'table',
                 engine: "engines",
                 cylinders: "cylinders",
                 fuelType: "fuel type",
@@ -85,6 +86,7 @@ export default new MLCreate({
 
         new MLanguage('russian').create({
             word: {
+                table:'таблица',
                 engine: "двигатели",
                 cylinders: "цилиндры",
                 fuelType: "вид топлива",
@@ -162,6 +164,7 @@ export default new MLCreate({
 
         new MLanguage('ukraine').create({
             word: {
+                table:'таблиця',
                 engine: 'двигуни',
                 cylinders: 'циліндри',
                 fuelType: 'вид палива',

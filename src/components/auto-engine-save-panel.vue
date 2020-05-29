@@ -3,15 +3,15 @@
         <ul class="nav nav-tabs" id="myTabengine" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="home-tabengine" data-toggle="tab" :href="'#h'+nameTitle"
-                   role="tab" aria-controls="home" aria-selected="true">Home</a>
+                   role="tab" aria-controls="home" aria-selected="true">{{$ml.get('word.table')}}</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="profile-tabengine" data-toggle="tab" :href="'#p'+nameTitle"
-                   role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+                   role="tab" aria-controls="profile" aria-selected="false">{{$ml.get('word.save')}}</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="contact-tabengine" data-toggle="tab" :href="'#c'+nameTitle"
-                   role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+                   role="tab" aria-controls="contact" aria-selected="false">{{$ml.get('word.update')}}</a>
             </li>
         </ul>
         <div class="tab-content" id="myTabContentengine" style="border: white">
