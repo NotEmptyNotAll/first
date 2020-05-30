@@ -121,7 +121,7 @@
                     />
                     <div class="input-group col-md-3">
                         <div class="input-group-prepend">
-                            <label class="input-group-text  text-white bg-dark" for="releaseYea">
+                            <label class="input-group-text   " for="releaseYea">
                                 {{$ml.get('word.releaseYear')}}
                                 <div v-if="LOADPARAM" class="lds-dual-ring"></div>
                             </label>

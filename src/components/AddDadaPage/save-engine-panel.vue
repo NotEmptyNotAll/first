@@ -191,7 +191,7 @@
                     />
                     <div class="input-group col-md-4">
                         <div class="input-group-prepend">
-                            <label class="input-group-text  text-white bg-dark" for="relYear">
+                            <label class="input-group-text   " for="relYear">
                                 {{$ml.get('word.releaseYear')}}
                                 <div v-if="LOADPARAM" class="lds-dual-ring"></div>
                             </label>
@@ -363,7 +363,7 @@
                     />
                     <div class="input-group col-md-4">
                         <div class="input-group-prepend">
-                            <label class="input-group-text  text-white bg-dark" for="releaseYear">
+                            <label class="input-group-text   " for="releaseYear">
                                 {{$ml.get('word.releaseYear')}}
                                 <div v-if="LOADPARAM" class="lds-dual-ring"></div>
                             </label>
