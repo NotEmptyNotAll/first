@@ -179,8 +179,8 @@
 
 <script>
     import {mapActions, mapGetters, mapMutations} from "vuex";
-    import InputField from "./input-field";
-    import VueDatalist from "./vue-datalist";
+    import InputField from "../input/input-field";
+    import VueDatalist from "../input/vue-datalist";
 
 
     export default {

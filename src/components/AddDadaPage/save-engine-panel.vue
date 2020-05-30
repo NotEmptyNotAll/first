@@ -17,8 +17,35 @@
         <div class="tab-content" id="myTabContentengine" style="border: white">
             <div class="tab-pane fade show active" :id="'h'+nameTitle" role="tabpanel"
                  aria-labelledby="home-tab">
-                <br/>
-                <br/>
+                <div class="row">
+                    <div class="col-md-7"></div>
+                    <div class="input-group col-md-5">
+                        <div class="input-group-prepend ">
+                            <label class="input-group-text   "
+                                   for="vue-list-input1"
+                            >{{$ml.get('word.search')}}</label>
+                        </div>
+                        <input
+                                v-model="search"
+                                id="vue-list-input1"
+                                autocomplete="off"
+                                class="form-control"
+                                type="text"
+                                placeholder=" "
+                                v-on:input="onChange"
+                                v-on:click="onChange"
+
+                        />
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-danger"
+                                    v-on:click="clear"
+                                    type="button">
+                                <span>&#10008;</span>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
                 <table class="table table-hover  " style="text-align: center; z-index: 0; border-radius: 0px; ">
                     <thead>
                     <tr >
@@ -39,7 +66,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="current in ADDITIONAL_DATA.engine" v-bind:key="current">
+                    <tr v-for="current in dataList" v-bind:key="current">
                         <td>{{current.id}}</td>
                         <td>{{current.data}}</td>
                         <td>{{current.cylindersPlacement}}</td>
@@ -216,8 +243,9 @@
             </div>
             <div class="tab-pane fade" :id="'c'+nameTitle" role="tabpanel"
                  aria-labelledby="contact-tab">
-                <br/>
-                <br/>
+
+          <br/>
+          <br/>
                 <div class="savePageRow row">
                     <vue-datalist
                             class="col-md-8"
@@ -377,15 +405,16 @@
 </template>
 
 <script>
-    import VueDatalist from "../vue-datalist";
-    import InputField from "../input-field";
+    import VueDatalist from "../input/vue-datalist";
+    import InputField from "../input/input-field";
     import {mapActions, mapGetters, mapMutations} from "vuex";
 
     export default {
         name: "save-engine-panel",
-        components: {VueDatalist, InputField},
+        components: { VueDatalist, InputField},
         data: () => ({
             showErr: false,
+            dataList: [],
             saveDataObj: {
                 engineType: null,
                 engineManufacturerFk: null,
@@ -460,6 +489,28 @@
             ...mapMutations({
                 cylindersPlacementFk: 'SET_UPDATE_CYLINDERS'
             }),
+            async clear() {
+                this.search = '';
+                this.filterResults();
+            },
+            onChange() {
+                this.filterResults();
+
+
+            }, filterResults() {
+                // first uncapitalize all the things
+                this.dataList = this.ADDITIONAL_DATA.engine.filter((item) => {
+                    return ( (item.cylindersPlacement.toLowerCase().indexOf(this.search.toLowerCase()) > -1) ||
+                        (item.data.toLowerCase().indexOf(this.search.toLowerCase()) > -1) ||
+                        ( item.fuelType.toLowerCase().indexOf(this.search.toLowerCase()) > -1)
+                    );
+                });
+                this.$emit("set-list", this.temp);
+
+            },
+            setDataList(tempList) {
+                this.dataList = tempList;
+            },
             autocompliteResult() {
                 alert(this.$refs.autocomplete.data.value);
             },
@@ -507,6 +558,7 @@
         },
         watch: {},
         mounted() {
+
         }
     }
 </script>

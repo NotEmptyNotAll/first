@@ -116,8 +116,8 @@
 
     import {mapActions, mapGetters} from 'vuex'
     import SearchEnginePanel from "./search-engine-panel";
-    import AutoEngineFullTree from "./auto-engine-full-tree";
-    import SaveElemTreePage from "./save-elem-tree-page";
+    import AutoEngineFullTree from "../tree/auto-engine-full-tree";
+    import SaveElemTreePage from "../tree/save-elem-tree-page";
 
     export default {
         name: "searchEng",

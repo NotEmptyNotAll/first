@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import searchEng from '../components/searchEng'
+import searchEng from '../components/SearchPage/searchEng'
 import login from '../components/login'
 import registration from '../components/Register'
 import testSave from '../components/AddDadaPage/vue-save-update-page'

@@ -17,8 +17,35 @@
         <div class="tab-content" id="myTabContentengine" style="border: white">
             <div class="tab-pane fade show active" :id="'h'+nameTitle" role="tabpanel"
                  aria-labelledby="home-tab">
-                <br/>
-                <br/>
+                <div class="row">
+                    <div class="col-md-7"></div>
+                    <div class="input-group col-md-5">
+                        <div class="input-group-prepend ">
+                            <label class="input-group-text   "
+                                   for="vue-list-input1"
+                            >{{$ml.get('word.search')}}</label>
+                        </div>
+                        <input
+                                v-model="search"
+                                id="vue-list-input1"
+                                autocomplete="off"
+                                class="form-control"
+                                type="text"
+                                placeholder=" "
+                                v-on:input="onChange"
+                                v-on:click="onChange"
+
+                        />
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-danger"
+                                    v-on:click="clear"
+                                    type="button">
+                                <span>&#10008;</span>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
                 <table class="table table-hover  " style="text-align: center; z-index: 0; border-radius: 0px">
                     <thead>
                     <tr>
@@ -31,7 +58,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="current in ADDITIONAL_DATA.autoEng" v-bind:key="current">
+                    <tr v-for="current in dataList" v-bind:key="current">
                         <td>{{current.id}}</td>
                         <td>{{current.engineFk}}</td>
                         <td>{{current.autoManufactureFk}}</td>
@@ -145,9 +172,10 @@
                 <br/>
                 <div class="savePageRow">
                     <search-engine-panel class="col-md-12"
-                            @submit-function="GET_AUTOENG_BY_PARAM_UPDATE" style="position: relative;right: 1vw; width: 75vw "
+                                         @submit-function="GET_AUTOENG_BY_PARAM_UPDATE"
+                                         style="position: relative;right: 1vw; width: 75vw "
                     />
-                <br/></div>
+                    <br/></div>
                 <table class="table" style="text-align: center; z-index: 0;">
                     <thead>
                     <tr>
@@ -254,18 +282,19 @@
 </template>
 
 <script>
-    import SearchEnginePanel from "../search-engine-panel";
-    import VueDatalist from "../vue-datalist";
+    import SearchEnginePanel from "../SearchPage/search-engine-panel";
+    import VueDatalist from "../input/vue-datalist";
     import {mapActions, mapGetters} from "vuex";
 
     export default {
         name: "auto-engine-save-panel",
-        components: {SearchEnginePanel, VueDatalist},
+        components: { SearchEnginePanel, VueDatalist},
         data: () => ({
             showErr: false,
             saveDataEngParam: {
                 saveData: null
             },
+            listForSearch: [],
             updateListParam: [],
             saveDataObj: {
                 engineFk: null,
@@ -315,6 +344,28 @@
                 'UPDATE_AUTO_ENGINE'
 
             ]),
+            setDataList(tempList) {
+                this.dataList = tempList;
+            },
+            async clear() {
+                this.search = '';
+                this.filterResults();
+            },
+            onChange() {
+                this.filterResults();
+
+
+            }, filterResults() {
+                // first uncapitalize all the things
+                this.dataList = this.ADDITIONAL_DATA.autoEng.filter((item) => {
+                    return ( (item.engineFk.toLowerCase().indexOf(this.search.toLowerCase()) > -1) ||
+                        (item.autoManufactureFk.toLowerCase().indexOf(this.search.toLowerCase()) > -1) ||
+                        ( item.autoModelFk.toLowerCase().indexOf(this.search.toLowerCase()) > -1)
+                    );
+                });
+                this.$emit("set-list", this.temp);
+
+            },
             async saveEngManufacture(number) {
                 let dupAutoM = this.ADDITIONAL_DATA.autoManufacture.find(item =>
                     item.id === this.saveDataObj.engineType
@@ -377,12 +428,13 @@
 
 <style scoped>
 
-    a{
+    a {
         padding-left: 3vw;
         padding-right: 3vw;
         color: #272e38;
         font-weight: bold;
     }
+
     .savePageRow {
         max-width: 75vw;
         min-width: 75vw;

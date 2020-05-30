@@ -262,7 +262,7 @@
 </template>
 
 <script>
-    import VueDatalist from "./vue-datalist";
+    import VueDatalist from "../input/vue-datalist";
 
     import {mapActions, mapGetters, mapMutations} from "vuex";
     import TreeItem from "./tree";

@@ -89,7 +89,7 @@
 <script>
 
     import {mapMutations, mapGetters} from "vuex";
-    import inputList from "./vue-datalist";
+    import inputList from "../input/vue-datalist";
 
     export default {
 

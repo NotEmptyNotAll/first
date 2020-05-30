@@ -4,11 +4,11 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-4 col-lg-2  navbar-container ">
-                    <nav class="navbar navbar-expand-md shadow-lg navbar-light rounded  " id="nav-panel">
-                        <div class="collapse navbar-collapse" id="navbar" style="width: 100%;">
+                    <nav class="navbar navbar-expand-md search-border shadow-lg   navbar-light rounded  " id="nav-panel">
+                        <div class="collapse navbar-collapse " id="navbar" style="width: 100%;">
                             <!-- Вертикальное меню -->
 
-                            <ul class="nav  nav-tabs tabs-right sideways" style="width: 100%">
+                            <ul class="nav  nav-tabs tabs-right  sideways" style="width: 100%">
                                 <li class="   nav-item"><a class="nav-link menu-item " href="#engine"
                                                              data-toggle="tab">
                                     <span></span>
@@ -71,7 +71,7 @@
                         </div>
                     </nav>
                 </div>
-                <div class="col-md-10 col-lg-10 rounded content-container shadow-lg bg-white">
+                <div class="col-md-10 col-lg-10 rounded search-border content-container shadow-lg bg-white">
                     <br/>
                     <div class="col-xs-9">
                         <!-- Tab panes -->
@@ -83,7 +83,7 @@
                                         :load-status="LOAD_SAVE.engine"
                                         @save-data-api="SAVE_DATA_ENGINE"
                                         @update-data-api="UPDATE_DATA_ENGINE"
-
+                                        :data-list="this.ADDITIONAL_DATA.engine"
                                 />
                             </div>
                             <div class="tab-pane" id="cylinders">
@@ -130,6 +130,7 @@
                             <div class="tab-pane" id="autoEngine">
 
                                 <auto-engine-save-panel
+                                        :data-list="ADDITIONAL_DATA.autoEng"
                                         :name-panel="$ml.get('word.autoEngine')"
                                         :load-status="LOAD_SAVE.engine"
                                 />
@@ -339,5 +340,11 @@
         .navbar-container .navbar-nav {
             flex-direction: column !important;
         }
+    }
+    .search-border {
+        border-style: solid;
+        border-top-color: lightslategrey;
+        border-width: 15px 0px 0px 0px;
+
     }
 </style>

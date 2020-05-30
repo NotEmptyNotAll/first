@@ -1,4 +1,5 @@
 <template>
+
     <div>
         <ul class="nav nav-tabs" id="myTabengine" role="tablist">
             <li class="nav-item">
@@ -13,12 +14,21 @@
                 <a class="nav-link" id="contact-tabengine" data-toggle="tab" :href="'#c'+nameTitle"
                    role="tab" aria-controls="contact" aria-selected="false">{{$ml.get('word.update')}}</a>
             </li>
+
         </ul>
         <div class="tab-content" id="myTabContentengine" style="border: white">
             <div class="tab-pane fade show active" :id="'h'+nameTitle" role="tabpanel"
                  aria-labelledby="home-tab">
-                <br/>
-                <br/>
+
+                <div class="row">
+                    <div class="col-md-7"></div>
+                    <search-input
+                            class="col-md-5"
+                            :title-input="$ml.get('word.search')"
+                            :items="listForSearch"
+                            @set-list="setDataList"
+                    />
+                </div>
                 <table class="table table-hover  "
                        style="text-align: center; z-index: 0; border-radius: 0px">
                     <thead>
@@ -144,15 +154,17 @@
 </template>
 
 <script>
-    import VueDatalist from "../vue-datalist";
+    import VueDatalist from "../input/vue-datalist";
     import {mapActions, mapGetters} from "vuex";
-    import InputField from "../input-field";
+    import InputField from "../input/input-field";
+    import SearchInput from "../input/searchInput";
 
     export default {
         name: "two-update-panel",
-        components: {InputField, VueDatalist},
+        components: {SearchInput, InputField, VueDatalist},
         data: () => ({
             showErr: null,
+            listForSearch: [],
             saveDataObj: {
                 saveData_primary: null,
                 saveData_secondary: null,
@@ -186,6 +198,9 @@
                 'GET_PARAM_NAME'
 
             ]),
+            setDataList(tempList) {
+                this.dataList = tempList;
+            },
             async saveEngManufacture(number) {
                 let temp = this.dataList.find(item =>
                     item.data === this.saveDataObj.saveData_primary
@@ -211,6 +226,7 @@
         },
         watch: {},
         mounted() {
+            this.listForSearch = this.dataList.slice();
         }
     }
 </script>

@@ -17,8 +17,16 @@
         <div class="tab-content" id="myTabContentengine" style="border: white">
             <div class="tab-pane fade show active" :id="'h'+nameTitle" role="tabpanel"
                  aria-labelledby="home-tab">
-                <br/>
-                <br/>
+                <div class="row">
+                    <div class="col-md-7"></div>
+
+                    <search-input
+                            class="col-md-5"
+                            :title-input="$ml.get('word.search')"
+                            :items="listForSearch"
+                            @set-list="setDataList"
+                    />
+                </div>
                 <table class="table table-hover  "
                        style="text-align: center; z-index: 0; border-radius: 0px">
                     <thead>
@@ -126,15 +134,17 @@
 
 <script>
     import {mapActions, mapGetters} from "vuex";
-    import VueDatalist from "../vue-datalist";
-    import InputField from "../input-field";
+    import VueDatalist from "../input/vue-datalist";
+    import InputField from "../input/input-field";
+    import SearchInput from "../input/searchInput";
 
 
     export default {
         name: "save-update-panel",
-        components: {InputField, VueDatalist},
+        components: {SearchInput, InputField, VueDatalist},
         data: () => ({
             showErr: false,
+            listForSearch: [],
             saveDataObj: {
                 saveData: null,
                 status: null
@@ -159,6 +169,9 @@
             ...mapActions([
                 'GET_ALL_ADDITIONAL_DATA'
             ]),
+            setDataList(tempList) {
+                this.dataList = tempList;
+            },
             async save(number) {
                 let temp = this.dataList.find(item =>
                     item.data === this.saveDataObj.saveData
@@ -182,7 +195,9 @@
             }
 
         },
-
+        mounted() {
+            this.listForSearch = this.dataList.slice();
+        }
     }
 </script>
 
