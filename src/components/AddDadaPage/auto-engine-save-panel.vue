@@ -150,6 +150,7 @@
                                     type="button">
                                 <span>&#10008;</span>
                             </button>
+
                         </div>
                     </div>
                 </div>
@@ -158,9 +159,13 @@
                     <div class="col-md-5"></div>
                     <div class="col-md-2">
 
-                        <button type="submit" @click="saveEngManufacture(1)"
+                        <button v-if="!loadStatus" type="submit" @click="saveEngManufacture(1)"
                                 class="btn btn-outline-dark btn-block">
                             <span>{{$ml.get('word.save')}}</span>
+                        </button>
+                        <button v-if="loadStatus" type="submit"
+                                class="btn  btn-block btn-dark" disabled>
+                            <span><div class="lds-dual-ring" style="position: relative; bottom: 1.2vh"></div></span>
                         </button>
                     </div>
                     <div class="col-md-2"></div>
@@ -263,13 +268,19 @@
                     </tbody>
                 </table>
                 <div style="margin-left: 40%; width: 20%;margin-right: 40%;">
-                    <button v-show="AUTO_ENGINE.length>0"
+                    <button v-if="!loadStatus && AUTO_ENGINE.length>0"
                             type="submit"
                             class="btn  btn-block btn-outline-dark"
                             @click="update(1)"
                             v-text="$ml.get('word.update')"
                     >
+
                         <span></span>
+                    </button>
+
+                    <button v-if="loadStatus && AUTO_ENGINE.length>0" type="submit"
+                            class="btn  btn-block btn-dark" disabled>
+                        <span><div class="lds-dual-ring" style="position: relative; bottom: 1.2vh"></div></span>
                     </button>
                 </div>
                 <hr/>
@@ -288,7 +299,7 @@
 
     export default {
         name: "auto-engine-save-panel",
-        components: { SearchEnginePanel, VueDatalist},
+        components: {SearchEnginePanel, VueDatalist},
         data: () => ({
             showErr: false,
             saveDataEngParam: {
@@ -358,9 +369,9 @@
             }, filterResults() {
                 // first uncapitalize all the things
                 this.dataList = this.ADDITIONAL_DATA.autoEng.filter((item) => {
-                    return ( (item.engineFk.toLowerCase().indexOf(this.search.toLowerCase()) > -1) ||
+                    return ((item.engineFk.toLowerCase().indexOf(this.search.toLowerCase()) > -1) ||
                         (item.autoManufactureFk.toLowerCase().indexOf(this.search.toLowerCase()) > -1) ||
-                        ( item.autoModelFk.toLowerCase().indexOf(this.search.toLowerCase()) > -1)
+                        (item.autoModelFk.toLowerCase().indexOf(this.search.toLowerCase()) > -1)
                     );
                 });
                 this.$emit("set-list", this.temp);
@@ -379,7 +390,9 @@
 
                 if (dupAutoM === undefined && dupAutoModel === undefined && dupEngine === undefined) {
                     this.showErr = false
-                    this.SAVE_DATA_AUTOMOBILE_ENGINE(this.saveDataObj);
+                    await this.SAVE_DATA_AUTOMOBILE_ENGINE(this.saveDataObj);
+                    this.GET_ALL_ADDITIONAL_DATA();
+
                 } else {
                     this.showErr = true;
                 }
@@ -388,8 +401,10 @@
             },
             async update(number) {
 
-                this.UPDATE_AUTO_ENGINE(this.updateListParam);
+                await this.UPDATE_AUTO_ENGINE(this.updateListParam);
+                this.GET_ALL_ADDITIONAL_DATA();
                 this.updateListParam = [];
+
                 //  this.SAVE_DATA_ENGINE_NUMBER(this.saveDataEngParam);
                 console.log(number)
             },
@@ -403,6 +418,7 @@
                     tempObj.autoModelFk = current.autoModelFk;
                     tempObj.releaseYearFrom = current.releaseYearBy;
                     tempObj.releaseYearBy = current.releaseYearFrom;
+                    tempObj.status = 2;
                 } else {
                     this.updateListParam.push({
                         id: current.id,
@@ -412,8 +428,8 @@
                         autoModelFk: current.autoModelFk,
                         releaseYearFrom: current.releaseYearFrom,
                         releaseYearBy: current.releaseYearBy,
-                        editRow: current.editRow
-
+                        editRow: current.editRow,
+                        status: 2
                     });
                 }
                 console.log(1)

@@ -352,8 +352,8 @@
 
 <style>
      .savePageRow {
-        max-width: 70vw;
-        min-width: 70vw;
+        max-width: 74vw;
+        min-width: 74vw;
     }
     .input-group-text {
         background: white;

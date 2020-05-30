@@ -19,7 +19,6 @@
         <div class="tab-content" id="myTabContentengine" style="border: white">
             <div class="tab-pane fade show active" :id="'h'+nameTitle" role="tabpanel"
                  aria-labelledby="home-tab">
-
                 <div class="row">
                     <div class="col-md-7"></div>
                     <search-input
@@ -57,6 +56,8 @@
             </div>
             <div class="tab-pane fade" :id="'p'+nameTitle" role="tabpanel"
                  aria-labelledby="profile-tab">
+                <br/>
+                <br/>
                 <div class="savePageRow row ">
                     <input-field
                             class="col-md-3"
@@ -76,18 +77,21 @@
                             :items="PARAM_NAME_AND_UNITS.status"
                             :update-obj="saveDataObj"
                             index="status"
-                            :holder-num=0
+                            :holderNum="dataList.find(elem=>elem.id===1).id"
 
                     />
                     <div class="col-md-3">
-                        <button type="submit" @click="saveEngManufacture(1)"
+                        <button v-if="!loadStatus" type="submit" @click="saveEngManufacture(1)"
                                 class="btn btn-outline-dark btn-block ">
                             <span>{{$ml.get('word.save')}}</span>
+                        </button>
+                        <button v-if="loadStatus" type="submit"
+                                class="btn  btn-block btn-dark" disabled>
+                            <span><div class="lds-dual-ring" style="position: relative; bottom: 1.2vh"></div></span>
                         </button>
                     </div>
                 </div>
                 <hr/>
-                <span v-if="loadStatus"><div class="lds-dual-ring-black posCenter"></div></span>
                 <div class="savePageRow row ">
                     <div v-if="showErr" class="alert alert-danger col-md-12" role="alert" style="margin-left: 4%">
                         {{$ml.get('msg.duplicateValue')}}
@@ -128,7 +132,7 @@
                             :items="PARAM_NAME_AND_UNITS.status"
                             :update-obj="updateDataObj"
                             index="status"
-                            :holder-num=0
+                            :holderNum="dataList.find(elem=>elem.id===1).id"
 
                     />
                 </div>
@@ -136,16 +140,19 @@
                 <div class="savePageRow row ">
                     <div class="col-md-4"></div>
                     <div class="col-md-4">
-                        <button type="submit" @click="update(1)"
+                        <button v-if="!loadStatus" type="submit" @click="update(1)"
                                 class="btn  btn-block btn-outline-dark">
                             <span>{{$ml.get('word.update')}}</span>
+                        </button>
+                        <button v-if="loadStatus" type="submit"
+                                class="btn  btn-block btn-dark" disabled>
+                            <span><div class="lds-dual-ring" style="position: relative; bottom: 1.2vh"></div></span>
                         </button>
                     </div>
                     <div class="col-md-4"></div>
 
                 </div>
                 <hr/>
-                <span v-if="loadStatus"><div class="lds-dual-ring-black posCenter"></div></span>
 
             </div>
         </div>
@@ -207,7 +214,10 @@
                 );
                 if (temp === undefined) {
                     if (this.saveDataObj.saveData_primary != null) {
-                        this.$emit("save-data-api", this.saveDataObj);
+                        if (this.saveDataObj.status === null) {
+                            this.saveDataObj.status = 1;
+                        }
+                        await this.$emit("save-data-api", this.saveDataObj);
                         this.GET_ALL_ADDITIONAL_DATA();
                         this.GET_PARAM_NAME();
                     }
@@ -218,7 +228,10 @@
             },
             async update(number) {
                 if (this.updateDataObj.objToBeChanged != null) {
-                    this.$emit("update-data-api", this.updateDataObj);
+                    if (this.updateDataObj.status === null) {
+                        this.updateDataObj.status = 1;
+                    }
+                    await this.$emit("update-data-api", this.updateDataObj);
                     this.GET_ALL_ADDITIONAL_DATA();
                 }
                 console.log(number)

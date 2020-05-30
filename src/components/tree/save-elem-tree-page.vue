@@ -40,7 +40,7 @@
         </div>
         <hr style="position: center; width: 100%;"/>
         <br/>
-        <div class="panelBody"  style="width: 100%">
+        <div class="panelBody" style="width: 100%">
             <navig>
                 <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                     <a v-for="current in ELEMENTS.elementsCh" v-bind:key="current"
@@ -141,9 +141,9 @@
                                     <td v-if="current.editRow">
                                         <input type="text" class="form-control" v-model="current.doubleNum">
                                     </td>
-                                    <td v-if="!current.editRow">{{current.author}}</td>
+                                    <td v-if="!current.editRow">{{current.status}}</td>
                                     <td v-if="current.editRow">
-                                        <input type="text" class="form-control" v-model="current.author">
+                                        <input type="text" class="form-control" v-model="current.status">
                                     </td>
                                     <td v-if="!current.editRow">{{current.source}}</td>
                                     <td v-if="current.editRow">
@@ -217,8 +217,14 @@
                                     </td>
                                     <td v-if="!current.editRow">{{current.author}}</td>
                                     <td v-if="current.editRow">
-                                        <input type="text" class="form-control" v-model="current.author">
+                                        <VueDatalist
+                                                :items="PARAM_NAME_AND_UNITS.status"
+                                                :update-obj="current"
+                                                index="status"
+                                                :hide-title="true"
+                                                :holder-num=0
 
+                                        />
                                     </td>
                                     <td v-if="!current.editRow">{{current.source}}</td>
                                     <td v-if="current.editRow">
@@ -395,6 +401,7 @@
                         doubleNum: current.doubleNum,
                         author: current.author,
                         source: current.source,
+                        status: current.status,
                         editRow: current.editRow,
                     }
 
@@ -409,7 +416,8 @@
                         doubleNum: current.doubleNum,
                         author: current.author,
                         source: current.source,
-                        editRow: current.editRow,
+                        status: current.status,
+                        editRow: current.editRow
                     });
                 }
                 console.log(1)
@@ -460,6 +468,7 @@
                     doubleNum: null,
                     author: null,
                     source: null,
+                    status: null,
                     editRow: true
                 });
                 this.setMaxId(this.ELEMENTS.maxId + 1);
@@ -544,7 +553,8 @@
     .treeRow {
         width: 90%;
     }
-    a{
+
+    a {
         padding-left: 3vw;
         padding-right: 3vw;
         color: #272e38;

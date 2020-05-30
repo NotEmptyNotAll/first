@@ -48,7 +48,7 @@
                 </div>
                 <table class="table table-hover  " style="text-align: center; z-index: 0; border-radius: 0px; ">
                     <thead>
-                    <tr >
+                    <tr>
                         <th scope="col">id</th>
                         <th scope="col">{{$ml.get('word.engine')}}</th>
                         <th scope="col">{{$ml.get('word.cylinders')}}</th>
@@ -85,7 +85,8 @@
                         </td>
                         <td v-if="current.releaseYearFrom!=null ">{{current.releaseYearFrom}}</td>
                         <td v-if="current.releaseYearBy!=null">{{current.releaseYearFrom}}</td>
-                        <td v-if="current.releaseYearFrom==null && current.releaseYearBy==null"></td>                    </tr>
+                        <td v-if="current.releaseYearFrom==null && current.releaseYearBy==null"></td>
+                    </tr>
                     </tbody>
                 </table>
 
@@ -227,13 +228,18 @@
                     <div class="col-md-5">
                     </div>
                     <div class="col-md-2">
-                        <button type="submit" @click="saveEngManufacture(1)"
+                        <button v-if="!loadStatus" type="submit" @click="saveEngManufacture(1)"
                                 class="btn btn-outline-dark btn-block ">
                             <span>{{$ml.get('word.save')}}</span>
                         </button>
+                        <button v-if="loadStatus" type="submit"
+                                class="btn  btn-block btn-dark" disabled>
+                            <span><div class="lds-dual-ring" style="position: relative; bottom: 1.2vh" ></div></span>
+                        </button>
                     </div>
                     <div class="col-md-5"></div>
-                </div>                <hr/>
+                </div>
+                <hr/>
                 <span v-if="loadStatus"><div class="lds-dual-ring-black posCenter"></div></span>
                 <div class="savePageRow row ">
                     <div v-if="showErr" class="alert alert-danger col-md-12" role="alert" style="margin-left: 4%">
@@ -244,8 +250,8 @@
             <div class="tab-pane fade" :id="'c'+nameTitle" role="tabpanel"
                  aria-labelledby="contact-tab">
 
-          <br/>
-          <br/>
+                <br/>
+                <br/>
                 <div class="savePageRow row">
                     <vue-datalist
                             class="col-md-8"
@@ -258,16 +264,25 @@
 
                     />
                     <div class="col-md-2">
-                        <button type="submit"
+                        <button  v-if="!loadStatus"
+                                type="submit"
                                 class="btn btn-outline-dark btn-block "
                                 @click="getEng(1)"
                         >
                             <span>{{$ml.get('word.choose')}}</span>
                         </button>
+                        <button v-if="loadStatus" type="submit"
+                                class="btn  btn-block btn-dark" disabled>
+                            <span><div class="lds-dual-ring" style="position: relative; bottom: 1.2vh" ></div></span>
+                        </button>
+
                     </div>
                     <div class="col-md-2">
-
-                        <button v- type="submit" @click="update(1)"
+                        <button v-if="loadStatus" type="submit"
+                                class="btn  btn-block btn-dark" disabled>
+                            <span><div class="lds-dual-ring" style="position: relative; bottom: 1.2vh" ></div></span>
+                        </button>
+                        <button v-if="!loadStatus" type="submit" @click="update(1)"
                                 class="btn  btn-block btn-outline-dark">
                             <span>{{$ml.get('word.update')}}</span>
                         </button>
@@ -286,7 +301,7 @@
                             :title-input="$ml.get('word.cylinders')"
                             :items="ADDITIONAL_DATA.cylinders"
                             :update-obj="updateDataObj"
-                            :holderNum="0"
+                            :holderNum="tempData.cylindersPlacementFk"
                             index="cylindersPlacementFk"
                     />
                     <vue-datalist
@@ -294,7 +309,7 @@
                             :title-input="$ml.get('word.engineManufacture')"
                             :items="ADDITIONAL_DATA.engineManufacture"
                             :update-obj="updateDataObj"
-                            :holderNum="0"
+                            :holderNum="tempData.engineManufacturerFk"
                             index="engineManufacturerFk"
                     />
 
@@ -305,7 +320,7 @@
                             :title-input="$ml.get('word.fuelType')"
                             :items="ADDITIONAL_DATA.fuelType"
                             :update-obj="updateDataObj"
-                            :holderNum="0"
+                            :holderNum="tempData.fuelTypeFk"
                             index="fuelTypeFk"
                     />
                     <vue-datalist
@@ -313,7 +328,7 @@
                             :title-input="$ml.get('word.superchargedType')"
                             :items="ADDITIONAL_DATA.superchargeType"
                             :update-obj="updateDataObj"
-                            :holderNum="0"
+                            :holderNum="tempData.superchargedTypeFk"
                             index="superchargedTypeFk"
                     />
                     <input-field class="col-md-3"
@@ -397,7 +412,6 @@
 
                 </div>
                 <hr/>
-                <span v-if="loadStatus"><div class="lds-dual-ring-black posCenter"></div></span>
 
             </div>
         </div>
@@ -411,7 +425,7 @@
 
     export default {
         name: "save-engine-panel",
-        components: { VueDatalist, InputField},
+        components: {VueDatalist, InputField},
         data: () => ({
             showErr: false,
             dataList: [],
@@ -430,7 +444,8 @@
                 degreeCompression: null,
                 releaseYearFrom: null,
                 releaseYearBy: null,
-                horsepower: null
+                horsepower: null,
+                status: null
             },
             tempData: {
                 engineType: null,
@@ -447,7 +462,8 @@
                 degreeCompression: null,
                 releaseYearFrom: null,
                 releaseYearBy: null,
-                horsepower: null
+                horsepower: null,
+                status: null
             },
             updateDataObj: {
                 objToBeChanged: null,
@@ -465,7 +481,8 @@
                 degreeCompression: null,
                 releaseYearFrom: null,
                 releaseYearBy: null,
-                horsepower: null
+                horsepower: null,
+                status: null
             },
             test: null
         }),
@@ -500,9 +517,10 @@
             }, filterResults() {
                 // first uncapitalize all the things
                 this.dataList = this.ADDITIONAL_DATA.engine.filter((item) => {
-                    return ( (item.cylindersPlacement.toLowerCase().indexOf(this.search.toLowerCase()) > -1) ||
+                    return ((item.cylindersPlacement.toLowerCase().indexOf(this.search.toLowerCase()) > -1) ||
                         (item.data.toLowerCase().indexOf(this.search.toLowerCase()) > -1) ||
-                        ( item.fuelType.toLowerCase().indexOf(this.search.toLowerCase()) > -1)
+                        (item.powerKwt.toLowerCase().indexOf(this.search.toLowerCase()) > -1) ||
+                        (item.fuelType.toLowerCase().indexOf(this.search.toLowerCase()) > -1)
                     );
                 });
                 this.$emit("set-list", this.temp);
@@ -544,7 +562,11 @@
                 );
                 if (temp === undefined) {
                     this.showErr = false
-                    this.$emit("save-data-api", this.saveDataObj)
+                    if (this.saveDataObj.status === null) {
+                        this.saveDataObj.status = 2;
+                    }
+                    await this.$emit("save-data-api", this.saveDataObj)
+                    this.GET_ALL_ADDITIONAL_DATA();
                 } else {
                     this.showErr = true;
 
@@ -552,7 +574,11 @@
                 console.log(number)
             },
             async update(number) {
-                this.$emit("update-data-api", this.updateDataObj)
+                if (this.updateDataObj.status === null) {
+                    this.updateDataObj.status = this.tempData.status;
+                }
+                await this.$emit("update-data-api", this.updateDataObj)
+                this.GET_ALL_ADDITIONAL_DATA();
                 console.log(number)
             }
         },
@@ -564,12 +590,13 @@
 </script>
 
 <style scoped>
-    a{
+    a {
         padding-left: 3vw;
         padding-right: 3vw;
         color: #272e38;
         font-weight: bold;
     }
+
     .savePageRow {
         max-width: 75vw;
         min-width: 75vw;
