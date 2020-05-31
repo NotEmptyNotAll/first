@@ -36,7 +36,7 @@ export default {
         state.autoEngine = autoEngine;
     },
     SET_AUTO_ENGINE_LOAD: (state, autoEngineLoad) => {
-        state.autoEngineLoad = autoEngineLoad;
+        state.loadSave.automobileEngine = autoEngineLoad;
     },
     SET_SEARCH_DATA: (state, searchData) => {
         state.searchData = searchData;
@@ -49,6 +49,12 @@ export default {
     },
     SET_LOAD_PARAM_FOR_TREE(state, loadParame) {
         state.loadParamForTree = loadParame;
+    },
+    SET_PARAM_NAME: (state, paramName) => {
+        state.paramName = paramName;
+    },
+    SET_ELEMENTS_LOAD: (state, elementsLoad) => {
+        state.elementsLoad = elementsLoad;
     },
     SET_LOAD_UPDATE_PARAMETERS: (state, loadSave) => {
         state.loadUpdate.parameters = loadSave;
@@ -128,6 +134,7 @@ export default {
     SET_LOAD_ADDITIONAL_DATA: (state, loadSave) => {
         state.allAdditionalDataLoad = loadSave;
     },
+
     SET_ADDITIONAL_DATA: (state, data) => {
         state.allAdditionalData = data;
     },

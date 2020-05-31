@@ -19,13 +19,32 @@
                  aria-labelledby="home-tab">
                 <div class="row">
                     <div class="col-md-7"></div>
+                    <div class="input-group col-md-5">
+                        <div class="input-group-prepend ">
+                            <label class="input-group-text   "
+                                   for="vue-list-input1"
+                            >{{$ml.get('word.search')}}</label>
+                        </div>
+                        <input
+                                v-model="search"
+                                id="vue-list-input1"
+                                autocomplete="off"
+                                class="form-control"
+                                type="text"
+                                placeholder=" "
+                                v-on:input="onChange"
+                                v-on:click="onChange"
 
-                    <search-input
-                            class="col-md-5"
-                            :title-input="$ml.get('word.search')"
-                            :items="listForSearch"
-                            @set-list="setDataList"
-                    />
+                        />
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-danger"
+                                    v-on:click="clear"
+                                    type="button">
+                                <span>&#10008;</span>
+                            </button>
+                        </div>
+
+                    </div>
                 </div>
                 <table class="table table-hover  "
                        style="text-align: center; z-index: 0; border-radius: 0px">
@@ -37,7 +56,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="current in dataList" v-bind:key="current">
+                    <tr v-for="current in listForSearch" v-bind:key="current" v-show="current.data!==''">
                         <td>{{current.id}}
                         </td>
                         <td>{{current.data}}
@@ -48,6 +67,7 @@
                     </tr>
                     </tbody>
                 </table>
+                <div v-if="LOAD_ADDITIONAL_DATA" class="lds-dual-ring-black" style="margin-left:47% "></div>
 
             </div>
             <div class="tab-pane fade" :id="'p'+nameTitle" role="tabpanel"
@@ -142,12 +162,11 @@
     import {mapActions, mapGetters} from "vuex";
     import VueDatalist from "../input/vue-datalist";
     import InputField from "../input/input-field";
-    import SearchInput from "../input/searchInput";
 
 
     export default {
         name: "save-update-panel",
-        components: {SearchInput, InputField, VueDatalist},
+        components: { InputField, VueDatalist},
         data: () => ({
             showErr: false,
             listForSearch: [],
@@ -159,11 +178,13 @@
                 objToBeChanged: null,
                 updateData: null,
                 status: null
-            }
+            } ,
+            search:''
         }),
         computed: {
             ...mapGetters([
-                'PARAM_NAME_AND_UNITS'
+                'PARAM_NAME_AND_UNITS',
+                'LOAD_ADDITIONAL_DATA'
             ])
         },
         props: {
@@ -175,6 +196,18 @@
             ...mapActions([
                 'GET_ALL_ADDITIONAL_DATA'
             ]),
+            async clear() {
+                this.search = '';
+                this.filterResults();
+            },
+            onChange() {
+                this.filterResults();
+            }, filterResults() {
+                // first uncapitalize all the things
+                this.listForSearch = this.dataList.filter((item) => {
+                    return item.data.toLowerCase().indexOf(this.search.toLowerCase()) > -1;
+                });
+            },
             setDataList(tempList) {
                 this.dataList = tempList;
             },
@@ -209,7 +242,7 @@
 
         },
         mounted() {
-            this.listForSearch = this.dataList.slice();
+            this.listForSearch = this.dataList;
         }
     }
 </script>

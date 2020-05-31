@@ -166,14 +166,14 @@
                                         </button>
                                     </td>
                                 </tr>
-                                <tr v-show="current.elemId===elemId" v-for="current in listNewParam"
-                                    v-bind:key="current">
-                                    <td v-if="!current.editRow ">{{PARAM_NAME_AND_UNITS.paramName.find(unit=>
+                                <tr  v-show="current.elemId===elemId " v-for="current in listNewParam"
+                                    v-bind:key="current ">
+                                    <td  v-if="!current.editRow">{{PARAM_NAME.find(unit=>
                                         unit.id===current.name).data}}
                                     </td>
-                                    <td v-if="current.editRow">
+                                    <td  v-if="current.editRow">
                                         <VueDatalist
-                                                :items="PARAM_NAME_AND_UNITS.paramName"
+                                                :items="PARAM_NAME.filter(elem=>{return !elem.tree_node})"
                                                 :update-obj="current"
                                                 index="name"
                                                 :hide-title="true"
@@ -215,7 +215,8 @@
                                         <input type="text" class="form-control" v-model="current.doubleNum">
 
                                     </td>
-                                    <td v-if="!current.editRow">{{current.author}}</td>
+                                    <td v-if="!current.editRow">{{PARAM_NAME_AND_UNITS.status.find(unit=>
+                                        unit.id===current.status).data}}</td>
                                     <td v-if="current.editRow">
                                         <VueDatalist
                                                 :items="PARAM_NAME_AND_UNITS.status"
@@ -231,7 +232,7 @@
                                         <input type="text" class="form-control" v-model="current.source">
                                     </td>
                                     <td>
-                                        <button type="button " v-if="!current.editRow"
+                                        <button type="button" v-if="!current.editRow"
                                                 class="btn btn-group  btn-warning"
                                                 @click="current.editRow=!current.editRow"
                                         >
@@ -319,7 +320,7 @@
         }),
         mounted() {
             this.GET_TREE_ROOT_NAMES();
-            this.GET_PARAM_NAME();
+
         },
         computed: {
             currentUser() {
@@ -337,7 +338,8 @@
                 'ELEMENTS_AND_MAX_ID',
                 'LISTNEWELEM',
                 'LOAD_TREE_UPDATE',
-                'LOAD_SAVE_ELEMENTS'
+                'LOAD_SAVE_ELEMENTS',
+                'PARAM_NAME'
 
             ])
         },
@@ -351,7 +353,8 @@
                 'GET_TREE_ROOT_NAMES',
                 'GET_ELEMENTS_AND_MAX_ID',
                 'SAVE_DATA_ELEMENTS',
-                'UPDATE_DATA_ELEMENTS'
+                'UPDATE_DATA_ELEMENTS',
+                'GET_ALL_PARAM_NAME'
 
             ])
             ,
@@ -372,11 +375,8 @@
                     doubleMin: current.doubleMin,
                     doubleMax: current.doubleMax,
                     doubleNum: current.doubleNum,
-                    author: current.author,
-                    source: current.source,
-                    editRow: current.editRow,
+                    source: current.source
                 });
-
                 console.log(1)
             },
             updateOldParam(current) {

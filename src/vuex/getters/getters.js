@@ -71,10 +71,17 @@ export default {
     ADDITIONAL_DATA: (state) => {
         return state.allAdditionalData;
     },
+    PARAM_NAME: (state) => {
+        return state.paramName;
+    },
     SAVE_STATUS: (state) => {
         return state.saveStatus;
     },
     UPDATE_ENGINE: (state) => {
         return state.updateDataObj;
+    },
+    ELEMENTS_LOAD: (state) => {
+        return state.elementsLoad;
     }
+
 }

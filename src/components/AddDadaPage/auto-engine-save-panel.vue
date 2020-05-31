@@ -58,21 +58,22 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="current in dataList" v-bind:key="current">
+                    <tr v-for="current in dataList" v-bind:key="current" v-show="current.data!==''">
                         <td>{{current.id}}</td>
                         <td>{{current.engineFk}}</td>
                         <td>{{current.autoManufactureFk}}</td>
                         <td>{{current.autoModelFk}}</td>
-                        <td v-if="current.releaseYearFrom!=null && current.releaseYearBy!=null">
-                            {{current.releaseYearFrom+'-'+current.releaseYearBy}}
+                        <td>
+                            <span v-if="current.releaseYearFrom!=null && current.releaseYearBy!=null"> {{current.releaseYearFrom+'-'+current.releaseYearBy}}</span>
+                            <span v-else-if="current.releaseYearFrom!=null ">{{current.releaseYearFrom}}</span>
+                            <span v-else-if="current.releaseYearBy!=null">{{current.releaseYearBy}}</span>
+                            <span v-else-if="current.releaseYearFrom==null && current.releaseYearBy==null"></span>
                         </td>
-                        <td v-if="current.releaseYearFrom!=null ">{{current.releaseYearFrom}}</td>
-                        <td v-if="current.releaseYearBy!=null">{{current.releaseYearFrom}}</td>
-                        <td v-if="current.releaseYearFrom==null && current.releaseYearBy==null"></td>
                         <td>{{current.status}}</td>
                     </tr>
                     </tbody>
                 </table>
+                <div v-if="LOAD_ADDITIONAL_DATA" class="lds-dual-ring-black" style="margin-left:47% "></div>
 
             </div>
             <div class="tab-pane fade" :id="'p'+nameTitle" role="tabpanel"
@@ -175,7 +176,7 @@
                  aria-labelledby="contact-tab">
                 <br/>
                 <br/>
-                <div class="savePageRow">
+                <div class="row" style="position: relative; left: 1vw">
                     <search-engine-panel class="col-md-12"
                                          @submit-function="GET_AUTOENG_BY_PARAM_UPDATE"
                                          style="position: relative;right: 1vw; width: 75vw "
@@ -228,7 +229,6 @@
                                     index="engineFk"
                                     :hide-title="true"
                                     :holder-num=0
-
                             />
                         </td>
                         <td v-if="!current.editRow">{{current.releaseYearFrom}}</td>
@@ -267,6 +267,7 @@
                     </tr>
                     </tbody>
                 </table>
+                <hr style="position:center;width:50% "/>
                 <div style="margin-left: 40%; width: 20%;margin-right: 40%;">
                     <button v-if="!loadStatus && AUTO_ENGINE.length>0"
                             type="submit"
@@ -280,11 +281,9 @@
 
                     <button v-if="loadStatus && AUTO_ENGINE.length>0" type="submit"
                             class="btn  btn-block btn-dark" disabled>
-                        <span><div class="lds-dual-ring" style="position: relative; bottom: 1.2vh"></div></span>
                     </button>
                 </div>
-                <hr/>
-                <span v-if="loadStatus"><div class="lds-dual-ring-black posCenter"></div></span>
+
 
             </div>
         </div>
@@ -344,6 +343,7 @@
                 'AUTO_ENGINE_LOAD',
                 'AUTO_ENGINE',
                 'LOAD_SAVE_AUTOMOBILE_ENGINE',
+                'LOAD_ADDITIONAL_DATA'
 
             ])
         },
@@ -352,7 +352,8 @@
                 'SAVE_DATA_AUTOMOBILE_ENGINE',
                 'GET_AUTOENG_BY_PARAM_UPDATE',
                 'SAVE_DATA_ENGINE_NUMBER',
-                'UPDATE_AUTO_ENGINE'
+                'UPDATE_AUTO_ENGINE',
+                'GET_ALL_ADDITIONAL_DATA'
 
             ]),
             setDataList(tempList) {

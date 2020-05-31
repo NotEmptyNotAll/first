@@ -4,7 +4,7 @@
         <error-page
                 v-if="!currentUser"
         />
-        <div  v-if="currentUser">
+        <div v-if="currentUser">
             <div class="search-border container  bg-white rounded" id="searchCont" style="text-align: center">
                 <div class="search-logo">
                     <div class="head-text deepshd "><h2>{{$ml.get('word.engine')}}</h2></div>
@@ -16,9 +16,9 @@
                 />
             </div>
             <!--engine data table. By clicking on row m we open the engine tree, where we can find out its parameters-->
-            <div class="container tab  rounded bg-white rad" id="contTable" style="position: relative; ">
-                <table class="table rounded search-tab table-hover">
-                    <thead class="thead-light ">
+            <div class="container tab  rounded bg-white rad" id="contTable" style="position: relative; height: auto">
+                <table class="table rounded search-tab table-hover" style="height: auto">
+                    <thead class=" text-white " style="background-color: lightslategrey;">
                     <tr>
                         <th>{{$ml.get('word.engine')}}</th>
                         <th>{{$ml.get('word.autoManufacturer')}}</th>
@@ -43,12 +43,12 @@
                         <td>{{current.engineType}}</td>
                         <td>{{current.autoManufacture}}</td>
                         <td>{{current.modelName}}</td>
-                        <td v-if="current.releaseYearFrom!=null && current.releaseYearBy!=null">
-                            {{current.releaseYearFrom+'-'+current.releaseYearBy}}
+                        <td v>
+                            <span v-if="current.releaseYearFrom!=null && current.releaseYearBy!=null"> {{current.releaseYearFrom+'-'+current.releaseYearBy}}</span>
+                            <span v-else-if="current.releaseYearFrom!=null ">{{current.releaseYearFrom}}</span>
+                            <span v-else-if="current.releaseYearBy!=null">{{current.releaseYearBy}}</span>
+                            <span v-else-if="current.releaseYearFrom==null && current.releaseYearBy==null"></span>
                         </td>
-                        <td v-if="current.releaseYearFrom!=null ">{{current.releaseYearFrom}}</td>
-                        <td v-if="current.releaseYearBy!=null">{{current.releaseYearFrom}}</td>
-                        <td v-if="current.releaseYearFrom==null && current.releaseYearBy==null"></td>
                         <td>{{current.fuelType}}</td>
                         <td>{{current.cylinderPlace}}</td>
                         <td>{{current.cylindersNumber}}</td>
@@ -69,8 +69,8 @@
                     </tr>
                     </tbody>
                 </table>
-                <div v-if="SHOW_LOAD" class="lds-dual-ring-black"
-                     style="margin-left: 50%; margin-right: 50% ;top: 4vw"></div>
+                <div v-if="SHOW_LOAD || ELEMENTS_LOAD" class="lds-dual-ring-black"
+                     style="margin-left: 47%; margin-right: 50% ;"></div>
             </div>
 
             <!--recursive tree of objects. Most likely it will look different-->
@@ -138,6 +138,7 @@
                     isPressed: false
                 }
             },
+            tempActiveRow: {active:false},
             searchData: {
                 paramList: [{
                     parameterName: '',
@@ -162,6 +163,7 @@
         mounted() {
             this.GET_START_PARAM();
             this.GET_PARAM_NAME();
+            this.GET_ALL_PARAM_NAME();
 
         },
         computed: {
@@ -175,17 +177,20 @@
                 'PARAM_NAME_AND_UNITS',
                 'SEARCHDATA',
                 'LOADPARAM',
-                'ELEMENTS'
+                'ELEMENTS',
+                'PARAM_NAME',
+                'ELEMENTS_LOAD'
+
             ])
         },
         methods: {
             ...mapActions([
                 'GET_START_PARAM',
-                'GET_AUTOENG_BY_PARAM',
                 'GET_PARAM_NAME',
                 'GET_ELEMENTS',
                 'GET_AUTO_BY_ENG',
-                'GET_AUTOENG_BY_PARAM'
+                'GET_AUTOENG_BY_PARAM',
+                'GET_ALL_PARAM_NAME'
             ]),
 
             addParam(number) {
@@ -249,7 +254,9 @@
             ,
             //query to get a list of parameter names
             async getElements(current) {
+                this.tempActiveRow.active=false;
                 current.active = true;
+                this.tempActiveRow = current;
                 this.listParam = [];
                 this.nowPressed.linkOnButt.isPressed = false;
                 this.auto_id = current.id;
@@ -390,7 +397,7 @@
         top: 0px;
         width: 20%;
         height: 50px;
-        background:lightslategrey;
+        background: lightslategrey;
         border-bottom-right-radius: 90px;
         border-bottom-left-radius: 90px;
     }
@@ -399,9 +406,9 @@
         text-align: center;
         horiz-align: center;
         width: 97.05vw;
-        left: 0px;
-        position: absolute;
-        top: -5px;
+        right: 1.1vw;
+        position: relative;
+        top: -2.2vh;
         border-style: solid;
         border-top-color: #272e38;
         border-width: 1px 0px 0px 0px;

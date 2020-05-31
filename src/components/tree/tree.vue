@@ -15,7 +15,7 @@
                         class="col-md-8"
                         v-show="item.name===''"
                         title-input="дані для зміни"
-                        :items="PARAM_NAME_AND_UNITS.paramName"
+                        :items="PARAM_NAME.filter(elem=>{return elem.tree_node})"
                         :show-title="true"
                         :update-obj="saveElemData"
                         index="paramNameFk"
@@ -38,12 +38,12 @@
                                 v-on:click="pressed"
                                 class="btn posLeft  btn-posit btn-success"
                                 @click="getParamtrs(nav,item.id,linkOnThisButt)">
-                            <span>&#x2b;</span>
+                            <span>&#10010;</span>
                         </button>
                         <button v-show="changeMod==='off'" type="button"
                                 v-if=" linkOnThisButt.isPressed && item.parametersIsExistInChild"
                                 class="btn posLeft btn-posit btn-secondary disabled">
-                            <span>&#x2b;</span>
+                            <span>&#10010;</span>
                         </button>
                     </div>
 
@@ -53,7 +53,7 @@
                                 v-on:click="pressed"
                                 class="btn btn-group posLeft btn-warning"
                                 @click="getParamtrs(nav,item.id,linkOnThisButt)">
-                            <span>&#9998;</span>
+                            <span >&#9998;</span>
                         </button>
                         <button v-show="changeMod==='on'" type="button" v-if=" linkOnThisButt.isPressed "
                                 class="btn btn-group posLeft btn-warning disabled">
@@ -61,7 +61,7 @@
                         </button>
                         <button v-show="changeMod==='on'" type="button"
                                 class="btn btn-group posLeft btn-info" @click="addElement(1)" style="z-index: 999">
-                            <span>&#x2b;</span>
+                            <span>&#10010;</span>
                         </button>
                     </div>
                 </div>
@@ -128,7 +128,8 @@
                 'PARAM_NAME_AND_UNITS',
                 'LISTNEWELEM',
                 'ELEMENTS_AND_MAX_ID',
-                'ELEMENTS'
+                'ELEMENTS',
+                'PARAM_NAME'
             ]),
             isFolder: function () {
                 return this.elementsCh && this.item.elementsCh.length;
@@ -162,8 +163,8 @@
             saveElem(number) {
                 this.item.name = this.PARAM_NAME_AND_UNITS.paramName.find(item => item.id === this.saveElemData.paramNameFk).data;
                 this.saveElemData.parentId = this.idParentElem;
-                this.saveElemData.elemId = this.ELEMENTS.maxId+1;
-                this.item.id=this.ELEMENTS.maxId+1;
+                this.saveElemData.elemId = this.ELEMENTS.maxId + 1;
+                this.item.id = this.ELEMENTS.maxId + 1;
                 this.listNewElem = this.LISTNEWELEM;
                 this.listNewElem.push(this.saveElemData);
                 this.setListNewElem(this.listNewElem);
@@ -242,7 +243,6 @@
         bottom: 5px;
         top: 2.1vh;
     }
-
 
 
 </style>

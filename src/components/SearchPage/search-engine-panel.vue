@@ -44,7 +44,6 @@
             <div class="col-md-3"></div>
             <div class="col col-md-2">
                 <button class="btn btn-block buttonanim btn-secondary" type="button" data-toggle="collapse"
-                        v-on:click="getParamName(1)"
                         @click="advanceSearch=!advanceSearch">
                          <span>{{$ml.get('word.advancedSearch')}}
                         </span>
@@ -103,47 +102,22 @@
                 <hr/>
                 <div v-for="(param,index) in searchData.paramList" v-bind:key="param" class="savePageRow row ">
                     <div class="input-group col-md-5">
-                        <div class="input-group-prepend">
-                            <label class="input-group-text" :for="'param'+index">{{$ml.get('word.parameter')}}</label>
-                        </div>
-
-                        <input list="listParam"
-                               v-model="param.parameterName"
-                               class="form-control"
-                               :id="'param'+index"
-                        >
-                        <datalist id="listParam">
-                            <option v-for="current in PARAM_NAME_AND_UNITS.paramName" v-bind:key="current"
-                                    :value="current.data"
-                                    :label="current.data"/>
-                        </datalist>
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-danger" v-on:click="param.parameterName=null"
-                                    type="button" id="button-addon11">
-                                <span>&#10008;</span>
-                            </button>
-                        </div>
+                        <param-elements-input
+                                :title-input="$ml.get('word.parameter')"
+                                :items="PARAM_NAME_AND_UNITS.paramName"
+                                :param-obj="param"
+                                index-node-id="parameterNodeId"
+                                index-child-id="parameterChildId"
+                        />
                     </div>
-                    <div class="input-group col-md-4">
-                        <div class="input-group-prepend">
-                            <label class="input-group-text" for="inputGroupSelect3">{{$ml.get('word.units')}}
-                            </label>
-                        </div>
-                        <select v-model="param.unitsFullName" aria-describedby="button-addon5"
-                                id="inputGroupSelect3"
-                                class="custom-select form-control">
-                            <option v-for="current in PARAM_NAME_AND_UNITS.units" v-bind:key="current">
-                                {{current.data}}
-                            </option>
-                        </select>
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-danger"
-                                    v-on:click="param.unitsFullName=null" type="button"
-                                    id="button-addon5">
-                                <span>&#10008;</span>
-                            </button>
-                        </div>
-                    </div>
+                    <vue-datalist
+                            class="col-md-4"
+                            :title-input="$ml.get('word.units')"
+                            :items="PARAM_NAME_AND_UNITS.units"
+                            :update-obj="param"
+                            :holderNum="0"
+                            index="unitsFullName"
+                    />
                     <div v-if="searchData.paramList.length>1" class="col col-md-2">
                         <input v-model="param.parameterNumber" class="form-control" type="number"
                                value="" :placeholder="$ml.get('word.data')"
@@ -181,11 +155,12 @@
     import {mapActions, mapGetters, mapMutations} from "vuex";
     import InputField from "../input/input-field";
     import VueDatalist from "../input/vue-datalist";
+    import ParamElementsInput from "../input/param-elements-input";
 
 
     export default {
         name: "search-engine-panel",
-        components: {VueDatalist, InputField},
+        components: {ParamElementsInput, VueDatalist, InputField},
         data: () => ({
             paramtrs: [],
             choiceParam: [],
@@ -194,7 +169,8 @@
             errorMessage: '',
             searchData: {
                 paramList: [{
-                    parameterName: '',
+                    parameterNodeId: null,
+                    parameterChildId: null,
                     unitsFullName: '',
                     parameterNumber: ''
                 }],
@@ -244,7 +220,8 @@
             clear(number) {
                 this.searchData = {
                     paramList: [{
-                        parameterName: '',
+                        parameterNodeId: null,
+                        parameterChildId: null,
                         unitsFullName: '',
                         parameterNumber: ''
                     }],
@@ -264,7 +241,8 @@
             ,
             addParam(number) {
                 this.searchData.paramList.push({
-                    parameterName: '',
+                    parameterNodeId: null,
+                    parameterChildId: null,
                     unitsFullName: '',
                     parameterNumber: ''
                 });
@@ -313,14 +291,6 @@
             }
 
             ,
-            //request for parameters
-            async getParamName(number) {
-                if (this.PARAM_NAME_AND_UNITS != null) {
-                    this.GET_PARAM_NAME();
-                }
-                console.log(number);
-            }
-            ,
             //request for data about the auto engine
             async submitChanges(dat) {
                 // this.dataEng = [];
@@ -351,10 +321,11 @@
 </script>
 
 <style>
-     .savePageRow {
+    .savePageRow {
         max-width: 74vw;
         min-width: 74vw;
     }
+
     .input-group-text {
         background: white;
         color: #272e38;

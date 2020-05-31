@@ -102,7 +102,6 @@
     }
 
     li, tr, table, td, .row, .container {
-
         animation: moveInBottom 0.5s ease-out;
         animation-fill-mode: backwards;
     }

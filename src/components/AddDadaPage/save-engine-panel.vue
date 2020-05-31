@@ -66,7 +66,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="current in dataList" v-bind:key="current">
+                    <tr v-for="current in dataList" v-bind:key="current" v-show="current.data!==''">
                         <td>{{current.id}}</td>
                         <td>{{current.data}}</td>
                         <td>{{current.cylindersPlacement}}</td>
@@ -80,15 +80,17 @@
                         <td>{{current.cylindersNumber}}</td>
                         <td>{{current.flapNumber}}</td>
                         <td>{{current.degreeCompression}}</td>
-                        <td v-if="current.releaseYearFrom!=null && current.releaseYearBy!=null">
-                            {{current.releaseYearFrom+'-'+current.releaseYearBy}}
+                        <td>
+                            <span v-if="current.releaseYearFrom!=null && current.releaseYearBy!=null"> {{current.releaseYearFrom+'-'+current.releaseYearBy}}</span>
+                            <span v-else-if="current.releaseYearFrom!=null ">{{current.releaseYearFrom}}</span>
+                            <span v-else-if="current.releaseYearBy!=null">{{current.releaseYearBy}}</span>
+                            <span v-else-if="current.releaseYearFrom==null && current.releaseYearBy==null"></span>
                         </td>
-                        <td v-if="current.releaseYearFrom!=null ">{{current.releaseYearFrom}}</td>
-                        <td v-if="current.releaseYearBy!=null">{{current.releaseYearFrom}}</td>
-                        <td v-if="current.releaseYearFrom==null && current.releaseYearBy==null"></td>
+
                     </tr>
                     </tbody>
                 </table>
+                <div v-if="LOAD_ADDITIONAL_DATA" class="lds-dual-ring-black" style="margin-left:47% "></div>
 
             </div>
             <div class="tab-pane fade" :id="'p'+nameTitle" role="tabpanel"
@@ -234,7 +236,7 @@
                         </button>
                         <button v-if="loadStatus" type="submit"
                                 class="btn  btn-block btn-dark" disabled>
-                            <span><div class="lds-dual-ring" style="position: relative; bottom: 1.2vh" ></div></span>
+                            <span><div class="lds-dual-ring" style="position: relative; bottom: 1.2vh"></div></span>
                         </button>
                     </div>
                     <div class="col-md-5"></div>
@@ -264,7 +266,7 @@
 
                     />
                     <div class="col-md-2">
-                        <button  v-if="!loadStatus"
+                        <button v-if="!loadStatus"
                                 type="submit"
                                 class="btn btn-outline-dark btn-block "
                                 @click="getEng(1)"
@@ -273,14 +275,14 @@
                         </button>
                         <button v-if="loadStatus" type="submit"
                                 class="btn  btn-block btn-dark" disabled>
-                            <span><div class="lds-dual-ring" style="position: relative; bottom: 1.2vh" ></div></span>
+                            <span><div class="lds-dual-ring" style="position: relative; bottom: 1.2vh"></div></span>
                         </button>
 
                     </div>
                     <div class="col-md-2">
                         <button v-if="loadStatus" type="submit"
                                 class="btn  btn-block btn-dark" disabled>
-                            <span><div class="lds-dual-ring" style="position: relative; bottom: 1.2vh" ></div></span>
+                            <span><div class="lds-dual-ring" style="position: relative; bottom: 1.2vh"></div></span>
                         </button>
                         <button v-if="!loadStatus" type="submit" @click="update(1)"
                                 class="btn  btn-block btn-outline-dark">
@@ -408,8 +410,6 @@
                             </button>
                         </div>
                     </div>
-
-
                 </div>
                 <hr/>
 
@@ -428,7 +428,6 @@
         components: {VueDatalist, InputField},
         data: () => ({
             showErr: false,
-            dataList: [],
             saveDataObj: {
                 engineType: null,
                 engineManufacturerFk: null,
@@ -449,10 +448,10 @@
             },
             tempData: {
                 engineType: null,
-                engineManufacturerFk: null,
-                cylindersPlacementFk: null,
-                fuelTypeFk: null,
-                superchargedTypeFk: null,
+                engineManufacturerFk: 0,
+                cylindersPlacementFk: 0,
+                fuelTypeFk: 0,
+                superchargedTypeFk: 0,
                 cylindersNumber: null,
                 flapNumber: null,
                 pistonDiameter: null,
@@ -496,12 +495,14 @@
             ...mapGetters([
                 'ADDITIONAL_DATA',
                 'UPDATE_ENGINE',
-                'ENGINE'
+                'ENGINE',
+                'LOAD_ADDITIONAL_DATA'
             ])
         },
         methods: {
             ...mapActions([
-                'GET_ENG'
+                'GET_ENG',
+                'GET_ALL_ADDITIONAL_DATA'
             ]),
             ...mapMutations({
                 cylindersPlacementFk: 'SET_UPDATE_CYLINDERS'
@@ -512,8 +513,6 @@
             },
             onChange() {
                 this.filterResults();
-
-
             }, filterResults() {
                 // first uncapitalize all the things
                 this.dataList = this.ADDITIONAL_DATA.engine.filter((item) => {
@@ -523,8 +522,6 @@
                         (item.fuelType.toLowerCase().indexOf(this.search.toLowerCase()) > -1)
                     );
                 });
-                this.$emit("set-list", this.temp);
-
             },
             setDataList(tempList) {
                 this.dataList = tempList;
@@ -569,7 +566,6 @@
                     this.GET_ALL_ADDITIONAL_DATA();
                 } else {
                     this.showErr = true;
-
                 }
                 console.log(number)
             },
@@ -584,7 +580,7 @@
         },
         watch: {},
         mounted() {
-
+            this.GET_ALL_PARAM_NAME();
         }
     }
 </script>

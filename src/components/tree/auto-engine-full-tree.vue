@@ -113,7 +113,9 @@
                 'LISTPARAM',
                 'ELEMENTS',
                 'LOAD_PARAM_FOR_TREE',
-                'PARAM_NAME_AND_UNITS'
+                'PARAM_NAME_AND_UNITS',
+                'GET_ALL_PARAM_NAME',
+                'PARAM_NAME'
             ])
         },
         methods: {
@@ -128,6 +130,8 @@
                 console.log(number);
             }
 
+        },
+        mounted() {
         }
 
     }

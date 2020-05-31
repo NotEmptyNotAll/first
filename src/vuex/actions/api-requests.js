@@ -17,6 +17,19 @@ export default {
                 return error
             })
     },
+    GET_ALL_PARAM_NAME({commit}) {
+        return axios(urlApi + 'getAllParamName', {
+            method: 'GET'
+        })
+            .then((startParam) => {
+                commit('SET_PARAM_NAME', startParam.data)
+                return startParam;
+            })
+            .catch((error) => {
+                console.log(error);
+                return error
+            })
+    },
 
     async GET_AUTOENG_BY_PARAM({commit}, searchData) {
         commit('SET_SHOW_LOAD', true);
@@ -119,6 +132,7 @@ export default {
             })
     },
     async GET_ELEMENTS({commit}, number) {
+        commit('SET_ELEMENTS_LOAD', true)
         return await axios({
             method: 'POST',
             url: urlApi + 'getElements',
@@ -126,9 +140,11 @@ export default {
             responseType: 'json'
         }).then(resp => {
             commit('SET_ELEMENTS', resp.data)
+            commit('SET_ELEMENTS_LOAD', false)
             return resp;
         })
             .catch((error) => {
+                commit('SET_ELEMENTS_LOAD', false)
                 console.log(error);
                 return error
             })

@@ -1,7 +1,9 @@
 <template>
     <div id="vue-save-update-page">
-
-        <div class="container-fluid">
+        <error-page
+                v-if="!currentUser"
+        />
+        <div  v-if="currentUser" class="container-fluid">
             <div class="row">
                 <div class="col-md-4 col-lg-2  navbar-container ">
                     <nav class="navbar navbar-expand-md search-border shadow-lg   navbar-light rounded  " id="nav-panel">
@@ -132,7 +134,7 @@
                                 <auto-engine-save-panel
                                         :data-list="ADDITIONAL_DATA.autoEng"
                                         :name-panel="$ml.get('word.autoEngine')"
-                                        :load-status="LOAD_SAVE.engine"
+                                        :load-status="LOAD_SAVE.automobileEngine"
                                 />
 
                             </div>
@@ -170,13 +172,14 @@
                                 />
                             </div>
                             <div class="tab-pane" id="nameElements">
-                                <two-update-panel
+
+                                <save-update-panel
                                         :name-title="$ml.get('word.nameElements')"
-                                        :name-panel="$ml.get('word.nameElements')"
-                                        :data-list="ADDITIONAL_DATA.parameterName"
                                         :load-status="LOAD_SAVE.paramName"
+                                        :data-list="ADDITIONAL_DATA.parameterName"
                                         @save-data-api="SAVE_PARAM_NAME"
                                         @update-data-api="UPDATE_PARAM_NAME"
+
                                 />
                             </div>
                         </div>
@@ -251,6 +254,7 @@
             this.GET_PARAM_NAME();
             this.GET_ALL_ADDITIONAL_DATA();
             this.GET_START_PARAM();
+
 
         }
     }
