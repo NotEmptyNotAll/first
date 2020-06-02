@@ -54,10 +54,10 @@
                     </div>
 
 
-                    <div class=" btn-group pos-left" v-show="item.name!=''" role="group">
+                    <div class=" btn-group " v-show="item.name!=''" role="group">
                         <button v-show="changeMod==='on'" type="button " v-if=" !linkOnThisButt.isPressed "
                                 v-on:click="pressed"
-                                class="btn btn-group posLeft btn-warning"
+                                class="btn btn-group pos-left btn-warning"
                                 @click="getParamtrs(nav,item.id,linkOnThisButt)">
                             <span>
                                     <b-icon icon="pencil"></b-icon>
@@ -65,13 +65,13 @@
                             </span>
                         </button>
                         <button v-show="changeMod==='on'" type="button" v-if=" linkOnThisButt.isPressed "
-                                class="btn btn-group posLeft btn-warning disabled">
+                                class="btn btn-group pos-left btn-warning disabled">
                             <span>
                                 <b-icon icon="pencil" animation="cylon"></b-icon>
                             </span>
                         </button>
                         <button v-show="changeMod==='on'" type="button"
-                                class="btn btn-group posLeft btn-info" @click="addElement(1)" style="z-index: 999">
+                                class="btn btn-group pos-left btn-info" @click="addElement(1)" style="z-index: 999">
                             <span>
                                 <p class="h5 md-2"><b-icon icon="plus"></b-icon></p>
                             </span>
@@ -223,7 +223,7 @@
     .pos-left {
         position: absolute;
         right: 0px;
-        bottom: 2.5vh;
+        top: 0;
     }
 
 
