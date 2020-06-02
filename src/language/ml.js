@@ -10,7 +10,7 @@ export default new MLCreate({
         new MLanguage('english').create({
             word: {
                 table:'table',
-                engine: "engines",
+                engine: "engine type",
                 cylinders: "cylinders",
                 fuelType: "fuel type",
                 superchargedType: "supercharged types",
@@ -87,7 +87,7 @@ export default new MLCreate({
         new MLanguage('russian').create({
             word: {
                 table:'таблица',
-                engine: "двигатели",
+                engine: "тип двигателя",
                 cylinders: "цилиндры",
                 fuelType: "вид топлива",
                 superchargedType: "виды наддува",
@@ -103,7 +103,7 @@ export default new MLCreate({
                 releaseYearFrom: "год вып, с",
                 releaseYearBy: "год вып, к",
                 action: "действие",
-                save: "сохранить",
+                save: "добавить запись",
                 update: "обновить",
                 engineCapacity: "Объем двигателя",
                 powerKwt: "мощно, kWt",
@@ -165,7 +165,7 @@ export default new MLCreate({
         new MLanguage('ukraine').create({
             word: {
                 table:'таблиця',
-                engine: 'двигуни',
+                engine: 'тип двигуна',
                 cylinders: 'циліндри',
                 fuelType: 'вид палива',
                 superchargedType: 'види наддуву',
@@ -181,7 +181,7 @@ export default new MLCreate({
                 releaseYearFrom: 'рік вип, з',
                 releaseYearBy: 'рік вип, до',
                 action: "дія",
-                save: 'зберегти',
+                save: 'додати запис',
                 update: 'обновити',
                 engineCapacity: 'об\'єм двигуна',
                 powerKwt: 'потуж, kWt',

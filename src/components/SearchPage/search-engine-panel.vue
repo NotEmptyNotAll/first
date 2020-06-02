@@ -39,7 +39,92 @@
                          index="produceYear"
             />
         </div>
+        <transition name="slide-fade">
+        <!--here we enter data for an improved search, which the user measures-->
+        <div v-if="advanceSearch">
+            <div class="savePageRow row  ">
+                <vue-datalist
+                        class="col-md-3"
+                        :title-input="$ml.get('word.engineNumber')"
+                        :items="STARTPARAM.engineNumber"
+                        :update-obj="searchData"
+                        :holderNum="0"
+                        index="numberEng"
+                        @change-meth="getAutoEnByNum"
+
+                />
+                <vue-datalist
+                        class="col-md-3"
+                        :title-input="$ml.get('word.fuelType')"
+                        :items="STARTPARAM.fuelType"
+                        :update-obj="searchData"
+                        :holderNum="0"
+                        index="fuelType"
+                        @change-meth="getEngDataByParam"
+
+                />
+                <input-field class="col-md-3"
+                             :name-input="$ml.get('word.engineCapacity')"
+                             :save-parameters="searchData"
+                             index="engineCapacity"
+                />
+                <input-field class="col-md-3"
+                             :name-input="$ml.get('word.powerKwt')"
+                             :save-parameters="searchData"
+                             index="powerKWt"
+                />
+            </div>
+            <hr/>
+            <div v-for="(param,index) in searchData.paramList" v-bind:key="param" class="savePageRow row ">
+                <div class="input-group col-md-5">
+                    <param-elements-input
+                            :title-input="$ml.get('word.parameter')"
+                            :items="PARAM_NAME_AND_UNITS.paramName"
+                            :param-obj="param"
+                            index-node-id="parameterNodeId"
+                            index-child-id="parameterChildId"
+                    />
+                </div>
+                <vue-datalist
+                        class="col-md-4"
+                        :title-input="$ml.get('word.units')"
+                        :items="PARAM_NAME_AND_UNITS.units"
+                        :update-obj="param"
+                        :holderNum="0"
+                        index="unitsFullName"
+                />
+                <div v-if="searchData.paramList.length>1" class="col col-md-2">
+                    <input v-model="param.parameterNumber" class="form-control" type="number"
+                           value="" :placeholder="$ml.get('word.data')"
+                    >
+                </div>
+                <div v-if="searchData.paramList.length>1" class="col col-md-1">
+                    <button class="btn  btn-outline-danger"
+                            v-on:click="searchData.paramList.splice(index,1)" type="button">
+                        <span>        <b-icon icon="trash-fill" aria-hidden="true"></b-icon>
+                        </span>
+                    </button>
+                </div>
+                <div v-if="searchData.paramList.length===1" class="col col-md-3">
+                    <input v-model="param.parameterNumber" class="form-control" type="number"
+                           value="" :placeholder="$ml.get('word.data')"
+                    >
+                </div>
+            </div>
+            <div class="savePageRow row ">
+                <div class="col col-md-4"></div>
+                <div class="col col-md-4">
+                    <button class="btn form-control btn-block btn-outline-secondary" type="button"
+                            v-on:click="addParam(1)">
+                        {{$ml.get('word.add')}}
+                    </button>
+                </div>
+                <div class="col col-md-4"></div>
+            </div>
+        </div>
+    </transition>
         <hr style="position: center; width: 70%"/>
+
         <div class="row ">
             <div class="col-md-3"></div>
             <div class="col col-md-2">
@@ -64,89 +149,6 @@
             <div class="col-md-3"></div>
 
         </div>
-        <transition name="slide-fade">
-            <!--here we enter data for an improved search, which the user measures-->
-            <div v-if="advanceSearch">
-                <div class="savePageRow row  ">
-                    <vue-datalist
-                            class="col-md-3"
-                            :title-input="$ml.get('word.engineNumber')"
-                            :items="STARTPARAM.engineNumber"
-                            :update-obj="searchData"
-                            :holderNum="0"
-                            index="numberEng"
-                            @change-meth="getAutoEnByNum"
-
-                    />
-                    <vue-datalist
-                            class="col-md-3"
-                            :title-input="$ml.get('word.fuelType')"
-                            :items="STARTPARAM.fuelType"
-                            :update-obj="searchData"
-                            :holderNum="0"
-                            index="fuelType"
-                            @change-meth="getEngDataByParam"
-
-                    />
-                    <input-field class="col-md-3"
-                                 :name-input="$ml.get('word.engineCapacity')"
-                                 :save-parameters="searchData"
-                                 index="engineCapacity"
-                    />
-                    <input-field class="col-md-3"
-                                 :name-input="$ml.get('word.powerKwt')"
-                                 :save-parameters="searchData"
-                                 index="powerKWt"
-                    />
-                </div>
-                <hr/>
-                <div v-for="(param,index) in searchData.paramList" v-bind:key="param" class="savePageRow row ">
-                    <div class="input-group col-md-5">
-                        <param-elements-input
-                                :title-input="$ml.get('word.parameter')"
-                                :items="PARAM_NAME_AND_UNITS.paramName"
-                                :param-obj="param"
-                                index-node-id="parameterNodeId"
-                                index-child-id="parameterChildId"
-                        />
-                    </div>
-                    <vue-datalist
-                            class="col-md-4"
-                            :title-input="$ml.get('word.units')"
-                            :items="PARAM_NAME_AND_UNITS.units"
-                            :update-obj="param"
-                            :holderNum="0"
-                            index="unitsFullName"
-                    />
-                    <div v-if="searchData.paramList.length>1" class="col col-md-2">
-                        <input v-model="param.parameterNumber" class="form-control" type="number"
-                               value="" :placeholder="$ml.get('word.data')"
-                        >
-                    </div>
-                    <div v-if="searchData.paramList.length>1" class="col col-md-1">
-                        <button class="btn btn-block btn-outline-danger"
-                                v-on:click="searchData.paramList.splice(index,1)" type="button">
-                            <span>{{$ml.get('word.deleteR')}}</span>
-                        </button>
-                    </div>
-                    <div v-if="searchData.paramList.length===1" class="col col-md-3">
-                        <input v-model="param.parameterNumber" class="form-control" type="number"
-                               value="" :placeholder="$ml.get('word.data')"
-                        >
-                    </div>
-                </div>
-                <div class="savePageRow row ">
-                    <div class="col col-md-4"></div>
-                    <div class="col col-md-4">
-                        <button class="btn form-control btn-block btn-outline-secondary" type="button"
-                                v-on:click="addParam(1)">
-                            {{$ml.get('word.add')}}
-                        </button>
-                    </div>
-                    <div class="col col-md-4"></div>
-                </div>
-            </div>
-        </transition>
 
     </div>
 </template>

@@ -19,9 +19,9 @@
                  aria-labelledby="home-tab">
                 <div class="row">
                     <div class="col-md-7"></div>
-                    <div class="input-group col-md-5">
+                    <div class="input-group  col-md-5">
                         <div class="input-group-prepend ">
-                            <label class="input-group-text   "
+                            <label class="input-group-text bg-white  "
                                    for="vue-list-input1"
                             >{{$ml.get('word.search')}}</label>
                         </div>
@@ -46,33 +46,45 @@
 
                     </div>
                 </div>
-                <table class="table table-hover  " style="text-align: center; z-index: 0; border-radius: 0px">
-                    <thead>
-                    <tr>
-                        <th scope="col">id</th>
-                        <th scope="col">{{$ml.get('word.engine')}}</th>
-                        <th scope="col" v-text="$ml.get('word.autoManufacturer')"></th>
-                        <th scope="col" v-text="$ml.get('word.autoModel')"></th>
-                        <th scope="col" v-text="$ml.get('word.releaseYear')"></th>
-                        <th scope="col" v-text="$ml.get('word.status')"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="current in dataList" v-bind:key="current" v-show="current.data!==''">
-                        <td>{{current.id}}</td>
-                        <td>{{current.engineFk}}</td>
-                        <td>{{current.autoManufactureFk}}</td>
-                        <td>{{current.autoModelFk}}</td>
-                        <td>
-                            <span v-if="current.releaseYearFrom!=null && current.releaseYearBy!=null"> {{current.releaseYearFrom+'-'+current.releaseYearBy}}</span>
-                            <span v-else-if="current.releaseYearFrom!=null ">{{current.releaseYearFrom}}</span>
-                            <span v-else-if="current.releaseYearBy!=null">{{current.releaseYearBy}}</span>
-                            <span v-else-if="current.releaseYearFrom==null && current.releaseYearBy==null"></span>
-                        </td>
-                        <td>{{current.status}}</td>
-                    </tr>
-                    </tbody>
-                </table>
+                <b-table class="my-table-scroll" no-border-collapse hover sticky-header="650px" :items="dataList"
+                         :fields="[
+                { key: 'index', label:'№' },
+                { key: 'engineFk', label: $ml.get('word.engine'), sortable: true },
+                { key: 'autoManufactureFk', label: $ml.get('word.autoManufacturer'), sortable: true },
+                { key: 'autoModelFk', label: $ml.get('word.autoModel'), sortable: true },
+                { key: 'releaseYearFrom', label:$ml.get('word.releaseYearFrom'), sortable: true },
+                { key: 'releaseYearBy', label: $ml.get('word.releaseYearBy'), sortable: true }]">
+                    <template v-slot:cell(index)="data">
+                        {{ data.index + 1 }}
+                    </template>
+                </b-table>
+                <!-- <table class="fixed_headers table table-hover  "  style="text-align: center; z-index: 0; border-radius: 0px">
+                     <thead>
+                     <tr>
+                         <th scope="col">id</th>
+                         <th scope="col">{{$ml.get('word.engine')}}</th>
+                         <th scope="col" v-text="$ml.get('word.autoManufacturer')"></th>
+                         <th scope="col" v-text="$ml.get('word.autoModel')"></th>
+                         <th scope="col" v-text="$ml.get('word.releaseYear')"></th>
+                         <th scope="col" v-text="$ml.get('word.status')"></th>
+                     </tr>
+                     </thead>
+                     <tbody>
+                     <tr v-for="current in dataList" v-bind:key="current" v-show="current.data!==''">
+                         <td>{{current.id}}</td>
+                         <td>{{current.engineFk}}</td>
+                         <td>{{current.autoManufactureFk}}</td>
+                         <td>{{current.autoModelFk}}</td>
+                         <td>
+                             <span v-if="current.releaseYearFrom!=null && current.releaseYearBy!=null"> {{current.releaseYearFrom+'-'+current.releaseYearBy}}</span>
+                             <span v-else-if="current.releaseYearFrom!=null ">{{current.releaseYearFrom}}</span>
+                             <span v-else-if="current.releaseYearBy!=null">{{current.releaseYearBy}}</span>
+                             <span v-else-if="current.releaseYearFrom==null && current.releaseYearBy==null"></span>
+                         </td>
+                         <td >{{current.status}}</td>
+                     </tr>
+                     </tbody>
+                 </table>-->
                 <div v-if="LOAD_ADDITIONAL_DATA" class="lds-dual-ring-black" style="margin-left:47% "></div>
 
             </div>
@@ -122,7 +134,7 @@
                     />
                     <div class="input-group col-md-3">
                         <div class="input-group-prepend">
-                            <label class="input-group-text   " for="releaseYea">
+                            <label class="input-group-text bg-white  " for="releaseYea">
                                 {{$ml.get('word.releaseYear')}}
                                 <div v-if="LOADPARAM" class="lds-dual-ring"></div>
                             </label>
@@ -244,7 +256,9 @@
                                     class="btn btn-group  btn-warning"
                                     @click="current.editRow=!current.editRow"
                             >
-                                <span>&#9998;</span>
+                                <span>
+                                    <b-icon icon="pencil"></b-icon>
+                                </span>
                             </button>
                             <button v-if="current.editRow"
                                     type="button"
@@ -252,7 +266,9 @@
                                     @click="current.editRow=!current.editRow"
                                     v-on:click="updateOldParam(current)"
                             >
-                                <span>&#10004;</span>
+                                <span>
+                                    <p class="h5 mb-2"><b-icon icon="check"></b-icon></p>
+                                </span>
                             </button>
                         </td>
                     </tr>
@@ -444,6 +460,10 @@
 </script>
 
 <style scoped>
+    .my-table-scroll::-webkit-scrollbar {
+        width: 0px;
+    }
+
 
     a {
         padding-left: 3vw;

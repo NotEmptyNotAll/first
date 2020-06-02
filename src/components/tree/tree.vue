@@ -4,7 +4,7 @@
         <li class="border-white bold list-group-item   left"
             style="position: relative; width: 24vw;padding: 0px;"
         >
-            <div class="row" style="min-width: 22vw;max-width: 22vw; padding: 15px">
+            <div class="row" style="min-width: 22vw;max-width: 22vw; padding: 5px">
                 <div class="col-md-8">
             <span v-show="item.name!=''" @click="toggle">
                 {{ space+item.name }}
@@ -29,7 +29,9 @@
                             class="btn  btn-success "
                             @click="saveElem(1)"
                     >
-                        <span>&#10004;</span>
+                        <span>
+                             <p class="h5 mb-2"><b-icon icon="check"></b-icon></p>
+                        </span>
                     </button>
 
                     <div class=" btn-group pos-left">
@@ -38,12 +40,16 @@
                                 v-on:click="pressed"
                                 class="btn posLeft  btn-posit btn-success"
                                 @click="getParamtrs(nav,item.id,linkOnThisButt)">
-                            <span>&#10010;</span>
+                            <span>
+                                <b-icon icon="chevron-bar-right"></b-icon>
+                            </span>
                         </button>
                         <button v-show="changeMod==='off'" type="button"
                                 v-if=" linkOnThisButt.isPressed && item.parametersIsExistInChild"
                                 class="btn posLeft btn-posit btn-secondary disabled">
-                            <span>&#10010;</span>
+                            <span>
+                                  <b-icon icon="chevron-bar-right"></b-icon>
+                            </span>
                         </button>
                     </div>
 
@@ -53,15 +59,22 @@
                                 v-on:click="pressed"
                                 class="btn btn-group posLeft btn-warning"
                                 @click="getParamtrs(nav,item.id,linkOnThisButt)">
-                            <span >&#9998;</span>
+                            <span>
+                                    <b-icon icon="pencil"></b-icon>
+
+                            </span>
                         </button>
                         <button v-show="changeMod==='on'" type="button" v-if=" linkOnThisButt.isPressed "
                                 class="btn btn-group posLeft btn-warning disabled">
-                            <span>&#9998;</span>
+                            <span>
+                                <b-icon icon="pencil" animation="cylon"></b-icon>
+                            </span>
                         </button>
                         <button v-show="changeMod==='on'" type="button"
                                 class="btn btn-group posLeft btn-info" @click="addElement(1)" style="z-index: 999">
-                            <span>&#10010;</span>
+                            <span>
+                                <p class="h5 md-2"><b-icon icon="plus"></b-icon></p>
+                            </span>
                         </button>
                     </div>
                 </div>
@@ -210,7 +223,7 @@
     .pos-left {
         position: absolute;
         right: 0px;
-        bottom: 0.3vh;
+        bottom: 2.5vh;
     }
 
 

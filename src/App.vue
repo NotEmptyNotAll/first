@@ -60,11 +60,6 @@
         background-color: #F0F8FF;
     }
 
-    table {
-        overflow: hidden;
-        padding-top: 15px;
-        size: auto;
-    }
 
     .thead-light-dark {
         background: #272e38;
@@ -97,9 +92,7 @@
         max-height: 38px;
     }
 
-    th, td {
-        padding: 20px;
-    }
+
 
     li, tr, table, td, .row, .container {
         animation: moveInBottom 0.5s ease-out;

@@ -1,47 +1,55 @@
 <template>
-    <nav class="navbar navbar-expand-lg navbar-light colorauto">
-        <div class=" collapse navbar-collapse " id="conteudoNavbarSuportado">
-            <ul class="navbar-nav mr-auto" style="font-family: 'Montserrat', sans-serif; ">
-                <li class="nav-elem " style="margin-right: 10px;">
-                    <a class="nav-link fontbranco" href="/#/" >{{$ml.get('word.search')}}</a>
-                </li>
+    <div>
+        <b-navbar class="navbar navbar-expand-lg navbar-light colorauto" toggleable="lg">
+            <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+            <b-collapse id="nav-collapse" is-nav>
 
-                <li class="nav-elem nav-hov" style="margin-right: 5px;">
-                    <a class="nav-link fontbranco" href="/#/addData"
-                       v-if="currentUser">{{$ml.get('word.updateData')}}</a>
-                </li>
-                <!--<li class="nav-elem nav-hov" style="margin-right: 5px;">
-                    <a class="nav-link fontbranco" href="/#/elemTree"
-                       v-if="currentUser">{{$ml.get('word.treeElem')}}</a>
-                </li>-->
-                <li class=" nav-elem dropdown " style="position: absolute; right: 7vw">
-                    <a class="nav-link dropdown-toggle fontbranco" href="#" id="navbarDropdown" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{$ml.get('word.language')}}
-                    </a>
-                    <div class="dropdown-menu colorauto" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item fontbranco"
-                           @click="$ml.change('ukraine')"
-                           href="#"><img src="../assets/Ukraine.png"> укр </a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item fontbranco" href="#"
-                           @click="$ml.change('russian')"
-                        ><img src="../assets/Russia.png"> рус </a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item fontbranco"
-                           @click="$ml.change('english')"
-                           href="#"> <img src="../assets/United-Kingdom.png"> eng</a>
-                    </div>
-                </li>
-                <li class="nav-elem   nav-hov" v-if="!currentUser" style="position: absolute; right: 2vw">
-                    <a class="nav-link fontbranco" href="/#/login">{{$ml.get('word.login')}}</a>
-                </li>
-                <li class="nav-elem   nav-hov" v-if="currentUser" style="position: absolute; right: 2vw">
-                    <a class="nav-link fontbranco" href="/#/login" @click="logOut">{{$ml.get('word.logout')}}</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+                <div class=" collapse navbar-collapse " id="conteudoNavbarSuportado">
+                    <ul class="navbar-nav mr-auto" style="font-family: 'Montserrat', sans-serif; ">
+                        <li class="nav-elem " style="margin-right: 10px;">
+                            <a class="nav-link fontbranco" href="/#/">{{$ml.get('word.search')}}</a>
+                        </li>
+
+                        <li class="nav-elem nav-hov" style="margin-right: 5px;">
+                            <a class="nav-link fontbranco" href="/#/addData"
+                               v-if="currentUser">{{$ml.get('word.updateData')}}</a>
+                        </li>
+                        <!--<li class="nav-elem nav-hov" style="margin-right: 5px;">
+                            <a class="nav-link fontbranco" href="/#/elemTree"
+                               v-if="currentUser">{{$ml.get('word.treeElem')}}</a>
+                        </li>-->
+                        <li class=" nav-elem dropdown " style="position: absolute; right: 7vw">
+                            <a class="nav-link dropdown-toggle fontbranco" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{$ml.get('word.language')}}
+                            </a>
+                            <div class="dropdown-menu colorauto" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item fontbranco"
+                                   @click="$ml.change('ukraine')"
+                                   href="#"><img src="../assets/Ukraine.png"> укр </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item fontbranco" href="#"
+                                   @click="$ml.change('russian')"
+                                ><img src="../assets/Russia.png"> рус </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item fontbranco"
+                                   @click="$ml.change('english')"
+                                   href="#"> <img src="../assets/United-Kingdom.png"> eng</a>
+                            </div>
+                        </li>
+                        <li class="nav-elem   nav-hov" v-if="!currentUser" style="position: absolute; right: 2vw">
+                            <a class="nav-link fontbranco" href="/#/login">{{$ml.get('word.login')}}</a>
+                        </li>
+                        <li class="nav-elem   nav-hov" v-if="currentUser" style="position: absolute; right: 2vw">
+                            <a class="nav-link fontbranco" href="/#/login"
+                               @click="logOut">{{$ml.get('word.logout')}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </b-collapse>
+        </b-navbar>
+
+    </div>
 </template>
 
 <script>

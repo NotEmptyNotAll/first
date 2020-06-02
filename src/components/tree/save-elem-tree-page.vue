@@ -1,5 +1,6 @@
 <template>
-    <div class=" card bg-white search-border  rounded" id="save-elem-tree-page" style="width: 98vw">
+    <div class="bord  card bg-white  rounded" id="save-elem-tree-page"
+         style="width: 98vw;   border-style: solid;border-top-color: lightslategrey;border-width: 15px 0px 0px 0px;">
         <br/>
         <div class="search-logo" id="treelogo">
             <div class="head-text deepshd ">
@@ -18,6 +19,7 @@
                     :title-input="$ml.get('word.newBlockText')"
                     :items="PARAM_NAME_AND_UNITS.paramName"
                     :update-obj="newBlock"
+                    index-item="name"
                     index="data"
                     :holder-num=0
             />
@@ -48,7 +50,7 @@
                        :id="'nav-add-tab'+current.name" data-toggle="tab"
                        :href="'#nav-add'+current.name"
                        role="tab" :aria-controls="'nav-add'+current.name" aria-selected="true"
-                       style="max-width: 30vw"
+                       style="max-width: 30vw; color: black"
                        v-on:click="setListParam(null)"
                     >{{current.name}}</a>
 
@@ -154,7 +156,9 @@
                                                 class="btn btn-group  btn-warning"
                                                 @click="current.editRow=!current.editRow"
                                         >
-                                            <span>&#9998;</span>
+                                                <span>
+                                                  <b-icon icon="pencil" ></b-icon>
+                                            </span>
                                         </button>
                                         <button v-if="current.editRow"
                                                 type="button"
@@ -162,16 +166,18 @@
                                                 @click="current.editRow=!current.editRow"
                                                 v-on:click="updateOldParam(current)"
                                         >
-                                            <span>&#10004;</span>
+                                            <span>
+                                                <p class="h5 mb-2" ><b-icon icon="check" ></b-icon></p>
+                                            </span>
                                         </button>
                                     </td>
                                 </tr>
-                                <tr  v-show="current.elemId===elemId " v-for="current in listNewParam"
+                                <tr v-show="current.elemId===elemId " v-for="current in listNewParam"
                                     v-bind:key="current ">
-                                    <td  v-if="!current.editRow">{{PARAM_NAME.find(unit=>
+                                    <td v-if="!current.editRow">{{PARAM_NAME.find(unit=>
                                         unit.id===current.name).data}}
                                     </td>
-                                    <td  v-if="current.editRow">
+                                    <td v-if="current.editRow">
                                         <VueDatalist
                                                 :items="PARAM_NAME.filter(elem=>{return !elem.tree_node})"
                                                 :update-obj="current"
@@ -216,7 +222,8 @@
 
                                     </td>
                                     <td v-if="!current.editRow">{{PARAM_NAME_AND_UNITS.status.find(unit=>
-                                        unit.id===current.status).data}}</td>
+                                        unit.id===current.status).data}}
+                                    </td>
                                     <td v-if="current.editRow">
                                         <VueDatalist
                                                 :items="PARAM_NAME_AND_UNITS.status"
@@ -236,7 +243,9 @@
                                                 class="btn btn-group  btn-warning"
                                                 @click="current.editRow=!current.editRow"
                                         >
-                                            <span>&#9998;</span>
+                                            <span>
+                                                  <b-icon icon="pencil" ></b-icon>
+                                            </span>
                                         </button>
                                         <button v-if="current.editRow"
                                                 type="button"
@@ -244,7 +253,9 @@
                                                 @click="current.editRow=!current.editRow"
                                                 v-on:click="saveParam(current)"
                                         >
-                                            <span>&#10004;</span>
+                                            <span>
+                                                <p class="h5 mb-2" ><b-icon icon="check" ></b-icon></p>
+                                            </span>
                                         </button>
                                     </td>
                                 </tr>
@@ -265,6 +276,9 @@
                 </div>
             </div>
         </div>
+        <br/>
+        <br/>
+        <br/>
     </div>
 </template>
 
@@ -561,6 +575,10 @@
         font-weight: bold;
     }
 
+    a:hover{
+        background:lightgray;
+    }
+
     #treelogo {
         position: absolute;
         left: 25%;
@@ -592,6 +610,13 @@
     .rad-bottom {
         border-bottom-left-radius: 30px;
         border-bottom-right-radius: 30px;
+    }
+
+    .bord {
+        border-style: solid;
+        border-top-color: lightslategrey;
+        border-width: 15px 0px 0px 0px;
+
     }
 
     #borderSide:after {

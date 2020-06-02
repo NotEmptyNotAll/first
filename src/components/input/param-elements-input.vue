@@ -1,7 +1,7 @@
 <template>
     <div class="input-group ">
         <div v-if="!hideTitle" class="input-group-prepend ">
-            <label class="input-group-text   "
+            <label class="input-group-text    bg-white " style="font-weight: bold"
                    :for="'vue-list-input'+titleInput"
             >
                 {{titleInput}}

@@ -1,7 +1,7 @@
 <template>
     <div class="input-group ">
         <div v-if="!hideTitle" class="input-group-prepend ">
-            <label class="input-group-text   "
+            <label class="input-group-text  bg-white " style="font-weight: bold"
                    :for="'vue-list-input'+titleInput"
             >
                 {{titleInput}}
@@ -28,7 +28,7 @@
                autocomplete="off"
                class="form-control"
                type="text"
-               :placeholder="items.find(e=>e.id===holderNum).data"
+               :placeholder="items.find(e=>e.id===holderNum)[indexItem]"
                v-on:change="chMeth"
                v-model="search"
                v-on:input="onChange"
@@ -56,7 +56,7 @@
                 class="autocomplete-result"
                 :class="{ 'is-active': i === arrowCounter }"
             >
-                {{ result.data }}
+                {{ result[indexItem] }}
             </li>
         </ul>
 
@@ -83,6 +83,9 @@
             titleInput: String,
             updateObj: Object,
             index: String,
+            indexItem:{
+                default: () => 'data',
+            },
             items: {
                 type: Array,
                 required: false,
@@ -135,12 +138,12 @@
             filterResults() {
                 // first uncapitalize all the things
                 this.results = this.items.filter((item) => {
-                    return item.data.toLowerCase().indexOf(this.search.toLowerCase()) > -1;
+                    return item[this.indexItem].toLowerCase().indexOf(this.search.toLowerCase()) > -1;
                 });
 
             },
             setResult(result) {
-                this.search = result.data;
+                this.search = result[this.indexItem] ;
                 this.updateObj[this.index] = result.id;
                 this.isOpen = false;
                 this.$emit("change-meth", 1);
@@ -157,7 +160,7 @@
             },
             onEnter() {
                 this.$emit("change-meth", 1);
-                this.search = this.results[this.arrowCounter].data;
+                this.search = this.results[this.arrowCounter][this.indexItem];
                 this.updateObj[this.index] = this.results[this.arrowCounter].id;
                 this.isOpen = false;
                 this.arrowCounter = -1;

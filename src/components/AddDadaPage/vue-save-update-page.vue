@@ -4,68 +4,67 @@
                 v-if="!currentUser"
         />
         <div  v-if="currentUser" class="container-fluid">
-            <div class="row">
+            <div class="row" style="padding-top: 1vh">
                 <div class="col-md-4 col-lg-2  navbar-container ">
                     <nav class="navbar navbar-expand-md search-border shadow-lg   navbar-light rounded  " id="nav-panel">
                         <div class="collapse navbar-collapse " id="navbar" style="width: 100%;">
                             <!-- Вертикальное меню -->
-
                             <ul class="nav  nav-tabs tabs-right  sideways" style="width: 100%">
-                                <li class="   nav-item"><a class="nav-link menu-item " href="#engine"
+                                <li class="   nav-item"><a class="nav-link menu-item "  style="border: white;" href="#engine"
                                                              data-toggle="tab">
                                     <span></span>
                                     {{$ml.get('word.engine')}}</a>
                                 </li>
                                 <hr style="position: center; width: 100%;"/>
-                                <li class="nav-item"><a class="nav-link menu-item " href="#cylinders" data-toggle="tab">
+                                <li class="nav-item"><a class="nav-link menu-item " href="#cylinders" data-toggle="tab" style="border: white;">
                                     <span></span>
                                     {{$ml.get('word.cylinders')}}</a>
                                 </li>
                                 <hr style="position: center; width: 100%;"/>
 
-                                <li class="nav-item"><a class="nav-link menu-item " href="#fuelType" data-toggle="tab">
+                                <li class="nav-item"><a class="nav-link menu-item " href="#fuelType" data-toggle="tab"  style="border: white;">
                                     <span></span>
                                     {{$ml.get('word.fuelType')}}</a>
                                 </li>
                                 <hr style="position: center; width: 100%;"/>
                                 <li class="nav-item"><a class="nav-link menu-item " href="#superchargedType"
-                                                        data-toggle="tab">
+                                                        data-toggle="tab"  style="border: white;">
                                     <span></span>
                                     {{$ml.get('word.superchargedType')}}</a>
                                 </li>
                                 <hr style="position: center; width: 100%;"/>
                                 <li class="nav-item"><a class="nav-link menu-item " href="#autoEngine"
-                                                        data-toggle="tab">
+                                                        data-toggle="tab"  style="border: white;">
                                     <span></span>
                                     {{$ml.get('word.autoEngine')}}</a>
                                 </li>
                                 <hr style="position: center; width: 100%;"/>
                                 <li class="nav-item"><a class="nav-link menu-item " href="#engineManufacture"
-                                                        data-toggle="tab">
+                                                        data-toggle="tab"  style="border: white;">
                                     <span></span>
                                     {{$ml.get('word.engineManufacture')}}</a>
                                 </li>
                                 <hr style="position: center; width: 100%;"/>
                                 <li class="nav-item"><a class="nav-link menu-item " href="#autoManufacturer"
-                                                        data-toggle="tab">
+                                                        data-toggle="tab"  style="border: white;">
                                     <span></span>
                                     {{$ml.get('word.autoManufacturer')}}</a></li>
                                 <hr style="position: center; width: 100%;"/>
 
                                 <li class="nav-item"><a class="nav-link menu-item " href="#autoModel"
-                                                        data-toggle="tab">
+                                                        data-toggle="tab"  style="border: white;">
                                     <span></span>
                                     {{$ml.get('word.autoModel')}}
                                 </a></li>
                                 <hr style="position: center; width: 100%;"/>
                                 <li class="nav-item"><a class="nav-link menu-item " href="#units"
-                                                        data-toggle="tab">
+                                                        data-toggle="tab"  style="border: white;">
                                     <span></span>
                                     {{$ml.get('word.units')}}
                                 </a></li>
                                 <hr style="position: center; width: 100%;"/>
                                 <li class="nav-item"><a class="nav-link menu-item " href="#nameElements"
-                                                        data-toggle="tab">
+                                                        data-toggle="tab"  style="border: white;">
                                     <span></span>
                                     {{$ml.get('word.nameElements')}}
                                 </a></li>
@@ -273,7 +272,8 @@
         .navbar-container {
             position: sticky;
             top: 0;
-            height: 100vh;
+            height: auto;
+            min-height: 85vh;
         }
 
         .navbar-container .navbar {
@@ -317,10 +317,11 @@
 
 
         .menu-item {
+            border: white;
+
             width: 100%;
             display: inline-block;
             transition: all 0.5s;
-            border: white;
             background: white;
             color: black;
             font-size: 1.2em;
@@ -345,6 +346,7 @@
             flex-direction: column !important;
         }
     }
+
     .search-border {
         border-style: solid;
         border-top-color: lightslategrey;

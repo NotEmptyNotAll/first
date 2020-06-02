@@ -21,7 +21,7 @@
                     <div class="col-md-7"></div>
                     <div class="input-group col-md-5">
                         <div class="input-group-prepend ">
-                            <label class="input-group-text   "
+                            <label class="input-group-text  bg-white "
                                    for="vue-list-input1"
                             >{{$ml.get('word.search')}}</label>
                         </div>
@@ -46,50 +46,71 @@
 
                     </div>
                 </div>
-                <table class="table table-hover  " style="text-align: center; z-index: 0; border-radius: 0px; ">
-                    <thead>
-                    <tr>
-                        <th scope="col">id</th>
-                        <th scope="col">{{$ml.get('word.engine')}}</th>
-                        <th scope="col">{{$ml.get('word.cylinders')}}</th>
-                        <th scope="col">{{$ml.get('word.fuelType')}}</th>
-                        <th scope="col" v-text="$ml.get('word.engineManufacture')"></th>
-                        <th scope="col" v-text="$ml.get('word.superchargedType')"></th>
-                        <th scope="col" v-text="$ml.get('word.pistonStroke')"></th>
-                        <th scope="col" v-text="$ml.get('word.engineCapacity')"></th>
-                        <th scope="col" v-text="$ml.get('word.powerKwt')"></th>
-                        <th scope="col" v-text="$ml.get('word.horsepower')"></th>
-                        <th scope="col" v-text="$ml.get('word.cylindersNumber')"></th>
-                        <th scope="col" v-text="$ml.get('word.flapNumber')"></th>
-                        <th scope="col" v-text="$ml.get('word.degreeCompression')"></th>
-                        <th scope="col" v-text="$ml.get('word.releaseYear')"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="current in dataList" v-bind:key="current" v-show="current.data!==''">
-                        <td>{{current.id}}</td>
-                        <td>{{current.data}}</td>
-                        <td>{{current.cylindersPlacement}}</td>
-                        <td>{{current.fuelType}}</td>
-                        <td>{{current.engineManufacture}}</td>
-                        <td>{{current.superchargedType}}</td>
-                        <td>{{current.pistonStroke}}</td>
-                        <td>{{current.engineCapacity}}</td>
-                        <td>{{current.powerKwt}}</td>
-                        <td>{{current.horsepower}}</td>
-                        <td>{{current.cylindersNumber}}</td>
-                        <td>{{current.flapNumber}}</td>
-                        <td>{{current.degreeCompression}}</td>
-                        <td>
-                            <span v-if="current.releaseYearFrom!=null && current.releaseYearBy!=null"> {{current.releaseYearFrom+'-'+current.releaseYearBy}}</span>
-                            <span v-else-if="current.releaseYearFrom!=null ">{{current.releaseYearFrom}}</span>
-                            <span v-else-if="current.releaseYearBy!=null">{{current.releaseYearBy}}</span>
-                            <span v-else-if="current.releaseYearFrom==null && current.releaseYearBy==null"></span>
-                        </td>
+                    <b-table class="my-table-scroll" no-border-collapse hover  sticky-header="650px" :items="dataList" :fields="[
+                { key: 'index', label:'№' },
+                { key: 'data', label: $ml.get('word.engine'), sortable: true },
+                { key: 'engineManufacturer', label: $ml.get('word.engineManufacture'), sortable: true },
+                { key: 'cylindersPlacement', label: $ml.get('word.cylinders'), sortable: true },
+                { key: 'fuelType', label: $ml.get('word.fuelType'), sortable: true },
+                { key: 'powerKwt', label:$ml.get('word.fuelType'), sortable: true },
+                { key: 'engineCapacity', label: $ml.get('word.engineCapacity'), sortable: true },
+                { key: 'flapNumber', label: $ml.get('word.flapNumber'), sortable: true },
+                { key: 'cylindersNumber', label:$ml.get('word.cylindersNumber'), sortable: true },
+                { key: 'horsepower', label: $ml.get('word.horsepower'), sortable: true },
+                { key: 'superchargedType', label: $ml.get('word.superchargedType'), sortable: true },
+                { key: 'releaseYearFrom', label: $ml.get('word.releaseYearFrom'), sortable: true },
+                { key: 'releaseYearBy', label: $ml.get('word.releaseYearBy'), sortable: true },
+                { key: 'status', label: $ml.get('word.status'), sortable: true }]"    >
 
-                    </tr>
-                    </tbody>
-                </table>
+                        <template v-slot:cell(index)="data">
+                            {{ data.index + 1 }}
+                        </template>
+                    </b-table>
+
+                <!--<table responseive  class="table table-hover  " style="text-align: center; z-index: 0; border-radius: 0px; ">
+                <thead >
+                <tr>
+                    <th scope="col">id</th>
+                    <th scope="col">{{$ml.get('word.engine')}}</th>
+                    <th scope="col">{{$ml.get('word.cylinders')}}</th>
+                    <th scope="col">{{$ml.get('word.fuelType')}}</th>
+                    <th scope="col" v-text="$ml.get('word.engineManufacture')"></th>
+                    <th scope="col" v-text="$ml.get('word.superchargedType')"></th>
+                    <th scope="col" v-text="$ml.get('word.pistonStroke')"></th>
+                    <th scope="col" v-text="$ml.get('word.engineCapacity')"></th>
+                    <th scope="col" v-text="$ml.get('word.powerKwt')"></th>
+                    <th scope="col" v-text="$ml.get('word.horsepower')"></th>
+                    <th scope="col" v-text="$ml.get('word.cylindersNumber')"></th>
+                    <th scope="col" v-text="$ml.get('word.flapNumber')"></th>
+                    <th scope="col" v-text="$ml.get('word.degreeCompression')"></th>
+                    <th scope="col" v-text="$ml.get('word.releaseYear')"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="current in dataList" v-bind:key="current" v-show="current.data!==''">
+                    <td>{{current.id}}</td>
+                    <td>{{current.data}}</td>
+                    <td>{{current.cylindersPlacement}}</td>
+                    <td>{{current.fuelType}}</td>
+                    <td>{{current.engineManufacture}}</td>
+                    <td>{{current.superchargedType}}</td>
+                    <td>{{current.pistonStroke}}</td>
+                    <td>{{current.engineCapacity}}</td>
+                    <td>{{current.powerKwt}}</td>
+                    <td>{{current.horsepower}}</td>
+                    <td>{{current.cylindersNumber}}</td>
+                    <td>{{current.flapNumber}}</td>
+                    <td>{{current.degreeCompression}}</td>
+                    <td>
+                        <span v-if="current.releaseYearFrom!=null && current.releaseYearBy!=null"> {{current.releaseYearFrom+'-'+current.releaseYearBy}}</span>
+                        <span v-else-if="current.releaseYearFrom!=null ">{{current.releaseYearFrom}}</span>
+                        <span v-else-if="current.releaseYearBy!=null">{{current.releaseYearBy}}</span>
+                        <span v-else-if="current.releaseYearFrom==null && current.releaseYearBy==null"></span>
+                    </td>
+
+                </tr>
+                </tbody>
+                </table>-->
                 <div v-if="LOAD_ADDITIONAL_DATA" class="lds-dual-ring-black" style="margin-left:47% "></div>
 
             </div>
@@ -194,7 +215,7 @@
                     />
                     <div class="input-group col-md-4">
                         <div class="input-group-prepend">
-                            <label class="input-group-text   " for="relYear">
+                            <label class="input-group-text bg-white  " for="relYear">
                                 {{$ml.get('word.releaseYear')}}
                                 <div v-if="LOADPARAM" class="lds-dual-ring"></div>
                             </label>
@@ -380,7 +401,7 @@
                     />
                     <div class="input-group col-md-4">
                         <div class="input-group-prepend">
-                            <label class="input-group-text   " for="releaseYear">
+                            <label class="input-group-text  bg-white " for="releaseYear">
                                 {{$ml.get('word.releaseYear')}}
                                 <div v-if="LOADPARAM" class="lds-dual-ring"></div>
                             </label>
@@ -422,6 +443,7 @@
     import VueDatalist from "../input/vue-datalist";
     import InputField from "../input/input-field";
     import {mapActions, mapGetters, mapMutations} from "vuex";
+    import { MLBuilder } from 'vue-multilanguage'
 
     export default {
         name: "save-engine-panel",
@@ -464,6 +486,7 @@
                 horsepower: null,
                 status: null
             },
+
             updateDataObj: {
                 objToBeChanged: null,
                 engineType: null,
@@ -497,7 +520,10 @@
                 'UPDATE_ENGINE',
                 'ENGINE',
                 'LOAD_ADDITIONAL_DATA'
-            ])
+            ]),
+            mlmyMessage:function ()  {
+                return new MLBuilder('word.superchargedType')
+            }
         },
         methods: {
             ...mapActions([
@@ -586,6 +612,8 @@
 </script>
 
 <style scoped>
+    .my-table-scroll::-webkit-scrollbar {width:0px;}
+
     a {
         padding-left: 3vw;
         padding-right: 3vw;

@@ -2,7 +2,7 @@
     <div class="input-field">
         <div class="input-group">
             <div class="input-group-prepend">
-                <label class="input-group-text " for="fuelTypeFk">
+                <label class="input-group-text  bg-white " for="fuelTypeFk" style="font-weight: bold">
                     {{nameInput}}
                     <div v-if="loadStatus" class="lds-dual-ring"></div>
                 </label>

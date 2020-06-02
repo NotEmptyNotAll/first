@@ -1,8 +1,11 @@
 <template>
     <div class="col-md-12">
-        <div class="container rad login-page login-border ">
-            <div class="login-logo">
-                <div class="head-text deepshd "><h2>&#63;</h2></div>
+        <div class=" container  rad login-page login-border " style="width: 18vw">
+            <div class="login-logo" style="display: flex;align-items: center">
+                <div class="head-text deepshd ">
+                    <h2  v-show="!loading">&#63;</h2>
+                    <span class="lds-dual-ring " v-show="loading"></span>
+                </div>
             </div>
             <img
                     id="profile-img"
@@ -44,7 +47,6 @@
                 </div>
                 <div class="form-group login-pad">
                     <button class="btn btn-primary btn-block" :disabled="loading">
-                        <span class="spinner-border spinner-border-sm" v-show="loading"></span>
                         <span>{{$ml.get('word.loginOnButton')}}</span>
                     </button>
                 </div>
@@ -107,8 +109,8 @@
 
 <style>
     .login-page {
-        max-width: 17vw;
-        min-width: 17vw;
+        max-width: 10vw;
+        min-width: 10vw;
         min-height: 51vh;
         position: relative;
         top: 15vh;
@@ -117,19 +119,19 @@
 
     .login-border {
         border-style: solid;
-        border-top-color: #272e38;
+        border-top-color: lightslategrey;
         border-width: 15px 0px 0px 0px;
     }
 
     .login-logo {
         z-index: 999;
         position: absolute;
-        left: 21%;
-        right: 21%;
+        left: 20%;
+        right: 20%;
         top: 0px;
-        width: 58%;
+        width: 60%;
         height: 45px;
-        background: #272e38;
+        background: lightslategrey;
         border-bottom-right-radius: 90px;
         border-bottom-left-radius: 90px;
     }

@@ -23,7 +23,7 @@
                     <div class="col-md-7"></div>
                     <div class="input-group col-md-5">
                         <div class="input-group-prepend ">
-                            <label class="input-group-text   "
+                            <label class="input-group-text  bg-white "
                                    for="vue-list-input1"
                             >{{$ml.get('word.search')}}</label>
                         </div>
@@ -48,30 +48,40 @@
 
                     </div>
                 </div>
-                <table class="table table-hover  "
-                       style="text-align: center; z-index: 0; border-radius: 0px">
-                    <thead>
-                    <tr>
-                        <th scope="col">id</th>
-                        <th scope="col">{{$ml.get('word.name')}}</th>
-                        <th scope="col">{{$ml.get('word.shortName')}}</th>
-                        <th scope="col" v-text="$ml.get('word.status')"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="current in listForSearch" v-bind:key="current" v-show="current.data!==''">
-                        <td>{{current.id}}
-                        </td>
-                        <td>{{current.data}}
-                        </td>
-                        <td>{{current.secondary_data}}
-                        </td>
-                        <td>{{current.status}}
-                        </td>
+                <b-table class="my-table-scroll" no-border-collapse hover sticky-header="650px" :items="listForSearch"
+                         :fields="[
+                { key: 'index', label:'№' },
+                { key: 'data', label: $ml.get('word.name'), sortable: true },
+                { key: 'secondary_data', label: $ml.get('word.shortName'), sortable: true },
+                { key: 'status', label: $ml.get('word.status'), sortable: true }]">
+                    <template v-slot:cell(index)="data">
+                        {{ data.index + 1 }}
+                    </template>
+                </b-table>
+                <!-- <table class="table table-hover  "
+                        style="text-align: center; z-index: 0; border-radius: 0px">
+                     <thead>
+                     <tr>
+                         <th scope="col">id</th>
+                         <th scope="col">{{$ml.get('word.name')}}</th>
+                         <th scope="col">{{$ml.get('word.shortName')}}</th>
+                         <th scope="col" v-text="$ml.get('word.status')"></th>
+                     </tr>
+                     </thead>
+                     <tbody>
+                     <tr v-for="current in listForSearch" v-bind:key="current" v-show="current.data!==''">
+                         <td>{{current.id}}
+                         </td>
+                         <td>{{current.data}}
+                         </td>
+                         <td>{{current.secondary_data}}
+                         </td>
+                         <td>{{current.status}}
+                         </td>
 
-                    </tr>
-                    </tbody>
-                </table>
+                     </tr>
+                     </tbody>
+                 </table>-->
                 <div v-if="LOAD_ADDITIONAL_DATA" class="lds-dual-ring-black" style="margin-left:47% "></div>
 
 
@@ -204,7 +214,7 @@
                 saveData_secondary: null,
                 status: null
             },
-            search:''
+            search: ''
         }),
         props: {
             nameTitle: String,
@@ -273,7 +283,12 @@
                 console.log(number)
             }
         },
-        watch: {},
+        watch: {
+            dataList: function (val) {
+                if (val !== null || val !== undefined)
+                    this.listForSearch = this.dataList;
+            }
+        },
         mounted() {
             this.listForSearch = this.dataList;
         }
@@ -281,6 +296,10 @@
 </script>
 
 <style scoped>
+    .my-table-scroll::-webkit-scrollbar {
+        width: 0px;
+    }
+
     .posCenter {
         padding-left: 50%;
         padding-right: 50%

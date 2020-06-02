@@ -16,9 +16,10 @@
                 />
             </div>
             <!--engine data table. By clicking on row m we open the engine tree, where we can find out its parameters-->
-            <div class="container tab  rounded bg-white rad" id="contTable" style="position: relative; height: auto">
-                <table class="table rounded search-tab table-hover" style="height: auto">
-                    <thead class=" text-white " style="background-color: lightslategrey;">
+            <div class="container search-border tab  rounded bg-white rad" id="contTable" style=" display: flex;
+	flex-direction: row; height: auto">
+                <table class=" table  rounded table-hover " style="height: auto;align-items: flex-start; ">
+                    <thead >
                     <tr>
                         <th>{{$ml.get('word.engine')}}</th>
                         <th>{{$ml.get('word.autoManufacturer')}}</th>
@@ -70,7 +71,7 @@
                     </tbody>
                 </table>
                 <div v-if="SHOW_LOAD || ELEMENTS_LOAD" class="lds-dual-ring-black"
-                     style="margin-left: 47%; margin-right: 50% ;"></div>
+                     style="position: absolute;bottom: 1vh; right: 50%; "></div>
             </div>
 
             <!--recursive tree of objects. Most likely it will look different-->
@@ -138,7 +139,7 @@
                     isPressed: false
                 }
             },
-            tempActiveRow: {active:false},
+            tempActiveRow: {active: false},
             searchData: {
                 paramList: [{
                     parameterName: '',
@@ -254,7 +255,7 @@
             ,
             //query to get a list of parameter names
             async getElements(current) {
-                this.tempActiveRow.active=false;
+                this.tempActiveRow.active = false;
                 current.active = true;
                 this.tempActiveRow = current;
                 this.listParam = [];
@@ -405,10 +406,8 @@
     .search-tab {
         text-align: center;
         horiz-align: center;
-        width: 97.05vw;
-        right: 1.1vw;
         position: relative;
-        top: -2.2vh;
+        top: -5vh;
         border-style: solid;
         border-top-color: #272e38;
         border-width: 1px 0px 0px 0px;
