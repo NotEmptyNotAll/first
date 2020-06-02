@@ -10,7 +10,7 @@
                    role="tab" aria-controls="profile" aria-selected="false">{{$ml.get('word.save')}}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="contact-tabengine" data-toggle="tab" :href="'#c'+nameTitle"
+                <a class="nav-link" id="contact-tabengine" ref="updateTab" data-toggle="tab" :href="'#c'+nameTitle"
                    role="tab" aria-controls="contact" aria-selected="false">{{$ml.get('word.update')}}</a>
             </li>
         </ul>
@@ -47,6 +47,7 @@
                     </div>
                 </div>
                 <b-table class="my-table-scroll" no-border-collapse hover sticky-header="650px" :items="dataList"
+                         @row-dblclicked="(item) => link( item)"
                          :fields="[
                 { key: 'index', label:'№' },
                 { key: 'engineFk', label: $ml.get('word.engine'), sortable: true },
@@ -365,6 +366,7 @@
         },
         methods: {
             ...mapActions([
+                'GET_AUTOENG_BY_ID',
                 'SAVE_DATA_AUTOMOBILE_ENGINE',
                 'GET_AUTOENG_BY_PARAM_UPDATE',
                 'SAVE_DATA_ENGINE_NUMBER',
@@ -424,6 +426,11 @@
 
                 //  this.SAVE_DATA_ENGINE_NUMBER(this.saveDataEngParam);
                 console.log(number)
+            },
+            async link(record) {
+                this.$refs.updateTab.click();
+                this.GET_AUTOENG_BY_ID({id:record.id});
+                console.log(1)
             },
             updateOldParam(current) {
                 let tempObj = this.updateListParam.find(param => param.id === current.id);

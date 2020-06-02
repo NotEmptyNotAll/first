@@ -49,6 +49,26 @@ export default {
                 return error
             })
     },
+
+    async GET_AUTOENG_BY_ID({commit}, searchData) {
+        commit('SET_SHOW_LOAD', true);
+        return await axios({
+            method: 'POST',
+            url: urlApi + 'getAutoEngineById',
+            data: searchData,
+            responseType: 'json'
+        }).then(engData => {
+            commit('SET_AUTO_ENGINE',  [engData.data])
+
+            commit('SET_SHOW_LOAD', false);
+            return engData;
+        })
+            .catch((error) => {
+                console.log(error);
+                commit('SET_SHOW_LOAD', false);
+                return error
+            })
+    },
     async GET_ENG({commit}, searchData) {
         commit('SET_LOAD_SAVE_ENGINE', true);
         return await axios({

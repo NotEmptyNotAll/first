@@ -11,7 +11,7 @@
                    role="tab" aria-controls="profile" aria-selected="false">{{$ml.get('word.save')}}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="contact-tabengine" data-toggle="tab" :href="'#c'+nameTitle"
+                <a class="nav-link" id="contact-tabengine" ref="updateTab" data-toggle="tab" :href="'#c'+nameTitle"
                    role="tab" aria-controls="contact" aria-selected="false">{{$ml.get('word.update')}}</a>
             </li>
 
@@ -49,6 +49,7 @@
                     </div>
                 </div>
                 <b-table class="my-table-scroll" no-border-collapse hover sticky-header="650px" :items="listForSearch"
+                         @row-dblclicked="(item) => link( item)"
                          :fields="[
                 { key: 'index', label:'№' },
                 { key: 'data', label: $ml.get('word.name'), sortable: true },
@@ -143,7 +144,7 @@
                             :update-obj="updateDataObj"
                             index="objToBeChanged"
                             :hide-title="true"
-                            :holder-num=0
+                            :holderNum="updateDataObj.objToBeChanged!==0?dataList.find(elem=>elem.id===updateDataObj.objToBeChanged).id:0"
 
                     />
                     <input-field
@@ -209,7 +210,7 @@
                 status: null
             },
             updateDataObj: {
-                objToBeChanged: null,
+                objToBeChanged: 0,
                 saveData_primary: null,
                 saveData_secondary: null,
                 status: null
@@ -253,6 +254,11 @@
             },
             setDataList(tempList) {
                 this.dataList = tempList;
+            },
+            async link(record) {
+                this.$refs.updateTab.click();
+                this.updateDataObj.objToBeChanged=record.id;
+                console.log(1)
             },
             async saveEngManufacture(number) {
                 let temp = this.dataList.find(item =>

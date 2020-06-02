@@ -10,7 +10,7 @@
                    role="tab" aria-controls="profile" aria-selected="false">{{$ml.get('word.save')}}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="contact-tabengine" data-toggle="tab" :href="'#c'+nameTitle"
+                <a class="nav-link" id="contact-tabengine" ref="updateTab" data-toggle="tab" :href="'#c'+nameTitle"
                    role="tab" aria-controls="contact" aria-selected="false">{{$ml.get('word.update')}}</a>
             </li>
         </ul>
@@ -46,7 +46,9 @@
 
                     </div>
                 </div>
-                <b-table class="my-table-scroll" no-border-collapse hover  sticky-header="650px" :items="listForSearch" :fields="[
+                <b-table class="my-table-scroll" no-border-collapse hover
+                         @row-dblclicked="(item) => link( item)"
+                         sticky-header="650px" :items="listForSearch" :fields="[
                 { key: 'index', label:'№' },
                 { key: 'data', label: $ml.get('word.nameTitle'), sortable: true },
                 { key: 'status', label: $ml.get('word.status'), sortable: true }]"    >
@@ -130,7 +132,7 @@
                             :update-obj="updateDataObj"
                             :hide-title="true"
                             index="objToBeChanged"
-                            :holder-num=0
+                            :holderNum="updateDataObj.objToBeChanged!==0?dataList.find(elem=>elem.id===updateDataObj.objToBeChanged).id:0"
                     />
                     <input-field
                             class="col-md-4"
@@ -152,7 +154,7 @@
 
                         <button v-if="!loadStatus" type="submit" @click="update(1)"
                                 class="btn  btn-outline-dark btn-block ">
-                            <span>{{$ml.get('word.save')}}</span>
+                            <span>{{$ml.get('word.update')}}</span>
                         </button>
                         <button v-if="loadStatus" type="submit"
                                 class="btn  btn-block btn-dark" disabled>
@@ -184,7 +186,7 @@
                 status: null
             },
             updateDataObj: {
-                objToBeChanged: null,
+                objToBeChanged: 0,
                 updateData: null,
                 status: null
             } ,
@@ -236,6 +238,11 @@
                     this.showErr = true;
                 }
                 console.log(number)
+            },
+            async link(record) {
+                this.$refs.updateTab.click();
+                this.updateDataObj.objToBeChanged=record.id;
+                console.log(1)
             },
             async update(number) {
                 if (this.updateDataObj.objToBeChanged != null) {

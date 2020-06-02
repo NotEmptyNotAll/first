@@ -10,7 +10,7 @@
                    role="tab" aria-controls="profile" aria-selected="false">{{$ml.get('word.save')}}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="contact-tabengine" data-toggle="tab" :href="'#c'+nameTitle"
+                <a class="nav-link" id="contact-tabengine" ref="updateTab" data-toggle="tab" :href="'#c'+nameTitle"
                    role="tab" aria-controls="contact" aria-selected="false">{{$ml.get('word.update')}}</a>
             </li>
         </ul>
@@ -46,8 +46,10 @@
 
                     </div>
                 </div>
-                    <b-table class="my-table-scroll" no-border-collapse hover  sticky-header="650px" :items="dataList" :fields="[
-                { key: 'index', label:'№' },
+                <b-table class="my-table-scroll" no-border-collapse hover
+                         sticky-header="650px" :items="dataList"
+                         @row-dblclicked="(item) => link( item)"
+                         :fields="[{ key: 'index', label:'№' },
                 { key: 'data', label: $ml.get('word.engine'), sortable: true },
                 { key: 'engineManufacturer', label: $ml.get('word.engineManufacture'), sortable: true },
                 { key: 'cylindersPlacement', label: $ml.get('word.cylinders'), sortable: true },
@@ -60,12 +62,13 @@
                 { key: 'superchargedType', label: $ml.get('word.superchargedType'), sortable: true },
                 { key: 'releaseYearFrom', label: $ml.get('word.releaseYearFrom'), sortable: true },
                 { key: 'releaseYearBy', label: $ml.get('word.releaseYearBy'), sortable: true },
-                { key: 'status', label: $ml.get('word.status'), sortable: true }]"    >
+                { key: 'status', label: $ml.get('word.status'), sortable: true }]">
 
-                        <template v-slot:cell(index)="data">
-                            {{ data.index + 1 }}
-                        </template>
-                    </b-table>
+                    <template v-slot:cell(index)="data">
+                        {{ data.index + 1 }}
+                    </template>
+
+                </b-table>
 
                 <!--<table responseive  class="table table-hover  " style="text-align: center; z-index: 0; border-radius: 0px; ">
                 <thead >
@@ -443,7 +446,7 @@
     import VueDatalist from "../input/vue-datalist";
     import InputField from "../input/input-field";
     import {mapActions, mapGetters, mapMutations} from "vuex";
-    import { MLBuilder } from 'vue-multilanguage'
+    import {MLBuilder} from 'vue-multilanguage'
 
     export default {
         name: "save-engine-panel",
@@ -521,7 +524,7 @@
                 'ENGINE',
                 'LOAD_ADDITIONAL_DATA'
             ]),
-            mlmyMessage:function ()  {
+            mlmyMessage: function () {
                 return new MLBuilder('word.superchargedType')
             }
         },
@@ -537,6 +540,7 @@
                 this.search = '';
                 this.filterResults();
             },
+
             onChange() {
                 this.filterResults();
             }, filterResults() {
@@ -557,6 +561,28 @@
             },
             test(id) {
                 alert(id)
+            },
+            async link(record) {
+                this.$refs.updateTab.click();
+                await this.GET_ENG({id: record.id});
+                this.tempData = this.ENGINE;
+                this.updateDataObj.objToBeChanged = this.ENGINE.id
+                this.updateDataObj.engineType = this.ENGINE.engineType
+                this.updateDataObj.engineManufacturerFk = this.ENGINE.engineManufacturerFk
+                this.updateDataObj.cylindersPlacementFk = this.ENGINE.cylindersPlacementFk
+                this.updateDataObj.fuelTypeFk = this.ENGINE.fuelTypeFk
+                this.updateDataObj.superchargedTypeFk = this.ENGINE.superchargedTypeFk
+                this.updateDataObj.cylindersNumber = this.ENGINE.cylindersNumber
+                this.updateDataObj.flapNumber = this.ENGINE.flapNumber
+                this.updateDataObj.pistonDiameter = this.ENGINE.pistonDiameter
+                this.updateDataObj.pistonStroke = this.ENGINE.pistonStroke
+                this.updateDataObj.engineCapacity = this.ENGINE.engineCapacity
+                this.updateDataObj.powerKwt = this.ENGINE.powerKwt
+                this.updateDataObj.degreeCompression = this.ENGINE.degreeCompression
+                this.updateDataObj.releaseYearFrom = this.ENGINE.releaseYearFrom
+                this.updateDataObj.releaseYearBy = this.ENGINE.releaseYearBy
+                this.updateDataObj.horsepower = this.ENGINE.horsepower
+                console.log(1)
             },
             async getEng(number) {
                 await this.GET_ENG({id: this.updateDataObj.objToBeChanged});
@@ -612,7 +638,9 @@
 </script>
 
 <style scoped>
-    .my-table-scroll::-webkit-scrollbar {width:0px;}
+    .my-table-scroll::-webkit-scrollbar {
+        width: 0px;
+    }
 
     a {
         padding-left: 3vw;
