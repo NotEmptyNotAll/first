@@ -4,7 +4,7 @@
         <li class="border-white bold list-group-item   left"
             style="position: relative; width: 24vw;padding: 0px;"
         >
-            <div class="row" style="min-width: 22vw;max-width: 22vw; padding: 5px">
+            <div class="row" style="min-width: 22vw;max-width: 22vw; padding: 15px">
                 <div class="col-md-8">
             <span v-show="item.name!=''" @click="toggle">
                 {{ space+item.name }}
