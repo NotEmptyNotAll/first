@@ -96,6 +96,7 @@
                 required: false,
                 default: false,
             },
+            cleanSearch: null,
             tp: []
         },
 
@@ -173,7 +174,11 @@
             }
         },
         watch: {
-
+            cleanSearch:function(val){
+                if(val!==null){
+                    this.search=''
+                }
+            },
             items: function (val, oldValue) {
                 // actually compare them
                 if (val.length !== oldValue.length) {

@@ -17,8 +17,12 @@
         <div class="tab-content" id="myTabContentengine" style="border: white">
             <div class="tab-pane fade show active" :id="'h'+nameTitle" role="tabpanel"
                  aria-labelledby="home-tab">
-                <div class="row">
-                    <div class="col-md-7"></div>
+                <div class="row"  style="padding-top: 3vh">
+                    <div class="col-md-2" style="text-align: center; position: relative;right: 1vw ;border-style: solid;   border-color: lightslategrey;  border-width: 2px 2px 2px 0px;">
+                        <h4 > {{nameTitle}}</h4>
+                    </div>
+                    <div class="col-md-5"></div>
+
                     <div class="input-group  col-md-5">
                         <div class="input-group-prepend ">
                             <label class="input-group-text bg-white  "
@@ -113,6 +117,8 @@
                             :update-obj="saveDataObj"
                             index="engineFk"
                             :holder-num=0
+                            :clean-search="cleanInputList"
+
 
                     />
                     <vue-datalist
@@ -122,6 +128,8 @@
                             :update-obj="saveDataObj"
                             index="autoModelFk"
                             :holder-num=0
+                            :clean-search="cleanInputList"
+
 
                     />
                     <vue-datalist
@@ -131,6 +139,7 @@
                             :update-obj="saveDataObj"
                             index="autoManufactureFk"
                             :holder-num=0
+                            :clean-search="cleanInputList"
 
                     />
                     <div class="input-group col-md-3">
@@ -157,21 +166,26 @@
                                step="1"
                                aria-describedby="button-addon1">
                         <div class="input-group-append">
-
                             <button class="btn btn-outline-danger"
                                     v-on:click="saveDataObj.releaseYearFrom=null"
                                     @click="saveDataObj.releaseYearBy=null"
                                     type="button">
                                 <span>&#10008;</span>
                             </button>
-
                         </div>
                     </div>
                 </div>
                 <hr style="position: center; width: 70%"/>
                 <div class="savePageRow row">
-                    <div class="col-md-5"></div>
-                    <div class="col-md-2">
+                    <div class="col-md-2"></div>
+                    <div class="  col-md-3">
+
+                        <button type="submit" @click="cancel"
+                                class="btn  btn-outline-danger btn-block ">
+                            <span>{{$ml.get('word.cancel')}}</span>
+                        </button>
+                    </div>
+                    <div class="col-md-3">
 
                         <button v-if="!loadStatus" type="submit" @click="saveEngManufacture(1)"
                                 class="btn btn-outline-dark btn-block">
@@ -347,9 +361,11 @@
                 elemId: null,
                 editRow: null,
             },
+            cleanInputList:false,
             tempObj: null
         }),
         props: {
+            nameTitle: String,
             namePanel: String,
             dataList: [],
             loadStatus: null
@@ -378,8 +394,14 @@
                 this.dataList = tempList;
             },
             async clear() {
+                this.cleanInputList=!this.cleanInputList;
                 this.search = '';
                 this.filterResults();
+            },
+            cancel(){
+                this.cleanInputList=!this.cleanInputList;
+                this.saveDataObj.releaseYearFrom='';
+                this.saveDataObj.releaseYearBy='';
             },
             onChange() {
                 this.filterResults();

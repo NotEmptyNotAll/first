@@ -4,13 +4,13 @@
                 v-if="!currentUser"
         />
         <div  v-if="currentUser" class="container-fluid">
-            <div class="row" style="padding-top: 1vh">
+            <div class="row" style="padding-top: 1vh;">
                 <div class="col-md-4 col-lg-2  navbar-container ">
                     <nav class="navbar navbar-expand-md search-border shadow-lg   navbar-light rounded  " id="nav-panel">
                         <div class="collapse navbar-collapse " id="navbar" style="width: 100%;">
                             <!-- Вертикальное меню -->
                             <ul class="nav  nav-tabs tabs-right  sideways" style="width: 100%">
-                                <li class="   nav-item"><a class="nav-link menu-item "  style="border: white;" href="#engine"
+                                <li class=" act ive  nav-item"><a class="nav-link menu-item "  style="border: white;" href="#engine"
                                                              data-toggle="tab">
                                     <span></span>
                                     {{$ml.get('word.engine')}}</a>
@@ -110,7 +110,7 @@
                             </div>
                             <div class="tab-pane " id="superchargedType">
                                 <two-update-panel
-                                        :name-title="$ml.get('word.autoEngine')"
+                                        :name-title="$ml.get('word.superchargedType')"
                                         :name-panel="$ml.get('word.superchargedType')"
                                         :data-list="ADDITIONAL_DATA.superchargeType"
                                         :load-status="LOAD_SAVE.superchargedType"
@@ -131,6 +131,7 @@
                             <div class="tab-pane" id="autoEngine">
 
                                 <auto-engine-save-panel
+                                        :name-title="$ml.get('word.autoEngine')"
                                         :data-list="ADDITIONAL_DATA.autoEng"
                                         :name-panel="$ml.get('word.autoEngine')"
                                         :load-status="LOAD_SAVE.automobileEngine"
@@ -353,4 +354,5 @@
         border-width: 15px 0px 0px 0px;
 
     }
+
 </style>

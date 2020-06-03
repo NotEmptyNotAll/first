@@ -17,8 +17,11 @@
         <div class="tab-content" id="myTabContentengine" style="border: white">
             <div class="tab-pane fade show active" :id="'h'+nameTitle" role="tabpanel"
                  aria-labelledby="home-tab">
-                <div class="row">
-                    <div class="col-md-7"></div>
+                <div class="row" style="padding-top: 3vh">
+                    <div class="col-md-2" style="text-align: center; position: relative;right: 1vw ;border-style: solid;   border-color: lightslategrey;  border-width: 2px 2px 2px 0px;">
+                        <h4 > {{nameTitle}}</h4>
+                    </div>
+                    <div class="col-md-5"></div>
                     <div class="input-group col-md-5">
                         <div class="input-group-prepend ">
                             <label class="input-group-text bg-white  "
@@ -51,33 +54,33 @@
                          sticky-header="650px" :items="listForSearch" :fields="[
                 { key: 'index', label:'№' },
                 { key: 'data', label: $ml.get('word.nameTitle'), sortable: true },
-                { key: 'status', label: $ml.get('word.status'), sortable: true }]"    >
+                { key: 'status', label: $ml.get('word.status'), sortable: true }]">
 
                     <template v-slot:cell(index)="data">
                         {{ data.index + 1 }}
                     </template>
                 </b-table>
-              <!--  <table class="table table-hover  "
-                       style="text-align: center; z-index: 0; border-radius: 0px">
-                    <thead>
-                    <tr>
-                        <th scope="col">id</th>
-                        <th scope="col">{{nameTitle}}</th>
-                        <th scope="col" v-text="$ml.get('word.status')"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="current in listForSearch" v-bind:key="current" v-show="current.data!==''">
-                        <td>{{current.id}}
-                        </td>
-                        <td>{{current.data}}
-                        </td>
-                        <td>{{current.status}}
-                        </td>
+                <!--  <table class="table table-hover  "
+                         style="text-align: center; z-index: 0; border-radius: 0px">
+                      <thead>
+                      <tr>
+                          <th scope="col">id</th>
+                          <th scope="col">{{nameTitle}}</th>
+                          <th scope="col" v-text="$ml.get('word.status')"></th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr v-for="current in listForSearch" v-bind:key="current" v-show="current.data!==''">
+                          <td>{{current.id}}
+                          </td>
+                          <td>{{current.data}}
+                          </td>
+                          <td>{{current.status}}
+                          </td>
 
-                    </tr>
-                    </tbody>
-                </table>-->
+                      </tr>
+                      </tbody>
+                  </table>-->
                 <div v-if="LOAD_ADDITIONAL_DATA" class="lds-dual-ring-black" style="margin-left:47% "></div>
 
             </div>
@@ -85,7 +88,7 @@
                  aria-labelledby="profile-tab">
                 <br/>
                 <br/>
-                <div class="savePageRow row ">
+                <div class=" row ">
                     <input-field
                             class="col-md-4"
                             :name-input="nameTitle"
@@ -99,9 +102,10 @@
                             :update-obj="saveDataObj"
                             index="status"
                             :holderNum="dataList.find(elem=>elem.id===1).id"
+                            :clean-search="cleanInputList"
 
                     />
-                    <div class="col input-group  col-md-4">
+                    <div class="col input-group  col-md-3">
 
                         <button v-if="!loadStatus" type="submit" @click="save(1)"
                                 class="btn  btn-outline-dark btn-block ">
@@ -109,12 +113,20 @@
                         </button>
                         <button v-if="loadStatus" type="submit"
                                 class="btn  btn-block btn-dark" disabled>
-                            <span><div class="lds-dual-ring" style="position: relative; bottom: 1.2vh" ></div></span>
+                            <span><div class="lds-dual-ring" style="position: relative; bottom: 1.2vh"></div></span>
+                        </button>
+                    </div>
+                    <div class="  col-md-2">
+
+                        <button type="submit" @click="cancelSave()"
+                                class="btn  btn-outline-danger btn-block ">
+                            <span>{{$ml.get('word.cancel')}}</span>
                         </button>
                     </div>
                 </div>
                 <hr/>
                 <div class="savePageRow row ">
+
                     <div v-if="showErr" class="alert alert-danger col-md-12" role="alert" style="margin-left: 4%">
                         {{$ml.get('msg.duplicateValue')}}
                     </div>
@@ -124,15 +136,19 @@
                  aria-labelledby="contact-tab">
                 <br/>
                 <br/>
-                <div class="savePageRow row ">
+                <div class=" row ">
+                    <div
+                            class="col-md-1"
+                    ></div>
                     <vue-datalist
                             class="col-md-3"
                             :title-input="$ml.get('word.dataChange')"
                             :items="dataList"
                             :update-obj="updateDataObj"
                             :hide-title="true"
+                            :clean-search="cleanInputList"
                             index="objToBeChanged"
-                            :holderNum="updateDataObj.objToBeChanged!==0?dataList.find(elem=>elem.id===updateDataObj.objToBeChanged).id:0"
+                            :holderNum="tempUpdateObj.objToBeChanged!==0?dataList.find(elem=>elem.id===tempUpdateObj.objToBeChanged).id:0"
                     />
                     <input-field
                             class="col-md-4"
@@ -146,24 +162,42 @@
                             :items="PARAM_NAME_AND_UNITS.status"
                             :update-obj="updateDataObj"
                             index="status"
-                            :holderNum="dataList.find(elem=>elem.id===1).id"
+                            :clean-search="cleanInputList"
+                            :holderNum="PARAM_NAME_AND_UNITS.status.find(elem=>elem.id===tempUpdateObj.status).id"
 
                     />
 
-                    <div class="  col-md-2">
+                    <div
+                            class="col-md-1"
+                    ></div>
+                </div>
+                <hr/>
+                <div class="row">
+                    <div
+                            class="col-md-3"
+                    ></div>
+                    <div class="  col-md-3">
 
-                        <button v-if="!loadStatus" type="submit" @click="update(1)"
+                        <button type="submit" @click="cancel()"
+                                class="btn  btn-outline-danger btn-block ">
+                            <span>{{$ml.get('word.cancel')}}</span>
+                        </button>
+                    </div>
+                    <div class="  col-md-3">
+
+                        <button v-if="!loadStatus" type="submit" @click="update()"
                                 class="btn  btn-outline-dark btn-block ">
                             <span>{{$ml.get('word.update')}}</span>
                         </button>
                         <button v-if="loadStatus" type="submit"
                                 class="btn  btn-block btn-dark" disabled>
-                            <span><div class="lds-dual-ring" style="position: relative; bottom: 1.2vh" ></div></span>
+                            <span><div class="lds-dual-ring" style="position: relative; bottom: 1.2vh"></div></span>
                         </button>
                     </div>
+                    <div
+                            class="col-md-3"
+                    ></div>
                 </div>
-                <hr/>
-
             </div>
         </div>
     </div>
@@ -177,7 +211,7 @@
 
     export default {
         name: "save-update-panel",
-        components: { InputField, VueDatalist},
+        components: {InputField, VueDatalist},
         data: () => ({
             showErr: false,
             listForSearch: [],
@@ -188,9 +222,15 @@
             updateDataObj: {
                 objToBeChanged: 0,
                 updateData: null,
-                status: null
-            } ,
-            search:''
+                status: 1
+            },
+            tempUpdateObj:{
+                objToBeChanged: 0,
+                updateData: null,
+                status: 1
+            },
+            cleanInputList:false,
+            search: ''
         }),
         computed: {
             ...mapGetters([
@@ -222,14 +262,27 @@
             setDataList(tempList) {
                 this.dataList = tempList;
             },
+            cancel(){
+                this.cleanInputList=!this.cleanInputList;
+                this.updateDataObj.objToBeChanged =1;
+                this.updateDataObj.status = 1;
+                this.updateDataObj.updateData =null;
+
+                console.log(1)
+            },
+            cancelSave(){
+                this.cleanInputList=!this.cleanInputList;
+                this.saveDataObj.saveData =null;
+                this.saveDataObj.status = 1;
+            },
             async save(number) {
                 let temp = this.dataList.find(item =>
                     item.data === this.saveDataObj.saveData
                 );
                 if (temp === undefined) {
                     if (this.saveDataObj.saveData != null) {
-                        if(this.saveDataObj.status===null) {
-                            this.saveDataObj.status=1;
+                        if (this.saveDataObj.status === null) {
+                            this.saveDataObj.status = 1;
                         }
                         await this.$emit("save-data-api", this.saveDataObj);
                         this.GET_ALL_ADDITIONAL_DATA();
@@ -240,14 +293,17 @@
                 console.log(number)
             },
             async link(record) {
+
                 this.$refs.updateTab.click();
-                this.updateDataObj.objToBeChanged=record.id;
+                this.updateDataObj.objToBeChanged = record.id;
+                this.tempUpdateObj.objToBeChanged = record.id;
+
                 console.log(1)
             },
             async update(number) {
                 if (this.updateDataObj.objToBeChanged != null) {
-                    if(this.updateDataObj.status===null) {
-                        this.updateDataObj.status=1;
+                    if (this.updateDataObj.status === null) {
+                        this.updateDataObj.status = 1;
                     }
                     await this.$emit("update-data-api", this.updateDataObj);
                     this.GET_ALL_ADDITIONAL_DATA();
@@ -260,17 +316,19 @@
         mounted() {
             this.listForSearch = this.dataList;
         },
-        watch:{
+        watch: {
             dataList: function (val) {
-                    if(val!==null || val!==undefined)
-                        this.listForSearch = this.dataList;
+                if (val !== null || val !== undefined)
+                    this.listForSearch = this.dataList;
             }
         }
     }
 </script>
 
 <style scoped>
-    .my-table-scroll::-webkit-scrollbar {width:0px;}
+    .my-table-scroll::-webkit-scrollbar {
+        width: 0px;
+    }
 
     .posCenter {
         padding-left: 50%;

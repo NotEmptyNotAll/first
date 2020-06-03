@@ -17,8 +17,11 @@
         <div class="tab-content" id="myTabContentengine" style="border: white">
             <div class="tab-pane fade show active" :id="'h'+nameTitle" role="tabpanel"
                  aria-labelledby="home-tab">
-                <div class="row">
-                    <div class="col-md-7"></div>
+                <div class="row"  style="padding-top: 3vh">
+                    <div class="col-md-2" style="text-align: center; position: relative;right: 1vw ;border-style: solid;   border-color: lightslategrey;  border-width: 2px 2px 2px 0px;">
+                        <h4 > {{nameTitle}}</h4>
+                    </div>
+                    <div class="col-md-5"></div>
                     <div class="input-group col-md-5">
                         <div class="input-group-prepend ">
                             <label class="input-group-text  bg-white "
@@ -127,7 +130,7 @@
                     </div>
 
                 </div>
-                <div class="savePageRow row ">
+                <div class=" row ">
                     <input-field class="col-md-4"
                                  :name-input="$ml.get('word.engine')"
                                  :save-parameters="saveDataObj"
@@ -152,7 +155,7 @@
                     />
 
                 </div>
-                <div class="savePageRow row ">
+                <div class=" row ">
                     <vue-datalist
                             class="col-md-3"
                             :title-input="$ml.get('word.cylinders')"
@@ -181,7 +184,7 @@
 
                     />
                 </div>
-                <div class=" savePageRow row ">
+                <div class="  row ">
                     <input-field class="col-md-3"
                                  :name-input="$ml.get('word.powerKwt')"
                                  :save-parameters="saveDataObj"
@@ -204,7 +207,7 @@
                                  index="flapNumber"
                     />
                 </div>
-                <div class="savePageRow row">
+                <div class=" row">
                     <input-field class="col-md-4"
                                  :name-input="$ml.get('word.degreeCompression')"
                                  :save-parameters="saveDataObj"
@@ -250,10 +253,17 @@
                     </div>
                 </div>
                 <hr style="position: center; width: 70%"/>
-                <div class="savePageRow row ">
-                    <div class="col-md-5">
+                <div class=" row ">
+                    <div class="col-md-3">
                     </div>
-                    <div class="col-md-2">
+                    <div class="  col-md-3">
+
+                        <button type="submit" @click="cancelsave()"
+                                class="btn  btn-outline-danger btn-block ">
+                            <span>{{$ml.get('word.cancel')}}</span>
+                        </button>
+                    </div>
+                    <div class="col-md-3">
                         <button v-if="!loadStatus" type="submit" @click="saveEngManufacture(1)"
                                 class="btn btn-outline-dark btn-block ">
                             <span>{{$ml.get('word.save')}}</span>
@@ -263,7 +273,8 @@
                             <span><div class="lds-dual-ring" style="position: relative; bottom: 1.2vh"></div></span>
                         </button>
                     </div>
-                    <div class="col-md-5"></div>
+
+                    <div class="col-md-3"></div>
                 </div>
                 <hr/>
                 <span v-if="loadStatus"><div class="lds-dual-ring-black posCenter"></div></span>
@@ -278,9 +289,9 @@
 
                 <br/>
                 <br/>
-                <div class="savePageRow row">
+                <div class=" row">
                     <vue-datalist
-                            class="col-md-8"
+                            class="col-md-6"
                             :title-input="$ml.get('word.changeTypeOfEngine')"
                             :items="ADDITIONAL_DATA.engine"
                             :update-obj="updateDataObj"
@@ -313,9 +324,16 @@
                             <span>{{$ml.get('word.update')}}</span>
                         </button>
                     </div>
+                    <div class="  col-md-2">
+
+                        <button type="submit" @click="cancel()"
+                                class="btn  btn-outline-danger btn-block ">
+                            <span>{{$ml.get('word.cancel')}}</span>
+                        </button>
+                    </div>
                 </div>
                 <hr style="color: lightgray"/>
-                <div class="savePageRow row">
+                <div class=" row">
                     <input-field
                             class="col-md-4"
                             :name-input="$ml.get('word.engine')"
@@ -329,6 +347,8 @@
                             :update-obj="updateDataObj"
                             :holderNum="tempData.cylindersPlacementFk"
                             index="cylindersPlacementFk"
+                            :clean-search="cleanInputList"
+
                     />
                     <vue-datalist
                             class="col-md-4"
@@ -337,10 +357,11 @@
                             :update-obj="updateDataObj"
                             :holderNum="tempData.engineManufacturerFk"
                             index="engineManufacturerFk"
+                            :clean-search="cleanInputList"
                     />
 
                 </div>
-                <div class="savePageRow row">
+                <div class=" row">
                     <vue-datalist
                             class="col-md-3"
                             :title-input="$ml.get('word.fuelType')"
@@ -348,6 +369,7 @@
                             :update-obj="updateDataObj"
                             :holderNum="tempData.fuelTypeFk"
                             index="fuelTypeFk"
+                            :clean-search="cleanInputList"
                     />
                     <vue-datalist
                             class="col-md-3"
@@ -369,7 +391,7 @@
                     />
 
                 </div>
-                <div class="savePageRow row">
+                <div class=" row">
                     <input-field class="col-md-3"
                                  :name-input="$ml.get('word.powerKwt')"
                                  :save-parameters="updateDataObj"
@@ -391,7 +413,7 @@
                                  index="flapNumber"
                     />
                 </div>
-                <div class="savePageRow row">
+                <div class=" row">
                     <input-field class="col-md-4"
                                  :name-input="$ml.get('word.degreeCompression')"
                                  :save-parameters="updateDataObj"
@@ -509,7 +531,8 @@
                 horsepower: null,
                 status: null
             },
-            test: null
+            test: null,
+            cleanInputList:false
         }),
         props: {
             nameTitle: String,
@@ -555,6 +578,43 @@
             },
             setDataList(tempList) {
                 this.dataList = tempList;
+            },
+            cancelsave(){
+                this.cleanInputList=!this.cleanInputList;
+                this.saveDataObj.engineType = null
+                this.saveDataObj.engineManufacturerFk = null
+                this.saveDataObj.cylindersPlacementFk = null
+                this.saveDataObj.fuelTypeFk = null
+                this.saveDataObj.superchargedTypeFk = null
+                this.saveDataObj.cylindersNumber = null
+                this.saveDataObj.flapNumber =null
+                this.saveDataObj.pistonDiameter = null
+                this.saveDataObj.pistonStroke = null
+                this.saveDataObj.engineCapacity = null
+                this.saveDataObj.powerKwt =null
+                this.saveDataObj.degreeCompression = null
+                this.saveDataObj.releaseYearFrom = null
+                this.saveDataObj.releaseYearBy = null
+                this.saveDataObj.horsepower = null
+           },
+            cancel(){
+                this.cleanInputList=!this.cleanInputList;
+                this.updateDataObj.objToBeChanged = this.tempData.id
+                this.updateDataObj.engineType = this.tempData.engineType
+                this.updateDataObj.engineManufacturerFk = this.tempData.engineManufacturerFk
+                this.updateDataObj.cylindersPlacementFk = this.tempData.cylindersPlacementFk
+                this.updateDataObj.fuelTypeFk = this.tempData.fuelTypeFk
+                this.updateDataObj.superchargedTypeFk = this.tempData.superchargedTypeFk
+                this.updateDataObj.cylindersNumber = this.tempData.cylindersNumber
+                this.updateDataObj.flapNumber = this.tempData.flapNumber
+                this.updateDataObj.pistonDiameter = this.tempData.pistonDiameter
+                this.updateDataObj.pistonStroke = this.tempData.pistonStroke
+                this.updateDataObj.engineCapacity = this.tempData.engineCapacity
+                this.updateDataObj.powerKwt = this.tempData.powerKwt
+                this.updateDataObj.degreeCompression = this.tempData.degreeCompression
+                this.updateDataObj.releaseYearFrom = this.tempData.releaseYearFrom
+                this.updateDataObj.releaseYearBy = this.tempData.releaseYearBy
+                this.updateDataObj.horsepower = this.tempData.horsepower
             },
             autocompliteResult() {
                 alert(this.$refs.autocomplete.data.value);

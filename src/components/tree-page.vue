@@ -1,6 +1,5 @@
 <template>
-
-    <div class="searchEng">
+    <div>
         <error-page
                 v-if="!currentUser"
         />
@@ -8,7 +7,6 @@
             <div class="search-border container  bg-white rounded" id="searchCont" style="text-align: center">
                 <br/>
                 <br/>
-
                 <search-engine-panel
                         @submit-function="GET_AUTOENG_BY_PARAM"
                 />
@@ -74,10 +72,11 @@
 
             <!--recursive tree of objects. Most likely it will look different-->
 
-            <auto-engine-full-tree
-                    v-if="currentUser"
+
+            <save-elem-tree-page
                     :auto_id="auto_id"
-                    ref="contParam" v-show="ELEMENTS!=null"/>
+                    v-if="currentUser"
+            />
 
 
             <!-- Modal -->
@@ -108,18 +107,17 @@
 </template>
 
 <script>
-
     import {mapActions, mapGetters} from 'vuex'
-    import AutoEngineFullTree from "../tree/auto-engine-full-tree";
-    import SearchEnginePanel from "./search-engine-panel";
+    import SaveElemTreePage from "./tree/save-elem-tree-page";
+    import SearchEnginePanel from "./SearchPage/search-engine-panel";
+
 
     export default {
-        name: "searchEng",
+        name: "tree-page",
 
         components: {
             SearchEnginePanel,
-            AutoEngineFullTree
-
+            SaveElemTreePage
         },
         data: () => ({
             paramtrs: [],
@@ -286,10 +284,9 @@
             }
         }
     }
-
 </script>
 
-<style>
+<style scoped>
     #contTable {
         min-height: 20vh;
     }

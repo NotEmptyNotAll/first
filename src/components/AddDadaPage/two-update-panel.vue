@@ -19,8 +19,12 @@
         <div class="tab-content" id="myTabContentengine" style="border: white">
             <div class="tab-pane fade show active" :id="'h'+nameTitle" role="tabpanel"
                  aria-labelledby="home-tab">
-                <div class="row">
-                    <div class="col-md-7"></div>
+                <div class="row"  style="padding-top: 3vh">
+                    <div class="col-md-2" style="text-align: center; position: relative;right: 1vw ;border-style: solid;   border-color: lightslategrey;  border-width: 2px 2px 2px 0px;">
+                        <h4 > {{nameTitle}}</h4>
+                    </div>
+                    <div class="col-md-5"></div>
+
                     <div class="input-group col-md-5">
                         <div class="input-group-prepend ">
                             <label class="input-group-text  bg-white "
@@ -93,38 +97,52 @@
                 <br/>
                 <div class="savePageRow row ">
                     <input-field
-                            class="col-md-3"
+                            class="col-md-4"
                             :name-input="nameTitle"
                             :save-parameters="saveDataObj"
                             index="saveData_primary"
                     />
                     <input-field
-                            class="col-md-3"
+                            class="col-md-4"
                             :name-input="$ml.get('word.shortName')"
                             :save-parameters="saveDataObj"
                             index="saveData_secondary"
                     />
                     <vue-datalist
-                            class="col-md-3"
+                            class="col-md-4"
                             :title-input="$ml.get('word.status')"
                             :items="PARAM_NAME_AND_UNITS.status"
                             :update-obj="saveDataObj"
                             index="status"
+                            :clean-search="cleanInputList"
                             :holderNum="dataList.find(elem=>elem.id===1).id"
 
                     />
-                    <div class="col-md-3">
-                        <button v-if="!loadStatus" type="submit" @click="saveEngManufacture(1)"
-                                class="btn btn-outline-dark btn-block ">
-                            <span>{{$ml.get('word.save')}}</span>
-                        </button>
-                        <button v-if="loadStatus" type="submit"
-                                class="btn  btn-block btn-dark" disabled>
-                            <span><div class="lds-dual-ring" style="position: relative; bottom: 1.2vh"></div></span>
-                        </button>
-                    </div>
+
                 </div>
                 <hr/>
+                <div class="row">
+                <div class="col-md-3"></div>
+                    <div class="  col-md-3">
+
+                        <button type="submit" @click="cancelSave()"
+                                class="btn  btn-outline-danger btn-block ">
+                            <span>{{$ml.get('word.cancel')}}</span>
+                        </button>
+                    </div>
+                <div class="col-md-3">
+                    <button v-if="!loadStatus" type="submit" @click="saveEngManufacture(1)"
+                            class="btn btn-outline-dark btn-block ">
+                        <span>{{$ml.get('word.save')}}</span>
+                    </button>
+                    <button v-if="loadStatus" type="submit"
+                            class="btn  btn-block btn-dark" disabled>
+                        <span><div class="lds-dual-ring" style="position: relative; bottom: 1.2vh"></div></span>
+                    </button>
+                </div>
+                </div>
+                <div class="col-md-3"></div>
+
                 <div class="savePageRow row ">
                     <div v-if="showErr" class="alert alert-danger col-md-12" role="alert" style="margin-left: 4%">
                         {{$ml.get('msg.duplicateValue')}}
@@ -143,6 +161,7 @@
                             :items="dataList"
                             :update-obj="updateDataObj"
                             index="objToBeChanged"
+                            :clean-search="cleanInputList"
                             :hide-title="true"
                             :holderNum="updateDataObj.objToBeChanged!==0?dataList.find(elem=>elem.id===updateDataObj.objToBeChanged).id:0"
 
@@ -164,6 +183,7 @@
                             :title-input="$ml.get('word.status')"
                             :items="PARAM_NAME_AND_UNITS.status"
                             :update-obj="updateDataObj"
+                            :clean-search="cleanInputList"
                             index="status"
                             :holderNum="dataList.find(elem=>elem.id===1).id"
 
@@ -171,8 +191,15 @@
                 </div>
                 <hr style="position: center; width: 70%"/>
                 <div class="savePageRow row ">
-                    <div class="col-md-4"></div>
-                    <div class="col-md-4">
+                    <div class="col-md-3"></div>
+                    <div class="  col-md-3">
+
+                        <button type="submit" @click="cancel()"
+                                class="btn  btn-outline-danger btn-block ">
+                            <span>{{$ml.get('word.cancel')}}</span>
+                        </button>
+                    </div>
+                    <div class="col-md-3">
                         <button v-if="!loadStatus" type="submit" @click="update(1)"
                                 class="btn  btn-block btn-outline-dark">
                             <span>{{$ml.get('word.update')}}</span>
@@ -182,7 +209,7 @@
                             <span><div class="lds-dual-ring" style="position: relative; bottom: 1.2vh"></div></span>
                         </button>
                     </div>
-                    <div class="col-md-4"></div>
+                    <div class="col-md-3"></div>
 
                 </div>
                 <hr/>
@@ -215,7 +242,8 @@
                 saveData_secondary: null,
                 status: null
             },
-            search: ''
+            search: '',
+            cleanInputList:false
         }),
         props: {
             nameTitle: String,
@@ -225,7 +253,8 @@
             dataList: null,
             loadStatus: null,
             title_one: String,
-            title_two: String
+            title_two: String,
+
         },
         computed: {
             ...mapGetters([
@@ -277,6 +306,19 @@
                     this.showErr = true;
                 }
                 console.log(number)
+            },
+            cancel(){
+                this.cleanInputList=!this.cleanInputList;
+                this.updateDataObj.objToBeChanged =1;
+                this.updateDataObj.saveData_primary =null;
+                this.updateDataObj.status = 1;
+                this.updateDataObj.saveData_secondary =null;
+            },
+            cancelSave(){
+                this.cleanInputList=!this.cleanInputList;
+                this.saveDataObj.saveData_primary =null;
+                this.saveDataObj.status = 1;
+                this.saveDataObj.saveData_secondary =null;
             },
             async update(number) {
                 if (this.updateDataObj.objToBeChanged != null) {

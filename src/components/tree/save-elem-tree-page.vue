@@ -94,7 +94,7 @@
                         </div>
                         <div class="col-md-8">
                             <table class="table table-hover" style="min-height: 10vh">
-                                <thead class="thead-light">
+                                <thead >
                                 <tr>
                                     <th>{{$ml.get('word.name')}}</th>
                                     <th>{{$ml.get('word.units')}}</th>

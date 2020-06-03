@@ -1,9 +1,15 @@
 <template>
-    <div class="card rounded rad" id="auto-engine-full-tree" style="width: 98vw">
-
+    <div class="card bg-white bord rounded " id="auto-engine-full-tree" style="width: 98vw ;  border-style: solid;border-top-color: lightslategrey;border-width: 15px 0px 0px 0px;">
+        <div class="search-logo" id="treelogo">
+            <div class="head-text deepshd ">
+                <h4
+                    style="width: 60%; margin-left: 20%; margin-right: 20%;text-align: center">{{ELEMENTS.name}}</h4>
+            </div>
+        </div>
+        <br/>
         <br/>
         <h4 class="deepshd" style="text-align: center">{{ELEMENTS.name}}</h4>
-        <div class="panelBody">
+        <div class="panelBody" style="width: 100%">
             <navig>
                 <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                     <a v-for="current in ELEMENTS.elementsCh" v-bind:key="current"
@@ -11,19 +17,19 @@
                        :id="'nav-add-tab'+current.name" data-toggle="tab"
                        :href="'#nav-add'+current.name"
                        role="tab" :aria-controls="'nav-add'+current.name" aria-selected="true"
-                       style="max-width: 30vw"
+                       style="max-width: 30vw; color: black"
                        v-on:click="setListParam(null)"
                     >{{current.name}}</a>
 
                 </div>
             </navig>
-            <div class="tab-content  bg-white" id="nav-tabContent">
+            <div class="tab-content rad-bottom  bg-white" id="nav-tabContent">
                 <div v-for="current in ELEMENTS.elementsCh" v-bind:key="current"
                      class="  tab-pane fade " :id="'nav-add'+current.name"
                      :aria-labelledby="'nav-add-tab'+current.name">
                     <div class="row rowCenter">
                         <div class="col-md-3">
-                            <div class="list-group">
+                            <div class="list-group" >
                                 <tree-item
                                         v-for="treeItem in current.elementsCh"
                                         v-bind:key="treeItem"
@@ -45,7 +51,7 @@
                         </div>
                         <div class="col-md-8">
                             <table class="table table-hover">
-                                <thead class="thead-light-dark">
+                                <thead >
                                 <tr>
                                     <th>{{$ml.get('word.name')}}</th>
                                     <th>{{$ml.get('word.units')}}</th>
@@ -57,7 +63,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="current in LISTPARAM" v-bind:key="current">
+                                <tr  v-for="current in LISTPARAM" v-bind:key="current">
                                     <td>{{current.name}}</td>
                                     <td>{{PARAM_NAME_AND_UNITS.units.find(unit=>
                                         unit.id===current.units).data}}</td>
@@ -73,7 +79,7 @@
                                         <span v-if="current.doubleNum!==null">{{Number(current.doubleNum).toFixed(4)}}</span>
                                         <span v-else></span>
                                     </td>
-                                    <td>{{current.author}}</td>
+                                    <td>{{current.status}}</td>
                                     <td>{{current.source}}</td>
                                 </tr>
                                 </tbody>
@@ -84,6 +90,7 @@
                 </div>
             </div>
         </div>
+        <br/><br/>
         <br/>
     </div>
 </template>
@@ -138,13 +145,71 @@
 </script>
 
 <style>
+    .treeRow {
+        width: 90%;
+    }
+
+    a {
+        padding-left: 3vw;
+        padding-right: 3vw;
+        color: #272e38;
+        font-weight: bold;
+    }
+
+    a:hover{
+        background:lightgray;
+    }
+
+    #treelogo {
+        position: absolute;
+        left: 25%;
+        right: 25%;
+        width: 50%;
+        top: 0px;
+        height: 50px;
+        background: lightslategrey;
+        border-bottom-right-radius: 90px;
+        border-bottom-left-radius: 90px;
+
+    }
+
     #auto-engine-full-tree {
         align-items: center;
         max-width: 97vw;
         min-width: 97vw;
         margin-left: 1vw;
         margin-right: 1vw;
-        border: white;
+    }
+
+    #borderSide {
+        border-left: 5px solid #272e38;
+        position: absolute;
+        bottom: 50%;
+        top: 0;
+    }
+
+    .rad-bottom {
+        border-bottom-left-radius: 30px;
+        border-bottom-right-radius: 30px;
+    }
+
+    .bord {
+        border-style: solid;
+        border-top-color: lightslategrey;
+        border-width: 15px 0px 0px 0px;
+
+    }
+
+    #borderSide:after {
+        background-color: #272e38;
+        bottom: 0;
+        content: '';
+        display: block;
+        height: 1px;
+        left: 50%;
+        position: absolute;
+        transform: translate(-50%, 0);
+        width: 50px;
     }
     .vl {
         border-left: 2px solid lightgray;
@@ -154,6 +219,5 @@
         margin-left: -3px;
         top: 0;
     }
-
 
 </style>

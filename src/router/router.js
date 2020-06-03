@@ -5,6 +5,8 @@ import searchEng from '../components/SearchPage/searchEng'
 import login from '../components/login'
 import registration from '../components/Register'
 import testSave from '../components/AddDadaPage/vue-save-update-page'
+import treeEdit from '../components/tree-page'
+
 
 Vue.use(Router)
 
@@ -27,8 +29,8 @@ let router = new Router({
             component: registration
         },
         {
-            path: '/test',
-            component: testSave
+            path: '/edittree',
+            component: treeEdit
         }
     ]
 })

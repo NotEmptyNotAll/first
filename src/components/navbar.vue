@@ -14,6 +14,10 @@
                             <a class="nav-link fontbranco" href="/#/addData"
                                v-if="currentUser">{{$ml.get('word.updateData')}}</a>
                         </li>
+                        <li class="nav-elem nav-hov" style="margin-right: 5px;">
+                            <a class="nav-link fontbranco" href="/#/edittree"
+                               v-if="currentUser">{{$ml.get('word.treeElem')}}</a>
+                        </li>
                         <!--<li class="nav-elem nav-hov" style="margin-right: 5px;">
                             <a class="nav-link fontbranco" href="/#/elemTree"
                                v-if="currentUser">{{$ml.get('word.treeElem')}}</a>

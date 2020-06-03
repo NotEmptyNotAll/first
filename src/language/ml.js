@@ -68,7 +68,8 @@ export default new MLCreate({
                 mark: 'mark',
                 newBlockText:'add new block',
                 status:'status',
-                shortName:'short name'
+                shortName:'short name',
+                cancel:'cancel'
             },
             msg: {
                 passwordErr: 'password is required!',
@@ -145,7 +146,9 @@ export default new MLCreate({
                 mark: "Обозначение",
                 newBlockText:'додати новий блок',
                 status:'статус',
-                shortName:'короткое назание'
+                shortName:'короткое назание',
+                cancel:'Отмена'
+
 
             },
             msg: {
@@ -223,7 +226,8 @@ export default new MLCreate({
                 mark:'Позначення',
                 newBlockText:'додати новий блок',
                 status:'статус',
-                shortName:'коротка назва'
+                shortName:'коротка назва',
+                cancel:'скасувати'
 
             },
             msg: {
