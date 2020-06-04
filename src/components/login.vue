@@ -109,8 +109,8 @@
 
 <style>
     .login-page {
-        max-width: 10vw;
-        min-width: 10vw;
+        max-width: 18vw;
+        min-width: 18vw;
         min-height: 51vh;
         position: relative;
         top: 15vh;
