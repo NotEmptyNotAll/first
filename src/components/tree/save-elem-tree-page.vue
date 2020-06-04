@@ -108,10 +108,25 @@
                                 </thead>
                                 <tbody>
                                 <tr v-for="current in LISTPARAM" v-bind:key="current">
-                                    <td>{{current.name}}</td>
+
+                                    <td v-if="!current.editRow">
+                                        {{PARAM_NAME.find(unit=>
+                                        unit.id===current.name).data}}
+                                    </td>
+                                    <td v-if="current.editRow">
+                                        <VueDatalist
+                                                :items="PARAM_NAME.filter(elem=>{return !elem.tree_node})"
+                                                :update-obj="current"
+                                                index="name"
+                                                :hide-title="true"
+                                                :holder-num=0
+
+                                        />
+                                    </td>
                                     <td v-if="!current.editRow">{{PARAM_NAME_AND_UNITS.units.find(unit=>
                                         unit.id===current.units).data}}
                                     </td>
+
                                     <td v-if="current.editRow">
                                         <VueDatalist
                                                 :items="PARAM_NAME_AND_UNITS.units"
@@ -143,7 +158,8 @@
                                     <td v-if="current.editRow">
                                         <input type="text" class="form-control" v-model="current.doubleNum">
                                     </td>
-                                    <td v-if="!current.editRow">{{current.status}}</td>
+                                    <td v-if="!current.editRow">{{PARAM_NAME_AND_UNITS.status.find(unit=>
+                                        unit.id===current.status).data}}</td>
                                     <td v-if="current.editRow">
                                         <input type="text" class="form-control" v-model="current.status">
                                     </td>
@@ -174,7 +190,8 @@
                                 </tr>
                                 <tr v-show="current.elemId===elemId " v-for="current in listNewParam"
                                     v-bind:key="current ">
-                                    <td v-if="!current.editRow">{{PARAM_NAME.find(unit=>
+                                    <td v-if="!current.editRow">
+                                        {{PARAM_NAME.find(unit=>
                                         unit.id===current.name).data}}
                                     </td>
                                     <td v-if="current.editRow">

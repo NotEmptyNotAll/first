@@ -50,7 +50,7 @@
 
                     </div>
                 </div>
-                <b-table class="my-table-scroll" no-border-collapse hover sticky-header="650px" :items="dataList"
+                <b-table class="my-table-scroll" no-border-collapse hover sticky-header="600px" :items="dataList"
                          @row-dblclicked="(item) => link( item)"
                          :fields="[
                 { key: 'index', label:'№' },

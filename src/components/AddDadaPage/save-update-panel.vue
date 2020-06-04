@@ -51,7 +51,7 @@
                 </div>
                 <b-table class="my-table-scroll" no-border-collapse hover
                          @row-dblclicked="(item) => link( item)"
-                         sticky-header="650px" :items="listForSearch" :fields="[
+                         sticky-header="600px" :items="listForSearch" :fields="[
                 { key: 'index', label:'№' },
                 { key: 'data', label: $ml.get('word.nameTitle'), sortable: true },
                 { key: 'status', label: $ml.get('word.status'), sortable: true }]">
@@ -284,8 +284,8 @@
                         if (this.saveDataObj.status === null) {
                             this.saveDataObj.status = 1;
                         }
-                        await this.$emit("save-data-api", this.saveDataObj);
-                        this.GET_ALL_ADDITIONAL_DATA();
+                        // eslint-disable-next-line no-unused-vars
+                       let temp= await this.$emit("save-data-api", this.saveDataObj);
                     }
                 } else {
                     this.showErr = true;

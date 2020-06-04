@@ -5,7 +5,7 @@
         />
         <div  v-if="currentUser" class="container-fluid">
             <div class="row" style="padding-top: 1vh;">
-                <div class="col-md-4 col-lg-2  navbar-container ">
+                <div class="col-md-2 col-lg-2  navbar-container ">
                     <nav class="navbar navbar-expand-md search-border shadow-lg   navbar-light rounded  " id="nav-panel">
                         <div class="collapse navbar-collapse " id="navbar" style="width: 100%;">
                             <!-- Вертикальное меню -->
@@ -72,7 +72,7 @@
                         </div>
                     </nav>
                 </div>
-                <div class="col-md-10 col-lg-10 rounded search-border content-container shadow-lg bg-white">
+                <div class="col-md-10 col-lg-10 rounded search-border content-container shadow-lg bg-white" style="height: 85vh">
                     <br/>
                     <div class="col-xs-9">
                         <!-- Tab panes -->
@@ -261,6 +261,9 @@
 </script>
 
 <style scoped>
+    .content-container{
+        height: 85vh;
+    }
     #nav-panel {
         background: white;
     }

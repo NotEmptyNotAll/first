@@ -76,6 +76,7 @@
             <save-elem-tree-page
                     :auto_id="auto_id"
                     v-if="currentUser"
+                    ref="contParam" v-show="ELEMENTS!=null"
             />
 
 

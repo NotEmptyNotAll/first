@@ -64,7 +64,8 @@
                                 </thead>
                                 <tbody>
                                 <tr  v-for="current in LISTPARAM" v-bind:key="current">
-                                    <td>{{current.name}}</td>
+                                    <td> {{PARAM_NAME.find(unit=>
+                                        unit.id===current.name).data}}</td>
                                     <td>{{PARAM_NAME_AND_UNITS.units.find(unit=>
                                         unit.id===current.units).data}}</td>
                                     <td>
@@ -79,7 +80,8 @@
                                         <span v-if="current.doubleNum!==null">{{Number(current.doubleNum).toFixed(4)}}</span>
                                         <span v-else></span>
                                     </td>
-                                    <td>{{current.status}}</td>
+                                    <td>{{PARAM_NAME_AND_UNITS.status.find(unit=>
+                                        unit.id===current.status).data}}</td>
                                     <td>{{current.source}}</td>
                                 </tr>
                                 </tbody>

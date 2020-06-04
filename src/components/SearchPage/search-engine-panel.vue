@@ -217,9 +217,16 @@
             ...mapMutations({
                 setEngData: 'SET_ENGDATA',
                 setElements: 'SET_ELEMENTS',
+                setAutoEng: 'SET_AUTO_ENGINE',
+                setTree: 'SET_LISTPARAM_ELEMENT'
 
             }),
             clear(number) {
+                this.setEngData(null)
+                this.setElements(null)
+                this.setAutoEng(null)
+                this.setTree(null)
+
                 this.searchData = {
                     paramList: [{
                         parameterNodeId: null,
