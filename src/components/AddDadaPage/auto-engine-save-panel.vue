@@ -17,9 +17,9 @@
         <div class="tab-content" id="myTabContentengine" style="border: white">
             <div class="tab-pane fade show active" :id="'h'+nameTitle" role="tabpanel"
                  aria-labelledby="home-tab">
-                <div class="row"  style="padding-top: 3vh">
-                    <div class="col-md-2" style="text-align: center; position: relative;right: 1vw ;border-style: solid;   border-color: lightslategrey;  border-width: 2px 2px 2px 0px;">
-                        <h4 > {{nameTitle}}</h4>
+                <div class="row" style="padding-top: 3vh">
+                    <div class="title-bord col-md-2">
+                        <h4> {{nameTitle}}</h4>
                     </div>
                     <div class="col-md-5"></div>
 
@@ -91,10 +91,14 @@
                      </tbody>
                  </table>-->
                 <div v-if="LOAD_ADDITIONAL_DATA" class="lds-dual-ring-black" style="margin-left:47% "></div>
-
             </div>
             <div class="tab-pane fade" :id="'p'+nameTitle" role="tabpanel"
                  aria-labelledby="profile-tab">
+                <br/>
+                <div class="title-bord col-md-2">
+                    <h4> {{nameTitle}}</h4>
+                </div>
+                <hr/>
 
                 <div class="savePageRow row ">
                     <div v-if="showErr" class="alert alert-danger" role="alert" style="text-align:center; width: 100%">
@@ -176,8 +180,8 @@
                     </div>
                 </div>
                 <hr style="position: center; width: 70%"/>
-                <div class="savePageRow row">
-                    <div class="col-md-2"></div>
+                <div class=" row" >
+                    <div class="col-md-3"></div>
                     <div class="  col-md-3">
 
                         <button type="submit" @click="cancel"
@@ -196,13 +200,56 @@
                             <span><div class="lds-dual-ring" style="position: relative; bottom: 1.2vh"></div></span>
                         </button>
                     </div>
-                    <div class="col-md-2"></div>
+                    <div class="col-md-3"></div>
                 </div>
+                <div class=" row ">
+
+                    <div class="col-md-3"></div>
+
+                    <b-alert
+                            class="col-md-6"
+                            :show="dismissCountDownErr"
+                            dismissible
+                            variant="danger"
+                            @dismissed="dismissCountDownErr=0"
+                            @dismiss-count-down="countDownChangedErr"
+                    >
+                        <p> {{$ml.get('msg.duplicateValue')}}</p>
+                        <b-progress variant="danger"
+                                    :max="dismissSecsErr"
+                                    :value="dismissCountDownErr"
+                                    height="4px"
+                        ></b-progress>
+                    </b-alert>
+
+                    <b-alert
+                            class="col-md-6"
+                            :show="dismissCountDownSucc"
+                            dismissible
+                            variant="success"
+                            @dismissed="dismissCountDownSucc=0"
+                            @dismiss-count-down="countDownChangedSucc"
+                    >
+                        <p> {{$ml.get('word.dataAddSuccess')}}</p>
+                        <b-progress variant="success"
+                                    :max="dismissSecsSucc"
+                                    :value="dismissCountDownSucc"
+                                    height="4px"
+                        ></b-progress>
+                    </b-alert>
+                    <div class="col-md-3"></div>
+
+                </div>
+
             </div>
             <div class="tab-pane fade" :id="'c'+nameTitle" role="tabpanel"
                  aria-labelledby="contact-tab">
                 <br/>
-                <br/>
+
+                <div class="title-bord col-md-2">
+                    <h4> {{nameTitle}}</h4>
+                </div>
+                <hr/>
                 <div class="row" style="position: relative; left: 1vw">
                     <search-engine-panel class="col-md-12"
                                          @submit-function="GET_AUTOENG_BY_PARAM_UPDATE"
@@ -314,8 +361,28 @@
                             class="btn  btn-block btn-dark" disabled>
                     </button>
                 </div>
+                <div class=" row ">
 
+                    <div class="col-md-3"></div>
 
+                    <b-alert
+                            class="col-md-6"
+                            :show="dismissCountDownSuccUpd"
+                            dismissible
+                            variant="success"
+                            @dismissed="dismissCountDownSuccUpd=0"
+                            @dismiss-count-down="countDownChangedSuccUpd"
+                    >
+                        <p> {{$ml.get('word.dataAddSuccess')}}</p>
+                        <b-progress variant="success"
+                                    :max="dismissSecsSuccUpd"
+                                    :value="dismissCountDownSuccUpd"
+                                    height="4px"
+                        ></b-progress>
+                    </b-alert>
+                    <div class="col-md-3"></div>
+
+                </div>
             </div>
         </div>
     </div>
@@ -344,6 +411,15 @@
                 releaseYearFrom: null,
                 releaseYearBy: null,
             },
+            dismissSecsErr: 7,
+            dismissCountDownErr: 0,
+            dismissSecsSucc: 7,
+            dismissCountDownSucc: 0,
+            dismissSecsErrUpd: 7,
+            dismissCountDownErrUpd: 0,
+            dismissSecsSuccUpd: 7,
+            dismissCountDownSuccUpd: 0,
+            showDismissibleAlert: false,
             updateDataObj: {
                 engineFk: null,
                 autoManufactureFk: null,
@@ -361,7 +437,7 @@
                 elemId: null,
                 editRow: null,
             },
-            cleanInputList:false,
+            cleanInputList: false,
             tempObj: null
         }),
         props: {
@@ -394,14 +470,14 @@
                 this.dataList = tempList;
             },
             async clear() {
-                this.cleanInputList=!this.cleanInputList;
+                this.cleanInputList = !this.cleanInputList;
                 this.search = '';
                 this.filterResults();
             },
-            cancel(){
-                this.cleanInputList=!this.cleanInputList;
-                this.saveDataObj.releaseYearFrom='';
-                this.saveDataObj.releaseYearBy='';
+            cancel() {
+                this.cleanInputList = !this.cleanInputList;
+                this.saveDataObj.releaseYearFrom = '';
+                this.saveDataObj.releaseYearBy = '';
             },
             onChange() {
                 this.filterResults();
@@ -432,10 +508,15 @@
                 if (dupAutoM === undefined && dupAutoModel === undefined && dupEngine === undefined) {
                     this.showErr = false
                     await this.SAVE_DATA_AUTOMOBILE_ENGINE(this.saveDataObj);
+                    let promise = new Promise((resolve) => {
+                        setTimeout(() => resolve("готово!"), 1500)
+                    });
+                    this.showAlertSucc()
+                    await promise
                     this.GET_ALL_ADDITIONAL_DATA();
 
                 } else {
-                    this.showErr = true;
+                    this.showAlertErr()
                 }
                 //  this.SAVE_DATA_ENGINE_NUMBER(this.saveDataEngParam);
                 console.log(number)
@@ -443,15 +524,15 @@
             async update(number) {
 
                 await this.UPDATE_AUTO_ENGINE(this.updateListParam);
+                this.showAlertSuccUpd();
                 this.GET_ALL_ADDITIONAL_DATA();
                 this.updateListParam = [];
-
                 //  this.SAVE_DATA_ENGINE_NUMBER(this.saveDataEngParam);
                 console.log(number)
             },
             async link(record) {
                 this.$refs.updateTab.click();
-                this.GET_AUTOENG_BY_ID({id:record.id});
+                this.GET_AUTOENG_BY_ID({id: record.id});
                 console.log(1)
             },
             updateOldParam(current) {
@@ -493,6 +574,14 @@
         width: 0px;
     }
 
+    .title-bord {
+        text-align: center;
+        position: relative;
+        right: 1vw;
+        border-style: solid;
+        border-color: lightgray;
+        border-width: 0px 2px 0px 0px;
+    }
 
     a {
         padding-left: 3vw;

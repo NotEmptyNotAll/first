@@ -1,5 +1,5 @@
 <template>
-    <div class="card bg-white bord rounded " id="auto-engine-full-tree" style="width: 98vw ;  border-style: solid;border-top-color: lightslategrey;border-width: 15px 0px 0px 0px;">
+    <div class="bord container bg-white  rounded " id="auto-engine-full-tree"  style="   border-style: solid;border-top-color: lightslategrey; border-width: 15px 0px 0px 0px;">
         <div class="search-logo" id="treelogo">
             <div class="head-text deepshd ">
                 <h4
@@ -177,10 +177,7 @@
 
     #auto-engine-full-tree {
         align-items: center;
-        max-width: 97vw;
-        min-width: 97vw;
-        margin-left: 1vw;
-        margin-right: 1vw;
+
     }
 
     #borderSide {

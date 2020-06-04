@@ -194,7 +194,7 @@
 
 <script>
     import SaveUpdatePanel from "./save-update-panel";
-    import {mapActions, mapGetters} from "vuex";
+    import {mapActions, mapGetters, mapMutations} from "vuex";
     import TwoUpdatePanel from "./two-update-panel";
     import SaveEnginePanel from "./save-engine-panel";
     import AutoEngineSavePanel from "./auto-engine-save-panel";
@@ -217,7 +217,10 @@
             ])
         },
         methods: {
-            ...mapActions([
+            ...mapMutations({
+                setAutoModel:''
+            }),
+                    ...mapActions([
                 'GET_START_PARAM',
                 'SAVE_ENGINE_MANUFACTURE',
                 'SAVE_DATA_AUTO_MODEL',

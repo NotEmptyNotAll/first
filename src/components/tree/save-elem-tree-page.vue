@@ -1,5 +1,5 @@
 <template>
-    <div class="bord  card bg-white  rounded" id="save-elem-tree-page"
+    <div class="container  card bg-white  rounded" id="save-elem-tree-page"
          style="width: 98vw;   border-style: solid;border-top-color: lightslategrey;border-width: 15px 0px 0px 0px;">
         <br/>
         <div class="search-logo" id="treelogo">
@@ -7,7 +7,7 @@
                  <span v-if="LOAD_SAVE_ELEMENTS"><div
                          class="lds-dual-ring " style="margin-left: 47%"></div></span>
                 <h4 v-if="!LOAD_SAVE_ELEMENTS"
-                    style="width: 60%; margin-left: 20%; margin-right: 20%;text-align: center">{{ELEMENTS.name}}</h4>
+                    style="width: 60%; margin-left: 20%; margin-right: 20%;text-align: center">{{ELEMENTS_UPDATE.name}}</h4>
             </div>
         </div>
         <br/>
@@ -45,7 +45,7 @@
         <div class="panelBody" style="width: 100%">
             <navig>
                 <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                    <a v-for="current in ELEMENTS.elementsCh" v-bind:key="current"
+                    <a v-for="current in ELEMENTS_UPDATE.elementsCh" v-bind:key="current"
                        class="nav-item nav-link "
                        :id="'nav-add-tab'+current.name" data-toggle="tab"
                        :href="'#nav-add'+current.name"
@@ -57,7 +57,7 @@
                 </div>
             </navig>
             <div class="tab-content rad-bottom bg-white" id="nav-tabContent" style="">
-                <div v-for="current in ELEMENTS.elementsCh" v-bind:key="current"
+                <div v-for="current in ELEMENTS_UPDATE.elementsCh" v-bind:key="current"
                      class="  tab-pane fade " :id="'nav-add'+current.name"
                      :aria-labelledby="'nav-add-tab'+current.name">
                     <br/>
@@ -365,7 +365,7 @@
                 'PARAM_NAME_AND_UNITS',
                 'SEARCHDATA',
                 'TREE_ROOT_NAMES',
-                'ELEMENTS',
+                'ELEMENTS_UPDATE',
                 'ELEMENTS_AND_MAX_ID',
                 'LISTNEWELEM',
                 'LOAD_TREE_UPDATE',
@@ -390,7 +390,7 @@
             ])
             ,
             ...mapMutations({
-                setElemTree: 'SET_ELEMENTS',
+                setElemTree: 'SET_ELEMENTS_UPDATE',
                 setListParam: 'SET_LISTPARAM_ELEMENT',
                 setListNewElem: 'SET_LIST_NEW_PARAM',
                 setMaxId: 'SET_MAX_ID'
@@ -611,10 +611,7 @@
 
     #save-elem-tree-page {
         align-items: center;
-        max-width: 97vw;
-        min-width: 97vw;
-        margin-left: 1vw;
-        margin-right: 1vw;
+
     }
 
     #borderSide {

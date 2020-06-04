@@ -18,8 +18,8 @@
             <div class="tab-pane fade show active" :id="'h'+nameTitle" role="tabpanel"
                  aria-labelledby="home-tab">
                 <div class="row" style="padding-top: 3vh">
-                    <div class="col-md-2" style="text-align: center; position: relative;right: 1vw ;border-style: solid;   border-color: lightslategrey;  border-width: 2px 2px 2px 0px;">
-                        <h4 > {{nameTitle}}</h4>
+                    <div class="title-bord col-md-2">
+                        <h4> {{nameTitle}}</h4>
                     </div>
                     <div class="col-md-5"></div>
                     <div class="input-group col-md-5">
@@ -53,7 +53,7 @@
                          @row-dblclicked="(item) => link( item)"
                          sticky-header="600px" :items="listForSearch" :fields="[
                 { key: 'index', label:'№' },
-                { key: 'data', label: $ml.get('word.nameTitle'), sortable: true },
+                { key: 'data', label: $ml.get('word.name'), sortable: true },
                 { key: 'status', label: $ml.get('word.status'), sortable: true }]">
 
                     <template v-slot:cell(index)="data">
@@ -87,7 +87,10 @@
             <div class="tab-pane fade" :id="'p'+nameTitle" role="tabpanel"
                  aria-labelledby="profile-tab">
                 <br/>
-                <br/>
+                <div class="title-bord col-md-2">
+                    <h4> {{nameTitle}}</h4>
+                </div>
+                <hr/>
                 <div class=" row ">
                     <input-field
                             class="col-md-4"
@@ -125,17 +128,52 @@
                     </div>
                 </div>
                 <hr/>
-                <div class="savePageRow row ">
+                <div class=" row ">
 
-                    <div v-if="showErr" class="alert alert-danger col-md-12" role="alert" style="margin-left: 4%">
-                        {{$ml.get('msg.duplicateValue')}}
-                    </div>
+                    <div class="col-md-3"></div>
+
+                    <b-alert
+                            class="col-md-6"
+                            :show="dismissCountDownErr"
+                            dismissible
+                            variant="danger"
+                            @dismissed="dismissCountDownErr=0"
+                            @dismiss-count-down="countDownChangedErr"
+                    >
+                        <p> {{$ml.get('msg.duplicateValue')}}</p>
+                        <b-progress variant="danger"
+                                    :max="dismissSecsErr"
+                                    :value="dismissCountDownErr"
+                                    height="4px"
+                        ></b-progress>
+                    </b-alert>
+
+                    <b-alert
+                            class="col-md-6"
+                            :show="dismissCountDownSucc"
+                            dismissible
+                            variant="success"
+                            @dismissed="dismissCountDownSucc=0"
+                            @dismiss-count-down="countDownChangedSucc"
+                    >
+                        <p> {{$ml.get('word.dataAddSuccess')}}</p>
+                        <b-progress variant="success"
+                                    :max="dismissSecsSucc"
+                                    :value="dismissCountDownSucc"
+                                    height="4px"
+                        ></b-progress>
+                    </b-alert>
+                    <div class="col-md-3"></div>
+
                 </div>
             </div>
             <div class="tab-pane fade" :id="'c'+nameTitle" role="tabpanel"
                  aria-labelledby="contact-tab">
                 <br/>
-                <br/>
+                <div class="title-bord col-md-2">
+                    <h4> {{nameTitle}}</h4>
+                </div>
+                <hr/>
                 <div class=" row ">
                     <div
                             class="col-md-1"
@@ -198,6 +236,28 @@
                             class="col-md-3"
                     ></div>
                 </div>
+                <div class=" row ">
+
+                    <div class="col-md-3"></div>
+
+                    <b-alert
+                            class="col-md-6"
+                            :show="dismissCountDownSuccUpd"
+                            dismissible
+                            variant="success"
+                            @dismissed="dismissCountDownSuccUpd=0"
+                            @dismiss-count-down="countDownChangedSuccUpd"
+                    >
+                        <p> {{$ml.get('word.dataAddSuccess')}}</p>
+                        <b-progress variant="success"
+                                    :max="dismissSecsSuccUpd"
+                                    :value="dismissCountDownSuccUpd"
+                                    height="4px"
+                        ></b-progress>
+                    </b-alert>
+                    <div class="col-md-3"></div>
+
+                </div>
             </div>
         </div>
     </div>
@@ -224,12 +284,21 @@
                 updateData: null,
                 status: 1
             },
-            tempUpdateObj:{
+            dismissSecsErr: 7,
+            dismissCountDownErr: 0,
+            dismissSecsSucc: 7,
+            dismissCountDownSucc: 0,
+            dismissSecsErrUpd: 7,
+            dismissCountDownErrUpd: 0,
+            dismissSecsSuccUpd: 7,
+            dismissCountDownSuccUpd: 0,
+            showDismissibleAlert: false,
+            tempUpdateObj: {
                 objToBeChanged: 0,
                 updateData: null,
                 status: 1
             },
-            cleanInputList:false,
+            cleanInputList: false,
             search: ''
         }),
         computed: {
@@ -247,6 +316,24 @@
             ...mapActions([
                 'GET_ALL_ADDITIONAL_DATA'
             ]),
+            countDownChangedErr(dismissCountDown) {
+                this.dismissCountDownErr = dismissCountDown
+            },
+            countDownChangedSucc(dismissCountDown) {
+                this.dismissCountDownSucc = dismissCountDown
+            },
+            countDownChangedSuccUpd(dismissCountDown) {
+                this.dismissCountDownSuccUpd = dismissCountDown
+            },
+            showAlertErr() {
+                this.dismissCountDownErr = this.dismissSecsErr
+            },
+            showAlertSucc() {
+                this.dismissCountDownSucc = this.dismissSecsSucc
+            },
+            showAlertSuccUpd() {
+                this.dismissCountDownSuccUpd = this.dismissSecsSuccUpd
+            },
             async clear() {
                 this.search = '';
                 this.filterResults();
@@ -262,20 +349,21 @@
             setDataList(tempList) {
                 this.dataList = tempList;
             },
-            cancel(){
-                this.cleanInputList=!this.cleanInputList;
-                this.updateDataObj.objToBeChanged =1;
+            cancel() {
+                this.cleanInputList = !this.cleanInputList;
+                this.updateDataObj.objToBeChanged = 1;
                 this.updateDataObj.status = 1;
-                this.updateDataObj.updateData =null;
+                this.updateDataObj.updateData = null;
 
                 console.log(1)
             },
-            cancelSave(){
-                this.cleanInputList=!this.cleanInputList;
-                this.saveDataObj.saveData =null;
+            cancelSave() {
+                this.cleanInputList = !this.cleanInputList;
+                this.saveDataObj.saveData = null;
                 this.saveDataObj.status = 1;
             },
             async save(number) {
+
                 let temp = this.dataList.find(item =>
                     item.data === this.saveDataObj.saveData
                 );
@@ -284,11 +372,17 @@
                         if (this.saveDataObj.status === null) {
                             this.saveDataObj.status = 1;
                         }
-                        // eslint-disable-next-line no-unused-vars
-                       let temp= await this.$emit("save-data-api", this.saveDataObj);
+                        this.$emit("save-data-api", this.saveDataObj);
+                        let promise = new Promise((resolve) => {
+                            setTimeout(() => resolve("готово!"), 1500)
+                        });
+                        this.showAlertSucc()
+                        await promise
+                        this.GET_ALL_ADDITIONAL_DATA();
                     }
+
                 } else {
-                    this.showErr = true;
+                    this.showAlertErr()
                 }
                 console.log(number)
             },
@@ -306,8 +400,9 @@
                         this.updateDataObj.status = 1;
                     }
                     await this.$emit("update-data-api", this.updateDataObj);
+
+                    this.showAlertSuccUpd();
                     this.GET_ALL_ADDITIONAL_DATA();
-                    console.log(number)
                 }
                 console.log(number)
             }
@@ -347,4 +442,12 @@
         min-width: 75vw;
     }
 
+    .title-bord {
+        text-align: center;
+        position: relative;
+        right: 1vw;
+        border-style: solid;
+        border-color: lightgray;
+        border-width: 0px 2px 0px 0px;
+    }
 </style>

@@ -10,7 +10,7 @@
                 <br/>
 
                 <search-engine-panel
-                        @submit-function="GET_AUTOENG_BY_PARAM"
+                        @submit-function="GET_AUTOENG"
                 />
             </div>
             <!--engine data table. By clicking on row m we open the engine tree, where we can find out its parameters-->
@@ -183,6 +183,7 @@
                 'GET_PARAM_NAME',
                 'GET_ELEMENTS',
                 'GET_AUTO_BY_ENG',
+                'GET_AUTOENG',
                 'GET_AUTOENG_BY_PARAM',
                 'GET_ALL_PARAM_NAME'
             ]),

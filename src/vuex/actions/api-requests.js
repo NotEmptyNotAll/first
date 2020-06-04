@@ -1,6 +1,6 @@
 import axios from "axios";
-let urlApi = 'https://newenginedb.herokuapp.com/';
-//let urlApi = 'http://localhost:5050/';
+//let urlApi = 'https://newenginedb.herokuapp.com/';
+let urlApi = 'http://localhost:5050/';
 
 export default {
     GET_START_PARAM({commit}) {
@@ -38,6 +38,24 @@ export default {
             data: searchData,
             responseType: 'json'
         }).then(engData => {
+            commit('SET_ENGDATA_TREE', engData.data)
+            commit('SET_SHOW_LOAD', false);
+            return engData;
+        })
+            .catch((error) => {
+                console.log(error);
+                commit('SET_SHOW_LOAD', false);
+                return error
+            })
+    },
+    async GET_AUTOENG({commit}, searchData) {
+        commit('SET_SHOW_LOAD', true);
+        return await axios({
+            method: 'POST',
+            url: urlApi + 'getAutoEngine',
+            data: searchData,
+            responseType: 'json'
+        }).then(engData => {
             commit('SET_ENGDATA', engData.data)
             commit('SET_SHOW_LOAD', false);
             return engData;
@@ -48,6 +66,7 @@ export default {
                 return error
             })
     },
+
 
     async GET_AUTOENG_BY_ID({commit}, searchData) {
         commit('SET_SHOW_LOAD', true);
@@ -159,6 +178,24 @@ export default {
             responseType: 'json'
         }).then(resp => {
             commit('SET_ELEMENTS', resp.data)
+            commit('SET_ELEMENTS_LOAD', false)
+            return resp;
+        })
+            .catch((error) => {
+                commit('SET_ELEMENTS_LOAD', false)
+                console.log(error);
+                return error
+            })
+    },
+    async GET_ELEMENTS_UPDATE({commit}, number) {
+        commit('SET_ELEMENTS_LOAD', true)
+        return await axios({
+            method: 'POST',
+            url: urlApi + 'getElements',
+            data: {id: number},
+            responseType: 'json'
+        }).then(resp => {
+            commit('SET_ELEMENTS_UPDATE', resp.data)
             commit('SET_ELEMENTS_LOAD', false)
             return resp;
         })

@@ -2,6 +2,12 @@ export default {
     SET_ENGDATA: (state, engData) => {
         state.engData = engData;
     },
+    SET_ENGDATA_TREE: (state, engData) => {
+        state.engdataTree = engData;
+    },
+    SET_ELEMENTS_UPDATE(state, engData) {
+         state.elementsUpdate=engData;
+    },
     SET_STARTPARAM: (state, startParam) => {
         state.startParam = startParam;
     },

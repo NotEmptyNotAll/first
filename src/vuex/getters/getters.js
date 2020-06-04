@@ -2,6 +2,9 @@ export default {
     ENGDATA(state) {
         return state.engData;
     },
+    ENGDATA_TREE(state) {
+        return state.engdataTree;
+    },
     STARTPARAM(state) {
         return state.startParam;
     },
@@ -19,6 +22,9 @@ export default {
     },
     ELEMENTS(state) {
         return state.elements;
+    },
+    ELEMENTS_UPDATE(state) {
+        return state.elementsUpdate;
     },
     TREE_ROOT_NAMES(state) {
         return state.treeRootNames;

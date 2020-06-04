@@ -34,7 +34,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="current in ENGDATA" v-bind:key="current" data-toggle="collapse" href="#collapse"
+                    <tr v-for="current in ENGDATA_TREE" v-bind:key="current" data-toggle="collapse" href="#collapse"
                         role="button" aria-expanded="false" :class="{trActive: current.active}" aria-controls="collapse"
                         v-on:click="getElements(current)">
                         <td>{{current.engineType}}</td>
@@ -76,7 +76,7 @@
             <save-elem-tree-page
                     :auto_id="auto_id"
                     v-if="currentUser"
-                    ref="contParam" v-show="ELEMENTS!=null"
+                    ref="contParam" v-show="ELEMENTS_UPDATE!=null"
             />
 
 
@@ -172,7 +172,10 @@
                 'LOADPARAM',
                 'ELEMENTS',
                 'PARAM_NAME',
-                'ELEMENTS_LOAD'
+                'ELEMENTS_LOAD',
+                'ENGDATA_TREE',
+                'ELEMENTS_UPDATE'
+
 
             ])
         },
@@ -180,7 +183,7 @@
             ...mapActions([
                 'GET_START_PARAM',
                 'GET_PARAM_NAME',
-                'GET_ELEMENTS',
+                'GET_ELEMENTS_UPDATE',
                 'GET_AUTO_BY_ENG',
                 'GET_AUTOENG_BY_PARAM',
                 'GET_ALL_PARAM_NAME'
@@ -253,7 +256,7 @@
                 this.listParam = [];
                 this.nowPressed.linkOnButt.isPressed = false;
                 this.auto_id = current.id;
-                this.GET_ELEMENTS(current.id);
+                this.GET_ELEMENTS_UPDATE(current.id);
                 document.getElementById('contParam').style.display = 'block'
                 console.log(current.id)
             }

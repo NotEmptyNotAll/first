@@ -69,7 +69,8 @@ export default new MLCreate({
                 newBlockText:'add new block',
                 status:'status',
                 shortName:'short name',
-                cancel:'cancel'
+                cancel:'cancel',
+                dataAddSuccess:'data added successfully'
             },
             msg: {
                 passwordErr: 'password is required!',
@@ -147,7 +148,9 @@ export default new MLCreate({
                 newBlockText:'додати новий блок',
                 status:'статус',
                 shortName:'короткое назание',
-                cancel:'Отмена'
+                cancel:'Отмена',
+                dataAddSuccess:'данные успешно добавлены'
+
 
 
             },
@@ -227,7 +230,8 @@ export default new MLCreate({
                 newBlockText:'додати новий блок',
                 status:'статус',
                 shortName:'коротка назва',
-                cancel:'скасувати'
+                cancel:'скасувати',
+                dataAddSuccess:'дані успішно додані'
 
             },
             msg: {

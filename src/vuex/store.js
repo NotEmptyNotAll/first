@@ -15,6 +15,7 @@ let store = new Vuex.Store({
         auth
     },
     state: {
+        engdataTree:[],
         elementsLoad:false,
         paramName:[],
         showEditParam:false,
@@ -32,6 +33,7 @@ let store = new Vuex.Store({
         elementsAndMaxId: null,
         paramNameAndUnits: [],
         elements: null,
+        elementsUpdate: null,
         treeRootNames: [],
         loadParam: false,
         allAdditionalData: [],
