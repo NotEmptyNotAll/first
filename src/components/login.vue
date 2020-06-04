@@ -1,6 +1,6 @@
 <template>
     <div class="col-md-12">
-        <div class=" container  rad login-page login-border " style="width: 100%">
+        <div class=" container  rad login-page login-border " style="width: 18vw">
             <div class="login-logo" style="display: flex;align-items: center">
                 <div class="head-text deepshd ">
                     <h2  v-show="!loading">&#63;</h2>
