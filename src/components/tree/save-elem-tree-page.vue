@@ -370,7 +370,7 @@
                 'LISTNEWELEM',
                 'LOAD_TREE_UPDATE',
                 'LOAD_SAVE_ELEMENTS',
-                'PARAM_NAME'
+                'PARAM_NAME',
 
             ])
         },
@@ -477,12 +477,12 @@
                 console.log(1);
             },
             saveElem(number) {
-                this.saveElemData.parentId = this.ELEMENTS.id;
-                this.saveElemData.elemId = this.ELEMENTS.maxId;
+                this.saveElemData.parentId = this.ELEMENTS_UPDATE.id;
+                this.saveElemData.elemId = this.ELEMENTS_UPDATE.maxId;
                 this.listNewElem = this.LISTNEWELEM;
                 this.listNewElem.push(this.saveElemData);
                 this.setListNewElem(this.listNewElem);
-                this.setMaxId(this.ELEMENTS.maxId + 1);
+                this.setMaxId(this.ELEMENTS_UPDATE.maxId + 1);
                 console.log(number)
             },
             addNewParam(number) {
@@ -492,7 +492,7 @@
                     elemId: this.elemId,
                     auto_id: this.auto_id,
                     name: null,
-                    nameElemId: this.ELEMENTS.maxId + 1,
+                    nameElemId: this.ELEMENTS_UPDATE.maxId + 1,
                     units: null,
                     doubleMin: null,
                     doubleMax: null,
@@ -502,14 +502,14 @@
                     status: null,
                     editRow: true
                 });
-                this.setMaxId(this.ELEMENTS.maxId + 1);
+                this.setMaxId(this.ELEMENTS_UPDATE.maxId + 1);
                 console.log(number)
             },
 
             async addNewBlock(number) {
-                let elmTreeTemp = this.ELEMENTS;
+                let elmTreeTemp = this.ELEMENTS_UPDATE;
                 elmTreeTemp.elementsCh.push({
-                        id: this.ELEMENTS.maxId,
+                        id: this.ELEMENTS_UPDATE.maxId,
                         elementsCh: [{
                             id: 0,
                             elementsCh: [],
@@ -519,7 +519,7 @@
 
                         }],
                         name: this.PARAM_NAME_AND_UNITS.paramName.find(param =>
-                            param.id === this.newBlock.data).data,
+                            param.id === this.newBlock.data).name,
                         paramIsNotEmpty: true,
                         parametersIsExistInChilda: true
                     }
@@ -527,12 +527,12 @@
                 this.listNewElem = this.LISTNEWELEM;
                 this.listNewElem.push({
                     parentId: 0,
-                    elemId: this.ELEMENTS.maxId,
+                    elemId: this.ELEMENTS_UPDATE.maxId,
                     paramNameFk: this.newBlock.data
                 });
                 this.setElemTree(elmTreeTemp);
                 this.setListNewElem(this.listNewElem);
-                this.setMaxId(this.ELEMENTS.maxId + 1);
+                this.setMaxId(this.ELEMENTS_UPDATE.maxId + 1);
                 console.log(number)
             },
             getParamtrs(nav, number, link) {
