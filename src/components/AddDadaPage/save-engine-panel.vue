@@ -783,7 +783,6 @@
                 this.showAlertSuccUpd()
 
                     let temp=this.mainDataList.find(item=>item.id===this.updateDataObj.objToBeChanged);
-                    alert(temp.flapNumber)
                     temp.data = this.updateDataObj.engineType
 
 
