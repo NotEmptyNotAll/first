@@ -17,9 +17,9 @@
         <div class="tab-content" id="myTabContentengine" style="border: white">
             <div class="tab-pane fade show active" :id="'h'+nameTitle" role="tabpanel"
                  aria-labelledby="home-tab">
-                <div class="row"  style="padding-top: 3vh">
-                    <div class="title-bord col-md-2" >
-                        <h4 > {{nameTitle}}</h4>
+                <div class="row" style="padding-top: 3vh">
+                    <div class="title-bord col-md-2">
+                        <h4> {{nameTitle}}</h4>
                     </div>
                     <div class="col-md-5"></div>
                     <div class="input-group col-md-5">
@@ -123,8 +123,8 @@
             <div class="tab-pane fade" :id="'p'+nameTitle" role="tabpanel"
                  aria-labelledby="profile-tab">
                 <br/>
-                <div class="title-bord col-md-2" >
-                    <h4 > {{nameTitle}}</h4>
+                <div class="title-bord col-md-2">
+                    <h4> {{nameTitle}}</h4>
                 </div>
                 <hr/>
                 <div class="savePageRow  row ">
@@ -324,8 +324,8 @@
                  aria-labelledby="contact-tab">
 
                 <br/>
-                <div class="title-bord col-md-2" >
-                    <h4 > {{nameTitle}}</h4>
+                <div class="title-bord col-md-2">
+                    <h4> {{nameTitle}}</h4>
                 </div>
                 <hr/>
                 <div class=" row">
@@ -572,7 +572,7 @@
                 horsepower: null,
                 status: null
             },
-            mainDataList:null,
+            mainDataList: null,
             updateDataObj: {
                 objToBeChanged: null,
                 engineType: null,
@@ -602,7 +602,7 @@
             dismissSecsSuccUpd: 2,
             dismissCountDownSuccUpd: 0,
             showDismissibleAlert: false,
-            cleanInputList:false
+            cleanInputList: false
         }),
         props: {
             nameTitle: String,
@@ -655,7 +655,7 @@
                 this.filterResults();
             }, filterResults() {
                 // first uncapitalize all the things
-                this.dataList = this.mainDataList.filter((item) => {
+                this.dataList = this.ADDITIONAL_DATA.engine.filter((item) => {
                     return ((item.cylindersPlacement.toLowerCase().indexOf(this.search.toLowerCase()) > -1) ||
                         (item.data.toLowerCase().indexOf(this.search.toLowerCase()) > -1) ||
                         (item.powerKwt.toLowerCase().indexOf(this.search.toLowerCase()) > -1) ||
@@ -666,26 +666,26 @@
             setDataList(tempList) {
                 this.dataList = tempList;
             },
-            cancelsave(){
-                this.cleanInputList=!this.cleanInputList;
+            cancelsave() {
+                this.cleanInputList = !this.cleanInputList;
                 this.saveDataObj.engineType = null
                 this.saveDataObj.engineManufacturerFk = null
                 this.saveDataObj.cylindersPlacementFk = null
                 this.saveDataObj.fuelTypeFk = null
                 this.saveDataObj.superchargedTypeFk = null
                 this.saveDataObj.cylindersNumber = null
-                this.saveDataObj.flapNumber =null
+                this.saveDataObj.flapNumber = null
                 this.saveDataObj.pistonDiameter = null
                 this.saveDataObj.pistonStroke = null
                 this.saveDataObj.engineCapacity = null
-                this.saveDataObj.powerKwt =null
+                this.saveDataObj.powerKwt = null
                 this.saveDataObj.degreeCompression = null
                 this.saveDataObj.releaseYearFrom = null
                 this.saveDataObj.releaseYearBy = null
                 this.saveDataObj.horsepower = null
-           },
-            cancel(){
-                this.cleanInputList=!this.cleanInputList;
+            },
+            cancel() {
+                this.cleanInputList = !this.cleanInputList;
                 this.updateDataObj.objToBeChanged = this.tempData.id
                 this.updateDataObj.engineType = this.tempData.engineType
                 this.updateDataObj.engineManufacturerFk = this.tempData.engineManufacturerFk
@@ -779,26 +779,25 @@
                 if (this.updateDataObj.status === null) {
                     this.updateDataObj.status = this.tempData.status;
                 }
-                 this.$emit("update-data-api", this.updateDataObj)
-                this.showAlertSuccUpd()
 
-                    let temp=this.mainDataList.find(item=>item.id===this.updateDataObj.objToBeChanged);
-                    temp.data = this.updateDataObj.engineType
+                this.dataList = this.ADDITIONAL_DATA.engine;
+                let temp =  this.dataList.find(item => item.id === this.updateDataObj.objToBeChanged);
+                temp.data = this.updateDataObj.engineType
 
 
-                temp.engineManufacturer =  this.updateDataObj.engineManufacturerFk!==0?this.ADDITIONAL_DATA.engineManufacture.find(item=>item.id===this.updateDataObj.engineManufacturerFk).data:"не задано";
+                temp.engineManufacturer = this.updateDataObj.engineManufacturerFk !== 0 ? this.ADDITIONAL_DATA.engineManufacture.find(item => item.id === this.updateDataObj.engineManufacturerFk).data : "не задано";
 
-                temp.cylindersPlacement =this.updateDataObj.cylindersPlacementFk!==0? this.ADDITIONAL_DATA.cylinders.find(item=>item.id===this.updateDataObj.cylindersPlacementFk).data:"не задано";
+                temp.cylindersPlacement = this.updateDataObj.cylindersPlacementFk !== 0 ? this.ADDITIONAL_DATA.cylinders.find(item => item.id === this.updateDataObj.cylindersPlacementFk).data : "не задано";
 
-                temp.fuelType = this.updateDataObj.fuelTypeFk!==0?this.ADDITIONAL_DATA.fuelType.find(item=>item.id===this.updateDataObj.fuelTypeFk).data:"не задано";
+                temp.fuelType = this.updateDataObj.fuelTypeFk !== 0 ? this.ADDITIONAL_DATA.fuelType.find(item => item.id === this.updateDataObj.fuelTypeFk).data : "не задано";
 
-                temp.superchargedType = this.updateDataObj.fuelTypeFk!==0?this.ADDITIONAL_DATA.superchargeType.find(item=>item.id===this.updateDataObj.superchargedTypeFk).data:"не задано";
+                temp.superchargedType = this.updateDataObj.fuelTypeFk !== 0 ? this.ADDITIONAL_DATA.superchargeType.find(item => item.id === this.updateDataObj.superchargedTypeFk).data : "не задано";
 
                 temp.cylindersNumber = this.ENGINE.cylindersNumber
 
-                temp.flapNumber =this.updateDataObj.flapNumber
+                temp.flapNumber = this.updateDataObj.flapNumber
 
-                temp.pistonDiameter =this.updateDataObj.pistonDiameter
+                temp.pistonDiameter = this.updateDataObj.pistonDiameter
 
                 temp.pistonStroke = this.updateDataObj.pistonStroke
 
@@ -808,15 +807,16 @@
                 temp.degreeCompression = this.updateDataObj.degreeCompression
                 temp.releaseYearFrom = this.updateDataObj.releaseYearFrom
                 temp.releaseYearBy = this.updateDataObj.releaseYearBy
-                    temp.horsepower = this.updateDataObj.horsepower
-                    this.dataList=this.mainDataList;
+                temp.horsepower = this.updateDataObj.horsepower
 
+                this.$emit("update-data-api", this.updateDataObj)
+                this.showAlertSuccUpd()
                 console.log(number)
             }
         },
         watch: {},
         mounted() {
-            this.mainDataList=this.dataList;
+          //  this.mainDataList = this.dataList;
             this.GET_ALL_PARAM_NAME();
         }
     }
@@ -833,14 +833,16 @@
         color: #272e38;
         font-weight: bold;
     }
-    .title-bord{
+
+    .title-bord {
         text-align: center;
         position: relative;
-        right: 1vw ;
+        right: 1vw;
         border-style: solid;
         border-color: lightgray;
         border-width: 0px 2px 0px 0px;
     }
+
     .savePageRow {
         max-width: 75vw;
         min-width: 75vw;
