@@ -572,7 +572,7 @@
                 horsepower: null,
                 status: null
             },
-
+            mainDataList:null,
             updateDataObj: {
                 objToBeChanged: null,
                 engineType: null,
@@ -655,7 +655,7 @@
                 this.filterResults();
             }, filterResults() {
                 // first uncapitalize all the things
-                this.dataList = this.ADDITIONAL_DATA.engine.filter((item) => {
+                this.dataList = this.mainDataList.filter((item) => {
                     return ((item.cylindersPlacement.toLowerCase().indexOf(this.search.toLowerCase()) > -1) ||
                         (item.data.toLowerCase().indexOf(this.search.toLowerCase()) > -1) ||
                         (item.powerKwt.toLowerCase().indexOf(this.search.toLowerCase()) > -1) ||
@@ -779,16 +779,45 @@
                 if (this.updateDataObj.status === null) {
                     this.updateDataObj.status = this.tempData.status;
                 }
-                await this.$emit("update-data-api", this.updateDataObj)
+                 this.$emit("update-data-api", this.updateDataObj)
                 this.showAlertSuccUpd()
 
-                this.showAlertSuccUpd();
-                this.GET_ALL_ADDITIONAL_DATA();
+                    let temp=this.mainDataList.find(item=>item.id===this.updateDataObj.objToBeChanged);
+                    alert(temp.flapNumber)
+                    temp.data = this.updateDataObj.engineType
+
+
+                temp.engineManufacturer =  this.updateDataObj.engineManufacturerFk!==0?this.ADDITIONAL_DATA.engineManufacture.find(item=>item.id===this.updateDataObj.engineManufacturerFk).data:"не задано";
+
+                temp.cylindersPlacement =this.updateDataObj.cylindersPlacementFk!==0? this.ADDITIONAL_DATA.cylinders.find(item=>item.id===this.updateDataObj.cylindersPlacementFk).data:"не задано";
+
+                temp.fuelType = this.updateDataObj.fuelTypeFk!==0?this.ADDITIONAL_DATA.fuelType.find(item=>item.id===this.updateDataObj.fuelTypeFk).data:"не задано";
+
+                temp.superchargedType = this.updateDataObj.fuelTypeFk!==0?this.ADDITIONAL_DATA.superchargeType.find(item=>item.id===this.updateDataObj.superchargedTypeFk).data:"не задано";
+
+                temp.cylindersNumber = this.ENGINE.cylindersNumber
+
+                temp.flapNumber =this.updateDataObj.flapNumber
+
+                temp.pistonDiameter =this.updateDataObj.pistonDiameter
+
+                temp.pistonStroke = this.updateDataObj.pistonStroke
+
+                temp.engineCapacity = this.updateDataObj.engineCapacity
+
+                temp.powerKwt = this.updateDataObj.powerKwt
+                temp.degreeCompression = this.updateDataObj.degreeCompression
+                temp.releaseYearFrom = this.updateDataObj.releaseYearFrom
+                temp.releaseYearBy = this.updateDataObj.releaseYearBy
+                    temp.horsepower = this.updateDataObj.horsepower
+                    this.dataList=this.mainDataList;
+
                 console.log(number)
             }
         },
         watch: {},
         mounted() {
+            this.mainDataList=this.dataList;
             this.GET_ALL_PARAM_NAME();
         }
     }

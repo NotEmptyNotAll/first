@@ -420,6 +420,7 @@
             dismissSecsSuccUpd: 2,
             dismissCountDownSuccUpd: 0,
             showDismissibleAlert: false,
+            mainDataList:null,
             updateDataObj: {
                 engineFk: null,
                 autoManufactureFk: null,
@@ -452,7 +453,8 @@
                 'AUTO_ENGINE_LOAD',
                 'AUTO_ENGINE',
                 'LOAD_SAVE_AUTOMOBILE_ENGINE',
-                'LOAD_ADDITIONAL_DATA'
+                'LOAD_ADDITIONAL_DATA',
+                'PARAM_NAME_AND_UNITS'
 
             ])
         },
@@ -485,7 +487,7 @@
 
             }, filterResults() {
                 // first uncapitalize all the things
-                this.dataList = this.ADDITIONAL_DATA.autoEng.filter((item) => {
+                this.dataList = this.mainDataList.filter((item) => {
                     return ((item.engineFk.toLowerCase().indexOf(this.search.toLowerCase()) > -1) ||
                         (item.autoManufactureFk.toLowerCase().indexOf(this.search.toLowerCase()) > -1) ||
                         (item.autoModelFk.toLowerCase().indexOf(this.search.toLowerCase()) > -1)
@@ -524,8 +526,18 @@
             async update(number) {
 
                 await this.UPDATE_AUTO_ENGINE(this.updateListParam);
-                this.showAlertSuccUpd();
-                this.GET_ALL_ADDITIONAL_DATA();
+                this.updateListParam.forEach(elem=>{
+                    let temp=this.mainDataList.find(item=>item.id===elem.id);
+                    alert(temp.id)
+                    temp.status=this.PARAM_NAME_AND_UNITS.status.find(item=>item.id===elem.status).data;
+                    temp.autoManufactureFk=this.ADDITIONAL_DATA.autoManufacture.find(item=>item.id===elem.autoManufactureFk).data;
+                    temp.engineFk=this.ADDITIONAL_DATA.engine.find(item=>item.id===elem.engineFk).data;
+                    temp.releaseYearFrom=elem.releaseYearFrom;
+                    temp.releaseYearBy=elem.releaseYearBy;
+                    temp.autoModelFk=this.ADDITIONAL_DATA.autoModel.find(item=>item.id===elem.autoModelFk).data;
+                });
+                this.dataList=this.mainDataList;
+
                 this.updateListParam = [];
                 //  this.SAVE_DATA_ENGINE_NUMBER(this.saveDataEngParam);
                 console.log(number)
@@ -564,6 +576,7 @@
         },
         watch: {},
         mounted() {
+            this.mainDataList=this.dataList;
             this.test()
         }
     }

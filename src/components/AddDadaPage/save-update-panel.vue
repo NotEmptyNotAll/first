@@ -402,7 +402,10 @@
                     await this.$emit("update-data-api", this.updateDataObj);
 
                     this.showAlertSuccUpd();
-                    this.GET_ALL_ADDITIONAL_DATA();
+                    let temp=this.dataList.find(item=>item.id===this.updateDataObj.objToBeChanged);
+                    temp.status=this.updateDataObj.status;
+                    temp.data=this.updateDataObj.updateData;
+                    this.listForSearch=this.dataList;
                 }
                 console.log(number)
             }

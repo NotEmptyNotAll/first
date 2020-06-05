@@ -421,11 +421,13 @@
                     if (this.updateDataObj.status === null) {
                         this.updateDataObj.status = 1;
                     }
-                    await this.$emit("update-data-api", this.updateDataObj);
-
+                    this.$emit("update-data-api", this.updateDataObj);
                     this.showAlertSuccUpd();
-                    this.GET_ALL_ADDITIONAL_DATA();
-                    this.GET_PARAM_NAME();
+                    let temp=this.dataList.find(item=>item.id===this.updateDataObj.objToBeChanged);
+                    temp.status=this.updateDataObj.status;
+                    temp.data=this.updateDataObj.saveData_primary;
+                    temp.secondary_data=this.updateDataObj.saveData_secondary;
+                    this.listForSearch=this.dataList;
                 }
                 console.log(number)
             }
