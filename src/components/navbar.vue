@@ -41,8 +41,8 @@
                                    href="#"> <img src="../assets/United-Kingdom.png"> eng</a>
                             </div>
                         </li>
-                        <li class="nav-elem   nav-hov"   :class="{activeLink:loginLink}" v-if="!currentUser" style="position: absolute; right: 2vw">
-                            <a class="nav-link fontbranco"  v-on:click="clickOnLink('loginLink')"
+                        <li class="nav-elem   nav-hov"   v-if="!currentUser" style="position: absolute; right: 2vw">
+                            <a class="nav-link fontbranco"
                                href="/#/login">{{$ml.get('word.login')}}</a>
                         </li>
                         <li class="nav-elem   nav-hov" v-if="currentUser" style="position: absolute; right: 2vw">
@@ -94,8 +94,6 @@
                     this.updateDataLink= false
                     this.treeElemLink= false
                     this.loginLink= false
-                    this.logoutLink= false
-                    this.languageLink= false
                     this[index]=true
             },
             logOut() {
