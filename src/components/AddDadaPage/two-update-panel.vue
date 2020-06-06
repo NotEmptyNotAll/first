@@ -15,7 +15,6 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="contact-tabengine" ref="updateTab" data-toggle="tab" :href="'#c'+nameTitle"
-                   v-on:click="cancelSave"
                    role="tab" aria-controls="contact" aria-selected="false">{{$ml.get('word.update')}}</a>
             </li>
 

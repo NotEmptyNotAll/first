@@ -12,7 +12,7 @@
                    role="tab" aria-controls="profile" aria-selected="false">{{$ml.get('word.save')}}</a>
             </li>
             <li class="nav-item">
-                <a v-on:click="cancelSave" class="nav-link" id="contact-tabengine" ref="updateTab" data-toggle="tab"
+                <a  class="nav-link" id="contact-tabengine" ref="updateTab" data-toggle="tab"
                    :href="'#c'+nameTitle"
                    role="tab" aria-controls="contact" aria-selected="false">{{$ml.get('word.update')}}</a>
             </li>
@@ -402,7 +402,6 @@
                         this.updateDataObj.status = 1;
                     }
                     await this.$emit("update-data-api", this.updateDataObj);
-
                     this.showAlertSuccUpd();
                     let temp = this.dataList.find(item => item.id === this.updateDataObj.objToBeChanged);
                     temp.status = this.PARAM_NAME_AND_UNITS.status.find(item => item.id === this.updateDataObj.status).data;
