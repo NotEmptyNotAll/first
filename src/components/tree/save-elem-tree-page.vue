@@ -602,7 +602,7 @@
         right: 25%;
         width: 50%;
         top: 0px;
-        height: 50px;
+        height: 40px;
         background: lightslategrey;
         border-bottom-right-radius: 90px;
         border-bottom-left-radius: 90px;

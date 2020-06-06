@@ -5,10 +5,15 @@
                 v-if="!currentUser"
         />
         <div v-if="currentUser">
-            <div class="search-border container  bg-white rounded" id="searchCont" style="text-align: center ;">
+            <div class="search-border container  bg-white rounded" id="searchCont" style="  display: flex; flex-direction: column; text-align: center ;">
                 <br/>
-                <br/>
+                <div class="search-logo" id="Searchlogo" style=" height: 40px;">
 
+                    <div class="deepshd head-text " >
+                        <h4> {{ $ml.get('word.search')}}</h4>
+                    </div>
+                </div>
+                <br/>
                 <search-engine-panel
                         @submit-function="GET_AUTOENG"
                 />
@@ -17,7 +22,7 @@
             <div class="container search-border tab  rounded bg-white rad" id="contTable" style=" display: flex;
 	flex-direction: row; height: auto">
                 <table class=" table  rounded table-hover " style="height: auto;align-items: flex-start; ">
-                    <thead >
+                    <thead>
                     <tr>
                         <th>{{$ml.get('word.engine')}}</th>
                         <th>{{$ml.get('word.autoManufacturer')}}</th>
@@ -411,6 +416,10 @@
         border-style: solid;
         border-top-color: lightslategrey;
         border-width: 15px 0px 0px 0px;
+
+    }
+
+    #Searchlogo{
 
     }
 

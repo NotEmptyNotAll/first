@@ -3,7 +3,6 @@
         <ul class="nav nav-tabs" id="myTabengine" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="home-tabengine" data-toggle="tab" :href="'#h'+nameTitle"
-                    @click="cancel"
 
                    role="tab" aria-controls="home" aria-selected="true">{{$ml.get('word.table')}}</a>
             </li>
@@ -353,6 +352,8 @@
 
                     <button v-if="loadStatus && AUTO_ENGINE.length>0" type="submit"
                             class="btn  btn-block btn-dark" disabled>
+                        <span><div class="lds-dual-ring" style="position: relative; bottom: 1.2vh"></div></span>
+
                     </button>
                 </div>
                 <div class=" row ">
@@ -476,6 +477,9 @@
 
 
             }, filterResults() {
+                if(this.mainDataList===undefined){
+                    this.mainDataList=this.ADDITIONAL_DATA.autoEng;
+                }
                 // first uncapitalize all the things
                 this.dataList = this.mainDataList.filter((item) => {
                     return ((item.engineFk.toLowerCase().indexOf(this.search.toLowerCase()) > -1) ||
@@ -518,7 +522,6 @@
                 await this.UPDATE_AUTO_ENGINE(this.updateListParam);
                 this.updateListParam.forEach(elem=>{
                     let temp=this.mainDataList.find(item=>item.id===elem.id);
-                    alert(temp.id)
                     temp.status=this.PARAM_NAME_AND_UNITS.status.find(item=>item.id===elem.status).data;
                     temp.autoManufactureFk=this.ADDITIONAL_DATA.autoManufacture.find(item=>item.id===elem.autoManufactureFk).data;
                     temp.engineFk=this.ADDITIONAL_DATA.engine.find(item=>item.id===elem.engineFk).data;
@@ -566,7 +569,7 @@
         },
         watch: {},
         mounted() {
-            this.mainDataList=this.dataList;
+            this.mainDataList=this.ADDITIONAL_DATA.autoEng
             this.test()
         }
     }

@@ -6,16 +6,16 @@
 
                 <div class=" collapse navbar-collapse " id="conteudoNavbarSuportado">
                     <ul class="navbar-nav mr-auto" style="font-family: 'Montserrat', sans-serif; ">
-                        <li class="nav-elem " :class="{activeLink:searchLink}"  style="margin-right: 10px;">
-                            <a class="nav-link fontbranco" v-on:click="clickOnLink('searchLink')" href="/#/">{{$ml.get('word.search')}}</a>
+                        <li class="nav-elem "   style="margin-right: 10px;">
+                            <a class="nav-link fontbranco" href="/#/">{{$ml.get('word.search')}}</a>
                         </li>
 
-                        <li class="nav-elem nav-hov" :class="{activeLink:updateDataLink}" style="margin-right: 5px;">
-                            <a class="nav-link fontbranco" v-on:click="clickOnLink('updateDataLink')" href="/#/addData"
+                        <li class="nav-elem nav-hov"  style="margin-right: 5px;">
+                            <a class="nav-link fontbranco"  href="/#/addData"
                                v-if="currentUser">{{$ml.get('word.updateData')}}</a>
                         </li>
-                        <li class="nav-elem nav-hov" :class="{activeLink:treeElemLink}" style="margin-right: 5px;">
-                            <a class="nav-link fontbranco"  v-on:click="clickOnLink('treeElemLink')" href="/#/edittree"
+                        <li class="nav-elem nav-hov" style="margin-right: 5px;">
+                            <a class="nav-link fontbranco"  href="/#/edittree"
                                v-if="currentUser">{{$ml.get('word.treeElem')}}</a>
                         </li>
                         <!--<li class="nav-elem nav-hov" style="margin-right: 5px;">
@@ -88,15 +88,7 @@
             }
         },
         methods: {
-            clickOnLink(index) {
-                    this.searchLink=false
-                    this.updateDataLink= false
-                    this.treeElemLink= false
-                    this.loginLink= false
-                    this.logoutLink= false
-                    this.languageLink= false
-                    this[index]=true
-            },
+
             logOut() {
                 this.$store.dispatch("auth/logout");
                 this.$router.push("/login");
