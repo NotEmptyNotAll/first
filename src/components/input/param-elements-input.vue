@@ -1,7 +1,7 @@
 <template>
     <div class="input-group ">
-        <div v-if="!hideTitle" class="input-group-prepend ">
-            <label class="input-group-text    bg-white " style="font-weight: bold"
+        <div v-if="!hideTitle" class="input-group-prepend " >
+            <label class="input-group-text    bg-white " style="font-weight: bold; "
                    :for="'vue-list-input'+titleInput"
             >
                 {{titleInput}}
@@ -21,47 +21,7 @@
                 v-on:keydown.up="onArrowUp"
                 v-on:keydown.enter="onEnter"
         />
-        <input v-if="!showChildInput"
-               disabled
-               autocomplete="off"
-               class="form-control"
-               type="text"
-        />
-        <input v-if="showChildInput"
-               v-model="searchChild"
-               placeholder=" "
-               v-on:input="onChangeChild"
-               v-on:click="onChangeChild"
-               v-on:keydown.down="onArrowDownChild"
-               v-on:keydown.up="onArrowUpChild"
-               v-on:keydown.enter="onEnterChild"
-               autocomplete="off"
-               class="form-control"
-               type="text"
-        />
-        <ul
-                id="autocomplete"
-                v-show="isOpenChild"
-                class="autocomplete-results"
-        >
-            <li style="text-align: center"
-                class="loading"
-                v-if="isLoading"
-            >
-                Loading results...
-            </li>
-            <li style="text-align: center"
-                v-else
-                v-for="(results, i) in resultsChild"
-                :key="i"
-                @click="setResultChild(results)"
-                class="autocomplete-result"
-                :class="{ 'is-active': i === arrowCounterChild }"
-            >
-                {{ results.name }}
-            </li>
-        </ul>
-        <ul
+        <ul style="margin-left:13%;width: 40%"
                 id="autocomplete-results"
                 v-show="isOpen"
                 class="autocomplete-results"
@@ -83,6 +43,48 @@
                 {{ result.name }}
             </li>
         </ul>
+
+        <input v-if="!showChildInput"
+               disabled
+               autocomplete="off"
+               class="form-control"
+               type="text"
+        />
+        <input v-if="showChildInput"
+               v-model="searchChild"
+               placeholder=" "
+               v-on:input="onChangeChild"
+               v-on:click="onChangeChild"
+               v-on:keydown.down="onArrowDownChild"
+               v-on:keydown.up="onArrowUpChild"
+               v-on:keydown.enter="onEnterChild"
+               autocomplete="off"
+               class="form-control"
+               type="text"
+        />
+        <ul style="margin-left:53%;width: 40%"
+            id="autocomplete"
+            v-show="isOpenChild"
+            class="autocomplete-results"
+        >
+            <li style="text-align: center"
+                class="loading"
+                v-if="isLoading"
+            >
+                Loading results...
+            </li>
+            <li style="text-align: center"
+                v-else
+                v-for="(results, i) in resultsChild"
+                :key="i"
+                @click="setResultChild(results)"
+                class="autocomplete-result"
+                :class="{ 'is-active': i === arrowCounterChild }"
+            >
+                {{ results.name }}
+            </li>
+        </ul>
+
 
         <div class="input-group-append">
             <button class="btn btn-outline-danger"
