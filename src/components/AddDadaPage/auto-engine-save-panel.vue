@@ -396,6 +396,7 @@
             listForSearch: [],
             updateListParam: [],
             saveDataObj: {
+                status:1,
                 engineFk: null,
                 autoModelFk: null,
                 autoManufactureFk: null,
@@ -413,6 +414,7 @@
             showDismissibleAlert: false,
             mainDataList:null,
             updateDataObj: {
+                status:1,
                 engineFk: null,
                 autoManufactureFk: null,
                 autoModelFk: null,
@@ -504,11 +506,12 @@
                 if (dupAutoM === undefined && dupAutoModel === undefined && dupEngine === undefined) {
                     this.showErr = false
                     await this.SAVE_DATA_AUTOMOBILE_ENGINE(this.saveDataObj);
+
                     let promise = new Promise((resolve) => {
-                        setTimeout(() => resolve("готово!"), 1500)
+                        setTimeout(() => resolve("готово!"), 2000)
                     });
-                    this.showAlertSucc()
                     await promise
+                    this.showAlertSucc()
                     this.GET_ALL_ADDITIONAL_DATA();
 
                 } else {
