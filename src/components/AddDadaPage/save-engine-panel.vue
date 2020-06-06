@@ -54,14 +54,14 @@
                     </div>
                 </div>
                 <b-table class="my-table-scroll" no-border-collapse hover
-                         sticky-header="600px" :items="dataList"
+                         sticky-header="650px" :items="dataList"
                          @row-dblclicked="(item) => link( item)"
                          :fields="[{ key: 'index', label:'№' },
                 { key: 'data', label: $ml.get('word.engine'), sortable: true },
                 { key: 'engineManufacturer', label: $ml.get('word.engineManufacture'), sortable: true },
                 { key: 'cylindersPlacement', label: $ml.get('word.cylinders'), sortable: true },
                 { key: 'fuelType', label: $ml.get('word.fuelType'), sortable: true },
-                { key: 'powerKwt', label:$ml.get('word.fuelType'), sortable: true },
+                { key: 'powerKwt', label:$ml.get('word.powerKwt'), sortable: true },
                 { key: 'engineCapacity', label: $ml.get('word.engineCapacity'), sortable: true },
                 { key: 'flapNumber', label: $ml.get('word.flapNumber'), sortable: true },
                 { key: 'cylindersNumber', label:$ml.get('word.cylindersNumber'), sortable: true },
@@ -284,7 +284,6 @@
                     <div class="col-md-3"></div>
                 </div>
                 <hr/>
-                <span v-if="loadStatus"><div class="lds-dual-ring-black posCenter"></div></span>
                 <div class=" row ">
 
                     <div class="col-md-3"></div>
@@ -298,11 +297,7 @@
                             @dismiss-count-down="countDownChangedErr"
                     >
                         <p> {{$ml.get('msg.duplicateValue')}}</p>
-                        <b-progress variant="danger"
-                                    :max="dismissSecsErr"
-                                    :value="dismissCountDownErr"
-                                    height="4px"
-                        ></b-progress>
+
                     </b-alert>
 
                     <b-alert
@@ -314,11 +309,7 @@
                             @dismiss-count-down="countDownChangedSucc"
                     >
                         <p> {{$ml.get('msg.dataAddSuccess')}}</p>
-                        <b-progress variant="success"
-                                    :max="dismissSecsSucc"
-                                    :value="dismissCountDownSucc"
-                                    height="4px"
-                        ></b-progress>
+
                     </b-alert>
                     <div class="col-md-3"></div>
 
@@ -514,11 +505,7 @@
                             @dismiss-count-down="countDownChangedSuccUpd"
                     >
                         <p> {{$ml.get('word.dataAddSuccess')}}</p>
-                        <b-progress variant="success"
-                                    :max="dismissSecsSuccUpd"
-                                    :value="dismissCountDownSuccUpd"
-                                    height="4px"
-                        ></b-progress>
+
                     </b-alert>
                     <div class="col-md-3"></div>
 
@@ -597,13 +584,13 @@
                 status: null
             },
             test: null,
-            dismissSecsErr: 2,
+            dismissSecsErr: 1.2,
             dismissCountDownErr: 0,
-            dismissSecsSucc: 2,
+            dismissSecsSucc: 1.2,
             dismissCountDownSucc: 0,
-            dismissSecsErrUpd: 2,
+            dismissSecsErrUpd: 1.2,
             dismissCountDownErrUpd: 0,
-            dismissSecsSuccUpd: 2,
+            dismissSecsSuccUpd: 1.2,
             dismissCountDownSuccUpd: 0,
             showDismissibleAlert: false,
             cleanInputList: false

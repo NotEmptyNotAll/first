@@ -1,65 +1,65 @@
 <template>
-    <div class="input-group ">
+
+
+<div class="input-group ">
         <div v-if="!hideTitle" class="input-group-prepend ">
             <label class="input-group-text  bg-white " style="font-weight: bold"
                    :for="'vue-list-input'+titleInput"
             >
                 {{titleInput}}
-                <div v-if="LOADPARAM" class="lds-dual-ring-black"></div>
             </label>
         </div>
-       <input
-               v-if="holderNum===0"
-               v-model="search"
-               v-on:change="chMeth"
-               :id="'vue-list-input'+titleInput"
-               autocomplete="off"
-               class="form-control"
-               type="text"
-               placeholder=" "
-               v-on:input="onChange"
-               v-on:click="onChange"
-               v-on:keydown.down="onArrowDown"
-               v-on:keydown.up="onArrowUp"
-               v-on:keydown.enter="onEnter"
-        />
-        <input v-if="holderNum!==0"
-               :id="'vue-list-input'+titleInput"
-               autocomplete="off"
-               class="form-control"
-               type="text"
-               :placeholder="items.find(e=>e.id===holderNum)[indexItem]"
-               v-on:change="chMeth"
-               v-model="search"
-               v-on:input="onChange"
-               v-on:click="onChange"
-               v-on:keydown.down="onArrowDown"
-               v-on:keydown.up="onArrowUp"
-               v-on:keydown.enter="onEnter"
-        />
-        <ul
-                id="autocomplete-results"
-                v-show="isOpen"
-                class="autocomplete-results"
-        >
-            <li style="text-align: center"
-                class="loading"
-                v-if="isLoading"
+            <input
+                    v-if="holderNum===0"
+                    v-model="search"
+                    v-on:change="chMeth"
+                    :id="'vue-list-input'+titleInput"
+                    autocomplete="off"
+                    class="form-control"
+                    type="text"
+                    placeholder=" "
+                    v-on:input="onChange"
+                    v-on:click="onChange"
+                    v-on:keydown.down="onArrowDown"
+                    v-on:keydown.up="onArrowUp"
+                    v-on:keydown.enter="onEnter"
+            />
+            <input v-if="holderNum!==0"
+                   :id="'vue-list-input'+titleInput"
+                   autocomplete="off"
+                   class="form-control"
+                   type="text"
+                   :placeholder="items.find(e=>e.id===holderNum)[indexItem]"
+                   v-on:change="chMeth"
+                   v-model="search"
+                   v-on:input="onChange"
+                   v-on:click="onChange"
+                   v-on:keydown.down="onArrowDown"
+                   v-on:keydown.up="onArrowUp"
+                   v-on:keydown.enter="onEnter"
+            />
+            <ul
+                    id="autocomplete-results"
+                    v-show="isOpen"
+                    class="autocomplete-results"
             >
-                Loading results...
-            </li>
-            <li style="text-align: center"
-                v-else
-                v-for="(result, i) in results"
-                :key="i"
-                @click="setResult(result)"
-                class="autocomplete-result"
-                :class="{ 'is-active': i === arrowCounter }"
-            >
-                {{ result[indexItem] }}
-            </li>
-        </ul>
-
+                <li style="text-align: center"
+                    class="loading"
+                    v-if="isLoading"
+                >
+                    Loading results...
+                </li>
+                <li style="text-align: center"
+                    v-else
+                    v-for="(result, i) in results"
+                    :key="i"
+                    @click="setResult(result)"
+                    class="autocomplete-result"
+                    :class="{ 'is-active': i === arrowCounter }"
+                >
+                    {{ result[indexItem] }}
+                </li>
+            </ul>
         <div class="input-group-append">
             <button class="btn btn-outline-danger"
                     v-on:click="clear"
@@ -69,7 +69,6 @@
         </div>
 
     </div>
-
 </template>
 <script>
     import {mapGetters} from "vuex";
@@ -83,7 +82,7 @@
             titleInput: String,
             updateObj: Object,
             index: String,
-            indexItem:{
+            indexItem: {
                 default: () => 'data',
             },
             items: {
@@ -114,9 +113,9 @@
         },
         methods: {
 
-            async clear(){
+            async clear() {
                 this.updateObj[this.index] = null;
-                this.search='';
+                this.search = '';
                 this.$emit("change-meth", 1);
             },
             async chMeth() {
@@ -144,7 +143,7 @@
 
             },
             setResult(result) {
-                this.search = result[this.indexItem] ;
+                this.search = result[this.indexItem];
                 this.updateObj[this.index] = result.id;
                 this.isOpen = false;
                 this.$emit("change-meth", 1);
@@ -174,9 +173,11 @@
             }
         },
         watch: {
-            cleanSearch:function(val){
-                if(val!==null){
-                    this.search=''
+            cleanSearch: function (val) {
+                if (val !== null) {
+                    this.updateObj[this.index] = null;
+                    this.search = '';
+                    this.$emit("change-meth", 1);
                 }
             },
             items: function (val, oldValue) {
@@ -215,9 +216,10 @@
         border: 1px solid #eeeeee;
         height: 130px;
         overflow: auto;
-        width: 93%;
+        width: 90%;
         top: 100%;
     }
+
 
     .autocomplete-result {
         list-style: none;
@@ -231,5 +233,6 @@
         background-color: #4AAE9B;
         color: white;
     }
+
 
 </style>

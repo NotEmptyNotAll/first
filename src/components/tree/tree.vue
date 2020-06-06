@@ -29,11 +29,10 @@
                             type="button"
                             class="btn  btn-success "
                             @click="saveElem(1)"
-                            style="position: relative; left: 5vw;padding: 1vh ;top:1vh"
-
+                            style="position: relative; left: 5vw;top:1vh"
                     >
                         <span>
-                             <p class="h5 mb-2"><b-icon icon="check"></b-icon></p>
+                             <p class="h5 md-2"><b-icon icon="check"></b-icon></p>
                         </span>
                     </button>
 
@@ -148,6 +147,7 @@
                 'LISTNEWELEM',
                 'ELEMENTS_AND_MAX_ID',
                 'ELEMENTS',
+                'ELEMENTS_UPDATE',
                 'PARAM_NAME'
             ]),
             isFolder: function () {
@@ -163,7 +163,7 @@
             addElement: function (number) {
                 this.isOpen = true;
                 this.item.elementsCh.push({
-                        id: this.ELEMENTS.maxId,
+                        id: this.ELEMENTS_UPDATE.maxId,
                         elementsCh: [{
                             id: 0,
                             elementsCh: [],
@@ -183,14 +183,14 @@
                 this.item.name = this.PARAM_NAME.find(item => item.id === this.saveElemData.paramNameFk).data;
                 this.saveElemData.parentId = this.idParentElem;
 
-                this.saveElemData.elemId = this.ELEMENTS.maxId + 1;
+                this.saveElemData.elemId = this.ELEMENTS_UPDATE.maxId + 1;
 
-                this.item.id = this.ELEMENTS.maxId + 1;
+                this.item.id = this.ELEMENTS_UPDATE.maxId + 1;
 
                 this.listNewElem = this.LISTNEWELEM;
                 this.listNewElem.push(this.saveElemData);
                 this.setListNewElem(this.listNewElem);
-                this.setMaxId(this.ELEMENTS.maxId + 1);
+                this.setMaxId(this.ELEMENTS_UPDATE.maxId + 1);
                 this.listElem.push(this.saveElemData)
                 console.log(number);
             },
@@ -215,7 +215,7 @@
             }
         },
         mounted() {
-            this.maxId = this.ELEMENTS.maxId;
+            this.maxId = this.ELEMENTS_UPDATE.maxId;
             this.elementsCh = this.item.elementsCh;
         }
     }

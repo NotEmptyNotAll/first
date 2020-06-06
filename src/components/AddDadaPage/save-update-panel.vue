@@ -54,7 +54,7 @@
                 </div>
                 <b-table class="my-table-scroll" no-border-collapse hover
                          @row-dblclicked="(item) => link( item)"
-                         sticky-header="600px" :items="listForSearch" :fields="[
+                         sticky-header="650px" :items="listForSearch" :fields="[
                 { key: 'index', label:'№' },
                 { key: 'data', label: $ml.get('word.name'), sortable: true },
                 { key: 'status', label: $ml.get('word.status'), sortable: true }]">
@@ -144,11 +144,7 @@
                             @dismiss-count-down="countDownChangedErr"
                     >
                         <p> {{$ml.get('msg.duplicateValue')}}</p>
-                        <b-progress variant="danger"
-                                    :max="dismissSecsErr"
-                                    :value="dismissCountDownErr"
-                                    height="4px"
-                        ></b-progress>
+
                     </b-alert>
 
                     <b-alert
@@ -160,11 +156,7 @@
                             @dismiss-count-down="countDownChangedSucc"
                     >
                         <p> {{$ml.get('word.dataAddSuccess')}}</p>
-                        <b-progress variant="success"
-                                    :max="dismissSecsSucc"
-                                    :value="dismissCountDownSucc"
-                                    height="4px"
-                        ></b-progress>
+
                     </b-alert>
                     <div class="col-md-3"></div>
 
@@ -213,18 +205,14 @@
                 </div>
                 <hr/>
                 <div class="row">
-                    <div
-                            class="col-md-3"
-                    ></div>
+                    <div class="col-md-3"></div>
                     <div class="  col-md-3">
-
                         <button type="submit" @click="cancel()"
                                 class="btn  btn-outline-danger btn-block ">
                             <span>{{$ml.get('word.cancel')}}</span>
                         </button>
                     </div>
                     <div class="  col-md-3">
-
                         <button v-if="!loadStatus" type="submit" @click="update()"
                                 class="btn  btn-outline-dark btn-block ">
                             <span>{{$ml.get('word.update')}}</span>
@@ -234,31 +222,31 @@
                             <span><div class="lds-dual-ring" style="position: relative; bottom: 1.2vh"></div></span>
                         </button>
                     </div>
-                    <div
-                            class="col-md-3"
-                    ></div>
+                    <div class="col-md-3"></div>
                 </div>
                 <div class=" row ">
-
                     <div class="col-md-3"></div>
+                    <b-alert
+                            class="col-md-6"
+                            :show="dismissCountDownErrUpd"
+                            dismissible
+                            variant="danger"
+                            @dismissed="dismissCountDownErrUpd=0"
+                            @dismiss-count-down="countDownChangedErrUpd">
+                        <p> {{$ml.get('msg.duplicateValue')}}</p>
 
+                    </b-alert>
                     <b-alert
                             class="col-md-6"
                             :show="dismissCountDownSuccUpd"
                             dismissible
                             variant="success"
                             @dismissed="dismissCountDownSuccUpd=0"
-                            @dismiss-count-down="countDownChangedSuccUpd"
-                    >
+                            @dismiss-count-down="countDownChangedSuccUpd">
                         <p> {{$ml.get('word.dataAddSuccess')}}</p>
-                        <b-progress variant="success"
-                                    :max="dismissSecsSuccUpd"
-                                    :value="dismissCountDownSuccUpd"
-                                    height="4px"
-                        ></b-progress>
+
                     </b-alert>
                     <div class="col-md-3"></div>
-
                 </div>
             </div>
         </div>
@@ -286,13 +274,14 @@
                 updateData: null,
                 status: 1
             },
-            dismissSecsErr: 2,
+
+            dismissSecsErr: 1.2,
             dismissCountDownErr: 0,
-            dismissSecsSucc: 2,
+            dismissSecsSucc: 1.2,
             dismissCountDownSucc: 0,
-            dismissSecsErrUpd: 2,
+            dismissSecsErrUpd: 1.2,
             dismissCountDownErrUpd: 0,
-            dismissSecsSuccUpd: 2,
+            dismissSecsSuccUpd:1.2,
             dismissCountDownSuccUpd: 0,
             showDismissibleAlert: false,
             tempUpdateObj: {
@@ -327,6 +316,9 @@
             countDownChangedSuccUpd(dismissCountDown) {
                 this.dismissCountDownSuccUpd = dismissCountDown
             },
+            countDownChangedErrUpd(dismissCountDown) {
+                this.dismissCountDownErrUpd = dismissCountDown
+            },
             showAlertErr() {
                 this.dismissCountDownErr = this.dismissSecsErr
             },
@@ -335,6 +327,9 @@
             },
             showAlertSuccUpd() {
                 this.dismissCountDownSuccUpd = this.dismissSecsSuccUpd
+            },
+            showAlertErrUpd() {
+                this.dismissCountDownErrUpd = this.dismissSecsErrUpd
             },
             async clear() {
                 this.search = '';
@@ -356,7 +351,7 @@
                 this.updateDataObj.objToBeChanged = 1;
                 this.updateDataObj.status = 1;
                 this.updateDataObj.updateData = null;
-                this.tempUpdateObj.objToBeChanged=0
+                this.tempUpdateObj.objToBeChanged = 0
                 console.log(1)
             },
             cancelSave() {
@@ -386,6 +381,10 @@
                 } else {
                     this.showAlertErr()
                 }
+                console.log(number)
+            },
+            changeUpdateValue(number) {
+                this.tempUpdateObj = this.updateDataObj;
                 console.log(number)
             },
             async link(record) {

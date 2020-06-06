@@ -226,17 +226,19 @@
                 setAutoEng: 'SET_AUTO_ENGINE',
                 setTree: 'SET_LISTPARAM_ELEMENT',
                 setEngList: 'SET_ENGDATA_TREE',
+                setListNewParam: 'SET_LIST_NEW_PARAM',
                 setElemUpdate:'SET_ELEMENTS_UPDATE'
 
             }),
             clear(number) {
+                this.setListNewParam([])
                 this.setEngData(null)
                 this.setElements(null)
                 this.setAutoEng(null)
                 this.setTree(null)
                 this.setEngList(null)
                 this.setElemUpdate(null)
-                this.cleanField=true
+                this.cleanField=!this.cleanField
                 this.searchData = {
                     paramList: [{
                         parameterNodeId: null,
@@ -269,6 +271,13 @@
             },
             async getAutoEnByNum(number) {
                 this.GET_AUTO_BY_ENG(this.searchData);
+                this.setListNewParam([])
+                this.setEngData(null)
+                this.setElements(null)
+                this.setAutoEng(null)
+                this.setTree(null)
+                this.setEngList(null)
+                this.setElemUpdate(null)
                 if (this.SEARCHDATA.powerKwt != undefined) {
                     this.searchData.autoModel = this.SEARCHDATA.autoModel;
                     this.searchData.autoManufacturer = this.SEARCHDATA.autoManufacture;
@@ -315,6 +324,7 @@
                 // this.dataEng = [];
                 // this.listParam = [];
                 //   this.elements = [];
+
                 this.setElements(null);
                 if ((!Number.isInteger(Number(this.searchData.produceYear)) || (this.searchData.produceYear < 1885 || this.searchData.produceYear > 2020)) && !this.searchData.produceYear == 0) {
                     this.errorMessage = "Ви некоректно ввели рік";

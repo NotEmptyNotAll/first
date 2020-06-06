@@ -9,7 +9,7 @@
             </div>
             <input id="fuelTypeFk"
                    v-model="saveParameters[index]"
-                   autocomplete="on" type="text"
+                   autocomplete="off" type="text"
                    class="form-control"
                    :placeholder="$ml.get('word.data')"
                    aria-describedby="button-addon1">

@@ -56,7 +56,7 @@
 
                     </div>
                 </div>
-                <b-table class="my-table-scroll" no-border-collapse hover sticky-header="600px" :items="listForSearch"
+                <b-table class="my-table-scroll" no-border-collapse hover sticky-header="650px" :items="listForSearch"
                          @row-dblclicked="(item) => link( item)"
                          :fields="[
                 { key: 'index', label:'№' },
@@ -163,11 +163,7 @@
                             @dismiss-count-down="countDownChangedErr"
                     >
                         <p> {{$ml.get('msg.duplicateValue')}}</p>
-                        <b-progress variant="danger"
-                                    :max="dismissSecsErr"
-                                    :value="dismissCountDownErr"
-                                    height="4px"
-                        ></b-progress>
+
                     </b-alert>
 
                     <b-alert
@@ -179,11 +175,7 @@
                             @dismiss-count-down="countDownChangedSucc"
                     >
                         <p> {{$ml.get('word.dataAddSuccess')}}</p>
-                        <b-progress variant="success"
-                                    :max="dismissSecsSucc"
-                                    :value="dismissCountDownSucc"
-                                    height="4px"
-                        ></b-progress>
+
                     </b-alert>
                     <div class="col-md-3"></div>
 
@@ -201,12 +193,13 @@
                 <div class=" row ">
                     <vue-datalist
                             class="col-md-3"
-                            :title-input="$ml.get('word.data')"
+                            :title-input="$ml.get('word.dataChange')"
                             :items="dataList"
                             :update-obj="updateDataObj"
                             index="objToBeChanged"
                             :clean-search="cleanInputList"
                             :holderNum="updateDataObj.objToBeChanged!==0?dataList.find(elem=>elem.id===updateDataObj.objToBeChanged).id:0"
+                            @change-meth="changeUpdateValue"
 
                     />
                     <input-field
@@ -259,7 +252,17 @@
                 <div class=" row ">
 
                     <div class="col-md-3"></div>
+                    <b-alert
+                            class="col-md-6"
+                            :show="dismissCountDownErrUpd"
+                            dismissible
+                            variant="danger"
+                            @dismissed="dismissCountDownErrUpd=0"
+                            @dismiss-count-down="countDownChangedErrUpd"
+                    >
+                        <p> {{$ml.get('msg.duplicateValue')}}</p>
 
+                    </b-alert>
                     <b-alert
                             class="col-md-6"
                             :show="dismissCountDownSuccUpd"
@@ -269,11 +272,7 @@
                             @dismiss-count-down="countDownChangedSuccUpd"
                     >
                         <p> {{$ml.get('word.dataAddSuccess')}}</p>
-                        <b-progress variant="success"
-                                    :max="dismissSecsSuccUpd"
-                                    :value="dismissCountDownSuccUpd"
-                                    height="4px"
-                        ></b-progress>
+
                     </b-alert>
                     <div class="col-md-3"></div>
 
@@ -307,14 +306,15 @@
                 saveData_secondary: null,
                 status: null
             },
+
             search: '',
-            dismissSecsErr: 2,
+            dismissSecsErr: 1.2,
             dismissCountDownErr: 0,
-            dismissSecsSucc: 2,
+            dismissSecsSucc: 1.2,
             dismissCountDownSucc: 0,
-            dismissSecsErrUpd: 2,
+            dismissSecsErrUpd: 1.2,
             dismissCountDownErrUpd: 0,
-            dismissSecsSuccUpd: 2,
+            dismissSecsSuccUpd: 1.2,
             dismissCountDownSuccUpd: 0,
             showDismissibleAlert: false,
             cleanInputList: false
@@ -356,6 +356,9 @@
             countDownChangedSuccUpd(dismissCountDown) {
                 this.dismissCountDownSuccUpd = dismissCountDown
             },
+            countDownChangedErrUpd(dismissCountDown) {
+                this.dismissCountDownErrUpd = dismissCountDown
+            },
             showAlertErr() {
                 this.dismissCountDownErr = this.dismissSecsErr
             },
@@ -364,6 +367,13 @@
             },
             showAlertSuccUpd() {
                 this.dismissCountDownSuccUpd = this.dismissSecsSuccUpd
+            },
+            showAlertErrUpd() {
+                this.dismissCountDownErrUpd = this.dismissSecsErrUpd
+            },
+            changeUpdateValue(number){
+                this.tempUpdateObj=  this.updateDataObj;
+                console.log(number)
             },
             onChange() {
                 this.filterResults();
@@ -380,6 +390,8 @@
             async link(record) {
                 this.$refs.updateTab.click();
                 this.updateDataObj.objToBeChanged = record.id;
+                this.updateDataObj.saveData_primary = record.data;
+                this.updateDataObj.saveData_secondary = record.secondary_data;
                 console.log(1)
             },
             async saveEngManufacture(number) {
@@ -408,10 +420,10 @@
             },
             cancel() {
                 this.cleanInputList = !this.cleanInputList;
-                this.updateDataObj.objToBeChanged = 1;
+                this.updateDataObj.objToBeChanged = 0;
                 this.updateDataObj.saveData_primary = null;
                 this.updateDataObj.status = 1;
-                this.tempUpdateObj.objToBeChanged=0
+                this.tempUpdateObj.objToBeChanged = 0
                 this.updateDataObj.saveData_secondary = null;
             },
             cancelSave() {
@@ -422,16 +434,21 @@
             },
             async update(number) {
                 if (this.updateDataObj.objToBeChanged != null) {
-                    if (this.updateDataObj.status === null) {
-                        this.updateDataObj.status = 1;
+                    if (this.dataList.find(item => item.data === this.updateDataObj.saveData_primary) !== undefined) {
+                        alert('1')
+                        this.showAlertErrUpd();
+                    } else {
+                        if (this.updateDataObj.status === null) {
+                            this.updateDataObj.status = 1;
+                        }
+                        this.$emit("update-data-api", this.updateDataObj);
+                        this.showAlertSuccUpd();
+                        let temp = this.dataList.find(item => item.id === this.updateDataObj.objToBeChanged);
+                        temp.status = this.PARAM_NAME_AND_UNITS.status.find(item => item.id === this.updateDataObj.status).data;
+                        temp.data = this.updateDataObj.saveData_primary;
+                        temp.secondary_data = this.updateDataObj.saveData_secondary;
+                        this.listForSearch = this.dataList;
                     }
-                    this.$emit("update-data-api", this.updateDataObj);
-                    this.showAlertSuccUpd();
-                    let temp = this.dataList.find(item => item.id === this.updateDataObj.objToBeChanged);
-                    temp.status = this.PARAM_NAME_AND_UNITS.status.find(item => item.id === this.updateDataObj.status).data;
-                    temp.data = this.updateDataObj.saveData_primary;
-                    temp.secondary_data = this.updateDataObj.saveData_secondary;
-                    this.listForSearch = this.dataList;
                 }
                 console.log(number)
             }

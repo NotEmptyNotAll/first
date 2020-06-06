@@ -72,7 +72,7 @@
                         </div>
                     </nav>
                 </div>
-                <div class="col-md-10 col-lg-10 rounded search-border content-container shadow-lg bg-white" style="height: 90vh">
+                <div class="col-md-10 col-lg-10 rounded search-border content-container shadow-lg bg-white" style="height: 95vh">
                     <br/>
                     <div class="col-xs-9">
                         <!-- Tab panes -->
@@ -172,14 +172,13 @@
                                 />
                             </div>
                             <div class="tab-pane" id="nameElements">
-
-                                <save-update-panel
+                                <two-update-panel
                                         :name-title="$ml.get('word.nameElements')"
+                                        :title_two="$ml.get('word.mark')"
                                         :load-status="LOAD_SAVE.paramName"
                                         :data-list="ADDITIONAL_DATA.parameterName"
                                         @save-data-api="SAVE_PARAM_NAME"
                                         @update-data-api="UPDATE_PARAM_NAME"
-
                                 />
                             </div>
                         </div>

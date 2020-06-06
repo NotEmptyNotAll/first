@@ -271,7 +271,7 @@
                                                 v-on:click="saveParam(current)"
                                         >
                                             <span>
-                                                <p class="h5 mb-2" ><b-icon icon="check" ></b-icon></p>
+                                                <p class="h5 md-2" ><b-icon icon="check" ></b-icon></p>
                                             </span>
                                         </button>
                                     </td>

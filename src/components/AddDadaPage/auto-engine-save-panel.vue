@@ -53,7 +53,7 @@
 
                     </div>
                 </div>
-                <b-table class="my-table-scroll" no-border-collapse hover sticky-header="600px" :items="dataList"
+                <b-table class="my-table-scroll" no-border-collapse hover sticky-header="650px" :items="dataList"
                          @row-dblclicked="(item) => link( item)"
                          :fields="[
                 { key: 'index', label:'№' },
@@ -218,11 +218,7 @@
                             @dismiss-count-down="countDownChangedErr"
                     >
                         <p> {{$ml.get('msg.duplicateValue')}}</p>
-                        <b-progress variant="danger"
-                                    :max="dismissSecsErr"
-                                    :value="dismissCountDownErr"
-                                    height="4px"
-                        ></b-progress>
+
                     </b-alert>
 
                     <b-alert
@@ -234,11 +230,6 @@
                             @dismiss-count-down="countDownChangedSucc"
                     >
                         <p> {{$ml.get('word.dataAddSuccess')}}</p>
-                        <b-progress variant="success"
-                                    :max="dismissSecsSucc"
-                                    :value="dismissCountDownSucc"
-                                    height="4px"
-                        ></b-progress>
                     </b-alert>
                     <div class="col-md-3"></div>
 
@@ -377,11 +368,7 @@
                             @dismiss-count-down="countDownChangedSuccUpd"
                     >
                         <p> {{$ml.get('word.dataAddSuccess')}}</p>
-                        <b-progress variant="success"
-                                    :max="dismissSecsSuccUpd"
-                                    :value="dismissCountDownSuccUpd"
-                                    height="4px"
-                        ></b-progress>
+
                     </b-alert>
                     <div class="col-md-3"></div>
 
@@ -414,13 +401,13 @@
                 releaseYearFrom: null,
                 releaseYearBy: null,
             },
-            dismissSecsErr: 2,
+            dismissSecsErr: 1.2,
             dismissCountDownErr: 0,
-            dismissSecsSucc: 2,
+            dismissSecsSucc: 1.2,
             dismissCountDownSucc: 0,
-            dismissSecsErrUpd: 2,
+            dismissSecsErrUpd: 1.2,
             dismissCountDownErrUpd: 0,
-            dismissSecsSuccUpd: 2,
+            dismissSecsSuccUpd: 1.2,
             dismissCountDownSuccUpd: 0,
             showDismissibleAlert: false,
             mainDataList:null,

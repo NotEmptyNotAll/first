@@ -6,24 +6,24 @@
 
                 <div class=" collapse navbar-collapse " id="conteudoNavbarSuportado">
                     <ul class="navbar-nav mr-auto" style="font-family: 'Montserrat', sans-serif; ">
-                        <li class="nav-elem " style="margin-right: 10px;">
-                            <a class="nav-link fontbranco" href="/#/">{{$ml.get('word.search')}}</a>
+                        <li class="nav-elem " :class="{activeLink:searchLink}" style="margin-right: 10px;">
+                            <a class="nav-link fontbranco" v-on:click="clickOnLink('searchLink')" href="/#/">{{$ml.get('word.search')}}</a>
                         </li>
 
-                        <li class="nav-elem nav-hov" style="margin-right: 5px;">
-                            <a class="nav-link fontbranco" href="/#/addData"
+                        <li class="nav-elem nav-hov" :class="{activeLink:updateDataLink}" style="margin-right: 5px;">
+                            <a class="nav-link fontbranco" v-on:click="clickOnLink('updateDataLink')" href="/#/addData"
                                v-if="currentUser">{{$ml.get('word.updateData')}}</a>
                         </li>
-                        <li class="nav-elem nav-hov" style="margin-right: 5px;">
-                            <a class="nav-link fontbranco" href="/#/edittree"
+                        <li class="nav-elem nav-hov" :class="{activeLink:treeElemLink}" style="margin-right: 5px;">
+                            <a class="nav-link fontbranco"  v-on:click="clickOnLink('treeElemLink')" href="/#/edittree"
                                v-if="currentUser">{{$ml.get('word.treeElem')}}</a>
                         </li>
                         <!--<li class="nav-elem nav-hov" style="margin-right: 5px;">
                             <a class="nav-link fontbranco" href="/#/elemTree"
                                v-if="currentUser">{{$ml.get('word.treeElem')}}</a>
                         </li>-->
-                        <li class=" nav-elem dropdown " style="position: absolute; right: 7vw">
-                            <a class="nav-link dropdown-toggle fontbranco" href="#" id="navbarDropdown" role="button"
+                        <li class=" nav-elem dropdown "  :class="{activeLink:languageLink}" style="position: absolute; right: 7vw">
+                            <a class="nav-link dropdown-toggle fontbranco"  v-on:click="clickOnLink('languageLink')" href="#" id="navbarDropdown" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 {{$ml.get('word.language')}}
                             </a>
@@ -41,8 +41,9 @@
                                    href="#"> <img src="../assets/United-Kingdom.png"> eng</a>
                             </div>
                         </li>
-                        <li class="nav-elem   nav-hov" v-if="!currentUser" style="position: absolute; right: 2vw">
-                            <a class="nav-link fontbranco" href="/#/login">{{$ml.get('word.login')}}</a>
+                        <li class="nav-elem   nav-hov"   :class="{activeLink:loginLink}" v-if="!currentUser" style="position: absolute; right: 2vw">
+                            <a class="nav-link fontbranco"  v-on:click="clickOnLink('loginLink')"
+                               href="/#/login">{{$ml.get('word.login')}}</a>
                         </li>
                         <li class="nav-elem   nav-hov" v-if="currentUser" style="position: absolute; right: 2vw">
                             <a class="nav-link fontbranco" href="/#/login"
@@ -62,6 +63,14 @@
         name: "navbar",
         components: {},
         props: {},
+        data: () => ({
+                searchLink: false,
+                updateDataLink: false,
+                treeElemLink: false,
+                loginLink: false,
+                logoutLink: false,
+                languageLink: false
+        }),
         computed: {
             currentUser() {
                 return this.$store.state.auth.user;
@@ -80,6 +89,15 @@
             }
         },
         methods: {
+            clickOnLink(index) {
+                    this.searchLink=false
+                    this.updateDataLink= false
+                    this.treeElemLink= false
+                    this.loginLink= false
+                    this.logoutLink= false
+                    this.languageLink= false
+                    this[index]=true
+            },
             logOut() {
                 this.$store.dispatch("auth/logout");
                 this.$router.push("/login");
@@ -244,6 +262,28 @@
             width: 100px;
         }
 
+    }
+
+    .activeLink::before {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 1px;
+        background: #fff;
+        transition: 0.3s;
+        transform: scaleX(1);
+        opacity: 1
+    }
+
+    .activeLink::after {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 1px;
+        background: #fff;
+        transition: 0.3s;
+        transform: scaleX(1);
+        opacity: 1
     }
 
 
