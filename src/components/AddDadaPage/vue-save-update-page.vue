@@ -5,7 +5,7 @@
         />
         <div  v-if="currentUser" class="container-fluid">
             <div class="row" style="padding-top: 1vh;">
-                <div class="col-md-2 col-lg-2  navbar-container " style="height: 90vh">
+                <div class="col-md-2 col-lg-2  navbar-container " style="height: 95vh">
                     <nav class="navbar navbar-expand-md search-border shadow-lg   navbar-light rounded  " id="nav-panel">
                         <div class="collapse navbar-collapse " id="navbar" style="width: 100%;">
                             <!-- Вертикальное меню -->
