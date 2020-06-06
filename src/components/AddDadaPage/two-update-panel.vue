@@ -4,14 +4,18 @@
         <ul class="nav nav-tabs" id="myTabengine" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="home-tabengine" data-toggle="tab" :href="'#h'+nameTitle"
+                   v-on:click="cancelSave" @click="cancel"
                    role="tab" aria-controls="home" aria-selected="true">{{$ml.get('word.table')}}</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="profile-tabengine" data-toggle="tab" :href="'#p'+nameTitle"
+                   @click="cancel"
+
                    role="tab" aria-controls="profile" aria-selected="false">{{$ml.get('word.save')}}</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="contact-tabengine" ref="updateTab" data-toggle="tab" :href="'#c'+nameTitle"
+                   v-on:click="cancelSave"
                    role="tab" aria-controls="contact" aria-selected="false">{{$ml.get('word.update')}}</a>
             </li>
 
@@ -19,9 +23,9 @@
         <div class="tab-content" id="myTabContentengine" style="border: white">
             <div class="tab-pane fade show active" :id="'h'+nameTitle" role="tabpanel"
                  aria-labelledby="home-tab">
-                <div class="row"  style="padding-top: 3vh">
-                    <div class="title-bord col-md-2" >
-                        <h4 > {{nameTitle}}</h4>
+                <div class="row" style="padding-top: 3vh">
+                    <div class="title-bord col-md-2">
+                        <h4> {{nameTitle}}</h4>
                     </div>
                     <div class="col-md-5"></div>
 
@@ -56,7 +60,7 @@
                          @row-dblclicked="(item) => link( item)"
                          :fields="[
                 { key: 'index', label:'№' },
-                { key: 'data', label: $ml.get('word.name'), sortable: true },
+                { key: 'data', label: $ml.get('word.fullName'), sortable: true },
                 { key: 'secondary_data', label: $ml.get('word.shortName'), sortable: true },
                 { key: 'status', label: $ml.get('word.status'), sortable: true }]">
                     <template v-slot:cell(index)="data">
@@ -94,8 +98,8 @@
             <div class="tab-pane fade" :id="'p'+nameTitle" role="tabpanel"
                  aria-labelledby="profile-tab">
                 <br/>
-                <div class="title-bord col-md-2" >
-                    <h4 > {{nameTitle}}</h4>
+                <div class="title-bord col-md-2">
+                    <h4> {{nameTitle}}</h4>
                 </div>
                 <hr/>
                 <div class=" row ">
@@ -125,7 +129,7 @@
                 </div>
                 <hr/>
                 <div class="row">
-                <div class="col-md-3"></div>
+                    <div class="col-md-3"></div>
                     <div class="  col-md-3">
 
                         <button type="submit" @click="cancelSave()"
@@ -133,16 +137,16 @@
                             <span>{{$ml.get('word.cancel')}}</span>
                         </button>
                     </div>
-                <div class="col-md-3">
-                    <button v-if="!loadStatus" type="submit" @click="saveEngManufacture(1)"
-                            class="btn btn-outline-dark btn-block ">
-                        <span>{{$ml.get('word.save')}}</span>
-                    </button>
-                    <button v-if="loadStatus" type="submit"
-                            class="btn  btn-block btn-dark" disabled>
-                        <span><div class="lds-dual-ring" style="position: relative; bottom: 1.2vh"></div></span>
-                    </button>
-                </div>
+                    <div class="col-md-3">
+                        <button v-if="!loadStatus" type="submit" @click="saveEngManufacture(1)"
+                                class="btn btn-outline-dark btn-block ">
+                            <span>{{$ml.get('word.save')}}</span>
+                        </button>
+                        <button v-if="loadStatus" type="submit"
+                                class="btn  btn-block btn-dark" disabled>
+                            <span><div class="lds-dual-ring" style="position: relative; bottom: 1.2vh"></div></span>
+                        </button>
+                    </div>
                 </div>
                 <div class="col-md-3"></div>
 
@@ -190,8 +194,8 @@
             <div class="tab-pane fade" :id="'c'+nameTitle" role="tabpanel"
                  aria-labelledby="contact-tab">
                 <br/>
-                <div class="title-bord col-md-2" >
-                    <h4 > {{nameTitle}}</h4>
+                <div class="title-bord col-md-2">
+                    <h4> {{nameTitle}}</h4>
                 </div>
                 <hr/>
                 <div class=" row ">
@@ -202,7 +206,6 @@
                             :update-obj="updateDataObj"
                             index="objToBeChanged"
                             :clean-search="cleanInputList"
-                            :hide-title="true"
                             :holderNum="updateDataObj.objToBeChanged!==0?dataList.find(elem=>elem.id===updateDataObj.objToBeChanged).id:0"
 
                     />
@@ -314,7 +317,7 @@
             dismissSecsSuccUpd: 2,
             dismissCountDownSuccUpd: 0,
             showDismissibleAlert: false,
-            cleanInputList:false
+            cleanInputList: false
         }),
 
         props: {
@@ -368,7 +371,7 @@
             filterResults() {
                 // first uncapitalize all the things
                 this.listForSearch = this.dataList.filter((item) => {
-                    return (item.data.toLowerCase().indexOf(this.search.toLowerCase()) > -1) ;
+                    return (item.data.toLowerCase().indexOf(this.search.toLowerCase()) > -1);
                 });
             },
             setDataList(tempList) {
@@ -376,7 +379,7 @@
             },
             async link(record) {
                 this.$refs.updateTab.click();
-                this.updateDataObj.objToBeChanged=record.id;
+                this.updateDataObj.objToBeChanged = record.id;
                 console.log(1)
             },
             async saveEngManufacture(number) {
@@ -403,18 +406,19 @@
                 }
                 console.log(number)
             },
-            cancel(){
-                this.cleanInputList=!this.cleanInputList;
-                this.updateDataObj.objToBeChanged =1;
-                this.updateDataObj.saveData_primary =null;
+            cancel() {
+                this.cleanInputList = !this.cleanInputList;
+                this.updateDataObj.objToBeChanged = 1;
+                this.updateDataObj.saveData_primary = null;
                 this.updateDataObj.status = 1;
-                this.updateDataObj.saveData_secondary =null;
+                this.tempUpdateObj.objToBeChanged=0
+                this.updateDataObj.saveData_secondary = null;
             },
-            cancelSave(){
-                this.cleanInputList=!this.cleanInputList;
-                this.saveDataObj.saveData_primary =null;
+            cancelSave() {
+                this.cleanInputList = !this.cleanInputList;
+                this.saveDataObj.saveData_primary = null;
                 this.saveDataObj.status = 1;
-                this.saveDataObj.saveData_secondary =null;
+                this.saveDataObj.saveData_secondary = null;
             },
             async update(number) {
                 if (this.updateDataObj.objToBeChanged != null) {
@@ -423,11 +427,11 @@
                     }
                     this.$emit("update-data-api", this.updateDataObj);
                     this.showAlertSuccUpd();
-                    let temp=this.dataList.find(item=>item.id===this.updateDataObj.objToBeChanged);
-                    temp.status=this.updateDataObj.status;
-                    temp.data=this.updateDataObj.saveData_primary;
-                    temp.secondary_data=this.updateDataObj.saveData_secondary;
-                    this.listForSearch=this.dataList;
+                    let temp = this.dataList.find(item => item.id === this.updateDataObj.objToBeChanged);
+                    temp.status = this.PARAM_NAME_AND_UNITS.status.find(item => item.id === this.updateDataObj.status).data;
+                    temp.data = this.updateDataObj.saveData_primary;
+                    temp.secondary_data = this.updateDataObj.saveData_secondary;
+                    this.listForSearch = this.dataList;
                 }
                 console.log(number)
             }
@@ -460,14 +464,16 @@
         color: #272e38;
         font-weight: bold;
     }
-    .title-bord{
+
+    .title-bord {
         text-align: center;
         position: relative;
-        right: 1vw ;
+        right: 1vw;
         border-style: solid;
         border-color: lightgray;
         border-width: 0px 2px 0px 0px;
     }
+
     .savePageRow {
         max-width: 75vw;
         min-width: 75vw;

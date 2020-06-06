@@ -70,7 +70,8 @@ export default new MLCreate({
                 status:'status',
                 shortName:'short name',
                 cancel:'cancel',
-                dataAddSuccess:'data added successfully'
+                dataAddSuccess:'data added successfully',
+                fullName:'full name'
             },
             msg: {
                 passwordErr: 'password is required!',
@@ -149,9 +150,8 @@ export default new MLCreate({
                 status:'статус',
                 shortName:'короткое назание',
                 cancel:'Отмена',
-                dataAddSuccess:'данные успешно добавлены'
-
-
+                dataAddSuccess:'данные успешно добавлены',
+                fullName:'полное название'
 
             },
             msg: {
@@ -231,7 +231,8 @@ export default new MLCreate({
                 status:'статус',
                 shortName:'коротка назва',
                 cancel:'скасувати',
-                dataAddSuccess:'дані успішно додані'
+                dataAddSuccess:'дані успішно додані',
+                fullName:'повна назва'
 
             },
             msg: {

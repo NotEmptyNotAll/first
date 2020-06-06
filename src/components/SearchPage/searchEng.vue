@@ -5,7 +5,7 @@
                 v-if="!currentUser"
         />
         <div v-if="currentUser">
-            <div class="search-border container  bg-white rounded" id="searchCont" style="text-align: center">
+            <div class="search-border container  bg-white rounded" id="searchCont" style="text-align: center ;">
                 <br/>
                 <br/>
 
@@ -328,12 +328,11 @@
     }
 
 
-    .slide-fade-enter, .slide-fade-leave-to
-        /*.slide-fade-leave-active до версии 2.1.8 */
-    {
+    .slide-fade-enter, .slide-fade-leave-to {
         transform: translateX(10px);
         opacity: 0;
     }
+
 
     .buttonanim {
         text-align: center;

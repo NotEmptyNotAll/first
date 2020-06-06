@@ -243,6 +243,7 @@
         .nav-elem:hover::after {
             width: 100px;
         }
+
     }
 
 

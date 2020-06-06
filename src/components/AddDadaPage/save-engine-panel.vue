@@ -3,14 +3,18 @@
         <ul class="nav nav-tabs" id="myTabengine" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="home-tabengine" data-toggle="tab" :href="'#h'+nameTitle"
+                   v-on:click="cancelsave" @click="cancel"
                    role="tab" aria-controls="home" aria-selected="true">{{$ml.get('word.table')}}</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="profile-tabengine" data-toggle="tab" :href="'#p'+nameTitle"
+                   @click="cancel"
+
                    role="tab" aria-controls="profile" aria-selected="false">{{$ml.get('word.save')}}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="contact-tabengine" ref="updateTab" data-toggle="tab" :href="'#c'+nameTitle"
+                <a v-on:click="cancelsave"
+                   class="nav-link" id="contact-tabengine" ref="updateTab" data-toggle="tab" :href="'#c'+nameTitle"
                    role="tab" aria-controls="contact" aria-selected="false">{{$ml.get('word.update')}}</a>
             </li>
         </ul>
@@ -685,6 +689,24 @@
                 this.saveDataObj.horsepower = null
             },
             cancel() {
+                this.tempData = {
+                    engineType: null,
+                    engineManufacturerFk: 0,
+                    cylindersPlacementFk: 0,
+                    fuelTypeFk: 0,
+                    superchargedTypeFk: 0,
+                    cylindersNumber: null,
+                    flapNumber: null,
+                    pistonDiameter: null,
+                    pistonStroke: null,
+                    engineCapacity: null,
+                    powerKwt: null,
+                    degreeCompression: null,
+                    releaseYearFrom: null,
+                    releaseYearBy: null,
+                    horsepower: null,
+                    status: null
+                }
                 this.cleanInputList = !this.cleanInputList;
                 this.updateDataObj.objToBeChanged = this.tempData.id
                 this.updateDataObj.engineType = this.tempData.engineType
@@ -781,7 +803,7 @@
                 }
 
                 this.dataList = this.ADDITIONAL_DATA.engine;
-                let temp =  this.dataList.find(item => item.id === this.updateDataObj.objToBeChanged);
+                let temp = this.dataList.find(item => item.id === this.updateDataObj.objToBeChanged);
                 temp.data = this.updateDataObj.engineType
 
 
@@ -816,7 +838,7 @@
         },
         watch: {},
         mounted() {
-          //  this.mainDataList = this.dataList;
+            //  this.mainDataList = this.dataList;
             this.GET_ALL_PARAM_NAME();
         }
     }

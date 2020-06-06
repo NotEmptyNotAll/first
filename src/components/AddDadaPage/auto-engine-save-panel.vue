@@ -3,10 +3,13 @@
         <ul class="nav nav-tabs" id="myTabengine" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="home-tabengine" data-toggle="tab" :href="'#h'+nameTitle"
+                    @click="cancel"
+
                    role="tab" aria-controls="home" aria-selected="true">{{$ml.get('word.table')}}</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="profile-tabengine" data-toggle="tab" :href="'#p'+nameTitle"
+                   @click="cancel"
                    role="tab" aria-controls="profile" aria-selected="false">{{$ml.get('word.save')}}</a>
             </li>
             <li class="nav-item">

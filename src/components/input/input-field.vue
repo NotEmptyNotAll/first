@@ -40,7 +40,8 @@
             dataList: [],
             loadStatus: null,
             saveParameters:Object,
-            index:String
+            index:String,
+            cleanSearch: null
         },
         computed: {},
         methods: {
@@ -51,7 +52,13 @@
                 console.log(number)
             }
         },
-        watch: {},
+        watch: {
+            cleanSearch:function(val){
+                if(val!==null){
+                    this.search=''
+                }
+            },
+        },
         mounted() {
         }
     }

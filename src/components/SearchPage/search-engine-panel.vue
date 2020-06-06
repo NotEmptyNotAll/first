@@ -1,5 +1,5 @@
 <template>
-    <div class="search-engine-panel">
+    <div class="search-engine-panel" >
         <!--fields for entering search data.
          Fill with the initial parameters that you get from the backend
           Use a v-model to populate data.-->
@@ -10,6 +10,7 @@
                     :items="STARTPARAM.engineManufacture"
                     :update-obj="searchData"
                     :holderNum="0"
+                    :clean-search="cleanField"
                     index="autoManufacturer"
                     @change-meth="getEngDataByParam"
 
@@ -20,6 +21,7 @@
                     :items="STARTPARAM.autoModel"
                     :update-obj="searchData"
                     :holderNum="0"
+                    :clean-search="cleanField"
                     index="autoModel"
                     @change-meth="getEngDataByParam"
 
@@ -29,6 +31,7 @@
                     :title-input="$ml.get('word.engine')"
                     :items="STARTPARAM.engineType"
                     :update-obj="searchData"
+                    :clean-search="cleanField"
                     :holderNum="0"
                     @change-meth="getEngDataByParam"
                     index="engineType"
@@ -39,10 +42,10 @@
                          index="produceYear"
             />
         </div>
-        <transition name="slide-fade">
+        <transition name="fade" >
         <!--here we enter data for an improved search, which the user measures-->
-        <div v-if="advanceSearch">
-            <div class="savePageRow row  ">
+        <div v-if="advanceSearch"  >
+            <div class=" row  " >
                 <vue-datalist
                         class="col-md-3"
                         :title-input="$ml.get('word.engineNumber')"
@@ -50,6 +53,7 @@
                         :update-obj="searchData"
                         :holderNum="0"
                         index="numberEng"
+                        :clean-search="cleanField"
                         @change-meth="getAutoEnByNum"
 
                 />
@@ -59,6 +63,7 @@
                         :items="STARTPARAM.fuelType"
                         :update-obj="searchData"
                         :holderNum="0"
+                        :clean-search="cleanField"
                         index="fuelType"
                         @change-meth="getEngDataByParam"
 
@@ -185,6 +190,7 @@
                 powerKWt: null,
                 engineCapacity: null
             },
+            cleanField:false,
             choiceData: [],
             test: null,
             advanceSearch: false
@@ -218,7 +224,9 @@
                 setEngData: 'SET_ENGDATA',
                 setElements: 'SET_ELEMENTS',
                 setAutoEng: 'SET_AUTO_ENGINE',
-                setTree: 'SET_LISTPARAM_ELEMENT'
+                setTree: 'SET_LISTPARAM_ELEMENT',
+                setEngList: 'SET_ENGDATA_TREE',
+                setElemUpdate:'SET_ELEMENTS_UPDATE'
 
             }),
             clear(number) {
@@ -226,7 +234,9 @@
                 this.setElements(null)
                 this.setAutoEng(null)
                 this.setTree(null)
-
+                this.setEngList(null)
+                this.setElemUpdate(null)
+                this.cleanField=true
                 this.searchData = {
                     paramList: [{
                         parameterNodeId: null,
@@ -334,6 +344,7 @@
         max-width: 74vw;
         min-width: 74vw;
     }
+
 
     .input-group-text {
         background: white;

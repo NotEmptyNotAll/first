@@ -3,14 +3,17 @@
         <ul class="nav nav-tabs" id="myTabengine" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="home-tabengine" data-toggle="tab" :href="'#h'+nameTitle"
+                   v-on:click="cancelSave" @click="cancel"
                    role="tab" aria-controls="home" aria-selected="true">{{$ml.get('word.table')}}</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="profile-tabengine" data-toggle="tab" :href="'#p'+nameTitle"
+                   @click="cancel"
                    role="tab" aria-controls="profile" aria-selected="false">{{$ml.get('word.save')}}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="contact-tabengine" ref="updateTab" data-toggle="tab" :href="'#c'+nameTitle"
+                <a v-on:click="cancelSave" class="nav-link" id="contact-tabengine" ref="updateTab" data-toggle="tab"
+                   :href="'#c'+nameTitle"
                    role="tab" aria-controls="contact" aria-selected="false">{{$ml.get('word.update')}}</a>
             </li>
         </ul>
@@ -183,7 +186,6 @@
                             :title-input="$ml.get('word.dataChange')"
                             :items="dataList"
                             :update-obj="updateDataObj"
-                            :hide-title="true"
                             :clean-search="cleanInputList"
                             index="objToBeChanged"
                             :holderNum="tempUpdateObj.objToBeChanged!==0?dataList.find(elem=>elem.id===tempUpdateObj.objToBeChanged).id:0"
@@ -354,7 +356,7 @@
                 this.updateDataObj.objToBeChanged = 1;
                 this.updateDataObj.status = 1;
                 this.updateDataObj.updateData = null;
-
+                this.tempUpdateObj.objToBeChanged=0
                 console.log(1)
             },
             cancelSave() {
@@ -391,6 +393,7 @@
                 this.$refs.updateTab.click();
                 this.updateDataObj.objToBeChanged = record.id;
                 this.tempUpdateObj.objToBeChanged = record.id;
+                this.updateDataObj.updateData = record.data;
 
                 console.log(1)
             },
@@ -402,10 +405,10 @@
                     await this.$emit("update-data-api", this.updateDataObj);
 
                     this.showAlertSuccUpd();
-                    let temp=this.dataList.find(item=>item.id===this.updateDataObj.objToBeChanged);
-                    temp.status=this.updateDataObj.status;
-                    temp.data=this.updateDataObj.updateData;
-                    this.listForSearch=this.dataList;
+                    let temp = this.dataList.find(item => item.id === this.updateDataObj.objToBeChanged);
+                    temp.status = this.PARAM_NAME_AND_UNITS.status.find(item => item.id === this.updateDataObj.status).data;
+                    temp.data = this.updateDataObj.updateData;
+                    this.listForSearch = this.dataList;
                 }
                 console.log(number)
             }
