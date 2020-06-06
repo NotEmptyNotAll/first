@@ -22,8 +22,8 @@
                             <a class="nav-link fontbranco" href="/#/elemTree"
                                v-if="currentUser">{{$ml.get('word.treeElem')}}</a>
                         </li>-->
-                        <li class=" nav-elem dropdown "  :class="{activeLink:languageLink}" style="position: absolute; right: 7vw">
-                            <a class="nav-link dropdown-toggle fontbranco"  v-on:click="clickOnLink('languageLink')" href="#" id="navbarDropdown" role="button"
+                        <li class=" nav-elem dropdown "  style="position: absolute; right: 7vw">
+                            <a class="nav-link dropdown-toggle fontbranco"   href="#" id="navbarDropdown" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 {{$ml.get('word.language')}}
                             </a>
@@ -41,8 +41,8 @@
                                    href="#"> <img src="../assets/United-Kingdom.png"> eng</a>
                             </div>
                         </li>
-                        <li class="nav-elem   nav-hov"   v-if="!currentUser" style="position: absolute; right: 2vw">
-                            <a class="nav-link fontbranco"
+                        <li class="nav-elem   nav-hov"   :class="{activeLink:loginLink}" v-if="!currentUser" style="position: absolute; right: 2vw">
+                            <a class="nav-link fontbranco"  v-on:click="clickOnLink('loginLink')"
                                href="/#/login">{{$ml.get('word.login')}}</a>
                         </li>
                         <li class="nav-elem   nav-hov" v-if="currentUser" style="position: absolute; right: 2vw">
