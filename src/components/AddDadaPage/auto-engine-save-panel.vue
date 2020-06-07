@@ -413,6 +413,7 @@
             dismissCountDownSuccUpd: 0,
             showDismissibleAlert: false,
             mainDataList:null,
+            search:'',
             updateDataObj: {
                 status:1,
                 engineFk: null,

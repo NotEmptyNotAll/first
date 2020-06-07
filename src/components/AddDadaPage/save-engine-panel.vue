@@ -14,8 +14,8 @@
             </li>
             <li class="nav-item">
                 <a
-                   class="nav-link" id="contact-tabengine" ref="updateTab" data-toggle="tab" :href="'#c'+nameTitle"
-                   role="tab" aria-controls="contact" aria-selected="false">{{$ml.get('word.update')}}</a>
+                        class="nav-link" id="contact-tabengine" ref="updateTab" data-toggle="tab" :href="'#c'+nameTitle"
+                        role="tab" aria-controls="contact" aria-selected="false">{{$ml.get('word.update')}}</a>
             </li>
         </ul>
         <div class="tab-content" id="myTabContentengine" style="border: white">
@@ -583,6 +583,7 @@
                 horsepower: null,
                 status: null
             },
+            search:'',
             test: null,
             dismissSecsErr: 1.2,
             dismissCountDownErr: 0,
@@ -645,13 +646,17 @@
             onChange() {
                 this.filterResults();
             }, filterResults() {
+                if(this.mainDataList===null){
+                    this.mainDataList=this.ADDITIONAL_DATA.engine;
+                }
                 // first uncapitalize all the things
-                this.dataList = this.ADDITIONAL_DATA.engine.filter((item) => {
-                    return ((item.cylindersPlacement.toLowerCase().indexOf(this.search.toLowerCase()) > -1) ||
-                        (item.data.toLowerCase().indexOf(this.search.toLowerCase()) > -1) ||
-                        (item.powerKwt.toLowerCase().indexOf(this.search.toLowerCase()) > -1) ||
-                        (item.fuelType.toLowerCase().indexOf(this.search.toLowerCase()) > -1)
-                    );
+                this.dataList = this.mainDataList.filter((item) => {
+
+                    return  item.data.toLowerCase().indexOf(this.search.toLowerCase()) > -1  ||
+                        item.cylindersPlacement.toLowerCase().indexOf(this.search.toLowerCase()) > -1 ||
+                        item.engineManufacturer.toLowerCase().indexOf(this.search.toLowerCase()) > -1 ||
+                        item.superchargedType.toLowerCase().indexOf(this.search.toLowerCase()) > -1 ||
+                        item.fuelType.toLowerCase().indexOf(this.search.toLowerCase()) > -1
                 });
             },
             setDataList(tempList) {
@@ -825,8 +830,8 @@
         },
         watch: {},
         mounted() {
-            //  this.mainDataList = this.dataList;
             this.GET_ALL_PARAM_NAME();
+
         }
     }
 </script>
