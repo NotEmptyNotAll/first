@@ -799,9 +799,11 @@
                 temp.data = this.updateDataObj.engineType
 
 
-                temp.engineManufacturer = this.updateDataObj.engineManufacturerFk !== 0 ? this.ADDITIONAL_DATA.engineManufacture.find(item => item.id === this.updateDataObj.engineManufacturerFk).data : "не задано";
 
-                temp.cylindersPlacement = this.updateDataObj.cylindersPlacementFk !== 0 ? this.ADDITIONAL_DATA.cylinders.find(item => item.id === this.updateDataObj.cylindersPlacementFk).data : "не задано";
+
+                temp.engineManufacturer = this.updateDataObj.engineManufacturerFk !== 0 ? this.ADDITIONAL_DATA.engineManufacture.find(item => item.id === this.updateDataObj.engineManufacturerFk).data : "не задано";
+                temp.cylindersPlacement = this.updateDataObj.cylindersPlacementFk !==100 ? this.ADDITIONAL_DATA.cylinders.find(item => item.id === this.updateDataObj.cylindersPlacementFk) : "не задано";
+
 
                 temp.fuelType = this.updateDataObj.fuelTypeFk !== 0 ? this.ADDITIONAL_DATA.fuelType.find(item => item.id === this.updateDataObj.fuelTypeFk).data : "не задано";
 
@@ -816,7 +818,6 @@
                 temp.pistonStroke = this.updateDataObj.pistonStroke
 
                 temp.engineCapacity = this.updateDataObj.engineCapacity
-
                 temp.powerKwt = this.updateDataObj.powerKwt
                 temp.degreeCompression = this.updateDataObj.degreeCompression
                 temp.releaseYearFrom = this.updateDataObj.releaseYearFrom
