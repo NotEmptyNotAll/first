@@ -142,21 +142,21 @@
                                         <span v-else></span>
                                     </td>
                                     <td v-if="current.editRow">
-                                        <input type="text" class="form-control" v-model="current.doubleMin">
+                                        <input type="number" class="form-control" v-model="current.doubleMin">
                                     </td>
                                     <td v-if="!current.editRow">
                                         <span v-if="current.doubleMax!==null">{{Number(current.doubleMax).toFixed(4)}}</span>
                                         <span v-else></span>
                                     </td>
                                     <td v-if="current.editRow">
-                                        <input type="text" class="form-control" v-model="current.doubleMax">
+                                        <input type="number" class="form-control" v-model="current.doubleMax">
                                     </td>
                                     <td v-if="!current.editRow">
                                         <span v-if="current.doubleNum!==null">{{Number(current.doubleNum).toFixed(4)}}</span>
                                         <span v-else></span>
                                     </td>
                                     <td v-if="current.editRow">
-                                        <input type="text" class="form-control" v-model="current.doubleNum">
+                                        <input type="number" class="form-control" v-model="current.doubleNum">
                                     </td>
                                     <td v-if="!current.editRow">{{PARAM_NAME_AND_UNITS.status.find(unit=>
                                         unit.id===current.status).data}}</td>
@@ -221,13 +221,13 @@
                                         <span v-if="current.doubleMin!==null">{{Number(current.doubleMin).toFixed(4)}}</span>
                                         <span v-else></span></td>
                                     <td v-if="current.editRow">
-                                        <input type="text" class="form-control" v-model="current.doubleMin">
+                                        <input type="number" class="form-control" v-model="current.doubleMin">
                                     </td>
                                     <td v-if="!current.editRow">
                                         <span v-if="current.doubleMax!==null">{{Number(current.doubleMax).toFixed(4)}}</span>
                                         <span v-else></span></td>
                                     <td v-if="current.editRow">
-                                        <input type="text" class="form-control" v-model="current.doubleMax">
+                                        <input type="number" class="form-control" v-model="current.doubleMax">
 
                                     </td>
                                     <td v-if="!current.editRow">
@@ -235,7 +235,7 @@
                                         <span v-else></span>
                                     </td>
                                     <td v-if="current.editRow">
-                                        <input type="text" class="form-control" v-model="current.doubleNum">
+                                        <input type="number" class="form-control" v-model="current.doubleNum">
 
                                     </td>
                                     <td v-if="!current.editRow">{{PARAM_NAME_AND_UNITS.status.find(unit=>
@@ -483,6 +483,7 @@
                 this.listNewElem.push(this.saveElemData);
                 this.setListNewElem(this.listNewElem);
                 this.setMaxId(this.ELEMENTS_UPDATE.maxId + 1);
+
                 console.log(number)
             },
             addNewParam(number) {

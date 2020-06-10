@@ -180,6 +180,7 @@
                 console.log(number);
             },
             saveElem(number) {
+
                 this.item.name = this.PARAM_NAME.find(item => item.id === this.saveElemData.paramNameFk).data;
                 this.saveElemData.parentId = this.idParentElem;
 
