@@ -422,7 +422,7 @@
 
 
                 if (ind !== null) {
-                    this.saveListParam[ind] = {
+                    this.listNewParam[ind] = {
                         id: current.id,
                         elemId: current.elemId,
                         name: current.name,
@@ -437,7 +437,7 @@
                     }
 
                 } else {
-                    this.saveListParam.push({
+                    this.listNewParam.push({
                         id: current.id,
                         elemId: current.elemId,
                         name: current.name,
@@ -550,7 +550,6 @@
                 //     listSaveParam: this.listNewParam.filter(param => (!param.editRow && param.id === 0)),
                 //     listUpdateParam: this.listNewParam.filter(param => (!param.editRow && param.id !== 0))
                 //  };
-                this.listNewParam = this.listNewParam.filter(param => (!param.editRow && param.id === 0));
                 let tempListElem = this.LISTNEWELEM;
                 this.listNewParam.forEach(param => {
                     tempListElem.push({
@@ -561,7 +560,7 @@
                 })
                 this.SAVE_DATA_ELEMENTS({
                     listElem: this.LISTNEWELEM,
-                    listSaveParam: this.listNewParam,
+                    listSaveParam: this.listNewParam.filter(param => (!param.editRow && param.id === 0)),
                     listUpdateParam: this.listNewParam.filter(param => (!param.editRow && param.id !== 0))
                 });
 
