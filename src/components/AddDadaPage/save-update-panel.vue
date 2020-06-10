@@ -371,6 +371,7 @@
                         }
                         this.$emit("save-data-api", this.saveDataObj);
                         this.showAlertSucc()
+                       await setTimeout(() => console.log('1'), 1500);
                         this.GET_ALL_ADDITIONAL_DATA();
                     }
 

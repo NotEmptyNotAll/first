@@ -445,6 +445,7 @@
                         if (this.updateDataObj.status === null) {
                             this.updateDataObj.status = 1;
                         }
+
                         this.$emit("update-data-api", this.updateDataObj);
                         this.showAlertSuccUpd();
                         let temp = this.dataList.find(item => item.id === this.updateDataObj.objToBeChanged);
