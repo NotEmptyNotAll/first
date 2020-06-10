@@ -182,7 +182,7 @@
                     </div>
                 </div>
                 <hr style="position: center; width: 70%"/>
-                <div class=" row" >
+                <div class=" row">
                     <div class="col-md-3"></div>
                     <div class="  col-md-3">
 
@@ -193,11 +193,11 @@
                     </div>
                     <div class="col-md-3">
 
-                        <button v-if="!loadStatus" type="submit" @click="saveEngManufacture(1)"
+                        <button v-if="!loadStatus && !LOAD_ADDITIONAL_DATA" type="submit" @click="saveEngManufacture(1)"
                                 class="btn btn-outline-dark btn-block">
                             <span>{{$ml.get('word.save')}}</span>
                         </button>
-                        <button v-if="loadStatus" type="submit"
+                        <button v-if="loadStatus || LOAD_ADDITIONAL_DATA" type="submit"
                                 class="btn  btn-block btn-dark" disabled>
                             <span><div class="lds-dual-ring" style="position: relative; bottom: 1.2vh"></div></span>
                         </button>
@@ -396,7 +396,7 @@
             listForSearch: [],
             updateListParam: [],
             saveDataObj: {
-                status:1,
+                status: 1,
                 engineFk: null,
                 autoModelFk: null,
                 autoManufactureFk: null,
@@ -412,10 +412,10 @@
             dismissSecsSuccUpd: 1.2,
             dismissCountDownSuccUpd: 0,
             showDismissibleAlert: false,
-            mainDataList:null,
-            search:'',
+            mainDataList: null,
+            search: '',
             updateDataObj: {
-                status:1,
+                status: 1,
                 engineFk: null,
                 autoManufactureFk: null,
                 autoModelFk: null,
@@ -480,8 +480,8 @@
 
 
             }, filterResults() {
-                if(this.mainDataList===undefined){
-                    this.mainDataList=this.ADDITIONAL_DATA.autoEng;
+                if (this.mainDataList === undefined) {
+                    this.mainDataList = this.ADDITIONAL_DATA.autoEng;
                 }
                 // first uncapitalize all the things
                 this.dataList = this.mainDataList.filter((item) => {
@@ -507,11 +507,6 @@
                 if (dupAutoM === undefined && dupAutoModel === undefined && dupEngine === undefined) {
                     this.showErr = false
                     await this.SAVE_DATA_AUTOMOBILE_ENGINE(this.saveDataObj);
-
-                    let promise = new Promise((resolve) => {
-                        setTimeout(() => resolve("готово!"), 2000)
-                    });
-                    await promise
                     this.showAlertSucc()
                     this.GET_ALL_ADDITIONAL_DATA();
 
@@ -524,16 +519,16 @@
             async update(number) {
 
                 await this.UPDATE_AUTO_ENGINE(this.updateListParam);
-                this.updateListParam.forEach(elem=>{
-                    let temp=this.mainDataList.find(item=>item.id===elem.id);
-                    temp.status=this.PARAM_NAME_AND_UNITS.status.find(item=>item.id===elem.status).data;
-                    temp.autoManufactureFk=this.ADDITIONAL_DATA.autoManufacture.find(item=>item.id===elem.autoManufactureFk).data;
-                    temp.engineFk=this.ADDITIONAL_DATA.engine.find(item=>item.id===elem.engineFk).data;
-                    temp.releaseYearFrom=elem.releaseYearFrom;
-                    temp.releaseYearBy=elem.releaseYearBy;
-                    temp.autoModelFk=this.ADDITIONAL_DATA.autoModel.find(item=>item.id===elem.autoModelFk).data;
+                this.updateListParam.forEach(elem => {
+                    let temp = this.mainDataList.find(item => item.id === elem.id);
+                    temp.status = this.PARAM_NAME_AND_UNITS.status.find(item => item.id === elem.status).data;
+                    temp.autoManufactureFk = this.ADDITIONAL_DATA.autoManufacture.find(item => item.id === elem.autoManufactureFk).data;
+                    temp.engineFk = this.ADDITIONAL_DATA.engine.find(item => item.id === elem.engineFk).data;
+                    temp.releaseYearFrom = elem.releaseYearFrom;
+                    temp.releaseYearBy = elem.releaseYearBy;
+                    temp.autoModelFk = this.ADDITIONAL_DATA.autoModel.find(item => item.id === elem.autoModelFk).data;
                 });
-                this.dataList=this.mainDataList;
+                this.dataList = this.mainDataList;
 
                 this.updateListParam = [];
                 //  this.SAVE_DATA_ENGINE_NUMBER(this.saveDataEngParam);
@@ -573,7 +568,7 @@
         },
         watch: {},
         mounted() {
-            this.mainDataList=this.ADDITIONAL_DATA.autoEng
+            this.mainDataList = this.ADDITIONAL_DATA.autoEng
             this.test()
         }
     }

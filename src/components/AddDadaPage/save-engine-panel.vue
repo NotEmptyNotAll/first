@@ -271,11 +271,11 @@
                         </button>
                     </div>
                     <div class="col-md-3">
-                        <button v-if="!loadStatus" type="submit" @click="saveEngManufacture(1)"
+                        <button v-if="!loadStatus && !LOAD_ADDITIONAL_DATA" type="submit" @click="saveEngManufacture(1)"
                                 class="btn btn-outline-dark btn-block ">
                             <span>{{$ml.get('word.save')}}</span>
                         </button>
-                        <button v-if="loadStatus" type="submit"
+                        <button v-if="loadStatus || LOAD_ADDITIONAL_DATA" type="submit"
                                 class="btn  btn-block btn-dark" disabled>
                             <span><div class="lds-dual-ring" style="position: relative; bottom: 1.2vh"></div></span>
                         </button>
@@ -583,7 +583,7 @@
                 horsepower: null,
                 status: null
             },
-            search:'',
+            search: '',
             test: null,
             dismissSecsErr: 1.2,
             dismissCountDownErr: 0,
@@ -646,13 +646,13 @@
             onChange() {
                 this.filterResults();
             }, filterResults() {
-                if(this.mainDataList===null){
-                    this.mainDataList=this.ADDITIONAL_DATA.engine;
+                if (this.mainDataList === null) {
+                    this.mainDataList = this.ADDITIONAL_DATA.engine;
                 }
                 // first uncapitalize all the things
                 this.dataList = this.mainDataList.filter((item) => {
 
-                    return  item.data.toLowerCase().indexOf(this.search.toLowerCase()) > -1  ||
+                    return item.data.toLowerCase().indexOf(this.search.toLowerCase()) > -1 ||
                         item.cylindersPlacement.toLowerCase().indexOf(this.search.toLowerCase()) > -1 ||
                         item.engineManufacturer.toLowerCase().indexOf(this.search.toLowerCase()) > -1 ||
                         item.superchargedType.toLowerCase().indexOf(this.search.toLowerCase()) > -1 ||
@@ -776,11 +776,7 @@
                         this.saveDataObj.status = 2;
                     }
                     await this.$emit("save-data-api", this.saveDataObj)
-                    let promise = new Promise((resolve) => {
-                        setTimeout(() => resolve("готово!"), 1500)
-                    });
                     this.showAlertSucc()
-                    await promise
                     this.GET_ALL_ADDITIONAL_DATA();
 
                 } else {
@@ -793,37 +789,23 @@
                 if (this.updateDataObj.status === null) {
                     this.updateDataObj.status = this.tempData.status;
                 }
-
                 this.dataList = this.ADDITIONAL_DATA.engine;
                 let temp = this.dataList.find(item => item.id === this.updateDataObj.objToBeChanged);
                 temp.data = this.updateDataObj.engineType
-
-
-
-
                 temp.engineManufacturer = this.updateDataObj.engineManufacturerFk !== 0 ? this.ADDITIONAL_DATA.engineManufacture.find(item => item.id === this.updateDataObj.engineManufacturerFk).data : "не задано";
-                temp.cylindersPlacement = this.updateDataObj.cylindersPlacementFk !==100 ? this.ADDITIONAL_DATA.cylinders.find(item => item.id === this.updateDataObj.cylindersPlacementFk).data : "не задано";
-
-
+                temp.cylindersPlacement = this.updateDataObj.cylindersPlacementFk !== 100 ? this.ADDITIONAL_DATA.cylinders.find(item => item.id === this.updateDataObj.cylindersPlacementFk).data : "не задано";
                 temp.fuelType = this.updateDataObj.fuelTypeFk !== 0 ? this.ADDITIONAL_DATA.fuelType.find(item => item.id === this.updateDataObj.fuelTypeFk).data : "не задано";
-
-                temp.superchargedType = this.updateDataObj.fuelTypeFk !== 0 ? this.ADDITIONAL_DATA.superchargeType.find(item => item.id === this.updateDataObj.superchargedTypeFk).data : "не задано";
-
-                temp.cylindersNumber = this.ENGINE.cylindersNumber
-
+                temp.superchargedType = this.updateDataObj.superchargedType !== 0 ? this.ADDITIONAL_DATA.superchargeType.find(item => item.id === this.updateDataObj.superchargedTypeFk).data : "не задано";
+                temp.cylindersNumber = this.updateDataObj.cylindersNumber
                 temp.flapNumber = this.updateDataObj.flapNumber
-
                 temp.pistonDiameter = this.updateDataObj.pistonDiameter
-
                 temp.pistonStroke = this.updateDataObj.pistonStroke
-
                 temp.engineCapacity = this.updateDataObj.engineCapacity
                 temp.powerKwt = this.updateDataObj.powerKwt
                 temp.degreeCompression = this.updateDataObj.degreeCompression
                 temp.releaseYearFrom = this.updateDataObj.releaseYearFrom
                 temp.releaseYearBy = this.updateDataObj.releaseYearBy
                 temp.horsepower = this.updateDataObj.horsepower
-
                 this.$emit("update-data-api", this.updateDataObj)
                 this.showAlertSuccUpd()
                 console.log(number)

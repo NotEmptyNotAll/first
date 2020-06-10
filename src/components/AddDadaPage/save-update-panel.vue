@@ -54,7 +54,7 @@
                 </div>
                 <b-table class="my-table-scroll" no-border-collapse hover
                          @row-dblclicked="(item) => link( item)"
-                         sticky-header="650px" :items="listForSearch" :fields="[
+                         sticky-header="650px" :items="listForSearch.filter(elem=>{return elem.data!=='не задано'})" :fields="[
                 { key: 'index', label:'№' },
                 { key: 'data', label: $ml.get('word.name'), sortable: true },
                 { key: 'status', label: $ml.get('word.status'), sortable: true }]">
@@ -113,11 +113,11 @@
                     />
                     <div class="col input-group  col-md-3">
 
-                        <button v-if="!loadStatus" type="submit" @click="save(1)"
+                        <button v-if="!loadStatus && !LOAD_ADDITIONAL_DATA" type="submit" @click="save(1)"
                                 class="btn  btn-outline-dark btn-block ">
                             <span>{{$ml.get('word.save')}}</span>
                         </button>
-                        <button v-if="loadStatus" type="submit"
+                        <button v-if="loadStatus || LOAD_ADDITIONAL_DATA" type="submit"
                                 class="btn  btn-block btn-dark" disabled>
                             <span><div class="lds-dual-ring" style="position: relative; bottom: 1.2vh"></div></span>
                         </button>
@@ -370,11 +370,7 @@
                             this.saveDataObj.status = 1;
                         }
                         this.$emit("save-data-api", this.saveDataObj);
-                        let promise = new Promise((resolve) => {
-                            setTimeout(() => resolve("готово!"), 1500)
-                        });
                         this.showAlertSucc()
-                        await promise
                         this.GET_ALL_ADDITIONAL_DATA();
                     }
 

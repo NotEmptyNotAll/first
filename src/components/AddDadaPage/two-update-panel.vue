@@ -55,7 +55,7 @@
 
                     </div>
                 </div>
-                <b-table class="my-table-scroll" no-border-collapse hover sticky-header="650px" :items="listForSearch"
+                <b-table class="my-table-scroll" no-border-collapse hover sticky-header="650px" :items="listForSearch.filter(elem=>{return elem.data!=='не задано'})"
                          @row-dblclicked="(item) => link( item)"
                          :fields="[
                 { key: 'index', label:'№' },
@@ -137,11 +137,11 @@
                         </button>
                     </div>
                     <div class="col-md-3">
-                        <button v-if="!loadStatus" type="submit" @click="saveEngManufacture(1)"
+                        <button v-show="!loadStatus" type="submit" @click="saveEngManufacture(1)"
                                 class="btn btn-outline-dark btn-block ">
                             <span>{{$ml.get('word.save')}}</span>
                         </button>
-                        <button v-if="loadStatus" type="submit"
+                        <button v-show="loadStatus" type="submit" style="position: relative; bottom: 0.9vh"
                                 class="btn  btn-block btn-dark" disabled>
                             <span><div class="lds-dual-ring" style="position: relative; bottom: 1.2vh"></div></span>
                         </button>
@@ -152,7 +152,6 @@
                 <div class=" row ">
 
                     <div class="col-md-3"></div>
-
                     <b-alert
                             class="col-md-6"
                             :show="dismissCountDownErr"
@@ -164,7 +163,6 @@
                         <p> {{$ml.get('msg.duplicateValue')}}</p>
 
                     </b-alert>
-
                     <b-alert
                             class="col-md-6"
                             :show="dismissCountDownSucc"
@@ -305,15 +303,14 @@
                 saveData_secondary: null,
                 status: null
             },
-
             search: '',
             dismissSecsErr: 1.2,
             dismissCountDownErr: 0,
-            dismissSecsSucc: 1.2,
+            dismissSecsSucc:1.2,
             dismissCountDownSucc: 0,
             dismissSecsErrUpd: 1.2,
             dismissCountDownErrUpd: 0,
-            dismissSecsSuccUpd: 1.2,
+            dismissSecsSuccUpd:1.2,
             dismissCountDownSuccUpd: 0,
             showDismissibleAlert: false,
             cleanInputList: false
@@ -394,27 +391,36 @@
                 console.log(1)
             },
             async saveEngManufacture(number) {
-                let temp = this.dataList.find(item =>
+
+               let temp = this.dataList.find(item =>
                     item.data === this.saveDataObj.saveData_primary
                 );
+
                 if (temp === undefined) {
+                    this.showAlertSucc();
                     if (this.saveDataObj.saveData_primary != null) {
                         if (this.saveDataObj.status === null) {
                             this.saveDataObj.status = 1;
                         }
+
                         await this.$emit("save-data-api", this.saveDataObj);
+                        this.cancel()
+
                         let promise = new Promise((resolve) => {
                             setTimeout(() => resolve("готово!"), 1500)
                         });
-                        this.showAlertSucc()
                         await promise
                         this.GET_ALL_ADDITIONAL_DATA();
 
                         this.GET_PARAM_NAME();
+                        this.cancel()
+
                     }
                 } else {
-                    this.showAlertErr()
+                    this.showAlertErr();
+                    this.cancel()
                 }
+
                 console.log(number)
             },
             cancel() {
@@ -434,7 +440,6 @@
             async update(number) {
                 if (this.updateDataObj.objToBeChanged != null) {
                     if (this.dataList.find(item => item.data === this.updateDataObj.saveData_primary) !== undefined) {
-                        alert('1')
                         this.showAlertErrUpd();
                     } else {
                         if (this.updateDataObj.status === null) {
