@@ -540,10 +540,11 @@
                 console.log(number)
             },
             async update(number) {
+                this.dataList = this.mainDataList;
 
                 await this.UPDATE_AUTO_ENGINE(this.updateListParam);
                 this.updateListParam.forEach(elem => {
-                    let temp = this.mainDataList.find(item => item.id === elem.id);
+                    let temp = this.dataList.find(item => item.id === elem.id);
                     temp.status = this.PARAM_NAME_AND_UNITS.status.find(item => item.id === elem.status).data;
                     temp.autoManufactureFk = this.ADDITIONAL_DATA.autoManufacture.find(item => item.id === elem.autoManufactureFk).data;
                     temp.engineFk = this.ADDITIONAL_DATA.engine.find(item => item.id === elem.engineFk).data;
@@ -551,7 +552,6 @@
                     temp.releaseYearBy = elem.releaseYearBy;
                     temp.autoModelFk = this.ADDITIONAL_DATA.autoModel.find(item => item.id === elem.autoModelFk).data;
                 });
-                this.dataList = this.mainDataList;
 
                 this.updateListParam = [];
                 //  this.SAVE_DATA_ENGINE_NUMBER(this.saveDataEngParam);
