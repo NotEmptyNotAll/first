@@ -102,7 +102,7 @@
                 </div>
                 <hr/>
 
-                <div class="savePageRow row ">
+                <div class="row ">
                     <div v-if="showErr" class="alert alert-danger" role="alert" style="text-align:center; width: 100%">
                         {{$ml.get('msg.duplicateValue')}}
                     </div>
@@ -271,7 +271,7 @@
                                     :update-obj="current"
                                     index="autoManufactureFk"
                                     :hide-title="true"
-                                    :holder-num=0
+                                    :holder-num="current.autoManufactureFk"
                             />
                         </td>
                         <td v-if="!current.editRow">{{ADDITIONAL_DATA.autoModel.find(elem=>
@@ -283,7 +283,7 @@
                                     :update-obj="current"
                                     index="autoModelFk"
                                     :hide-title="true"
-                                    :holder-num=0
+                                    :holder-num="current.autoModelFk"
                             />
                         </td>
                         <td v-if="!current.editRow">{{ADDITIONAL_DATA.engine.find(elem=>
@@ -295,16 +295,16 @@
                                     :update-obj="current"
                                     index="engineFk"
                                     :hide-title="true"
-                                    :holder-num=0
+                                    :holder-num="current.engineFk"
                             />
                         </td>
                         <td v-if="!current.editRow">{{current.releaseYearFrom}}</td>
                         <td v-if="current.editRow">
-                            <input type="text" class="form-control" v-model="current.releaseYearFrom">
+                            <input max="2020" min="1895" :placeholder="current.releaseYearFrom" type="number" class="form-control" v-model="current.releaseYearFrom">
                         </td>
                         <td v-if="!current.editRow">{{current.releaseYearBy}}</td>
                         <td v-if="current.editRow">
-                            <input type="text" class="form-control" v-model="current.releaseYearBy">
+                            <input max="2020" min="1895" :placeholder="current.releaseYearBy" type="number" class="form-control" v-model="current.releaseYearBy">
                         </td>
                         <td>
                             <button type="button " v-if="!current.editRow"
@@ -462,6 +462,30 @@
                 'GET_ALL_ADDITIONAL_DATA'
 
             ]),
+            countDownChangedErr(dismissCountDown) {
+                this.dismissCountDownErr = dismissCountDown
+            },
+            countDownChangedSucc(dismissCountDown) {
+                this.dismissCountDownSucc = dismissCountDown
+            },
+            countDownChangedSuccUpd(dismissCountDown) {
+                this.dismissCountDownSuccUpd = dismissCountDown
+            },
+            countDownChangedErrUpd(dismissCountDown) {
+                this.dismissCountDownErrUpd = dismissCountDown
+            },
+            showAlertErr() {
+                this.dismissCountDownErr = this.dismissSecsErr
+            },
+            showAlertSucc() {
+                this.dismissCountDownSucc = this.dismissSecsSucc
+            },
+            showAlertSuccUpd() {
+                this.dismissCountDownSuccUpd = this.dismissSecsSuccUpd
+            },
+            showAlertErrUpd() {
+                this.dismissCountDownErrUpd = this.dismissSecsErrUpd
+            },
             setDataList(tempList) {
                 this.dataList = tempList;
             },
@@ -506,10 +530,9 @@
 
                 if (dupAutoM === undefined && dupAutoModel === undefined && dupEngine === undefined) {
                     this.showErr = false
-                    await this.SAVE_DATA_AUTOMOBILE_ENGINE(this.saveDataObj);
+                    await this.SAVE_DATA_AUTOMOBILE_ENGINE(this.saveDataObj)
                     this.showAlertSucc()
-                    this.GET_ALL_ADDITIONAL_DATA();
-
+                    this.GET_ALL_ADDITIONAL_DATA()
                 } else {
                     this.showAlertErr()
                 }
