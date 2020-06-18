@@ -21,7 +21,15 @@
     #app {
 
     }
+    .el-table .warning-row {
+        background: #fde3e3;
+    }
 
+
+
+    .el-table .success-row {
+        background: #e2f3d9;
+    }
 
     .container {
         margin-top: 10px;

@@ -12,9 +12,14 @@
                    role="tab" aria-controls="profile" aria-selected="false">{{$ml.get('word.save')}}</a>
             </li>
             <li class="nav-item">
-                <a  class="nav-link" id="contact-tabengine" ref="updateTab" data-toggle="tab"
+                <a class="nav-link" id="contact-tabengine" ref="updateTab" data-toggle="tab"
                    :href="'#c'+nameTitle"
                    role="tab" aria-controls="contact" aria-selected="false">{{$ml.get('word.update')}}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="importTab" ref="importTab" data-toggle="tab"
+                   :href="'#i'+nameTitle" v-on:click="cancelSave" @click="cancel"
+                   role="tab" aria-controls="import" aria-selected="false">{{$ml.get('word.importFile')}}</a>
             </li>
         </ul>
         <div class="tab-content" id="myTabContentengine" style="border: white">
@@ -24,7 +29,12 @@
                     <div class="title-bord col-md-2">
                         <h4> {{nameTitle}}</h4>
                     </div>
-                    <div class="col-md-5"></div>
+                    <div class="col-md-3"></div>
+                    <div class="col-md-2">
+                        <b-button block variant="outline-secondary" v-on:click="onexport">
+                            {{$ml.get('word.exportFile')}}
+                        </b-button>
+                    </div>
                     <div class="input-group col-md-5">
                         <div class="input-group-prepend ">
                             <label class="input-group-text bg-white  "
@@ -54,7 +64,8 @@
                 </div>
                 <b-table class="my-table-scroll" no-border-collapse hover
                          @row-dblclicked="(item) => link( item)"
-                         sticky-header="650px" :items="listForSearch.filter(elem=>{return elem.data!=='не задано'})" :fields="[
+                         sticky-header="650px" :items="listForSearch.filter(elem=>{return elem.data!=='не задано'})"
+                         :fields="[
                 { key: 'index', label:'№' },
                 { key: 'data', label: $ml.get('word.name'), sortable: true },
                 { key: 'status', label: $ml.get('word.status'), sortable: true }]">
@@ -249,14 +260,73 @@
                     <div class="col-md-3"></div>
                 </div>
             </div>
+            <div class="tab-pane fade" :id="'i'+nameTitle" role="tabpanel"
+                 aria-labelledby="import-tab">
+                <div class="upload-box">
+                    <div class="row import-page-btn">
+                        <div class="col-md-2 title-bord">
+                                <h4> {{nameTitle}}</h4>
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-4">
+                            <el-upload
+                                    :file-list="listFile"
+                                    :show-file-list="false"
+                                    class="upload-demo"
+                                    :on-change="handleChange"
+                                    :on-remove="handleRemove"
+                                    :on-exceed="handleExceed"
+                                    :limit="limitUpload"
+                                    accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
+                                    :auto-upload="false">
+                                <button class="btn  btn-block   btn-primary" style="width: 20vw">
+                                    {{$ml.get('word.clickToUpload')}}
+                                </button>
+                            </el-upload>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn  btn-block   btn-success" :class="{disabled:(da===null)}"  type="button"
+                                    @click="importFile"
+                            >
+                         <span>{{$ml.get('word.importFile')}}
+                        </span>
+                            </button>
+                        </div>
+                        <div class="col-md-2 ">
+                            <button class="btn  btn-block  btn-danger"  :class="{disabled:(da===null)}" type="button"
+                                    @click="cancelInport"
+                            >
+                         <span>{{$ml.get('word.cancel')}}
+                        </span>
+                            </button>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                </div>
+                <hr/>
+                <el-table
+                        empty-text="пусто"
+                        height="600" :data="da"
+                        :row-class-name="tableRowClassName">
+                    <el-table-column prop="id" label="#">
+                    </el-table-column>
+                    <el-table-column prop="data" :label="$ml.get('word.name')">
+                    </el-table-column>
+                    <el-table-column prop="status" :label="$ml.get('word.status')">
+                    </el-table-column>
+                </el-table>
+
+            </div>
         </div>
     </div>
 </template>
+
 
 <script>
     import {mapActions, mapGetters} from "vuex";
     import VueDatalist from "../input/vue-datalist";
     import InputField from "../input/input-field";
+    import XLSX from 'xlsx'
 
 
     export default {
@@ -274,14 +344,26 @@
                 updateData: null,
                 status: 1
             },
-
+            Datas: {
+                // We will make a Workbook contains 2 Worksheets
+                'animals': [
+                    {"name": "cat", "category": "animal"}
+                    , {"name": "dog", "category": "animal"}
+                    , {"name": "pig", "category": "animal"}
+                ],
+                'pokemons': [
+                    {"name": "pikachu", "category": "pokemon"}
+                    , {"name": "Arbok", "category": "pokemon"}
+                    , {"name": "Eevee", "category": "pokemon"}
+                ]
+            },
             dismissSecsErr: 1.2,
             dismissCountDownErr: 0,
             dismissSecsSucc: 1.2,
             dismissCountDownSucc: 0,
             dismissSecsErrUpd: 1.2,
             dismissCountDownErrUpd: 0,
-            dismissSecsSuccUpd:1.2,
+            dismissSecsSuccUpd: 1.2,
             dismissCountDownSuccUpd: 0,
             showDismissibleAlert: false,
             tempUpdateObj: {
@@ -289,6 +371,14 @@
                 updateData: null,
                 status: 1
             },
+            limitUpload: 100,
+            fileTemp: null,
+            file: null,
+            listFile: null,
+            da: null,
+            dalen: 0,
+            test: null,
+            testlist: [],
             cleanInputList: false,
             search: ''
         }),
@@ -307,6 +397,7 @@
             ...mapActions([
                 'GET_ALL_ADDITIONAL_DATA'
             ]),
+
             countDownChangedErr(dismissCountDown) {
                 this.dismissCountDownErr = dismissCountDown
             },
@@ -335,6 +426,17 @@
                 this.search = '';
                 this.filterResults();
             },
+            // eslint-disable-next-line no-unused-vars
+            tableRowClassName({row, rowIndex}) {
+                let temp = this.dataList.find(item =>
+                    item.data === row.data
+                );
+                if (temp !== undefined) {
+                    return 'warning-row';
+                } else {
+                    return 'success-row';
+                }
+            },
             onChange() {
                 this.filterResults();
             }, filterResults() {
@@ -354,11 +456,128 @@
                 this.tempUpdateObj.objToBeChanged = 0
                 console.log(1)
             },
+            cancelInport() {
+                this.listFile = null
+                this.fileTemp = null
+                this.da = null
+                this.file = null
+            },
             cancelSave() {
                 this.cleanInputList = !this.cleanInputList;
                 this.saveDataObj.saveData = null;
                 this.saveDataObj.status = 1;
             },
+            onexport() { // On Click Excel download button
+
+                // export json to Worksheet of Excel
+                // only array possible
+                var animalWS = XLSX.utils.json_to_sheet(this.dataList, {header: ["id", "data", "secondary_data", "status"]})
+
+                // A workbook is the name given to an Excel file
+                var wb = XLSX.utils.book_new() // make Workbook of Excel
+
+                // add Worksheet to Workbook
+                // Workbook contains one or more worksheets
+                XLSX.utils.book_append_sheet(wb, animalWS, 'animals') // sheetAName is name of Worksheet
+
+                // export Excel file
+                XLSX.writeFile(wb, this.nameTitle + '.xlsx') // name of the file is 'book.xlsx'
+            },
+
+            // eslint-disable-next-line no-unused-vars
+            handleChange(file, fileList) {
+                this.fileTemp = file.raw;
+                if (this.fileTemp) {
+                    if ((this.fileTemp.type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+                        || (this.fileTemp.type == 'application/vnd.ms-excel')) {
+                        this.importfxx(this.fileTemp);
+                    } else {
+                        this.$message({
+                            type: 'warning',
+                            message: 'ошибка！'
+                        })
+                    }
+                } else {
+                    this.$message({
+                        type: 'warning',
+                        message: 'ошибка'
+                    })
+                }
+            },
+            handleExceed() {
+                this.$message({
+                    type: 'warning',
+                    message: 'ошибка！'
+                })
+                return;
+            },
+            // eslint-disable-next-line no-unused-vars
+            handleRemove(file, fileList) {
+                this.fileTemp = null
+                this.da = null
+            },
+            // eslint-disable-next-line no-unused-vars
+            importfxx(obj) {
+                let _this = this;
+                // eslint-disable-next-line no-unused-vars
+                let inputDOM = this.$refs.inputer;
+
+                this.file = event.currentTarget.files[0];
+
+                var rABS = false;
+                var f = this.file;
+
+                var reader = new FileReader();
+                //if (!FileReader.prototype.readAsBinaryString) {
+                FileReader.prototype.readAsBinaryString = function (f) {
+                    var binary = "";
+                    var rABS = false;
+                    // eslint-disable-next-line no-unused-vars
+                    var pt = this;
+                    var wb;
+                    var outdata;
+                    var reader = new FileReader();
+                    // eslint-disable-next-line no-unused-vars
+                    reader.onload = function (e) {
+                        var bytes = new Uint8Array(reader.result);
+                        var length = bytes.byteLength;
+                        for (var i = 0; i < length; i++) {
+                            binary += String.fromCharCode(bytes[i]);
+                        }
+                        var XLSX = require("xlsx");
+                        if (rABS) {
+                            // eslint-disable-next-line no-undef
+                            wb = XLSX.read(btoa(fixdata(binary)), {
+                                type: "base64"
+                            });
+                        } else {
+                            wb = XLSX.read(binary, {
+                                type: "binary"
+                            });
+                        }
+                        outdata = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+                        console.log(outdata);
+                        let arr = [];
+                        outdata.map(v => {
+                            let obj = {}
+                            obj.id = v['id']
+                            obj.data = v['data']
+                            obj.status = v['status']
+                            arr.push(obj)
+                        });
+                        _this.da = arr;
+                        _this.dalen = arr.length;
+                        return arr;
+                    };
+                    reader.readAsArrayBuffer(f);
+                };
+                if (rABS) {
+                    reader.readAsArrayBuffer(f);
+                } else {
+                    reader.readAsBinaryString(f);
+                }
+            },
+
             async save(number) {
 
                 let temp = this.dataList.find(item =>
@@ -371,7 +590,7 @@
                         }
                         this.$emit("save-data-api", this.saveDataObj);
                         this.showAlertSucc()
-                       await setTimeout(() => console.log('1'), 1500);
+                        await setTimeout(() => console.log('1'), 1500);
                         this.GET_ALL_ADDITIONAL_DATA();
                     }
 
@@ -393,6 +612,27 @@
 
                 console.log(1)
             },
+            async importFile() {
+                let importList = [];
+                this.da.forEach(v => {
+                        let temp = this.dataList.find(item =>
+                            item.data === v.data
+                        );
+                        if (temp === undefined) {
+                            let obj = {}
+                            obj.saveData = v['data']
+                            obj.status = this.PARAM_NAME_AND_UNITS.status.find(item => item.data === v.status).id
+                            this.dataList.push(v)
+                            importList.push(obj)
+                        }
+                    }
+                )
+
+                await this.$emit("import-data-api", {list: importList});
+                this.$message({
+                    message: this.$ml.get('word.dataAddSuccess'),
+                    type: 'success'
+                });            },
             async update(number) {
                 if (this.updateDataObj.objToBeChanged != null) {
                     if (this.updateDataObj.status === null) {
@@ -411,7 +651,8 @@
         },
         mounted() {
             this.listForSearch = this.dataList;
-        },
+        }
+        ,
         watch: {
             dataList: function (val) {
                 if (val !== null || val !== undefined)
@@ -451,4 +692,11 @@
         border-color: lightgray;
         border-width: 0px 2px 0px 0px;
     }
+
+
+    .import-page-btn {
+        padding-top: 3%;
+    }
+
+
 </style>

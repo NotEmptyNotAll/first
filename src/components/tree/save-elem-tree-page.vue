@@ -598,9 +598,9 @@
 
     #treelogo {
         position: absolute;
-        left: 25%;
-        right: 25%;
-        width: 50%;
+        left: 20%;
+        right: 20%;
+        width: 60%;
         top: 0px;
         height: 40px;
         background: lightslategrey;

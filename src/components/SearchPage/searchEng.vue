@@ -73,8 +73,8 @@
                     </tr>
                     </tbody>
                 </table>
-                <div v-if="SHOW_LOAD || ELEMENTS_LOAD" class="lds-dual-ring-black"
-                     style="position: absolute;bottom: 1vh; right: 50%; "></div>
+                <div v-if="SHOW_LOAD || ELEMENTS_LOAD"  class="lds-dual-ring-black"
+                     style="position: absolute;bottom: 0vh; right: 50%; "></div>
             </div>
 
             <!--recursive tree of objects. Most likely it will look different-->

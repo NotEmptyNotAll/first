@@ -71,7 +71,10 @@ export default new MLCreate({
                 shortName:'short name',
                 cancel:'cancel',
                 dataAddSuccess:'data added successfully',
-                fullName:'full name'
+                fullName:'full name',
+                importFile:'import',
+                exportFile:'export file',
+                clickToUpload:"click to upload"
             },
             msg: {
                 passwordErr: 'password is required!',
@@ -151,8 +154,10 @@ export default new MLCreate({
                 shortName:'короткое назание',
                 cancel:'Отмена',
                 dataAddSuccess:'данные успешно добавлены',
-                fullName:'полное название'
-
+                fullName:'полное название',
+                importFile:'импорт',
+                exportFile:'экспортировать файл',
+                clickToUpload:"нажмите, чтобы загрузить"
             },
             msg: {
                 passwordErr: "Пароль необходим!",
@@ -232,14 +237,17 @@ export default new MLCreate({
                 shortName:'коротка назва',
                 cancel:'скасувати',
                 dataAddSuccess:'дані успішно додані',
-                fullName:'повна назва'
-
+                fullName:'повна назва',
+                importFile:'імпорт',
+                exportFile:'експортувати файл',
+                clickToUpload:"натисніть для завантаження"
             },
             msg: {
                 passwordErr: 'Пароль необхідний!',
                 userNamedErr: 'Ім\'я користувача обов\'язкове!',
                 authErr: 'Помилка авторизації',
-                duplicateValue:'повторюване значення'
+                duplicateValue:'повторюване значення',
+                formatIsIncorrect:"Формат вкладених файлів невірний. Видаліть і повторно завантажте!"
             },
             errPage: {
                 logoText: 'помилка',
