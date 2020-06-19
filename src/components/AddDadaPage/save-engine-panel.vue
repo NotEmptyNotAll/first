@@ -17,6 +17,11 @@
                         class="nav-link" id="contact-tabengine" ref="updateTab" data-toggle="tab" :href="'#c'+nameTitle"
                         role="tab" aria-controls="contact" aria-selected="false">{{$ml.get('word.update')}}</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab"
+                   :href="'#inp'+nameTitle" @click="cancel"
+                   role="tab" aria-controls="impr" aria-selected="false">{{$ml.get('word.importFile')}}</a>
+            </li>
         </ul>
         <div class="tab-content" id="myTabContentengine" style="border: white">
             <div class="tab-pane fade show active" :id="'h'+nameTitle" role="tabpanel"
@@ -25,51 +30,41 @@
                     <div class="title-bord col-md-2">
                         <h4> {{nameTitle}}</h4>
                     </div>
-                    <div class="col-md-5"></div>
-                    <div class="input-group col-md-5">
-                        <div class="input-group-prepend ">
-                            <label class="input-group-text  bg-white "
-                                   for="vue-list-input1"
-                            >{{$ml.get('word.search')}}</label>
-                        </div>
-                        <input
-                                v-model="search"
-                                id="vue-list-input1"
-                                autocomplete="off"
-                                class="form-control"
-                                type="text"
-                                placeholder=" "
-                                v-on:input="onChange"
-                                v-on:click="onChange"
-
-                        />
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-danger"
-                                    v-on:click="clear"
-                                    type="button">
-                                <span>&#10008;</span>
-                            </button>
-                        </div>
-
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-2">
+                        <el-button plain type="info" style="width: 100%; font-size: 16px" v-on:click="onexport">
+                            {{$ml.get('word.exportFile')}}
+                        </el-button>
+                    </div>
+                    <div class="col-md-2">
+                        <el-dropdown style="width: 100%" :hide-on-click="false">
+                            <el-button type="primary" style="width: 100%; font-size: 16px">
+                                {{$ml.get('word.column')}}
+                                <i class="el-icon-arrow-down el-icon--right"></i>
+                            </el-button>
+                            <el-dropdown-menu style="width: 11vw;" slot="dropdown">
+                                <el-checkbox-group :min="1"
+                                                   v-model="checkedColumns" @change="handleCheckedColumnChange">
+                                    <el-checkbox v-for="column in columns" style="padding-left: 2vw" :label="column"
+                                                 :key="column">{{column}}
+                                    </el-checkbox>
+                                </el-checkbox-group>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </div>
+                    <div class="input-group col-md-4">
+                        <el-input :placeholder="$ml.get('word.search')" v-model="search"
+                                  v-on:input="onChange"
+                                  v-on:click="onChange" class="input-with-select" clearable>
+                            <el-button slot="prepend" icon="el-icon-search"></el-button>
+                        </el-input>
                     </div>
                 </div>
                 <b-table class="my-table-scroll" no-border-collapse hover
                          sticky-header="650px" :items="dataList"
                          @row-dblclicked="(item) => link( item)"
-                         :fields="[{ key: 'index', label:'№' },
-                { key: 'data', label: $ml.get('word.engine'), sortable: true },
-                { key: 'engineManufacturer', label: $ml.get('word.engineManufacture'), sortable: true },
-                { key: 'cylindersPlacement', label: $ml.get('word.cylinders'), sortable: true },
-                { key: 'fuelType', label: $ml.get('word.fuelType'), sortable: true },
-                { key: 'powerKwt', label:$ml.get('word.powerKwt'), sortable: true },
-                { key: 'engineCapacity', label: $ml.get('word.engineCapacity'), sortable: true },
-                { key: 'flapNumber', label: $ml.get('word.flapNumber'), sortable: true },
-                { key: 'cylindersNumber', label:$ml.get('word.cylindersNumber'), sortable: true },
-                { key: 'horsepower', label: $ml.get('word.horsepower'), sortable: true },
-                { key: 'superchargedType', label: $ml.get('word.superchargedType'), sortable: true },
-                { key: 'releaseYearFrom', label: $ml.get('word.releaseYearFrom'), sortable: true },
-                { key: 'releaseYearBy', label: $ml.get('word.releaseYearBy'), sortable: true },
-                { key: 'status', label: $ml.get('word.status'), sortable: true }]">
+                         :fields="tableColumns">
 
                     <template v-slot:cell(index)="data">
                         {{ data.index + 1 }}
@@ -463,6 +458,90 @@
                 </div>
                 <hr/>
             </div>
+            <div class="tab-pane fade" :id="'inp'+nameTitle" role="tabpanel"
+                 aria-labelledby="impr-tab">
+                <div class="upload-box">
+                    <div class="row import-page-btn">
+                        <div class="col-md-2 title-bord">
+                            <h4> {{nameTitle}}</h4>
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-4">
+                            <el-upload
+                                    :file-list="listFile"
+                                    :show-file-list="false"
+                                    class="upload-demo"
+                                    :on-change="handleChange"
+                                    :on-remove="handleRemove"
+                                    :on-exceed="handleExceed"
+                                    :limit="limitUpload"
+                                    accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
+                                    :auto-upload="false">
+                                <button class="btn  btn-block   btn-outline-dark" style="width: 20vw">
+                                    {{$ml.get('word.clickToUpload')}}
+                                </button>
+                            </el-upload>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn  btn-block   btn-secondary" :class="{disabled:(da===null)}" type="button"
+                                    @click="importFile"
+                            >
+                         <span>{{$ml.get('word.importFile')}}
+                        </span>
+                            </button>
+                        </div>
+                        <div class="col-md-2 ">
+                            <button class="btn  btn-block  btn-danger" :class="{disabled:(da===null)}" type="button"
+                                    @click="cancelInport"
+                            >
+                         <span>{{$ml.get('word.cancel')}}
+                        </span>
+                            </button>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                </div>
+                <hr/>
+                <el-table
+                        empty-text="пусто"
+                        height="600" :data="da"
+                        :row-class-name="tableRowClassName">
+                    <el-table-column prop="id" label="№">
+                    </el-table-column>
+                    <el-table-column prop="data" :label="$ml.get('word.engine')">
+                    </el-table-column>
+                    <el-table-column prop="engineManufacturer" :label="$ml.get('word.engineManufacture')">
+                    </el-table-column>
+                    <el-table-column prop="cylindersPlacement" :label="$ml.get('word.cylinders')">
+                    </el-table-column>
+                    <el-table-column prop="fuelType" :label="$ml.get('word.fuelType')">
+                    </el-table-column>
+                    <el-table-column prop="superchargedType" :label="$ml.get('word.superchargedType')">
+                    </el-table-column>
+                    <el-table-column prop="cylindersNumber" :label="$ml.get('word.cylindersNumber')">
+                    </el-table-column>
+                    <el-table-column prop="pistonDiameter" :label="$ml.get('word.pistonDiameter')">
+                    </el-table-column>
+                    <el-table-column prop="flapNumber" :label="$ml.get('word.flapNumber')">
+                    </el-table-column>
+                    <el-table-column prop="engineCapacity" :label="$ml.get('word.engineCapacity')">
+                    </el-table-column>
+                    <el-table-column prop="pistonStroke" :label="$ml.get('word.pistonStroke')">
+                    </el-table-column>
+                    <el-table-column prop="powerKwt" :label="$ml.get('word.powerKwt')">
+                    </el-table-column>
+                    <el-table-column prop="horsepower" :label="$ml.get('word.horsepower')">
+                    </el-table-column>
+                    <el-table-column prop="degreeCompression" :label="$ml.get('word.degreeCompression')">
+                    </el-table-column>
+                    <el-table-column prop="releaseYearBy" :label="$ml.get('word.releaseYearBy')">
+                    </el-table-column>
+                    <el-table-column prop="releaseYearFrom" :label="$ml.get('word.releaseYearFrom')">
+                    </el-table-column>
+                    <el-table-column prop="status" :label="$ml.get('word.status')">
+                    </el-table-column>
+                </el-table>
+            </div>
         </div>
     </div>
 </template>
@@ -472,6 +551,7 @@
     import InputField from "../input/input-field";
     import {mapActions, mapGetters, mapMutations} from "vuex";
     import {MLBuilder} from 'vue-multilanguage'
+    import XLSX from "xlsx";
 
     export default {
         name: "save-engine-panel",
@@ -537,7 +617,21 @@
             search: '',
             test: null,
             showDismissibleAlert: false,
-            cleanInputList: false
+            cleanInputList: false,
+            columnOptions: [],
+            columns: [],
+            limitUpload: 100,
+            fileTemp: null,
+            file: null,
+            listFile: null,
+            da: null,
+            dalen: 0,
+            testlist: [],
+            checkedColumns: [],
+            isIndeterminate: true,
+            checkAll: false,
+            tableColumns: [],
+            allTableColumns: []
         }),
         props: {
             nameTitle: String,
@@ -550,6 +644,7 @@
                 'ADDITIONAL_DATA',
                 'UPDATE_ENGINE',
                 'ENGINE',
+                'PARAM_NAME_AND_UNITS',
                 'LOAD_ADDITIONAL_DATA'
             ]),
             mlmyMessage: function () {
@@ -564,6 +659,225 @@
             ...mapMutations({
                 cylindersPlacementFk: 'SET_UPDATE_CYLINDERS'
             }),
+            // eslint-disable-next-line no-unused-vars
+            tableRowClassName({row, rowIndex}) {
+                let temp = this.dataList.find(item =>
+                    item.data === row.data
+                );
+                if (temp !== undefined) {
+                    return 'warning-row';
+                } else {
+                    return 'success-row';
+                }
+            },
+            onexport() { // On Click Excel download button
+
+                // export json to Worksheet of Excel
+                // only array possible
+                let arr = []
+                this.dataList.map(elem => {
+                    let obj = {}
+                    if (elem.data !== "не задано") {
+                        obj['№'] = elem.id
+                        obj[this.$ml.get('word.engine')] = elem.data
+                        obj[this.$ml.get('word.engineManufacture')] = elem.engineManufacturer
+                        obj[this.$ml.get('word.cylinders')] = elem.cylindersPlacement
+                        obj[this.$ml.get('word.fuelType')] = elem.fuelType
+                        obj[this.$ml.get('word.superchargedType')] = elem.superchargedType
+                        obj[this.$ml.get('word.cylindersNumber')] = elem.cylindersNumber
+                        obj[this.$ml.get('word.pistonDiameter')] = elem.pistonDiameter
+                        obj[this.$ml.get('word.flapNumber')] = elem.flapNumber
+                        obj[this.$ml.get('word.engineCapacity')] = elem.engineCapacity
+                        obj[this.$ml.get('word.pistonStroke')] = elem.pistonStroke
+                        obj[this.$ml.get('word.powerKwt')] = elem.powerKwt
+                        obj[this.$ml.get('word.horsepower')] = elem.horsepower
+                        obj[this.$ml.get('word.degreeCompression')] = elem.degreeCompression
+                        obj[this.$ml.get('word.releaseYearBy')] = elem.releaseYearBy
+                        obj[this.$ml.get('word.releaseYearFrom')] = elem.releaseYearFrom
+                        obj[this.$ml.get('word.status')] = elem.status
+                        arr.push(obj)
+                    }
+                });
+                var animalWS = XLSX.utils.json_to_sheet(arr)
+
+                // A workbook is the name given to an Excel file
+                var wb = XLSX.utils.book_new() // make Workbook of Excel
+
+                // add Worksheet to Workbook
+                // Workbook contains one or more worksheets
+                XLSX.utils.book_append_sheet(wb, animalWS, 'animals') // sheetAName is name of Worksheet
+
+                // export Excel file
+                XLSX.writeFile(wb, this.nameTitle + '.xlsx') // name of the file is 'book.xlsx'
+            },
+            cancelInport() {
+                this.listFile = null
+                this.fileTemp = null
+                this.da = null
+                this.file = null
+            },
+            // eslint-disable-next-line no-unused-vars
+            handleChange(file, fileList) {
+                this.fileTemp = file.raw;
+                if (this.fileTemp) {
+                    if ((this.fileTemp.type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+                        || (this.fileTemp.type == 'application/vnd.ms-excel')) {
+                        this.importfxx(this.fileTemp);
+                    } else {
+                        this.$message({
+                            type: 'warning',
+                            message: 'ошибка！'
+                        })
+                    }
+                } else {
+                    this.$message({
+                        type: 'warning',
+                        message: 'ошибка'
+                    })
+                }
+            },
+            handleExceed() {
+                this.$message({
+                    type: 'warning',
+                    message: 'ошибка！'
+                })
+                return;
+            },
+            // eslint-disable-next-line no-unused-vars
+            handleRemove(file, fileList) {
+                this.fileTemp = null
+                this.da = null
+            },
+            async importFile() {
+                let importList = [];
+                this.da.forEach(v => {
+                        let temp = this.dataList.find(item =>
+                            item.data === v.data
+                        );
+                        if (temp === undefined) {
+                            let obj = {}
+                            obj.engineType = v['data']
+                            obj.engineManufacturerFk = this.ADDITIONAL_DATA.engineManufacture.find(item => item.data === v['engineManufacturer']).id
+                            obj.cylindersPlacementFk = this.ADDITIONAL_DATA.cylinders.find(item => item.data === v['cylindersPlacement']).id
+                            obj.fuelTypeFk =this.ADDITIONAL_DATA.fuelType.find(item => item.data ===  v[('fuelType')]).id
+                            obj.superchargedTypeFk =this.ADDITIONAL_DATA.superchargeType.find(item => item.data ===  v['superchargedType']).id
+                            obj.cylindersNumber = v['cylindersNumber']
+                            obj.pistonDiameter = v['pistonDiameter']
+                            obj.flapNumber = v['flapNumber']
+                            obj.engineCapacity = v['engineCapacity']
+                            obj.pistonStroke = v['pistonStroke']
+                            obj.powerKwt = v['powerKwt']
+                            obj.horsepower = v['horsepower']
+                            obj.degreeCompression = v['degreeCompression']
+                            obj.releaseYearBy = v['releaseYearBy']
+                            obj.releaseYearFrom = v['releaseYearFrom']
+                            alert('1')
+                            obj.status = this.PARAM_NAME_AND_UNITS.status.find(item => item.data === v.status).id
+                            alert('1')
+
+                            obj.engineManufacturer = this.ADDITIONAL_DATA.engineManufacture.find(item => item.data === v['engineManufacturer']).id
+                            obj.cylindersPlacement = this.ADDITIONAL_DATA.cylinders.find(item => item.data === v['cylindersPlacement']).id
+                            obj.fuelType =this.ADDITIONAL_DATA.fuelType.find(item => item.data ===  v[('fuelType')]).id
+                            obj.superchargedType =this.ADDITIONAL_DATA.superchargeType.find(item => item.data ===  v['superchargedType']).id
+                            alert('1')
+
+                            this.dataList.push(v)
+                            importList.push(obj)
+                        }
+                    }
+                )
+
+                await this.$emit("import-data-api", {list: importList});
+                this.$message({
+                    message: this.$ml.get('word.dataAddSuccess'),
+                    type: 'success'
+                });
+            },
+            // eslint-disable-next-line no-unused-vars
+            importfxx(obj) {
+                let _this = this;
+                // eslint-disable-next-line no-unused-vars
+                let inputDOM = this.$refs.inputer;
+
+                this.file = event.currentTarget.files[0];
+
+                var rABS = false;
+                var f = this.file;
+
+                var reader = new FileReader();
+                //if (!FileReader.prototype.readAsBinaryString) {
+                FileReader.prototype.readAsBinaryString = function (f) {
+                    var binary = "";
+                    var rABS = false;
+                    // eslint-disable-next-line no-unused-vars
+                    var pt = this;
+                    var wb;
+                    var outdata;
+                    var reader = new FileReader();
+                    // eslint-disable-next-line no-unused-vars
+                    reader.onload = function (e) {
+                        var bytes = new Uint8Array(reader.result);
+                        var length = bytes.byteLength;
+                        for (var i = 0; i < length; i++) {
+                            binary += String.fromCharCode(bytes[i]);
+                        }
+                        var XLSX = require("xlsx");
+                        if (rABS) {
+                            // eslint-disable-next-line no-undef
+                            wb = XLSX.read(btoa(fixdata(binary)), {
+                                type: "base64"
+                            });
+                        } else {
+                            wb = XLSX.read(binary, {
+                                type: "binary"
+                            });
+                        }
+                        outdata = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+                        console.log(outdata);
+                        let arr = [];
+                        outdata.map(v => {
+                            let obj = {}
+                            obj.id = v['№']
+                            obj.data = v[_this.$ml.get('word.engine')]
+                            obj.engineManufacturer = v[_this.$ml.get('word.engineManufacture')]
+                            obj.cylindersPlacement = v[_this.$ml.get('word.cylinders')]
+                            obj.fuelType = v[_this.$ml.get('word.fuelType')]
+                            obj.superchargedType = v[_this.$ml.get('word.superchargedType')]
+                            obj.cylindersNumber = v[_this.$ml.get('word.cylindersNumber')]
+                            obj.pistonDiameter = v[_this.$ml.get('word.pistonDiameter')]
+                            obj.flapNumber = v[_this.$ml.get('word.flapNumber')]
+                            obj.engineCapacity = v[_this.$ml.get('word.engineCapacity')]
+                            obj.pistonStroke = v[_this.$ml.get('word.pistonStroke')]
+                            obj.powerKwt = v[_this.$ml.get('word.powerKwt')]
+                            obj.horsepower = v[_this.$ml.get('word.horsepower')]
+                            obj.degreeCompression = v[_this.$ml.get('word.degreeCompression')]
+                            obj.releaseYearBy = v[_this.$ml.get('word.releaseYearBy')]
+                            obj.releaseYearFrom = v[_this.$ml.get('word.releaseYearFrom')]
+                            obj.status = v[_this.$ml.get('word.status')]
+                            arr.push(obj)
+                        });
+                        _this.da = arr;
+                        _this.dalen = arr.length;
+                        return arr;
+                    };
+                    reader.readAsArrayBuffer(f);
+                };
+                if (rABS) {
+                    reader.readAsArrayBuffer(f);
+                } else {
+                    reader.readAsBinaryString(f);
+                }
+            },
+            handleCheckedColumnChange(value) {
+                let checkedCount = value.length;
+                this.tableColumns = []
+                value.forEach(elem => {
+                        this.tableColumns.push(this.allTableColumns.find(item => item.label === elem))
+                    }
+                )
+                this.checkAll = checkedCount === this.columns.length;
+                this.isIndeterminate = checkedCount > 0 && checkedCount < this.columns.length;
+            },
             async clear() {
                 this.search = '';
                 this.filterResults();
@@ -746,6 +1060,57 @@
         },
         watch: {},
         mounted() {
+
+
+            this.checkedColumns = [
+                '№', this.$ml.get('word.engine'), this.$ml.get('word.engineManufacture'),
+                this.$ml.get('word.cylinders'), this.$ml.get('word.fuelType'),
+                this.$ml.get('word.status'),
+                this.$ml.get('word.superchargedType'), this.$ml.get('word.releaseYearFrom'), this.$ml.get('word.releaseYearBy')
+            ];
+            this.columns = [
+                '№', this.$ml.get('word.engine'), this.$ml.get('word.engineManufacture'),
+                this.$ml.get('word.cylinders'), this.$ml.get('word.fuelType'),
+                this.$ml.get('word.powerKwt'), this.$ml.get('word.status'),
+                this.$ml.get('word.engineCapacity'), this.$ml.get('word.flapNumber'),
+                this.$ml.get('word.cylindersNumber'), this.$ml.get('word.horsepower'),
+                this.$ml.get('word.superchargedType'), this.$ml.get('word.releaseYearFrom'),
+                this.$ml.get('word.releaseYearBy'), this.$ml.get('word.degreeCompression')
+            ];
+            this.columnOptions = [
+                '№', this.$ml.get('word.engine'), this.$ml.get('word.engineManufacture'),
+                this.$ml.get('word.cylinders'), this.$ml.get('word.fuelType'),
+                this.$ml.get('word.powerKwt'), this.$ml.get('word.status'),
+                this.$ml.get('word.engineCapacity'), this.$ml.get('word.flapNumber'),
+                this.$ml.get('word.cylindersNumber'), this.$ml.get('word.horsepower'),
+                this.$ml.get('word.superchargedType'), this.$ml.get('word.releaseYearFrom'),
+                this.$ml.get('word.releaseYearBy'), this.$ml.get('word.degreeCompression')];
+            this.tableColumns = [
+                {key: 'index', label: '№', sortable: true},
+                {key: 'data', label: this.$ml.get('word.engine'), sortable: true},
+                {key: 'engineManufacturer', label: this.$ml.get('word.engineManufacture'), sortable: true},
+                {key: 'cylindersPlacement', label: this.$ml.get('word.cylinders'), sortable: true},
+                {key: 'fuelType', label: this.$ml.get('word.fuelType'), sortable: true},
+                {key: 'superchargedType', label: this.$ml.get('word.superchargedType'), sortable: true},
+                {key: 'releaseYearFrom', label: this.$ml.get('word.releaseYearFrom'), sortable: true},
+                {key: 'releaseYearBy', label: this.$ml.get('word.releaseYearBy'), sortable: true},
+                {key: 'status', label: this.$ml.get('word.status'), sortable: true}];
+            this.allTableColumns = [
+                {key: 'index', label: '№', sortable: true},
+                {key: 'data', label: this.$ml.get('word.engine'), sortable: true},
+                {key: 'engineManufacturer', label: this.$ml.get('word.engineManufacture'), sortable: true},
+                {key: 'cylindersPlacement', label: this.$ml.get('word.cylinders'), sortable: true},
+                {key: 'fuelType', label: this.$ml.get('word.fuelType'), sortable: true},
+                {key: 'powerKwt', label: this.$ml.get('word.powerKwt'), sortable: true},
+                {key: 'engineCapacity', label: this.$ml.get('word.engineCapacity'), sortable: true},
+                {key: 'flapNumber', label: this.$ml.get('word.flapNumber'), sortable: true},
+                {key: 'cylindersNumber', label: this.$ml.get('word.cylindersNumber'), sortable: true},
+                {key: 'degreeCompression', label: this.$ml.get('word.degreeCompression'), sortable: true},
+                {key: 'horsepower', label: this.$ml.get('word.horsepower'), sortable: true},
+                {key: 'superchargedType', label: this.$ml.get('word.superchargedType'), sortable: true},
+                {key: 'releaseYearFrom', label: this.$ml.get('word.releaseYearFrom'), sortable: true},
+                {key: 'releaseYearBy', label: this.$ml.get('word.releaseYearBy'), sortable: true},
+                {key: 'status', label: this.$ml.get('word.status'), sortable: true}];
             this.GET_ALL_PARAM_NAME();
 
         }

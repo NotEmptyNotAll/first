@@ -32,7 +32,7 @@
                     <div class="col-md-2">
                     </div>
                     <div class="col-md-2">
-                        <el-button   plain type="info" style="width: 100%; font-size: 16px" v-on:click="onexport">
+                        <el-button plain type="info" style="width: 100%; font-size: 16px" v-on:click="onexport">
                             {{$ml.get('word.exportFile')}}
                         </el-button>
                     </div>
@@ -42,9 +42,9 @@
                                 {{$ml.get('word.column')}}
                                 <i class="el-icon-arrow-down el-icon--right"></i>
                             </el-button>
-                            <el-dropdown-menu  style="width: 11vw;" slot="dropdown">
-                                <el-checkbox-group     :min="1"
-                                                       v-model="checkedColumns" @change="handleCheckedColumnChange">
+                            <el-dropdown-menu style="width: 11vw;" slot="dropdown">
+                                <el-checkbox-group :min="1"
+                                                   v-model="checkedColumns" @change="handleCheckedColumnChange">
                                     <el-checkbox v-for="column in columns" style="padding-left: 2vw" :label="column"
                                                  :key="column">{{column}}
                                     </el-checkbox>
@@ -286,27 +286,28 @@
                 updateData: null,
                 status: 1
             },
-            columnOptions: [],
-            columns: [],
+
             showDismissibleAlert: false,
             tempUpdateObj: {
                 objToBeChanged: 0,
                 updateData: null,
                 status: 1
             },
+            search: '',
+            test: null,
+            cleanInputList: false,
+            columnOptions: [],
+            columns: [],
             limitUpload: 100,
             fileTemp: null,
             file: null,
             listFile: null,
             da: null,
             dalen: 0,
-            test: null,
             testlist: [],
-            cleanInputList: false,
             checkedColumns: [],
             isIndeterminate: true,
             checkAll: false,
-            search: '',
             tableColumns: [],
             allTableColumns: []
         }),
@@ -329,7 +330,7 @@
                 let checkedCount = value.length;
                 this.tableColumns = []
                 value.forEach(elem => {
-                        this.tableColumns.push(this.allTableColumns.find(item=>item.label===elem))
+                        this.tableColumns.push(this.allTableColumns.find(item => item.label === elem))
                     }
                 )
                 this.checkAll = checkedCount === this.columns.length;

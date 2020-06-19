@@ -23,7 +23,7 @@ let store = new Vuex.Store({
         engine:null,
         loadParamForTree:false,
         showLoad: false,
-        autoEngine: [],
+        autoEngine: null,
         autoEngineLoad: false,
         loadTreeUpdate: false,
         engData: [],

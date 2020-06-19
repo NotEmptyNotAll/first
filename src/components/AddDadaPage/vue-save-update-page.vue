@@ -89,6 +89,7 @@
                                         :load-status="LOAD_SAVE.engine"
                                         @save-data-api="SAVE_DATA_ENGINE"
                                         @update-data-api="UPDATE_DATA_ENGINE"
+                                        @import-data-api="IMPORT_DATA_ENGINE"
                                         :data-list="this.ADDITIONAL_DATA.engine"
                                 />
                             </div>
@@ -121,7 +122,7 @@
                                         :name-panel="$ml.get('word.superchargedType')"
                                         :data-list="ADDITIONAL_DATA.superchargeType"
                                         :load-status="LOAD_SAVE.superchargedType"
-                                        @import-data-api="IMPORT_DATA_SUPERCHARGE_TYPE"
+                                        @import-data-api="IMPORT_DATA_MEASUREMENT_UNITS"
                                         @save-data-api="SAVE_DATA_SUPERCHARGE_TYPE"
                                         @update-data-api="UPDATE_DATA_SUPERCHARGE_TYPE"
 
@@ -144,6 +145,7 @@
                                         :name-title="$ml.get('word.autoEngine')"
                                         :data-list="ADDITIONAL_DATA.autoEng"
                                         :name-panel="$ml.get('word.autoEngine')"
+                                        @import-data-api="IMPORT_DATA_AUTOMOBILE_ENGINE"
                                         :load-status="LOAD_SAVE.automobileEngine"
                                 />
 

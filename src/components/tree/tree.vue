@@ -2,10 +2,10 @@
 
     <ul>
         <li class="border-white bold list-group-item   left"
-            style="position: relative; width: 24vw;padding: 0px; display: flex;align-items: center"
+            style="position: relative; width: 24vw;padding: 0px; display: flex;align-items: center; min-height: 4em "
 
         >
-            <div class="row" style=" padding: 0px ;width:70%;">
+            <div class="row" style=" padding: 0px ;width:100%;">
                 <div class="col-md-8" style="display: flex;align-items: center">
             <span v-show="item.name!=''" @click="toggle" style="padding-left: 1vw">
                 {{ space+item.name }}
@@ -258,7 +258,7 @@
 
     .pos-left {
         position: absolute;
-        right: 0px;
+        right: 5em;
         top: 0;
     }
 
@@ -288,10 +288,9 @@
 
     .posLeft {
         position: absolute;
-        right: 0px;
-        left: 8vw;
+        right: 0;
         bottom: 5px;
-        top: 2.1vh;
+        top: 1.9vh;
     }
 
 

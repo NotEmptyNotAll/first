@@ -313,7 +313,7 @@
                 </table>
                 <hr style="position:center;width:50% "/>
                 <div style="margin-left: 40%; width: 20%;margin-right: 40%;">
-                    <button v-if="!loadStatus && AUTO_ENGINE.length>0"
+                    <button v-if="!loadStatus && AUTO_ENGINE!==null"
                             type="submit"
                             class="btn  btn-block btn-outline-dark"
                             @click="update(1)"
@@ -342,6 +342,7 @@
 
     export default {
         name: "auto-engine-save-panel",
+        // eslint-disable-next-line vue/no-unused-components
         components: {SearchEnginePanel, VueDatalist},
         data: () => ({
             showErr: false,
