@@ -7,7 +7,8 @@
                  <span v-if="LOAD_SAVE_ELEMENTS"><div
                          class="lds-dual-ring " style="margin-left: 47%"></div></span>
                 <h4 v-if="!LOAD_SAVE_ELEMENTS"
-                    style="width: 60%; margin-left: 20%; margin-right: 20%;text-align: center">{{ELEMENTS_UPDATE.name}}</h4>
+                    style="width: 60%; margin-left: 20%; margin-right: 20%;text-align: center">
+                    {{ELEMENTS_UPDATE.name}}</h4>
             </div>
         </div>
         <br/>
@@ -22,7 +23,7 @@
                     index-item="name"
                     index="data"
                     :holder-num=0
-            />
+            ></vue-datalist>
             <div class="col col-md-2">
                 <button class="btn btn-block buttonanim btn-secondary" type="button" data-toggle="collapse"
                         v-on:click="addNewBlock(1)"
@@ -94,7 +95,7 @@
                         </div>
                         <div class="col-md-8">
                             <table class="table table-hover" style="min-height: 10vh">
-                                <thead >
+                                <thead>
                                 <tr>
                                     <th>{{$ml.get('word.name')}}</th>
                                     <th>{{$ml.get('word.units')}}</th>
@@ -159,7 +160,8 @@
                                         <input type="number" class="form-control" v-model="current.doubleNum">
                                     </td>
                                     <td v-if="!current.editRow">{{PARAM_NAME_AND_UNITS.status.find(unit=>
-                                        unit.id===current.status).data}}</td>
+                                        unit.id===current.status).data}}
+                                    </td>
                                     <td v-if="current.editRow">
                                         <input type="text" class="form-control" v-model="current.status">
                                     </td>
@@ -173,7 +175,7 @@
                                                 @click="current.editRow=!current.editRow"
                                         >
                                                 <span>
-                                                  <b-icon icon="pencil" ></b-icon>
+                                                  <b-icon icon="pencil"></b-icon>
                                             </span>
                                         </button>
                                         <button v-if="current.editRow"
@@ -183,7 +185,7 @@
                                                 v-on:click="updateOldParam(current)"
                                         >
                                             <span>
-                                                <p class="h5 mb-2" ><b-icon icon="check" ></b-icon></p>
+                                                <p class="h5 mb-2"><b-icon icon="check"></b-icon></p>
                                             </span>
                                         </button>
                                     </td>
@@ -261,7 +263,7 @@
                                                 @click="current.editRow=!current.editRow"
                                         >
                                             <span>
-                                                  <b-icon icon="pencil" ></b-icon>
+                                                  <b-icon icon="pencil"></b-icon>
                                             </span>
                                         </button>
                                         <button v-if="current.editRow"
@@ -271,7 +273,7 @@
                                                 v-on:click="saveParam(current)"
                                         >
                                             <span>
-                                                <p class="h5 md-2" ><b-icon icon="check" ></b-icon></p>
+                                                <p class="h5 md-2"><b-icon icon="check"></b-icon></p>
                                             </span>
                                         </button>
                                     </td>
@@ -592,8 +594,8 @@
         font-weight: bold;
     }
 
-    a:hover{
-        background:lightgray;
+    a:hover {
+        background: lightgray;
     }
 
     #treelogo {

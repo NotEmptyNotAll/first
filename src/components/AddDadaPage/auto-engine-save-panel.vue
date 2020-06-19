@@ -193,7 +193,7 @@
                     </div>
                     <div class="col-md-3">
 
-                        <button v-if="!loadStatus && !LOAD_ADDITIONAL_DATA" type="submit" @click="saveEngManufacture(1)"
+                        <button v-if="!loadStatus && !LOAD_ADDITIONAL_DATA" type="submit" @click="save(1)"
                                 class="btn btn-outline-dark btn-block">
                             <span>{{$ml.get('word.save')}}</span>
                         </button>
@@ -203,35 +203,6 @@
                         </button>
                     </div>
                     <div class="col-md-3"></div>
-                </div>
-                <div class=" row ">
-
-                    <div class="col-md-3"></div>
-
-                    <b-alert
-                            class="col-md-6"
-                            :show="dismissCountDownErr"
-                            dismissible
-                            variant="danger"
-                            @dismissed="dismissCountDownErr=0"
-                            @dismiss-count-down="countDownChangedErr"
-                    >
-                        <p> {{$ml.get('msg.duplicateValue')}}</p>
-
-                    </b-alert>
-
-                    <b-alert
-                            class="col-md-6"
-                            :show="dismissCountDownSucc"
-                            dismissible
-                            variant="success"
-                            @dismissed="dismissCountDownSucc=0"
-                            @dismiss-count-down="countDownChangedSucc"
-                    >
-                        <p> {{$ml.get('word.dataAddSuccess')}}</p>
-                    </b-alert>
-                    <div class="col-md-3"></div>
-
                 </div>
 
             </div>
@@ -300,11 +271,13 @@
                         </td>
                         <td v-if="!current.editRow">{{current.releaseYearFrom}}</td>
                         <td v-if="current.editRow">
-                            <input max="2020" min="1895" :placeholder="current.releaseYearFrom" type="number" class="form-control" v-model="current.releaseYearFrom">
+                            <input max="2020" min="1895" :placeholder="current.releaseYearFrom" type="number"
+                                   class="form-control" v-model="current.releaseYearFrom">
                         </td>
                         <td v-if="!current.editRow">{{current.releaseYearBy}}</td>
                         <td v-if="current.editRow">
-                            <input max="2020" min="1895" :placeholder="current.releaseYearBy" type="number" class="form-control" v-model="current.releaseYearBy">
+                            <input max="2020" min="1895" :placeholder="current.releaseYearBy" type="number"
+                                   class="form-control" v-model="current.releaseYearBy">
                         </td>
                         <td>
                             <button type="button " v-if="!current.editRow"
@@ -356,24 +329,6 @@
 
                     </button>
                 </div>
-                <div class=" row ">
-
-                    <div class="col-md-3"></div>
-
-                    <b-alert
-                            class="col-md-6"
-                            :show="dismissCountDownSuccUpd"
-                            dismissible
-                            variant="success"
-                            @dismissed="dismissCountDownSuccUpd=0"
-                            @dismiss-count-down="countDownChangedSuccUpd"
-                    >
-                        <p> {{$ml.get('word.dataAddSuccess')}}</p>
-
-                    </b-alert>
-                    <div class="col-md-3"></div>
-
-                </div>
             </div>
         </div>
     </div>
@@ -403,14 +358,6 @@
                 releaseYearFrom: null,
                 releaseYearBy: null,
             },
-            dismissSecsErr: 1.2,
-            dismissCountDownErr: 0,
-            dismissSecsSucc: 1.2,
-            dismissCountDownSucc: 0,
-            dismissSecsErrUpd: 1.2,
-            dismissCountDownErrUpd: 0,
-            dismissSecsSuccUpd: 1.2,
-            dismissCountDownSuccUpd: 0,
             showDismissibleAlert: false,
             mainDataList: null,
             search: '',
@@ -462,30 +409,6 @@
                 'GET_ALL_ADDITIONAL_DATA'
 
             ]),
-            countDownChangedErr(dismissCountDown) {
-                this.dismissCountDownErr = dismissCountDown
-            },
-            countDownChangedSucc(dismissCountDown) {
-                this.dismissCountDownSucc = dismissCountDown
-            },
-            countDownChangedSuccUpd(dismissCountDown) {
-                this.dismissCountDownSuccUpd = dismissCountDown
-            },
-            countDownChangedErrUpd(dismissCountDown) {
-                this.dismissCountDownErrUpd = dismissCountDown
-            },
-            showAlertErr() {
-                this.dismissCountDownErr = this.dismissSecsErr
-            },
-            showAlertSucc() {
-                this.dismissCountDownSucc = this.dismissSecsSucc
-            },
-            showAlertSuccUpd() {
-                this.dismissCountDownSuccUpd = this.dismissSecsSuccUpd
-            },
-            showAlertErrUpd() {
-                this.dismissCountDownErrUpd = this.dismissSecsErrUpd
-            },
             setDataList(tempList) {
                 this.dataList = tempList;
             },
@@ -517,7 +440,7 @@
                 this.$emit("set-list", this.temp);
 
             },
-            async saveEngManufacture(number) {
+            async save(number) {
                 let dupAutoM = this.ADDITIONAL_DATA.autoManufacture.find(item =>
                     item.id === this.saveDataObj.engineType
                 );
@@ -531,10 +454,16 @@
                 if (dupAutoM === undefined && dupAutoModel === undefined && dupEngine === undefined) {
                     this.showErr = false
                     await this.SAVE_DATA_AUTOMOBILE_ENGINE(this.saveDataObj)
-                    this.showAlertSucc()
+                    this.$message({
+                        message: this.$ml.get('word.dataAddSuccess'),
+                        type: 'success'
+                    });
                     this.GET_ALL_ADDITIONAL_DATA()
                 } else {
-                    this.showAlertErr()
+                    this.$message({
+                        message: this.$ml.get('msg.duplicateValue'),
+                        type: 'error'
+                    });
                 }
                 //  this.SAVE_DATA_ENGINE_NUMBER(this.saveDataEngParam);
                 console.log(number)

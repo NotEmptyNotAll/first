@@ -3,6 +3,7 @@
         <!--fields for entering search data.
          Fill with the initial parameters that you get from the backend
           Use a v-model to populate data.-->
+
         <div class="savePageRow row  ">
             <vue-datalist
                     class="col-md-3"
@@ -167,7 +168,7 @@
 
     export default {
         name: "search-engine-panel",
-        components: {ParamElementsInput, VueDatalist, InputField},
+        components: { ParamElementsInput, VueDatalist, InputField},
         data: () => ({
             paramtrs: [],
             choiceParam: [],

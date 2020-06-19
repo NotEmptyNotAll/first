@@ -74,7 +74,8 @@ export default new MLCreate({
                 fullName:'full name',
                 importFile:'import',
                 exportFile:'export file',
-                clickToUpload:"click to upload"
+                clickToUpload:"click to upload",
+                column:"columns"
             },
             msg: {
                 passwordErr: 'password is required!',
@@ -157,7 +158,8 @@ export default new MLCreate({
                 fullName:'полное название',
                 importFile:'импорт',
                 exportFile:'экспортировать файл',
-                clickToUpload:"нажмите, чтобы загрузить"
+                clickToUpload:"нажмите, чтобы загрузить",
+                column:"столбцы"
             },
             msg: {
                 passwordErr: "Пароль необходим!",
@@ -240,7 +242,8 @@ export default new MLCreate({
                 fullName:'повна назва',
                 importFile:'імпорт',
                 exportFile:'експортувати файл',
-                clickToUpload:"натисніть для завантаження"
+                clickToUpload:"натисніть для завантаження",
+                column:"стовпці"
             },
             msg: {
                 passwordErr: 'Пароль необхідний!',

@@ -1,72 +1,35 @@
 <template>
+    <div class="input-group ">
 
+        <el-autocomplete
+                v-if="holderNum===0"
+                clearable
+                style="width: 100%"
+                class="inline-input"
+                v-model="state1"
+                :fetch-suggestions="querySearch"
+                :placeholder="$ml.get('word.data')"
+                @select="handleSelect"
+        >
+            <template v-if="!hideTitle" slot="prepend">
+                <strong class="title" style="font-size: 15px">{{titleInput}}</strong>
+            </template>
+        </el-autocomplete>
+        <el-autocomplete
+                v-if="holderNum!==0"
+                clearable
+                style="width: 100%"
+                class="inline-input"
+                v-model="state1"
+                :fetch-suggestions="querySearch"
+                :placeholder="items.find(e=>e.id===holderNum)[indexItem]"
+                @select="handleSelect"
+        >
+            <template v-if="!hideTitle" slot="prepend">
+                <strong class="title" style="font-size: 15px">{{titleInput}}</strong>
+            </template>
 
-<div class="input-group ">
-        <div v-if="!hideTitle" class="input-group-prepend ">
-            <label class="input-group-text  bg-white " style="font-weight: bold"
-                   :for="'vue-list-input'+titleInput"
-            >
-                {{titleInput}}
-            </label>
-        </div>
-            <input
-                    v-if="holderNum===0"
-                    v-model="search"
-                    v-on:change="chMeth"
-                    :id="'vue-list-input'+titleInput"
-                    autocomplete="off"
-                    class="form-control"
-                    type="text"
-                    placeholder=" "
-                    v-on:input="onChange"
-                    v-on:click="onChange"
-                    v-on:keydown.down="onArrowDown"
-                    v-on:keydown.up="onArrowUp"
-                    v-on:keydown.enter="onEnter"
-            />
-            <input v-if="holderNum!==0"
-                   :id="'vue-list-input'+titleInput"
-                   autocomplete="off"
-                   class="form-control"
-                   type="text"
-                   :placeholder="items.find(e=>e.id===holderNum)[indexItem]"
-                   v-on:change="chMeth"
-                   v-model="search"
-                   v-on:input="onChange"
-                   v-on:click="onChange"
-                   v-on:keydown.down="onArrowDown"
-                   v-on:keydown.up="onArrowUp"
-                   v-on:keydown.enter="onEnter"
-            />
-            <ul
-                    id="autocomplete-results"
-                    v-show="isOpen"
-                    class="autocomplete-results"
-            >
-                <li style="text-align: center"
-                    class="loading"
-                    v-if="isLoading"
-                >
-                    Loading results...
-                </li>
-                <li style="text-align: center"
-                    v-else
-                    v-for="(result, i) in results"
-                    :key="i"
-                    @click="setResult(result)"
-                    class="autocomplete-result"
-                    :class="{ 'is-active': i === arrowCounter }"
-                >
-                    {{ result[indexItem] }}
-                </li>
-            </ul>
-        <div class="input-group-append">
-            <button class="btn btn-outline-danger"
-                    v-on:click="clear"
-                    type="button">
-                <span>&#10008;</span>
-            </button>
-        </div>
+        </el-autocomplete>
 
     </div>
 </template>
@@ -74,7 +37,7 @@
     import {mapGetters} from "vuex";
 
     export default {
-        name: 'autocomplete',
+        name: "vue-data-list-02",
 
         props: {
             holderNum: Number,
@@ -101,6 +64,8 @@
 
         data() {
             return {
+                state1: '',
+                state2: '',
                 isOpen: false,
                 results: [],
                 search: '',
@@ -113,70 +78,46 @@
         },
         methods: {
 
-            async clear() {
-                this.updateObj[this.index] = null;
-                this.search = '';
-                this.$emit("change-meth", 1);
-            },
-            async chMeth() {
-                this.$emit("change-meth", 1);
-            },
-            onChange() {
-                // Let's warn the parent that a change was made
-                // this.$emit('input', this.search);
+            querySearch(queryString, cb) {
+                var results = [];
+                this.items.filter((item) => {
+                    return item[this.indexItem].toLowerCase().indexOf(queryString.toLowerCase()) > -1;
+                }).map(elem => {
+                    let obj = {}
+                    obj.value = elem[this.indexItem]
+                    results.push(obj)
+                })
 
-                // Is the data given by an outside ajax request?
-                if (this.isAsync) {
-                    this.isLoading = true;
-                } else {
-                    // Let's  our flat array
-                    this.filterResults();
-                    this.isOpen = true;
-                }
-            },
+                // call callback function to return suggestions
 
-            filterResults() {
-                // first uncapitalize all the things
-                this.results = this.items.filter((item) => {
-                    return item[this.indexItem].toLowerCase().indexOf(this.search.toLowerCase()) > -1;
-                });
-
+                cb(results);
             },
-            setResult(result) {
-                this.search = result[this.indexItem];
-                this.updateObj[this.index] = result.id;
-                this.isOpen = false;
-                this.$emit("change-meth", 1);
+            createFilter(queryString) {
+                return (link) => {
+                    return (link.data.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+                };
             },
-            onArrowDown() {
-                if (this.arrowCounter < this.results.length) {
-                    this.arrowCounter = this.arrowCounter + 1;
-                }
-            },
-            onArrowUp() {
-                if (this.arrowCounter > 0) {
-                    this.arrowCounter = this.arrowCounter - 1;
-                }
-            },
-            onEnter() {
-                this.$emit("change-meth", 1);
-                this.search = this.results[this.arrowCounter][this.indexItem];
-                this.updateObj[this.index] = this.results[this.arrowCounter].id;
-                this.isOpen = false;
-                this.arrowCounter = -1;
-            },
-            handleClickOutside(evt) {
-                if (!this.$el.contains(evt.target)) {
-                    this.isOpen = false;
-                    this.arrowCounter = -1;
-                }
+            handleSelect(item) {
+                console.log(item);
             }
         },
         watch: {
+            state1: function (val) {
+                if (val !== "") {
+                    let temp = this.items.find(elem => elem[this.indexItem] === val)
+                    if (temp !== undefined) {
+                        this.updateObj[this.index] = temp.id
+                        this.$emit("change-meth", 1);
+                    }
+                } else {
+                    this.updateObj[this.index] = null
+                    this.$emit("change-meth", 1);
+                }
+            },
             cleanSearch: function (val) {
                 if (val !== null) {
                     this.updateObj[this.index] = null;
-                    this.search = '';
+                    this.state1 = '';
                     this.$emit("change-meth", 1);
                 }
             },
@@ -187,8 +128,10 @@
                     this.isLoading = false;
                 }
             },
-        },
+        }
+        ,
         mounted() {
+
             if (this.holderNum === null || this.holderNum === undefined) {
                 this.holderNum = 0;
             }
@@ -197,11 +140,13 @@
                 this.hideTitle = false;
             }
             document.addEventListener('click', this.handleClickOutside)
-        },
+        }
+        ,
         destroyed() {
             document.removeEventListener('click', this.handleClickOutside)
         }
-    };
+    }
+    ;
 </script>
 
 <style>
@@ -234,5 +179,12 @@
         color: white;
     }
 
+    .cancel-btn {
+        background: white;
+    }
+
+    .title {
+        color: dimgrey;
+    }
 
 </style>

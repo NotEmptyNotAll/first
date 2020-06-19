@@ -29,46 +29,42 @@
                     <div class="title-bord col-md-2">
                         <h4> {{nameTitle}}</h4>
                     </div>
-                    <div class="col-md-3"></div>
                     <div class="col-md-2">
-                        <b-button block variant="outline-secondary" v-on:click="onexport">
-                            {{$ml.get('word.exportFile')}}
-                        </b-button>
                     </div>
-                    <div class="input-group col-md-5">
-                        <div class="input-group-prepend ">
-                            <label class="input-group-text bg-white  "
-                                   for="vue-list-input1"
-                            >{{$ml.get('word.search')}}</label>
-                        </div>
-                        <input
-                                v-model="search"
-                                id="vue-list-input1"
-                                autocomplete="off"
-                                class="form-control"
-                                type="text"
-                                placeholder=" "
-                                v-on:input="onChange"
-                                v-on:click="onChange"
-
-                        />
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-danger"
-                                    v-on:click="clear"
-                                    type="button">
-                                <span>&#10008;</span>
-                            </button>
-                        </div>
+                    <div class="col-md-2">
+                        <el-button   plain type="info" style="width: 100%; font-size: 16px" v-on:click="onexport">
+                            {{$ml.get('word.exportFile')}}
+                        </el-button>
+                    </div>
+                    <div class="col-md-2">
+                        <el-dropdown style="width: 100%" :hide-on-click="false">
+                            <el-button type="primary" style="width: 100%; font-size: 16px">
+                                {{$ml.get('word.column')}}
+                                <i class="el-icon-arrow-down el-icon--right"></i>
+                            </el-button>
+                            <el-dropdown-menu  style="width: 11vw;" slot="dropdown">
+                                <el-checkbox-group     :min="1"
+                                                       v-model="checkedColumns" @change="handleCheckedColumnChange">
+                                    <el-checkbox v-for="column in columns" style="padding-left: 2vw" :label="column"
+                                                 :key="column">{{column}}
+                                    </el-checkbox>
+                                </el-checkbox-group>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </div>
+                    <div class="input-group col-md-4">
+                        <el-input :placeholder="$ml.get('word.search')" v-model="search"
+                                  v-on:input="onChange"
+                                  v-on:click="onChange" class="input-with-select" clearable>
+                            <el-button slot="prepend" icon="el-icon-search"></el-button>
+                        </el-input>
 
                     </div>
                 </div>
                 <b-table class="my-table-scroll" no-border-collapse hover
                          @row-dblclicked="(item) => link( item)"
                          sticky-header="650px" :items="listForSearch.filter(elem=>{return elem.data!=='не задано'})"
-                         :fields="[
-                { key: 'index', label:'№' },
-                { key: 'data', label: $ml.get('word.name'), sortable: true },
-                { key: 'status', label: $ml.get('word.status'), sortable: true }]">
+                         :fields="tableColumns">
 
                     <template v-slot:cell(index)="data">
                         {{ data.index + 1 }}
@@ -142,36 +138,7 @@
                     </div>
                 </div>
                 <hr/>
-                <div class=" row ">
 
-                    <div class="col-md-3"></div>
-
-                    <b-alert
-                            class="col-md-6"
-                            :show="dismissCountDownErr"
-                            dismissible
-                            variant="danger"
-                            @dismissed="dismissCountDownErr=0"
-                            @dismiss-count-down="countDownChangedErr"
-                    >
-                        <p> {{$ml.get('msg.duplicateValue')}}</p>
-
-                    </b-alert>
-
-                    <b-alert
-                            class="col-md-6"
-                            :show="dismissCountDownSucc"
-                            dismissible
-                            variant="success"
-                            @dismissed="dismissCountDownSucc=0"
-                            @dismiss-count-down="countDownChangedSucc"
-                    >
-                        <p> {{$ml.get('word.dataAddSuccess')}}</p>
-
-                    </b-alert>
-                    <div class="col-md-3"></div>
-
-                </div>
             </div>
             <div class="tab-pane fade" :id="'c'+nameTitle" role="tabpanel"
                  aria-labelledby="contact-tab">
@@ -235,37 +202,14 @@
                     </div>
                     <div class="col-md-3"></div>
                 </div>
-                <div class=" row ">
-                    <div class="col-md-3"></div>
-                    <b-alert
-                            class="col-md-6"
-                            :show="dismissCountDownErrUpd"
-                            dismissible
-                            variant="danger"
-                            @dismissed="dismissCountDownErrUpd=0"
-                            @dismiss-count-down="countDownChangedErrUpd">
-                        <p> {{$ml.get('msg.duplicateValue')}}</p>
 
-                    </b-alert>
-                    <b-alert
-                            class="col-md-6"
-                            :show="dismissCountDownSuccUpd"
-                            dismissible
-                            variant="success"
-                            @dismissed="dismissCountDownSuccUpd=0"
-                            @dismiss-count-down="countDownChangedSuccUpd">
-                        <p> {{$ml.get('word.dataAddSuccess')}}</p>
-
-                    </b-alert>
-                    <div class="col-md-3"></div>
-                </div>
             </div>
             <div class="tab-pane fade" :id="'i'+nameTitle" role="tabpanel"
                  aria-labelledby="import-tab">
                 <div class="upload-box">
                     <div class="row import-page-btn">
                         <div class="col-md-2 title-bord">
-                                <h4> {{nameTitle}}</h4>
+                            <h4> {{nameTitle}}</h4>
                         </div>
                         <div class="col-md-1"></div>
                         <div class="col-md-4">
@@ -279,13 +223,13 @@
                                     :limit="limitUpload"
                                     accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
                                     :auto-upload="false">
-                                <button class="btn  btn-block   btn-primary" style="width: 20vw">
+                                <button class="btn  btn-block   btn-outline-dark" style="width: 20vw">
                                     {{$ml.get('word.clickToUpload')}}
                                 </button>
                             </el-upload>
                         </div>
                         <div class="col-md-2">
-                            <button class="btn  btn-block   btn-success" :class="{disabled:(da===null)}"  type="button"
+                            <button class="btn  btn-block   btn-secondary" :class="{disabled:(da===null)}" type="button"
                                     @click="importFile"
                             >
                          <span>{{$ml.get('word.importFile')}}
@@ -293,7 +237,7 @@
                             </button>
                         </div>
                         <div class="col-md-2 ">
-                            <button class="btn  btn-block  btn-danger"  :class="{disabled:(da===null)}" type="button"
+                            <button class="btn  btn-block  btn-danger" :class="{disabled:(da===null)}" type="button"
                                     @click="cancelInport"
                             >
                          <span>{{$ml.get('word.cancel')}}
@@ -308,14 +252,13 @@
                         empty-text="пусто"
                         height="600" :data="da"
                         :row-class-name="tableRowClassName">
-                    <el-table-column prop="id" label="#">
+                    <el-table-column prop="id" label="№">
                     </el-table-column>
                     <el-table-column prop="data" :label="$ml.get('word.name')">
                     </el-table-column>
                     <el-table-column prop="status" :label="$ml.get('word.status')">
                     </el-table-column>
                 </el-table>
-
             </div>
         </div>
     </div>
@@ -327,7 +270,6 @@
     import VueDatalist from "../input/vue-datalist";
     import InputField from "../input/input-field";
     import XLSX from 'xlsx'
-
 
     export default {
         name: "save-update-panel",
@@ -344,27 +286,8 @@
                 updateData: null,
                 status: 1
             },
-            Datas: {
-                // We will make a Workbook contains 2 Worksheets
-                'animals': [
-                    {"name": "cat", "category": "animal"}
-                    , {"name": "dog", "category": "animal"}
-                    , {"name": "pig", "category": "animal"}
-                ],
-                'pokemons': [
-                    {"name": "pikachu", "category": "pokemon"}
-                    , {"name": "Arbok", "category": "pokemon"}
-                    , {"name": "Eevee", "category": "pokemon"}
-                ]
-            },
-            dismissSecsErr: 1.2,
-            dismissCountDownErr: 0,
-            dismissSecsSucc: 1.2,
-            dismissCountDownSucc: 0,
-            dismissSecsErrUpd: 1.2,
-            dismissCountDownErrUpd: 0,
-            dismissSecsSuccUpd: 1.2,
-            dismissCountDownSuccUpd: 0,
+            columnOptions: [],
+            columns: [],
             showDismissibleAlert: false,
             tempUpdateObj: {
                 objToBeChanged: 0,
@@ -380,7 +303,12 @@
             test: null,
             testlist: [],
             cleanInputList: false,
-            search: ''
+            checkedColumns: [],
+            isIndeterminate: true,
+            checkAll: false,
+            search: '',
+            tableColumns: [],
+            allTableColumns: []
         }),
         computed: {
             ...mapGetters([
@@ -397,30 +325,15 @@
             ...mapActions([
                 'GET_ALL_ADDITIONAL_DATA'
             ]),
-
-            countDownChangedErr(dismissCountDown) {
-                this.dismissCountDownErr = dismissCountDown
-            },
-            countDownChangedSucc(dismissCountDown) {
-                this.dismissCountDownSucc = dismissCountDown
-            },
-            countDownChangedSuccUpd(dismissCountDown) {
-                this.dismissCountDownSuccUpd = dismissCountDown
-            },
-            countDownChangedErrUpd(dismissCountDown) {
-                this.dismissCountDownErrUpd = dismissCountDown
-            },
-            showAlertErr() {
-                this.dismissCountDownErr = this.dismissSecsErr
-            },
-            showAlertSucc() {
-                this.dismissCountDownSucc = this.dismissSecsSucc
-            },
-            showAlertSuccUpd() {
-                this.dismissCountDownSuccUpd = this.dismissSecsSuccUpd
-            },
-            showAlertErrUpd() {
-                this.dismissCountDownErrUpd = this.dismissSecsErrUpd
+            handleCheckedColumnChange(value) {
+                let checkedCount = value.length;
+                this.tableColumns = []
+                value.forEach(elem => {
+                        this.tableColumns.push(this.allTableColumns.find(item=>item.label===elem))
+                    }
+                )
+                this.checkAll = checkedCount === this.columns.length;
+                this.isIndeterminate = checkedCount > 0 && checkedCount < this.columns.length;
             },
             async clear() {
                 this.search = '';
@@ -471,7 +384,17 @@
 
                 // export json to Worksheet of Excel
                 // only array possible
-                var animalWS = XLSX.utils.json_to_sheet(this.dataList, {header: ["id", "data", "secondary_data", "status"]})
+                let arr = []
+                this.dataList.map(elem => {
+                    let obj = {}
+                    if (elem.data !== "не задано") {
+                        obj['№'] = elem.id
+                        obj[this.$ml.get('word.name')] = elem.data
+                        obj[this.$ml.get('word.status')] = elem.status
+                        arr.push(obj)
+                    }
+                });
+                var animalWS = XLSX.utils.json_to_sheet(arr)
 
                 // A workbook is the name given to an Excel file
                 var wb = XLSX.utils.book_new() // make Workbook of Excel
@@ -560,9 +483,9 @@
                         let arr = [];
                         outdata.map(v => {
                             let obj = {}
-                            obj.id = v['id']
-                            obj.data = v['data']
-                            obj.status = v['status']
+                            obj.id = v['№']
+                            obj.data = v[_this.$ml.get('word.name')]
+                            obj.status = v[_this.$ml.get('word.status')]
                             arr.push(obj)
                         });
                         _this.da = arr;
@@ -589,13 +512,19 @@
                             this.saveDataObj.status = 1;
                         }
                         this.$emit("save-data-api", this.saveDataObj);
-                        this.showAlertSucc()
+                        this.$message({
+                            message: this.$ml.get('word.dataAddSuccess'),
+                            type: 'success'
+                        });
                         await setTimeout(() => console.log('1'), 1500);
                         this.GET_ALL_ADDITIONAL_DATA();
                     }
 
                 } else {
-                    this.showAlertErr()
+                    this.$message({
+                        message: this.$ml.get('msg.duplicateValue'),
+                        type: 'error'
+                    });
                 }
                 console.log(number)
             },
@@ -632,18 +561,32 @@
                 this.$message({
                     message: this.$ml.get('word.dataAddSuccess'),
                     type: 'success'
-                });            },
+                });
+            },
             async update(number) {
                 if (this.updateDataObj.objToBeChanged != null) {
-                    if (this.updateDataObj.status === null) {
-                        this.updateDataObj.status = 1;
+                    let temp = this.dataList.find(item =>
+                        item.data === this.updateDataObj.updateData
+                    );
+                    if (temp === undefined) {
+                        if (this.updateDataObj.status === null) {
+                            this.updateDataObj.status = 1;
+                        }
+                        await this.$emit("update-data-api", this.updateDataObj);
+                        this.$message({
+                            message: this.$ml.get('word.dataAddSuccess'),
+                            type: 'success'
+                        });
+                        let temp = this.dataList.find(item => item.id === this.updateDataObj.objToBeChanged);
+                        temp.status = this.PARAM_NAME_AND_UNITS.status.find(item => item.id === this.updateDataObj.status).data;
+                        temp.data = this.updateDataObj.updateData;
+                        this.listForSearch = this.dataList;
+                    } else {
+                        this.$message({
+                            message: this.$ml.get('msg.duplicateValue'),
+                            type: 'error'
+                        });
                     }
-                    await this.$emit("update-data-api", this.updateDataObj);
-                    this.showAlertSuccUpd();
-                    let temp = this.dataList.find(item => item.id === this.updateDataObj.objToBeChanged);
-                    temp.status = this.PARAM_NAME_AND_UNITS.status.find(item => item.id === this.updateDataObj.status).data;
-                    temp.data = this.updateDataObj.updateData;
-                    this.listForSearch = this.dataList;
                 }
                 console.log(number)
             }
@@ -651,6 +594,17 @@
         },
         mounted() {
             this.listForSearch = this.dataList;
+            this.checkedColumns = ['№', this.$ml.get('word.name'), this.$ml.get('word.status')];
+            this.columns = ['№', this.$ml.get('word.name'), this.$ml.get('word.status')];
+            this.columnOptions = ['№', this.$ml.get('word.name'), this.$ml.get('word.status')];
+            this.tableColumns = [
+                {key: 'index', label: '№', sortable: true},
+                {key: 'data', label: this.$ml.get('word.name'), sortable: true},
+                {key: 'status', label: this.$ml.get('word.status'), sortable: true}];
+            this.allTableColumns = [
+                {key: 'index', label: '№', sortable: true},
+                {key: 'data', label: this.$ml.get('word.name'), sortable: true},
+                {key: 'status', label: this.$ml.get('word.status'), sortable: true}];
         }
         ,
         watch: {

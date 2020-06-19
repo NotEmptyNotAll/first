@@ -13,20 +13,21 @@
             <el-menu-item class="item-menu" index="/addData">{{$ml.get('word.updateData')}}</el-menu-item>
             <el-menu-item class="item-menu" index="/edittree">{{$ml.get('word.treeElem')}}</el-menu-item>
             <el-submenu index="2" style="position: absolute; right: 6vw">
-                <template class="item-menu" slot="title"><span style="font-size: 130%;">{{$ml.get('word.language')}}</span></template>
+                <template class="item-menu" slot="title"><span
+                        style="font-size: 130%;">{{$ml.get('word.language')}}</span></template>
                 <el-menu-item align="center"
-                              @click="$ml.change('english')"
-                              index="2-1">Eng <img src="../assets/United-Kingdom.png">
+                              @click="$ml.change('english')">Eng <img src="../assets/United-Kingdom.png">
                 </el-menu-item>
-                <el-menu-item index="2-2" align="center" @click="$ml.change('russian')">Рус <img
+                <el-menu-item align="center" @click="$ml.change('russian')">Рус <img
                         src="../assets/Russia.png"></el-menu-item>
-                <el-menu-item index="2-3" align="center" @click="$ml.change('ukraine')">Укр <img
+                <el-menu-item align="center" @click="$ml.change('ukraine')">Укр <img
                         src="../assets/Ukraine.png"></el-menu-item>
             </el-submenu>
-            <el-menu-item class="item-menu"  v-if="!currentUser" index="/login" style="position: absolute; right: 0vw">
+            <el-menu-item class="item-menu" v-if="!currentUser" index="/login" style="position: absolute; right: 0vw">
                 {{$ml.get('word.login')}}
             </el-menu-item>
-            <el-menu-item class="item-menu" v-if="currentUser" index="/login" style="position: absolute; right: 0vw"   @click="logOut">
+            <el-menu-item class="item-menu" v-if="currentUser" index="/login" style="position: absolute; right: 0vw"
+                          @click="logOut">
                 {{$ml.get('word.logout')}}
             </el-menu-item>
         </el-menu>

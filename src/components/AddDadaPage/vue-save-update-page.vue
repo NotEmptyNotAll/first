@@ -121,6 +121,7 @@
                                         :name-panel="$ml.get('word.superchargedType')"
                                         :data-list="ADDITIONAL_DATA.superchargeType"
                                         :load-status="LOAD_SAVE.superchargedType"
+                                        @import-data-api="IMPORT_DATA_SUPERCHARGE_TYPE"
                                         @save-data-api="SAVE_DATA_SUPERCHARGE_TYPE"
                                         @update-data-api="UPDATE_DATA_SUPERCHARGE_TYPE"
 
@@ -175,6 +176,7 @@
                                         :title_two="$ml.get('word.mark')"
                                         :data-list="ADDITIONAL_DATA.units"
                                         :load-status="LOAD_SAVE.measurementUnits"
+                                        @import-data-api="IMPORT_DATA_MEASUREMENT_UNITS"
                                         @save-data-api="SAVE_DATA_MEASUREMENT_UNITS"
                                         @update-data-api="UPDATE_DATA_MEASUREMENT_UNITS"
                                 />
@@ -185,6 +187,7 @@
                                         :title_two="$ml.get('word.mark')"
                                         :load-status="LOAD_SAVE.paramName"
                                         :data-list="ADDITIONAL_DATA.parameterName"
+                                        @import-data-api="IMPORT_PARAM_NAME"
                                         @save-data-api="SAVE_PARAM_NAME"
                                         @update-data-api="UPDATE_PARAM_NAME"
                                 />
@@ -228,6 +231,11 @@
                 setAutoModel: ''
             }),
             ...mapActions([
+                'IMPORT_DATA_MEASUREMENT_UNITS',
+                'IMPORT_DATA_SUPERCHARGE_TYPE',
+                'IMPORT_PARAM_NAME',
+                'IMPORT_DATA_AUTOMOBILE_ENGINE',
+                'IMPORT_DATA_ENGINE',
                 'IMPORT_DATA_CYLINDERS',
                 'IMPORT_ENGINE_MANUFACTURE',
                 'IMPORT_DATA_AUTO_MODEL',

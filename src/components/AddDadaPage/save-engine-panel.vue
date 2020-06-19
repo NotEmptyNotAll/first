@@ -284,36 +284,6 @@
                     <div class="col-md-3"></div>
                 </div>
                 <hr/>
-                <div class=" row ">
-
-                    <div class="col-md-3"></div>
-
-                    <b-alert
-                            class="col-md-6"
-                            :show="dismissCountDownErr"
-                            dismissible
-                            variant="danger"
-                            @dismissed="dismissCountDownErr=0"
-                            @dismiss-count-down="countDownChangedErr"
-                    >
-                        <p> {{$ml.get('msg.duplicateValue')}}</p>
-
-                    </b-alert>
-
-                    <b-alert
-                            class="col-md-6"
-                            :show="dismissCountDownSucc"
-                            dismissible
-                            variant="success"
-                            @dismissed="dismissCountDownSucc=0"
-                            @dismiss-count-down="countDownChangedSucc"
-                    >
-                        <p> {{$ml.get('msg.dataAddSuccess')}}</p>
-
-                    </b-alert>
-                    <div class="col-md-3"></div>
-
-                </div>
             </div>
             <div class="tab-pane fade" :id="'c'+nameTitle" role="tabpanel"
                  aria-labelledby="contact-tab">
@@ -492,25 +462,6 @@
                     </div>
                 </div>
                 <hr/>
-                <div class=" row ">
-
-                    <div class="col-md-3"></div>
-
-                    <b-alert
-                            class="col-md-6"
-                            :show="dismissCountDownSuccUpd"
-                            dismissible
-                            variant="success"
-                            @dismissed="dismissCountDownSuccUpd=0"
-                            @dismiss-count-down="countDownChangedSuccUpd"
-                    >
-                        <p> {{$ml.get('word.dataAddSuccess')}}</p>
-
-                    </b-alert>
-                    <div class="col-md-3"></div>
-
-                </div>
-
             </div>
         </div>
     </div>
@@ -585,14 +536,6 @@
             },
             search: '',
             test: null,
-            dismissSecsErr: 1.2,
-            dismissCountDownErr: 0,
-            dismissSecsSucc: 1.2,
-            dismissCountDownSucc: 0,
-            dismissSecsErrUpd: 1.2,
-            dismissCountDownErrUpd: 0,
-            dismissSecsSuccUpd: 1.2,
-            dismissCountDownSuccUpd: 0,
             showDismissibleAlert: false,
             cleanInputList: false
         }),
@@ -624,24 +567,6 @@
             async clear() {
                 this.search = '';
                 this.filterResults();
-            },
-            countDownChangedErr(dismissCountDown) {
-                this.dismissCountDownErr = dismissCountDown
-            },
-            countDownChangedSucc(dismissCountDown) {
-                this.dismissCountDownSucc = dismissCountDown
-            },
-            countDownChangedSuccUpd(dismissCountDown) {
-                this.dismissCountDownSuccUpd = dismissCountDown
-            },
-            showAlertErr() {
-                this.dismissCountDownErr = this.dismissSecsErr
-            },
-            showAlertSucc() {
-                this.dismissCountDownSucc = this.dismissSecsSucc
-            },
-            showAlertSuccUpd() {
-                this.dismissCountDownSuccUpd = this.dismissSecsSucc
             },
             onChange() {
                 this.filterResults();
@@ -776,12 +701,17 @@
                         this.saveDataObj.status = 2;
                     }
                     await this.$emit("save-data-api", this.saveDataObj)
-                    this.showAlertSucc()
+                    this.$message({
+                        message: this.$ml.get('word.dataAddSuccess'),
+                        type: 'success'
+                    });
                     this.GET_ALL_ADDITIONAL_DATA();
 
                 } else {
-                    this.showAlertErr()
-
+                    this.$message({
+                        message: this.$ml.get('msg.duplicateValue'),
+                        type: 'error'
+                    });
                 }
                 console.log(number)
             },
@@ -807,7 +737,10 @@
                 temp.releaseYearBy = this.updateDataObj.releaseYearBy
                 temp.horsepower = this.updateDataObj.horsepower
                 this.$emit("update-data-api", this.updateDataObj)
-                this.showAlertSuccUpd()
+                this.$message({
+                    message: this.$ml.get('word.dataAddSuccess'),
+                    type: 'success'
+                });
                 console.log(number)
             }
         },
