@@ -3,14 +3,15 @@
         <error-page
                 v-if="!currentUser"
         />
-        <div v-if="currentUser" class="container-fluid">
+        <div v-if="currentUser" id="main-panel" class="container-fluid shadow-lg  bg-white rounded search-border">
             <div class="row" style="padding-top: 1vh;">
-                <div class="col-md-2 col-lg-2  navbar-container " style="height: 95vh">
-                    <nav class="navbar navbar-expand-md search-border shadow-lg   navbar-light rounded  "
+                <div class="col-md-2 col-lg-2  navbar-container " >
+                    <nav class="navbar navbar-expand-md    navbar-light   "
                          id="nav-panel">
                         <div class="collapse navbar-collapse " id="navbar" style="width: 100%;">
                             <!-- Вертикальное меню -->
                             <ul class="nav  nav-tabs tabs-right  sideways" style="width: 100%">
+
                                 <li class=" act ive  nav-item"><a class="nav-link menu-item " style="border: white;"
                                                                   href="#engine"
                                                                   data-toggle="tab">
@@ -76,8 +77,8 @@
                         </div>
                     </nav>
                 </div>
-                <div class="col-md-10 col-lg-10 rounded search-border content-container shadow-lg bg-white"
-                     style="height: 95vh">
+                <div class="col-md-10 col-lg-10 content-container "
+                     >
                     <br/>
                     <div class="col-xs-9">
                         <!-- Tab panes -->
@@ -201,6 +202,7 @@
                 </div>
             </div>
         </div>
+        <br/>
     </div>
 </template>
 
@@ -291,13 +293,27 @@
     }
 
     #nav-panel {
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-direction: column;
+        flex-direction: column;
+        position: relative;
+        top: 3vh;
         background: white;
+        border-style: solid;
+        border-width: 0px 1px 0px 0px;
+        border-right-color: lightgray;
     }
+
 
     .nav-item {
         color: lightgray;
         width: auto;
+        align-self: stretch;
+
     }
+
+
 
     @media (min-width: 768px) {
         .navbar-container {
@@ -305,6 +321,11 @@
             top: 0;
             height: auto;
             min-height: 85vh;
+        }
+
+        #main-panel {
+            height: 94vh;
+            width: 96vw;
         }
 
         .navbar-container .navbar {

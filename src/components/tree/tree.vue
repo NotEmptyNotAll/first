@@ -1,19 +1,19 @@
 <template>
 
-    <ul>
-        <li class="border-white bold list-group-item   left"
-            style="position: relative; width: 24vw;padding: 0px; display: flex;align-items: center; min-height: 4em "
+    <ul style="height: auto">
+        <li class="border-white bold list-group-item   li-hov"
+            style="position: relative; width: 24vw; display: flex;align-items: center; height: 3.5em "
 
         >
             <div class="row" style=" padding: 0px ;width:100%;">
-                <div class="col-md-8" style="display: flex;align-items: center">
-            <span v-show="item.name!=''" @click="toggle" style="padding-left: 1vw">
+                <div class="col-md-9" style="display: flex;align-items: center; ">
+            <span v-show="item.name!=''" @click="toggle" style="padding-left: 0vw;">
                 {{ space+item.name }}
                 <span v-if="isFolder">[{{ isOpen ? '-' : '+' }}]</span>
             </span>
                 </div>
                 <inputList
-                        class="col-md-8"
+                        class="col-md-9"
                         v-show="item.name===''"
                         title-input="дані для зміни"
                         :items="PARAM_NAME.filter(elem=>{return elem.tree_node})"
@@ -22,9 +22,9 @@
                         index="paramNameFk"
                         :hide-title="true"
                         :holder-num=0
-                        style="position: relative; left: 1vw;padding: 1vh"
+                        style="position: relative; left: 1vw;"
                 />
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class=" btn-group  " style="display: flex;">
                         <button v-show="item.name===''"
                                 type="button"
@@ -48,24 +48,20 @@
                         </button>
                     </div>
                     <div class=" btn-group  " style="display: flex;">
-                        <button v-show="changeMod==='off'" type="button"
-                                v-if=" !linkOnThisButt.isPressed && item.parametersIsExistInChild"
-                                v-on:click="pressed"
-                                class="btn posLeft  btn-posit btn-success"
-                                @click="getParamtrs(nav,item.id,linkOnThisButt)"
-                                style="max-width: 3vw">
-                            <span>
-                                <b-icon icon="chevron-bar-right"></b-icon>
-                            </span>
-                        </button>
-                        <button v-show="changeMod==='off'" type="button"
-                                v-if=" linkOnThisButt.isPressed && item.parametersIsExistInChild"
-                                class="btn posLeft btn-posit btn-secondary disabled"
-                                style="max-width: 3vw">
-                            <span>
-                                  <b-icon icon="chevron-bar-right"></b-icon>
-                            </span>
-                        </button>
+                        <el-button circle v-show="changeMod==='off'"
+                                   v-if=" !linkOnThisButt.isPressed && item.parametersIsExistInChild"
+                                   v-on:click="pressed" type="success"
+                                   class=" posLeft  btn-posit"
+                                   @click="getParamtrs(nav,item.id,linkOnThisButt)"
+                                   style="max-width: 3vw" icon="el-icon-d-arrow-right"
+                                   size="small">
+                        </el-button>
+                        <el-button disabled v-show="changeMod==='off'"
+                                   circle size="small"
+                                   v-if=" linkOnThisButt.isPressed && item.parametersIsExistInChild"
+                                   class=" posLeft btn-posit  " type="success"
+                                   style="max-width: 3vw" icon="el-icon-d-arrow-right">
+                        </el-button>
                     </div>
 
 
@@ -73,7 +69,7 @@
                          style=" position: relative; top: 0.5vh; left: 6vw;padding: 1vh">
                         <button v-show="changeMod==='on'" type="button " v-if=" !linkOnThisButt.isPressed "
                                 v-on:click="pressed"
-                                class="btn btn-group  pos-left btn-warning"
+                                class="btn btn-group   btn-warning"
                                 @click="getParamtrs(nav,item.id,linkOnThisButt)"
                         >
                             <span>
@@ -82,13 +78,13 @@
                             </span>
                         </button>
                         <button v-show="changeMod==='on'" type="button" v-if=" linkOnThisButt.isPressed "
-                                class="btn btn-group  pos-left btn-warning disabled">
+                                class="btn btn-group   btn-warning disabled">
                             <span>
                                 <b-icon icon="pencil" animation="cylon"></b-icon>
                             </span>
                         </button>
                         <button v-show="changeMod==='on'" type="button"
-                                class="btn btn-group  pos-left btn-info" @click="addElement(1)" style="z-index: 999">
+                                class="btn btn-group   btn-info" @click="addElement(1)" style="z-index: 999">
                             <span>
                                 <p class="h5 md-2"><b-icon icon="plus"></b-icon></p>
                             </span>
@@ -170,19 +166,19 @@
         methods: {
             ...mapMutations({
                 setElements: 'SET_ELEMENTS',
-                setListNewElem: 'SET_LIST_NEW_PARAM',   
+                setListNewElem: 'SET_LIST_NEW_PARAM',
                 setMaxId: 'SET_MAX_ID'
             }),
-            deleteInPatent(id){
-                this.saveElemData= {
+            deleteInPatent(id) {
+                this.saveElemData = {
                     elemId: null,
-                        paramNameFk: null,
-                        parentId: null
+                    paramNameFk: null,
+                    parentId: null
                 },
-                this.$emit("parent-delete",id)
+                    this.$emit("parent-delete", id)
             },
-            deleteElem(id){
-                this.item.elementsCh= this.item.elementsCh.filter(elem=>elem.id!==id)
+            deleteElem(id) {
+                this.item.elementsCh = this.item.elementsCh.filter(elem => elem.id !== id)
                 console.log(id)
             },
             addElement: function (number) {
@@ -251,17 +247,11 @@
 
 <style>
 
-    .btn-posit {
-        position: absolute;
-        right: 1vw;
-    }
 
-    .pos-left {
-        position: absolute;
-        right: 5em;
-        top: 0;
+    .btn-group {
+        position: relative;
+        right: 7em;
     }
-
 
     .item {
         cursor: pointer;
@@ -277,20 +267,20 @@
         list-style-type: none;
     }
 
-    .left {
-        position: relative; /* Абсолютное позиционирование */
-        left: -1px;
+    .li-hov:hover {
+
+        background: #edf5ff;
     }
 
     div {
         position: relative;;
     }
 
+
     .posLeft {
-        position: absolute;
+        position: relative;
         right: 0;
-        bottom: 5px;
-        top: 1.9vh;
+        top: 1.4em;
     }
 
 

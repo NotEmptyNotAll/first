@@ -157,13 +157,20 @@
                                         <span v-else></span>
                                     </td>
                                     <td v-if="current.editRow">
-                                        <input type="number" class="form-control" v-model="current.doubleNum">
+                                        <input type="number" class="form-control"  v-model="current.doubleNum">
                                     </td>
                                     <td v-if="!current.editRow">{{PARAM_NAME_AND_UNITS.status.find(unit=>
                                         unit.id===current.status).data}}
                                     </td>
                                     <td v-if="current.editRow">
-                                        <input type="text" class="form-control" v-model="current.status">
+                                        <VueDatalist
+                                                :items="PARAM_NAME_AND_UNITS.status"
+                                                :update-obj="current"
+                                                index="status"
+                                                :hide-title="true"
+                                                :holder-num=0
+
+                                        />
                                     </td>
                                     <td v-if="!current.editRow">{{current.source}}</td>
                                     <td v-if="current.editRow">
@@ -171,7 +178,7 @@
                                     </td>
                                     <td>
                                         <button type="button " v-if="!current.editRow"
-                                                class="btn btn-group  btn-warning"
+                                                class="btn   btn-warning"
                                                 @click="current.editRow=!current.editRow"
                                         >
                                                 <span>
@@ -259,7 +266,7 @@
                                     </td>
                                     <td>
                                         <button type="button" v-if="!current.editRow"
-                                                class="btn btn-group  btn-warning"
+                                                class="btn   btn-warning"
                                                 @click="current.editRow=!current.editRow"
                                         >
                                             <span>

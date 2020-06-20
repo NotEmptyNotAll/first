@@ -1,5 +1,5 @@
 <template>
-    <div class="input-group ">
+    <!--<div class="input-group ">
         <div v-if="!hideTitle" class="input-group-prepend " >
             <label class="input-group-text    bg-white " style="font-weight: bold; "
                    :for="'vue-list-input'+titleInput"
@@ -94,8 +94,21 @@
             </button>
         </div>
 
+    </div>-->
+    <div style="width: 100%">
+        <div  style="width: 100%">
+            <el-cascader
+                    placeholder="input"
+                    style="width: 100%"
+                    v-model="value"
+                    :options="items"
+                    :props="{ expandTrigger: 'hover',
+                    value:'name',
+                    label:'name',
+                    children:'paramNameResponseList'}"
+                    @change="handleChange"></el-cascader>
+        </div>
     </div>
-
 </template>
 
 <script>
@@ -125,10 +138,11 @@
 
         data() {
             return {
+                value: [],
                 showChildInput: false,
                 isOpen: false,
                 isOpenChild: false,
-                childItem:[],
+                childItem: [],
                 results: [],
                 resultsChild: [],
                 search: '',
@@ -142,22 +156,24 @@
             ...mapGetters(['LOADPARAM'])
         },
         methods: {
-
+            handleChange(value) {
+                console.log(value);
+            },
             async clear() {
-                this.paramObj[this.indexNodeId]=null;
-                this.paramObj[this.indexChildId]=null;
+                this.paramObj[this.indexNodeId] = null;
+                this.paramObj[this.indexChildId] = null;
                 this.search = '';
                 this.searchChild = '';
-                this.showChildInput=false;
+                this.showChildInput = false;
             },
             onChange() {
                 // Let's warn the parent that a change was made
                 // this.$emit('input', this.search);
 
                 // Is the data given by an outside ajax request?
-                if(this.search===''){
-                    this.paramObj[this.indexNodeId]=null;
-                    this.showChildInput=false;
+                if (this.search === '') {
+                    this.paramObj[this.indexNodeId] = null;
+                    this.showChildInput = false;
                 }
                 if (this.isAsync) {
                     this.isLoading = true;
@@ -173,9 +189,9 @@
 
                 // Is the data given by an outside ajax request?
 
-                    // Let's  our flat array
-                    this.filterResultsChild();
-                    this.isOpenChild = true;
+                // Let's  our flat array
+                this.filterResultsChild();
+                this.isOpenChild = true;
 
             },
 
@@ -197,8 +213,8 @@
                 this.search = result.name;
                 this.paramObj[this.indexNodeId] = result.id;
                 this.showChildInput = true;
-                this.searchChild='',
-                this.childItem=result.paramNameResponseList;
+                this.searchChild = '',
+                    this.childItem = result.paramNameResponseList;
                 this.isOpen = false;
             },
             setResultChild(result) {
@@ -230,7 +246,7 @@
                 this.search = this.results[this.arrowCounter].name;
                 this.paramObj[this.indexNodeId] = this.results[this.arrowCounter].id;
                 this.showChildInput = true;
-                this.childItem=this.results[this.arrowCounter].paramNameResponseList;
+                this.childItem = this.results[this.arrowCounter].paramNameResponseList;
                 this.isOpen = false;
                 this.arrowCounter = -1;
             },
@@ -243,7 +259,7 @@
             handleClickOutside(evt) {
                 if (!this.$el.contains(evt.target)) {
                     this.isOpen = false;
-                    this.isOpenChild=false;
+                    this.isOpenChild = false;
                     this.arrowCounter = -1;
                     this.arrowCounterChild = -1;
                 }

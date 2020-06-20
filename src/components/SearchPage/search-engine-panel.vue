@@ -43,9 +43,9 @@
                          index="produceYear"
             />
         </div>
-        <transition name="fade" >
         <!--here we enter data for an improved search, which the user measures-->
-        <div v-if="advanceSearch"  >
+            <b-collapse id="collapse-1" class="mt-2">
+
             <div class=" row  " >
                 <vue-datalist
                         class="col-md-3"
@@ -127,18 +127,20 @@
                 </div>
                 <div class="col col-md-4"></div>
             </div>
-        </div>
-    </transition>
+            </b-collapse>
         <hr style="position: center; width: 70%"/>
 
         <div class="row ">
             <div class="col-md-3"></div>
             <div class="col col-md-2">
-                <button class="btn btn-block buttonanim btn-secondary" type="button" data-toggle="collapse"
+               <!-- <button class="btn btn-block buttonanim btn-secondary" type="button" data-toggle="collapse"
                         @click="advanceSearch=!advanceSearch">
                          <span>{{$ml.get('word.advancedSearch')}}
                         </span>
-                </button>
+                </button>-->
+                <b-button v-b-toggle.collapse-1 class="btn btn-block buttonanim btn-secondary" variant="secondary"><span>{{$ml.get('word.advancedSearch')}}
+                        </span></b-button>
+
             </div>
             <div class="col input-group col-md-2">
                 <button class="btn btn-block btn-danger buttonanim" v-on:click="clear(1)"
@@ -355,6 +357,7 @@
         max-width: 74vw;
         min-width: 74vw;
     }
+
 
 
     .input-group-text {
