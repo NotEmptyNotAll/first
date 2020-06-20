@@ -759,8 +759,8 @@
                             obj.engineType = v['data']
                             obj.engineManufacturerFk = this.ADDITIONAL_DATA.engineManufacture.find(item => item.data === v['engineManufacturer']).id
                             obj.cylindersPlacementFk = this.ADDITIONAL_DATA.cylinders.find(item => item.data === v['cylindersPlacement']).id
-                            obj.fuelTypeFk =this.ADDITIONAL_DATA.fuelType.find(item => item.data ===  v[('fuelType')]).id
-                            obj.superchargedTypeFk =this.ADDITIONAL_DATA.superchargeType.find(item => item.data ===  v['superchargedType']).id
+                            obj.fuelTypeFk = this.ADDITIONAL_DATA.fuelType.find(item => item.data === v[('fuelType')]).id
+                            obj.superchargedTypeFk = this.ADDITIONAL_DATA.superchargeType.find(item => item.data === v['superchargedType']).id
                             obj.cylindersNumber = v['cylindersNumber']
                             obj.pistonDiameter = v['pistonDiameter']
                             obj.flapNumber = v['flapNumber']
@@ -777,8 +777,8 @@
 
                             obj.engineManufacturer = this.ADDITIONAL_DATA.engineManufacture.find(item => item.data === v['engineManufacturer']).id
                             obj.cylindersPlacement = this.ADDITIONAL_DATA.cylinders.find(item => item.data === v['cylindersPlacement']).id
-                            obj.fuelType =this.ADDITIONAL_DATA.fuelType.find(item => item.data ===  v[('fuelType')]).id
-                            obj.superchargedType =this.ADDITIONAL_DATA.superchargeType.find(item => item.data ===  v['superchargedType']).id
+                            obj.fuelType = this.ADDITIONAL_DATA.fuelType.find(item => item.data === v[('fuelType')]).id
+                            obj.superchargedType = this.ADDITIONAL_DATA.superchargeType.find(item => item.data === v['superchargedType']).id
                             alert('1')
 
                             this.dataList.push(v)

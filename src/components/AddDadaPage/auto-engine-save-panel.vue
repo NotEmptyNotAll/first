@@ -15,6 +15,11 @@
                 <a class="nav-link" id="contact-tabengine" ref="updateTab" data-toggle="tab" :href="'#c'+nameTitle"
                    role="tab" aria-controls="contact" aria-selected="false">{{$ml.get('word.update')}}</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" id="importTab" ref="importTab" data-toggle="tab"
+                   :href="'#inpr'+nameTitle" v-on:click="cancelSave" @click="cancel"
+                   role="tab" aria-controls="imp" aria-selected="false">{{$ml.get('word.importFile')}}</a>
+            </li>
         </ul>
         <div class="tab-content" id="myTabContentengine" style="border: white">
             <div class="tab-pane fade show active" :id="'h'+nameTitle" role="tabpanel"
@@ -23,44 +28,40 @@
                     <div class="title-bord col-md-2">
                         <h4> {{nameTitle}}</h4>
                     </div>
-                    <div class="col-md-5"></div>
-
-                    <div class="input-group  col-md-5">
-                        <div class="input-group-prepend ">
-                            <label class="input-group-text bg-white  "
-                                   for="vue-list-input1"
-                            >{{$ml.get('word.search')}}</label>
-                        </div>
-                        <input
-                                v-model="search"
-                                id="vue-list-input1"
-                                autocomplete="off"
-                                class="form-control"
-                                type="text"
-                                placeholder=" "
-                                v-on:input="onChange"
-                                v-on:click="onChange"
-
-                        />
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-danger"
-                                    v-on:click="clear"
-                                    type="button">
-                                <span>&#10008;</span>
-                            </button>
-                        </div>
-
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-2">
+                        <el-button plain type="info" style="width: 100%; font-size: 16px" v-on:click="onexport">
+                            {{$ml.get('word.exportFile')}}
+                        </el-button>
+                    </div>
+                    <div class="col-md-2">
+                        <el-dropdown style="width: 100%" :hide-on-click="false">
+                            <el-button type="primary" style="width: 100%; font-size: 16px">
+                                {{$ml.get('word.column')}}
+                                <i class="el-icon-arrow-down el-icon--right"></i>
+                            </el-button>
+                            <el-dropdown-menu style="width: 11vw;" slot="dropdown">
+                                <el-checkbox-group :min="1"
+                                                   v-model="checkedColumns" @change="handleCheckedColumnChange">
+                                    <el-checkbox v-for="column in columns" style="padding-left: 2vw" :label="column"
+                                                 :key="column">{{column}}
+                                    </el-checkbox>
+                                </el-checkbox-group>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </div>
+                    <div class="input-group col-md-4">
+                        <el-input :placeholder="$ml.get('word.search')" v-model="search"
+                                  v-on:input="onChange"
+                                  v-on:click="onChange" class="input-with-select" clearable>
+                            <el-button slot="prepend" icon="el-icon-search"></el-button>
+                        </el-input>
                     </div>
                 </div>
                 <b-table class="my-table-scroll" no-border-collapse hover sticky-header="650px" :items="dataList"
                          @row-dblclicked="(item) => link( item)"
-                         :fields="[
-                { key: 'index', label:'№' },
-                { key: 'engineFk', label: $ml.get('word.engine'), sortable: true },
-                { key: 'autoManufactureFk', label: $ml.get('word.autoManufacturer'), sortable: true },
-                { key: 'autoModelFk', label: $ml.get('word.autoModel'), sortable: true },
-                { key: 'releaseYearFrom', label:$ml.get('word.releaseYearFrom'), sortable: true },
-                { key: 'releaseYearBy', label: $ml.get('word.releaseYearBy'), sortable: true }]">
+                         :fields="tableColumns">
                     <template v-slot:cell(index)="data">
                         {{ data.index + 1 }}
                     </template>
@@ -330,6 +331,71 @@
                     </button>
                 </div>
             </div>
+            <div class="tab-pane fade" :id="'inpr'+nameTitle" role="tabpanel"
+                 aria-labelledby="imp-tab">
+                <div class="upload-box">
+                    <div class="row import-page-btn">
+                        <div class="col-md-2 title-bord">
+                            <h4> {{nameTitle}}</h4>
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-4">
+                            <el-upload
+                                    :file-list="listFile"
+                                    :show-file-list="false"
+                                    class="upload-demo"
+                                    :on-change="handleChange"
+                                    :on-remove="handleRemove"
+                                    :on-exceed="handleExceed"
+                                    :limit="limitUpload"
+                                    accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
+                                    :auto-upload="false">
+                                <button class="btn  btn-block   btn-outline-dark" style="width: 20vw">
+                                    {{$ml.get('word.clickToUpload')}}
+                                </button>
+                            </el-upload>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn  btn-block   btn-secondary" :class="{disabled:(da===null)}" type="button"
+                                    @click="importFile"
+                            >
+                         <span>{{$ml.get('word.importFile')}}
+                        </span>
+                            </button>
+                        </div>
+                        <div class="col-md-2 ">
+                            <button class="btn  btn-block  btn-danger" :class="{disabled:(da===null)}" type="button"
+                                    @click="cancelInport"
+                            >
+                         <span>{{$ml.get('word.cancel')}}
+                        </span>
+                            </button>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                </div>
+                <hr/>
+                <el-table
+                        empty-text="пусто"
+                        height="600" :data="da"
+                        :row-class-name="tableRowClassName">
+                    <el-table-column prop="id" label="№">
+                    </el-table-column>
+                    <el-table-column prop="engineFk" :label="$ml.get('word.engine')">
+                    </el-table-column>
+                    <el-table-column prop="autoManufactureFk" :label="$ml.get('word.autoManufacturer')">
+                    </el-table-column>
+                    <el-table-column prop="autoModelFk" :label="$ml.get('word.autoModel')">
+                    </el-table-column>
+                    <el-table-column prop="releaseYearFrom" :label="$ml.get('word.releaseYearFrom')">
+                    </el-table-column>
+                    <el-table-column prop="releaseYearBy" :label="$ml.get('word.releaseYearBy')">
+                    </el-table-column>
+                    <el-table-column prop="status" :label="$ml.get('word.status')">
+                    </el-table-column>
+                </el-table>
+            </div>
+
         </div>
     </div>
 
@@ -339,6 +405,7 @@
     import SearchEnginePanel from "../SearchPage/search-engine-panel";
     import VueDatalist from "../input/vue-datalist";
     import {mapActions, mapGetters} from "vuex";
+    import XLSX from "xlsx";
 
     export default {
         name: "auto-engine-save-panel",
@@ -381,7 +448,22 @@
                 editRow: null,
             },
             cleanInputList: false,
-            tempObj: null
+            tempObj: null,
+            columnOptions: [],
+            columns: [],
+            limitUpload: 100,
+            fileTemp: null,
+            file: null,
+            listFile: null,
+            da: null,
+            dalen: 0,
+            test: null,
+            testlist: [],
+            checkedColumns: [],
+            isIndeterminate: true,
+            checkAll: false,
+            tableColumns: [],
+            allTableColumns: []
         }),
         props: {
             nameTitle: String,
@@ -410,6 +492,193 @@
                 'GET_ALL_ADDITIONAL_DATA'
 
             ]),
+            // eslint-disable-next-line no-unused-vars
+            tableRowClassName({row, rowIndex}) {
+                let temp = this.dataList.find(item =>
+                    item.engineFk === row.engineFk &&
+                    item.autoManufactureFk === row.autoManufactureFk &&
+                    item.autoModelFk === row.autoModelFk
+                );
+                if (temp !== undefined) {
+                    return 'warning-row';
+                } else {
+                    return 'success-row';
+                }
+            },
+            onexport() { // On Click Excel download button
+
+                // export json to Worksheet of Excel
+                // only array possible
+                let arr = []
+                this.dataList.map(elem => {
+                    let obj = {}
+                    if (elem.data !== "не задано") {
+                        obj['№'] = elem.id
+                        obj[this.$ml.get('word.engine')] = elem.engineFk
+                        obj[this.$ml.get('word.autoManufacturer')] = elem.autoManufactureFk
+                        obj[this.$ml.get('word.autoModel')] = elem.autoModelFk
+                        obj[this.$ml.get('word.releaseYearFrom')] = elem.releaseYearFrom
+                        obj[this.$ml.get('word.releaseYearBy')] = elem.releaseYearBy
+                        obj[this.$ml.get('word.status')] = elem.status
+                        arr.push(obj)
+                    }
+                });
+                var animalWS = XLSX.utils.json_to_sheet(arr)
+
+                // A workbook is the name given to an Excel file
+                var wb = XLSX.utils.book_new() // make Workbook of Excel
+
+                // add Worksheet to Workbook
+                // Workbook contains one or more worksheets
+                XLSX.utils.book_append_sheet(wb, animalWS, 'animals') // sheetAName is name of Worksheet
+
+                // export Excel file
+                XLSX.writeFile(wb, this.nameTitle + '.xlsx') // name of the file is 'book.xlsx'
+            },
+            cancelInport() {
+                this.listFile = null
+                this.fileTemp = null
+                this.da = null
+                this.file = null
+            },
+            // eslint-disable-next-line no-unused-vars
+            handleChange(file, fileList) {
+                this.fileTemp = file.raw;
+                if (this.fileTemp) {
+                    if ((this.fileTemp.type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+                        || (this.fileTemp.type == 'application/vnd.ms-excel')) {
+                        this.importfxx(this.fileTemp);
+                    } else {
+                        this.$message({
+                            type: 'warning',
+                            message: 'ошибка！'
+                        })
+                    }
+                } else {
+                    this.$message({
+                        type: 'warning',
+                        message: 'ошибка'
+                    })
+                }
+            },
+            handleExceed() {
+                this.$message({
+                    type: 'warning',
+                    message: 'ошибка！'
+                })
+                return;
+            },
+            // eslint-disable-next-line no-unused-vars
+            handleRemove(file, fileList) {
+                this.fileTemp = null
+                this.da = null
+            },
+            async importFile() {
+                let importList = [];
+
+                this.da.forEach(v => {
+                        let temp = this.dataList.find(item =>
+                            item.engineFk === v.engineFk &&
+                            item.autoManufactureFk === v.autoManufactureFk &&
+                            item.autoModelFk === v.autoModelFk
+                        );
+                    if (temp === undefined) {
+                            let obj = {}
+                            obj.autoManufactureFk = v['autoManufactureFk']
+                            obj.autoModelFk = v['autoModelFk']
+                            obj.engineFk = ['engineFk']
+                            obj.releaseYearFrom = v['releaseYearFrom']
+                            obj.releaseYearBy = v['releaseYearBy']
+                            obj.status = this.PARAM_NAME_AND_UNITS.status.find(item => item.data === v.status).id
+                            this.dataList.push(v)
+                            obj.autoManufactureFk = this.ADDITIONAL_DATA.autoManufacture.find(item => item.data === v['autoManufactureFk']).id
+                            obj.autoModelFk = this.ADDITIONAL_DATA.autoModel.find(item => item.data === v['autoModelFk']).id
+                            obj.engineFk = this.ADDITIONAL_DATA.engine.find(item => item.data === v['engineFk']).id
+                            importList.push(obj)
+                        }
+                    }
+                )
+                await this.$emit("import-data-api", {list: importList});
+                this.$message({
+                    message: this.$ml.get('word.dataAddSuccess'),
+                    type: 'success'
+                });
+            },
+            // eslint-disable-next-line no-unused-vars
+            importfxx(obj) {
+                let _this = this;
+                // eslint-disable-next-line no-unused-vars
+                let inputDOM = this.$refs.inputer;
+
+                this.file = event.currentTarget.files[0];
+
+                var rABS = false;
+                var f = this.file;
+
+                var reader = new FileReader();
+                //if (!FileReader.prototype.readAsBinaryString) {
+                FileReader.prototype.readAsBinaryString = function (f) {
+                    var binary = "";
+                    var rABS = false;
+                    // eslint-disable-next-line no-unused-vars
+                    var pt = this;
+                    var wb;
+                    var outdata;
+                    var reader = new FileReader();
+                    // eslint-disable-next-line no-unused-vars
+                    reader.onload = function (e) {
+                        var bytes = new Uint8Array(reader.result);
+                        var length = bytes.byteLength;
+                        for (var i = 0; i < length; i++) {
+                            binary += String.fromCharCode(bytes[i]);
+                        }
+                        var XLSX = require("xlsx");
+                        if (rABS) {
+                            // eslint-disable-next-line no-undef
+                            wb = XLSX.read(btoa(fixdata(binary)), {
+                                type: "base64"
+                            });
+                        } else {
+                            wb = XLSX.read(binary, {
+                                type: "binary"
+                            });
+                        }
+                        outdata = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+                        console.log(outdata);
+                        let arr = [];
+                        outdata.map(v => {
+                            let obj = {}
+                            obj.id = v['№']
+                            obj.autoManufactureFk = v[_this.$ml.get('word.autoManufacturer')]
+                            obj.engineFk = v[_this.$ml.get('word.engine')]
+                            obj.autoModelFk = v[_this.$ml.get('word.autoModel')]
+                            obj.releaseYearFrom = v[_this.$ml.get('word.releaseYearFrom')]
+                            obj.releaseYearBy = v[_this.$ml.get('word.releaseYearBy')]
+                            obj.status = v[_this.$ml.get('word.status')]
+                            arr.push(obj)
+                        });
+                        _this.da = arr;
+                        _this.dalen = arr.length;
+                        return arr;
+                    };
+                    reader.readAsArrayBuffer(f);
+                };
+                if (rABS) {
+                    reader.readAsArrayBuffer(f);
+                } else {
+                    reader.readAsBinaryString(f);
+                }
+            },
+            handleCheckedColumnChange(value) {
+                let checkedCount = value.length;
+                this.tableColumns = []
+                value.forEach(elem => {
+                        this.tableColumns.push(this.allTableColumns.find(item => item.label === elem))
+                    }
+                )
+                this.checkAll = checkedCount === this.columns.length;
+                this.isIndeterminate = checkedCount > 0 && checkedCount < this.columns.length;
+            },
             setDataList(tempList) {
                 this.dataList = tempList;
             },
@@ -521,6 +790,26 @@
         },
         watch: {},
         mounted() {
+            this.checkedColumns = ['№', this.$ml.get('word.engine'), this.$ml.get('word.autoManufacturer'),
+                this.$ml.get('word.autoModel'), this.$ml.get('word.releaseYearFrom'), this.$ml.get('word.releaseYearBy')];
+            this.columns = ['№', this.$ml.get('word.engine'), this.$ml.get('word.autoManufacturer'),
+                this.$ml.get('word.autoModel'), this.$ml.get('word.releaseYearFrom'), this.$ml.get('word.releaseYearBy')];
+            this.columnOptions = ['№', this.$ml.get('word.engine'), this.$ml.get('word.autoManufacturer'),
+                this.$ml.get('word.autoModel'), this.$ml.get('word.releaseYearFrom'), this.$ml.get('word.releaseYearBy')];
+            this.tableColumns = [
+                {key: 'index', label: '№'},
+                {key: 'engineFk', label: this.$ml.get('word.engine'), sortable: true},
+                {key: 'autoManufactureFk', label: this.$ml.get('word.autoManufacturer'), sortable: true},
+                {key: 'autoModelFk', label: this.$ml.get('word.autoModel'), sortable: true},
+                {key: 'releaseYearFrom', label: this.$ml.get('word.releaseYearFrom'), sortable: true},
+                {key: 'releaseYearBy', label: this.$ml.get('word.releaseYearBy'), sortable: true}];
+            this.allTableColumns = [
+                {key: 'index', label: '№'},
+                {key: 'engineFk', label: this.$ml.get('word.engine'), sortable: true},
+                {key: 'autoManufactureFk', label: this.$ml.get('word.autoManufacturer'), sortable: true},
+                {key: 'autoModelFk', label: this.$ml.get('word.autoModel'), sortable: true},
+                {key: 'releaseYearFrom', label: this.$ml.get('word.releaseYearFrom'), sortable: true},
+                {key: 'releaseYearBy', label: this.$ml.get('word.releaseYearBy'), sortable: true}];
             this.mainDataList = this.ADDITIONAL_DATA.autoEng
             this.test()
         }

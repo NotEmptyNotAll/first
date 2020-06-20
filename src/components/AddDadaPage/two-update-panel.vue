@@ -326,7 +326,7 @@
             isIndeterminate: true,
             checkAll: false,
             tableColumns: [],
-            allTableColumns: [],
+            allTableColumns: []
         }),
 
         props: {
