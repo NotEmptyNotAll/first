@@ -96,16 +96,17 @@
 
     </div>-->
     <div style="width: 100%">
-        <div  style="width: 100%">
+        <div style="width: 100%">
             <el-cascader
-                    placeholder="input"
+                    clearable
+                    :placeholder="$ml.get('word.data')"
                     style="width: 100%"
                     v-model="value"
                     :options="items"
-                    :props="{ expandTrigger: 'hover',
-                    value:'name',
+                    :props="{
+                    value:'id',
                     label:'name',
-                    children:'paramNameResponseList'}"
+                    children:'elementsCh'}"
                     @change="handleChange"></el-cascader>
         </div>
     </div>
@@ -153,11 +154,13 @@
             };
         },
         computed: {
-            ...mapGetters(['LOADPARAM'])
+            ...mapGetters([
+                'LOADPARAM',
+                'TREE_ELEMENTS'])
         },
         methods: {
             handleChange(value) {
-                console.log(value);
+                this.paramObj[this.indexChildId]=this.value[value.length-1]
             },
             async clear() {
                 this.paramObj[this.indexNodeId] = null;
@@ -194,6 +197,7 @@
                 this.isOpenChild = true;
 
             },
+
 
             filterResults() {
                 // first uncapitalize all the things

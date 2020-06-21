@@ -85,7 +85,7 @@
                 <div class="input-group col-md-5">
                     <param-elements-input
                             :title-input="$ml.get('word.parameter')"
-                            :items="PARAM_NAME_AND_UNITS.paramName"
+                            :items="treeElem"
                             :param-obj="param"
                             index-node-id="parameterNodeId"
                             index-child-id="parameterChildId"
@@ -193,6 +193,7 @@
                 powerKWt: null,
                 engineCapacity: null
             },
+            treeElem:[],
             cleanField:false,
             choiceData: [],
             test: null,
@@ -200,6 +201,15 @@
         }),
         mounted() {
             this.GET_START_PARAM()
+            this.GET_TREE_ELEMENTS()
+
+        },
+        watch:{
+            // eslint-disable-next-line no-unused-vars
+            TREE_ELEMENTS:function (val) {
+                this.treeElem=this.TREE_ELEMENTS.elementsCh
+                this.mapTreeElem(this.treeElem)
+            }
         },
         computed: {
             ...mapGetters([
@@ -210,7 +220,8 @@
                 'PARAM_NAME_AND_UNITS',
                 'ELEMENTS',
                 'SEARCHDATA',
-                'LOADPARAM'
+                'LOADPARAM',
+                'TREE_ELEMENTS'
             ])
         },
         methods: {
@@ -219,6 +230,7 @@
                 'GET_AUTOENG_BY_PARAM',
                 'GET_PARAMTRS',
                 'GET_PARAM_NAME',
+                'GET_TREE_ELEMENTS',
                 'GET_ELEMENTS',
                 'GET_AUTO_BY_ENG',
                 'GET_ENGDATA_BY_PARAM'
@@ -272,6 +284,17 @@
                 });
                 console.log(number)
             },
+            mapTreeElem(treeElem){
+                treeElem.map(elem=>{
+                    if(elem.elementsCh.length===0) {
+                        delete elem.elementsCh
+                    }else {
+                        this.mapTreeElem(elem.elementsCh)
+                    }
+                }
+                )
+            }
+            ,
             async getAutoEnByNum(number) {
                 this.GET_AUTO_BY_ENG(this.searchData);
                 this.setListNewParam([])
@@ -322,6 +345,7 @@
             }
 
             ,
+
             //request for data about the auto engine
             async submitChanges(dat) {
                 // this.dataEng = [];

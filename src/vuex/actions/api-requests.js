@@ -1,6 +1,6 @@
 import axios from "axios";
 let urlApi = 'https://newenginedb.herokuapp.com/';
- //let urlApi = 'http://localhost:5050/';
+//let urlApi = 'http://localhost:5050/';
 
 export default {
     GET_START_PARAM({commit}) {
@@ -9,6 +9,19 @@ export default {
         })
             .then((startParam) => {
                 commit('SET_STARTPARAM', startParam.data)
+                return startParam;
+            })
+            .catch((error) => {
+                console.log(error);
+                return error
+            })
+    },
+    GET_TREE_ELEMENTS({commit}) {
+        return axios(urlApi + 'getTreeElements', {
+            method: 'GET'
+        })
+            .then((startParam) => {
+                commit('SET_TREE_ELEMENTS', startParam.data)
                 return startParam;
             })
             .catch((error) => {

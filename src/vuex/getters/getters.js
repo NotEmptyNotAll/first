@@ -44,6 +44,9 @@ export default {
     LISTNEWELEM(state) {
         return state.listNewElem;
     },
+    TREE_ELEMENTS: (state) => {
+       return  state.treeElemets;
+    },
     LOAD_TREE_UPDATE(state) {
         return state.loadTreeUpdate;
     },

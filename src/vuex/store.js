@@ -16,6 +16,7 @@ let store = new Vuex.Store({
         auth
     },
     state: {
+        treeElemets:[],
         engdataTree:[],
         elementsLoad:false,
         paramName:[],
