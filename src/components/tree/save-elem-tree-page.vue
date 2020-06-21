@@ -169,7 +169,6 @@
                                                 index="status"
                                                 :hide-title="true"
                                                 :holder-num=0
-
                                         />
                                     </td>
                                     <td v-if="!current.editRow">{{current.source}}</td>

@@ -279,7 +279,7 @@
 
     .posLeft {
         position: relative;
-        right: 0;
+        left: 8em;
         top: 1.4em;
     }
 
