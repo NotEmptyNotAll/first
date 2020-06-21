@@ -13,7 +13,7 @@
             </span>
                 </div>
                 <inputList
-                        class="col-md-9"
+                        class="col-md-8"
                         v-show="item.name===''"
                         title-input="дані для зміни"
                         :items="PARAM_NAME.filter(elem=>{return elem.tree_node})"
@@ -22,15 +22,16 @@
                         index="paramNameFk"
                         :hide-title="true"
                         :holder-num=0
-                        style="position: relative; left: 1vw;"
+                        style="position: relative; left: 0vw; width: 80%"
                 />
+                <div  class="col-md-1" v-show="item.name===''"></div>
                 <div class="col-md-3">
                     <div class=" btn-group  " style="display: flex;">
                         <button v-show="item.name===''"
                                 type="button"
                                 class="btn  btn-success "
                                 @click="saveElem(1)"
-                                style="position: relative; left: 5vw;top:1vh"
+                                style="position: relative; left: 5vw;top:0.5vh"
                         >
                         <span>
                              <p class="h5 md-2"><b-icon icon="check"></b-icon></p>
@@ -40,7 +41,7 @@
                                 type="button"
                                 class="btn  btn-danger "
                                 @click="deleteInPatent(item.id)"
-                                style="position: relative; left: 5vw;top:1vh"
+                                style="position: relative; left: 5vw;top:0.5vh"
                         >
                         <span>
                                     <b-icon icon="trash-fill" aria-hidden="true"></b-icon>
@@ -93,22 +94,23 @@
                 </div>
             </div>
         </li>
-        <ul class="list-group border-white left" v-show="isOpen" v-if="isFolder">
-            <tree-item
-                    class="item"
-                    v-for="(child, index) in item.elementsCh"
-                    :key="index"
-                    :item="child"
-                    :choice-param="choiceParam"
-                    :nav="child.name"
-                    :id-parent-elem="item.id"
-                    :change-mod="changeMod"
-                    :space="space.concat('')"
-                    @get-paramtrs="getParamtrs"
-                    :show-edit-param="showEditParam"
-                    @parent-delete="deleteElem"
-            ></tree-item>
-        </ul>
+
+            <ul class="list-group border-white left" v-show="isOpen" v-if="isFolder">
+                <tree-item
+                        class="item"
+                        v-for="(child, index) in item.elementsCh"
+                        :key="index"
+                        :item="child"
+                        :choice-param="choiceParam"
+                        :nav="child.name"
+                        :id-parent-elem="item.id"
+                        :change-mod="changeMod"
+                        :space="space.concat('')"
+                        @get-paramtrs="getParamtrs"
+                        :show-edit-param="showEditParam"
+                        @parent-delete="deleteElem"
+                ></tree-item>
+            </ul>
     </ul>
 
 </template>
