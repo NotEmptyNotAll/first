@@ -3,7 +3,7 @@
          style="width: 98vw;   border-style: solid;border-top-color: lightslategrey;border-width: 15px 0px 0px 0px;">
         <br/>
         <div class="search-logo" id="treelogo">
-            <div class="head-text deepshd ">
+            <div class="head-text deepshd " >
                  <span v-if="LOAD_SAVE_ELEMENTS"><div
                          class="lds-dual-ring " style="margin-left: 47%"></div></span>
                 <h4 v-if="!LOAD_SAVE_ELEMENTS"
@@ -13,10 +13,10 @@
         </div>
         <br/>
         <br/>
-        <div class="treeRow row " style="width: 100vw">
-            <div class="col-md-1"></div>
+        <div class="row" style="width: 100%;" >
+            <div class="col-md-2"></div>
             <vue-datalist
-                    class="col-md-5"
+                    class="col-md-4"
                     :title-input="$ml.get('word.newBlockText')"
                     :items="PARAM_NAME_AND_UNITS.paramName"
                     :update-obj="newBlock"
@@ -38,7 +38,7 @@
                     <span>{{$ml.get('word.update')}}</span>
                 </button>
             </div>
-            <div class="col-md-1"></div>
+            <div class="col-md-2"></div>
 
         </div>
         <hr style="position: center; width: 100%;"/>
@@ -194,6 +194,7 @@
                                                 <p class="h5 mb-2"><b-icon icon="check"></b-icon></p>
                                             </span>
                                         </button>
+
                                     </td>
                                 </tr>
                                 <tr v-show="current.elemId===elemId " v-for="current in listNewParam"
@@ -406,7 +407,18 @@
             })
             ,
             saveParam(current) {
-                this.saveListParam.push({
+                let ind = null;
+                this.saveListParam.forEach(
+                    (param, index) => {
+                        if (param.id === current.id) {
+                            ind = index;
+                        }
+                    }
+                )
+                if(ind!==null){
+
+
+                this.saveListParam[ind]={
                     id: current.id,
                     elemId: current.elemId,
                     name: current.name,
@@ -415,7 +427,19 @@
                     doubleMax: current.doubleMax,
                     doubleNum: current.doubleNum,
                     source: current.source
-                });
+                }
+                }else {
+                    this.saveListParam.push({
+                        id: current.id,
+                        elemId: current.elemId,
+                        name: current.name,
+                        units: current.units,
+                        doubleMin: current.doubleMin,
+                        doubleMax: current.doubleMax,
+                        doubleNum: current.doubleNum,
+                        source: current.source
+                    });
+                }
                 console.log(1)
             },
             updateOldParam(current) {
