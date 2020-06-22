@@ -405,12 +405,16 @@
                         this.importfxx(this.fileTemp);
                     } else {
                         this.$message({
+
+                            showClose: true,
                             type: 'warning',
                             message: 'ошибка！'
                         })
                     }
                 } else {
                     this.$message({
+
+                        showClose: true,
                         type: 'warning',
                         message: 'ошибка'
                     })
@@ -418,6 +422,8 @@
             },
             handleExceed() {
                 this.$message({
+
+                    showClose: true,
                     type: 'warning',
                     message: 'ошибка！'
                 })
@@ -447,6 +453,7 @@
 
                 await this.$emit("import-data-api", {list: importList});
                 this.$message({
+                    showClose: true,
                     message: this.$ml.get('word.dataAddSuccess'),
                     type: 'success'
                 });
@@ -558,6 +565,7 @@
 
                 if (temp === undefined) {
                     this.$message({
+                        showClose: true,
                         message: this.$ml.get('word.dataAddSuccess'),
                         type: 'success'
                     });
@@ -581,6 +589,7 @@
                     }
                 } else {
                     this.$message({
+                        showClose: true,
                         message: this.$ml.get('msg.duplicateValue'),
                         type: 'error'
                     });
@@ -607,6 +616,7 @@
                 if (this.updateDataObj.objToBeChanged != null) {
                     if (this.dataList.find(item => item.data === this.updateDataObj.saveData_primary) !== undefined) {
                         this.$message({
+                            showClose: true,
                             message: this.$ml.get('msg.duplicateValue'),
                             type: 'error'
                         });
@@ -617,6 +627,7 @@
 
                         this.$emit("update-data-api", this.updateDataObj);
                         this.$message({
+                            showClose: true,
                             message: this.$ml.get('word.dataAddSuccess'),
                             type: 'success'
                         });

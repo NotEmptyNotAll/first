@@ -22,7 +22,7 @@
                         index="paramNameFk"
                         :hide-title="true"
                         :holder-num=0
-                        style="position: relative; left: 0vw; width: 80%"
+                        style="position: relative; top: 0.25em; width: 80%"
                 />
                 <div  class="col-md-1" v-show="item.name===''"></div>
                 <div class="col-md-3">

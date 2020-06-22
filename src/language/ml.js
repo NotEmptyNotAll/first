@@ -75,7 +75,10 @@ export default new MLCreate({
                 importFile:'import',
                 exportFile:'export file',
                 clickToUpload:"click to upload",
-                column:"columns"
+                column:"columns",
+                inccYear:'You entered the year incorrectly',
+                noRecordsInDB:'there are no records in the database'
+
             },
             msg: {
                 passwordErr: 'password is required!',
@@ -159,7 +162,9 @@ export default new MLCreate({
                 importFile:'импорт',
                 exportFile:'экспортировать файл',
                 clickToUpload:"нажмите, чтобы загрузить",
-                column:"столбцы"
+                column:"столбцы",
+                inccYear:'Вы некорректно ввели год',
+                noRecordsInDB:'в базе нет записей'
             },
             msg: {
                 passwordErr: "Пароль необходим!",
@@ -243,7 +248,9 @@ export default new MLCreate({
                 importFile:'імпорт',
                 exportFile:'експортувати файл',
                 clickToUpload:"натисніть для завантаження",
-                column:"стовпці"
+                column:"стовпці",
+                inccYear:'Ви некоректно ввели рік',
+                noRecordsInDB:'в базі немає записів'
             },
             msg: {
                 passwordErr: 'Пароль необхідний!',

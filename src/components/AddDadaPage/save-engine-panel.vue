@@ -222,6 +222,27 @@
                                  index="pistonDiameter"
                     />
                     <div class="input-group col-md-4">
+                        <el-input :placeholder="$ml.get('word.from')"
+                                  v-model="saveDataObj.releaseYearFrom"
+                                  style="width: 62%"
+                                  max="2020"
+                                  min="1895"
+                                  type="number"
+                                  clearable
+                        >
+                            <template slot="prepend">
+                                <strong class="title" style="font-size: 15px">{{$ml.get('word.releaseYear')}}</strong>
+                            </template>
+                        </el-input>
+                        <el-input :placeholder="$ml.get('word.by')"
+                                  clearable
+                                  max="2020"
+                                  min="1895"
+                                  type="number"
+                                  style="width: 38%"
+                                  v-model="saveDataObj.releaseYearBy">
+                        </el-input>
+                        <!--
                         <div class="input-group-prepend">
                             <label class="input-group-text bg-white  " for="relYear">
                                 {{$ml.get('word.releaseYear')}}
@@ -251,7 +272,7 @@
                                     type="button">
                                 <span>&#10008;</span>
                             </button>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
                 <hr style="position: center; width: 70%"/>
@@ -424,6 +445,28 @@
                                  index="pistonDiameter"
                     />
                     <div class="input-group col-md-4">
+                        <el-input :placeholder="$ml.get('word.from')"
+                                  v-model="updateDataObj.releaseYearFrom"
+                                  style="width: 62%"
+                                  max="2020"
+                                  min="1895"
+                                  type="number"
+                                  clearable
+                        >
+                            <template slot="prepend">
+                                <strong class="title" style="font-size: 15px">{{$ml.get('word.releaseYear')}}</strong>
+                            </template>
+                        </el-input>
+                        <el-input :placeholder="$ml.get('word.by')"
+                                  clearable
+                                  max="2020"
+                                  min="1895"
+                                  type="number"
+                                  style="width: 38%"
+                                  v-model="updateDataObj.releaseYearBy"
+                        >
+                        </el-input>
+                        <!--
                         <div class="input-group-prepend">
                             <label class="input-group-text  bg-white " for="releaseYear">
                                 {{$ml.get('word.releaseYear')}}
@@ -453,7 +496,7 @@
                                     type="button">
                                 <span>&#10008;</span>
                             </button>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
                 <hr/>
@@ -725,12 +768,14 @@
                         this.importfxx(this.fileTemp);
                     } else {
                         this.$message({
+                            showClose: true,
                             type: 'warning',
                             message: 'ошибка！'
                         })
                     }
                 } else {
                     this.$message({
+                        showClose: true,
                         type: 'warning',
                         message: 'ошибка'
                     })
@@ -738,6 +783,7 @@
             },
             handleExceed() {
                 this.$message({
+                    showClose: true,
                     type: 'warning',
                     message: 'ошибка！'
                 })
@@ -789,6 +835,7 @@
 
                 await this.$emit("import-data-api", {list: importList});
                 this.$message({
+                    showClose: true,
                     message: this.$ml.get('word.dataAddSuccess'),
                     type: 'success'
                 });
@@ -1016,6 +1063,7 @@
                     }
                     await this.$emit("save-data-api", this.saveDataObj)
                     this.$message({
+                        showClose: true,
                         message: this.$ml.get('word.dataAddSuccess'),
                         type: 'success'
                     });
@@ -1023,6 +1071,7 @@
 
                 } else {
                     this.$message({
+                        showClose: true,
                         message: this.$ml.get('msg.duplicateValue'),
                         type: 'error'
                     });
@@ -1052,6 +1101,7 @@
                 temp.horsepower = this.updateDataObj.horsepower
                 this.$emit("update-data-api", this.updateDataObj)
                 this.$message({
+                    showClose: true,
                     message: this.$ml.get('word.dataAddSuccess'),
                     type: 'success'
                 });

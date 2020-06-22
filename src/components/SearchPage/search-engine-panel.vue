@@ -38,6 +38,9 @@
                     index="engineType"
             />
             <input-field class="col-md-3"
+                         number
+                         min="1895"
+                         max="2020"
                          :name-input="$ml.get('word.releaseYear')"
                          :save-parameters="searchData"
                          index="produceYear"
@@ -313,8 +316,11 @@
                     this.searchData.fuelType = this.SEARCHDATA.fuelType;
                     this.searchData.engineCapacity = this.SEARCHDATA.engineCapacity;
                 } else {
-                    this.errorMessage = 'відсутній номер двигуна';
-                    document.getElementById('openModal').click();
+                    this.$message({
+                        message: this.$ml.get('word.inccYear'),
+                        showClose: true,
+                        type: 'error'
+                    });
                 }
                 console.log(number)
             }
@@ -354,20 +360,29 @@
 
                 this.setElements(null);
                 if ((!Number.isInteger(Number(this.searchData.produceYear)) || (this.searchData.produceYear < 1885 || this.searchData.produceYear > 2020)) && !this.searchData.produceYear == 0) {
-                    this.errorMessage = "Ви некоректно ввели рік";
-                    document.getElementById('openModal').click();
+                    this.$message({
+                        showClose: true,
+                        message: this.$ml.get('word.inccYear'),
+                        type: 'error'
+                    });
                 } else {
                     this.$emit('submit-function', this.searchData);
                     // this.GET_AUTOENG_BY_PARAM(this.searchData);
 
                     if (this.ENGDATA.status == null) {
                         if (this.ENGDATA.dataEng[0] == null) {
-                            this.errorMessage = "в базі немає записів";
-                            document.getElementById('openModal').click();
+                            this.$message({
+                                showClose: true,
+                                message: this.$ml.get('word.noRecordsInDB'),
+                                type: 'error'
+                            });
                         }
                     } else {
-                        this.errorMessage = this.ENGDATA.status;
-                        document.getElementById('openModal').click();
+                        this.$message({
+                            showClose: true,
+                            message: this.$ml.get('word.noRecordsInDB'),
+                            type: 'error'
+                        });
                     }
                     console.log(dat)
                 }

@@ -109,7 +109,7 @@
                     </div>
 
                 </div>
-                <div class=" savePageRow row">
+                <div class="row">
                     <!-- <input-field
                              class="col-md-3"
                              :name-input="$ml.get('word.engineNumber')"
@@ -150,36 +150,27 @@
 
                     />
                     <div class="input-group col-md-3">
-                        <div class="input-group-prepend">
-                            <label class="input-group-text bg-white  " for="releaseYea">
-                                {{$ml.get('word.releaseYear')}}
-                                <div v-if="LOADPARAM" class="lds-dual-ring"></div>
-                            </label>
-                        </div>
-                        <input id="releaseYea"
-                               min="1885" max="2020"
-                               v-model="saveDataObj.releaseYearFrom"
-                               autocomplete="on" type="number"
-                               step="1"
-                               class="form-control"
-                               :placeholder="$ml.get('word.from')"
-                               aria-describedby="button-addon1">
-                        <input id="fuelTk" type="number"
-                               min="1885" max="2020"
-                               v-model="saveDataObj.releaseYearBy"
-                               autocomplete="on"
-                               class="form-control"
-                               :placeholder="$ml.get('word.by')"
-                               step="1"
-                               aria-describedby="button-addon1">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-danger"
-                                    v-on:click="saveDataObj.releaseYearFrom=null"
-                                    @click="saveDataObj.releaseYearBy=null"
-                                    type="button">
-                                <span>&#10008;</span>
-                            </button>
-                        </div>
+                        <el-input :placeholder="$ml.get('word.from')"
+                                  v-model="saveDataObj.releaseYearFrom"
+                                  style="width: 69%"
+                                  max="2020"
+                                  min="1895"
+                                  type="number"
+                                  clearable
+                        >
+                            <template slot="prepend">
+                                <strong class="title" style="font-size: 15px">{{$ml.get('word.releaseYear')}}</strong>
+                            </template>
+                        </el-input>
+                        <el-input :placeholder="$ml.get('word.by')"
+                                  clearable
+                                  max="2020"
+                                  min="1895"
+                                  type="number"
+                                  style="width: 31%"
+                                  v-model="saveDataObj.releaseYearBy"
+                        >
+                        </el-input>
                     </div>
                 </div>
                 <hr style="position: center; width: 70%"/>
@@ -550,12 +541,14 @@
                         this.importfxx(this.fileTemp);
                     } else {
                         this.$message({
+                            showClose: true,
                             type: 'warning',
                             message: 'ошибка！'
                         })
                     }
                 } else {
                     this.$message({
+                        showClose: true,
                         type: 'warning',
                         message: 'ошибка'
                     })
@@ -563,6 +556,7 @@
             },
             handleExceed() {
                 this.$message({
+                    showClose: true,
                     type: 'warning',
                     message: 'ошибка！'
                 })
@@ -600,6 +594,7 @@
                 )
                 await this.$emit("import-data-api", {list: importList});
                 this.$message({
+                    showClose: true,
                     message: this.$ml.get('word.dataAddSuccess'),
                     type: 'success'
                 });
@@ -725,12 +720,14 @@
                     this.showErr = false
                     await this.SAVE_DATA_AUTOMOBILE_ENGINE(this.saveDataObj)
                     this.$message({
+                        showClose: true,
                         message: this.$ml.get('word.dataAddSuccess'),
                         type: 'success'
                     });
                     this.GET_ALL_ADDITIONAL_DATA()
                 } else {
                     this.$message({
+                        showClose: true,
                         message: this.$ml.get('msg.duplicateValue'),
                         type: 'error'
                     });

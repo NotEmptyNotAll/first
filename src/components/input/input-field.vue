@@ -1,7 +1,9 @@
 <template>
     <div class="input-field">
-        <div class="input-group">
-            <el-input
+
+
+        <div  class="input-group">
+            <el-input v-show="!number"
                     v-model="saveParameters[index]"
                     :placeholder="$ml.get('word.data')"
                     clearable>
@@ -9,6 +11,22 @@
             </el-input>
 
         </div>
+
+        <div  class="input-group">
+            <el-input v-show="number"
+                      :max="max"
+                      :min="min"
+                      type="number"
+                      v-model="saveParameters[index]"
+                      :placeholder="$ml.get('word.data')"
+                      clearable>
+                <template   slot="prepend">   <strong class="title" style="font-size: 15px">{{nameInput}}</strong></template>
+            </el-input>
+
+        </div>
+
+
+
 
     </div>
 </template>
@@ -23,7 +41,18 @@
             }
         }),
         props: {
-
+            number: {
+                type: Boolean,
+                default: false
+            },
+            min:{
+                type: Number,
+                default: 0
+            },
+            max:{
+                type: Number,
+                default: 99999999
+            },
             nameInput: String,
             dataList: [],
             loadStatus: null,

@@ -110,7 +110,7 @@
     @keyframes moveInBottom {
         0% {
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(-30px);
         }
 
         100% {

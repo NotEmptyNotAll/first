@@ -80,7 +80,7 @@
                                         :id-parent-elem="current.id"
                                         :show-edit-param="showEditParam"
                                         @get-paramtrs="getParamtrs"
-
+                                        @parent-delete="deleteElem"
                                 />
                                 <button type="button"
                                         @click="addElement(current)"
@@ -461,10 +461,17 @@
                 }
                 console.log(1)
             },
+            deleteElem(id) {
+                this.ELEMENTS_UPDATE.elementsCh.map(items=>{
+                    items.elementsCh= items.elementsCh.filter(elem => elem.id !== id)
+                    }
+                )
+                console.log(id)
+            },
             addElement(current) {
                 let elmTreeTemp = current;
                 elmTreeTemp.elementsCh.push({
-                        id: 0,
+                        id: this.ELEMENTS_UPDATE.maxId,
                         elementsCh: [{
                             id: 0,
                             elementsCh: [],
@@ -477,21 +484,18 @@
                         paramIsNotEmpty: true,
                         parametersIsExistInChilda: true
                     }
-                );
+            );
 
                 //this.setElemTree(elmTreeTemp);
-
+                this.setMaxId(this.ELEMENTS_UPDATE.maxId + 1)
                 //   this.setMaxId(this.ELEMENTS.maxId + 1);
                 console.log(1);
             },
             saveElem(number) {
                 this.saveElemData.parentId = this.ELEMENTS_UPDATE.id;
-                this.saveElemData.elemId = this.ELEMENTS_UPDATE.maxId;
                 this.listNewElem = this.LISTNEWELEM;
                 this.listNewElem.push(this.saveElemData);
                 this.setListNewElem(this.listNewElem);
-                this.setMaxId(this.ELEMENTS_UPDATE.maxId + 1);
-
                 console.log(number)
             },
             addNewParam(number) {
