@@ -77,6 +77,7 @@ export default new MLCreate({
                 clickToUpload:"click to upload",
                 column:"columns",
                 inccYear:'You entered the year incorrectly',
+                treeStruct:'tree structure',
                 noRecordsInDB:'there are no records in the database'
 
             },
@@ -164,6 +165,7 @@ export default new MLCreate({
                 clickToUpload:"нажмите, чтобы загрузить",
                 column:"столбцы",
                 inccYear:'Вы некорректно ввели год',
+                treeStruct:'структура дерева',
                 noRecordsInDB:'в базе нет записей'
             },
             msg: {
@@ -249,6 +251,7 @@ export default new MLCreate({
                 exportFile:'експортувати файл',
                 clickToUpload:"натисніть для завантаження",
                 column:"стовпці",
+                treeStruct:'структура дерева',
                 inccYear:'Ви некоректно ввели рік',
                 noRecordsInDB:'в базі немає записів'
             },

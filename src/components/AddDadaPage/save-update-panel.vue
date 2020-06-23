@@ -515,6 +515,7 @@
                         if (this.saveDataObj.status === null) {
                             this.saveDataObj.status = 1;
                         }
+                        alert('1')
                         this.$emit("save-data-api", this.saveDataObj);
                         this.$message({
                             showClose: true,

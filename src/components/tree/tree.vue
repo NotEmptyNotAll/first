@@ -65,10 +65,19 @@
                         </el-button>
                     </div>
 
-
-                    <div class=" btn-group  " v-show="item.name!=''" role="group"
+                    <div class=" btn-group  " v-show="item.name!='' && changeMod==='tree'" role="group"
                          style=" position: relative; top: 0.5vh; left: 6vw;padding: 1vh">
-                        <button v-show="changeMod==='on'" type="button " v-if=" !linkOnThisButt.isPressed "
+                        <button  type="button"
+                                class="btn btn-group   btn-info" @click="addElement(1)" style="z-index: 999">
+                            <span>
+                                <p class="h5 md-2"><b-icon icon="plus"></b-icon></p>
+                            </span>
+                        </button>
+                    </div>
+
+                    <div class=" btn-group  " v-show="item.name!='' && changeMod==='on'" role="group"
+                         style=" position: relative; top: 0.5vh; left: 6vw;padding: 1vh">
+                        <button type="button " v-if=" !linkOnThisButt.isPressed "
                                 v-on:click="pressed"
                                 class="btn btn-group   btn-warning"
                                 @click="getParamtrs(nav,item.id,linkOnThisButt)"
@@ -78,16 +87,10 @@
 
                             </span>
                         </button>
-                        <button v-show="changeMod==='on'" type="button" v-if=" linkOnThisButt.isPressed "
+                        <button  type="button" v-if=" linkOnThisButt.isPressed "
                                 class="btn btn-group   btn-warning disabled">
                             <span>
                                 <b-icon icon="pencil" animation="cylon"></b-icon>
-                            </span>
-                        </button>
-                        <button v-show="changeMod==='on'" type="button"
-                                class="btn btn-group   btn-info" @click="addElement(1)" style="z-index: 999">
-                            <span>
-                                <p class="h5 md-2"><b-icon icon="plus"></b-icon></p>
                             </span>
                         </button>
                     </div>

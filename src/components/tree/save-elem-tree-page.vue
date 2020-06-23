@@ -14,31 +14,15 @@
         <br/>
         <br/>
         <div class="row" style="width: 100%;" >
-            <div class="col-md-2"></div>
-            <vue-datalist
-                    class="col-md-4"
-                    :title-input="$ml.get('word.newBlockText')"
-                    :items="PARAM_NAME_AND_UNITS.paramName"
-                    :update-obj="newBlock"
-                    index-item="name"
-                    index="data"
-                    :holder-num=0
-            ></vue-datalist>
-            <div class="col col-md-2">
-                <button class="btn btn-block buttonanim btn-secondary" type="button" data-toggle="collapse"
-                        v-on:click="addNewBlock(1)"
-                        @click="advanceSearch=!advanceSearch">
-                         <span>{{$ml.get('word.add')}}
-                        </span>
-                </button>
+            <div class="col-md-4">
             </div>
-            <div class="col-md-2">
+            <div class="col-md-4">
                 <button v- type="submit" @click="saveElemParam(1)"
                         class="btn  btn-block btn-outline-dark">
                     <span>{{$ml.get('word.update')}}</span>
                 </button>
             </div>
-            <div class="col-md-2"></div>
+            <div class="col-md-4"></div>
 
         </div>
         <hr style="position: center; width: 100%;"/>
@@ -82,12 +66,6 @@
                                         @get-paramtrs="getParamtrs"
                                         @parent-delete="deleteElem"
                                 />
-                                <button type="button"
-                                        @click="addElement(current)"
-                                        class="btn btn-block btn-outline-dark"
-                                        style="width: 70%; margin-left: 15%;margin-right: 15%"
-                                >{{$ml.get('word.add')}}
-                                </button>
                             </div>
                         </div>
                         <div class="col-md-1">

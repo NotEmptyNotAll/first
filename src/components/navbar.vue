@@ -12,6 +12,7 @@
             <el-menu-item class="item-menu" index="/">{{$ml.get('word.search')}}</el-menu-item>
             <el-menu-item class="item-menu" index="/addData">{{$ml.get('word.updateData')}}</el-menu-item>
             <el-menu-item class="item-menu" index="/edittree">{{$ml.get('word.treeElem')}}</el-menu-item>
+            <el-menu-item class="item-menu" index="/treeStruct">{{$ml.get('word.treeStruct')}}</el-menu-item>
             <el-submenu index="2" style="position: absolute; right: 6vw">
                 <template class="item-menu" slot="title"><span
                         style="font-size: 130%;">{{$ml.get('word.language')}}</span></template>

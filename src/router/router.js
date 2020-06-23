@@ -6,6 +6,7 @@ import login from '../components/login'
 import registration from '../components/Register'
 import testSave from '../components/AddDadaPage/vue-save-update-page'
 import treeEdit from '../components/tree-page'
+import treeStruct from '../components/tree-struct-page'
 
 
 Vue.use(Router)
@@ -31,6 +32,10 @@ let router = new Router({
         {
             path: '/edittree',
             component: treeEdit
+        },
+        {
+            path: '/treeStruct',
+            component: treeStruct
         }
     ]
 })
