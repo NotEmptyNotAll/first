@@ -76,6 +76,7 @@ export default new MLCreate({
                 exportFile:'export file',
                 clickToUpload:"click to upload",
                 column:"columns",
+                setParameter:'change parameters',
                 inccYear:'You entered the year incorrectly',
                 treeStruct:'tree structure',
                 noRecordsInDB:'there are no records in the database'
@@ -166,6 +167,7 @@ export default new MLCreate({
                 column:"столбцы",
                 inccYear:'Вы некорректно ввели год',
                 treeStruct:'структура дерева',
+                setParameter:'зміна параметрів',
                 noRecordsInDB:'в базе нет записей'
             },
             msg: {
@@ -252,6 +254,7 @@ export default new MLCreate({
                 clickToUpload:"натисніть для завантаження",
                 column:"стовпці",
                 treeStruct:'структура дерева',
+                setParameter:'изменение параметров',
                 inccYear:'Ви некоректно ввели рік',
                 noRecordsInDB:'в базі немає записів'
             },
