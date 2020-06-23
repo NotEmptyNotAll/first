@@ -65,6 +65,9 @@ export default {
     SET_ELEMENTS_LOAD: (state, elementsLoad) => {
         state.elementsLoad = elementsLoad;
     },
+    SET_ELEMENTS_TREE: (state, elementsLoad) => {
+        state.elemTree = elementsLoad;
+    },
     SET_LOAD_UPDATE_PARAMETERS: (state, loadSave) => {
         state.loadUpdate.parameters = loadSave;
     },

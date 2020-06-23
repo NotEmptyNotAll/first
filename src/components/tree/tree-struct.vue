@@ -31,7 +31,7 @@
         </div>
         <hr/>
         <el-tabs tab-position="left" style="height: auto">
-            <el-tab-pane v-for="elem in ELEMENTS_UPDATE.elementsCh" v-bind:key="elem" :label="elem.name">
+            <el-tab-pane v-for="elem in ELEMENTS_TREE.elementsCh" v-bind:key="elem" :label="elem.name">
                 <div class="row">
                     <div class="col-md-3"></div>
                     <div class="col-md-4">
@@ -53,7 +53,7 @@
                         <button type="button"
                                 @click="addElement(elem)"
                                 class="btn  btn-outline-dark"
-                                style="width: 70%; margin-left: 5%;margin-right: 15%"
+                                style="width: 70%; margin-left: 10%;margin-right: 15%"
                         >{{$ml.get('word.add')}}
                         </button>
                     </div>
@@ -109,7 +109,7 @@
             elemId: null
         }),
         mounted() {
-            this.GET_ELEMENTS_UPDATE(3);
+            this.GET_ELEMENTS_TREE();
             this.GET_ALL_PARAM_NAME();
             this.GET_PARAM_NAME();
 
@@ -125,6 +125,7 @@
                 'LISTPARAMUP',
                 'PARAM_NAME_AND_UNITS',
                 'SEARCHDATA',
+                'ELEMENTS_TREE',
                 'TREE_ROOT_NAMES',
                 'ELEMENTS_LOAD',
                 'ELEMENTS_UPDATE',
@@ -147,6 +148,7 @@
                 'GET_AUTO_BY_ENG',
                 'GET_TREE_ROOT_NAMES',
                 'SAVE_DATA_ELEMENTS',
+                'GET_ELEMENTS_TREE',
                 'GET_ELEMENTS_UPDATE',
                 'GET_PARAM_NAME',
                 'UPDATE_DATA_ELEMENTS',
@@ -155,7 +157,7 @@
             ])
             ,
             ...mapMutations({
-                setElemTree: 'SET_ELEMENTS_UPDATE',
+                setElemTree: 'SET_ELEMENTS_TREE',
                 setListParam: 'SET_LISTPARAM_ELEMENT',
                 setListNewElem: 'SET_LIST_NEW_PARAM',
                 setMaxId: 'SET_MAX_ID'
@@ -242,7 +244,7 @@
                 console.log(1)
             },
             deleteElem(id) {
-                this.ELEMENTS_UPDATE.elementsCh.map(items => {
+                this.ELEMENTS_TREE.elementsCh.map(items => {
                         items.elementsCh = items.elementsCh.filter(elem => elem.id !== id)
                     }
                 )
@@ -251,7 +253,7 @@
             addElement(current) {
                 let elmTreeTemp = current;
                 elmTreeTemp.elementsCh.push({
-                        id: this.ELEMENTS_UPDATE.maxId,
+                        id: this.ELEMENTS_TREE.maxId,
                         elementsCh: [{
                             id: 0,
                             elementsCh: [],
@@ -267,12 +269,12 @@
                 );
 
                 //this.setElemTree(elmTreeTemp);
-                this.setMaxId(this.ELEMENTS_UPDATE.maxId + 1)
+                this.setMaxId(this.ELEMENTS_TREE.maxId + 1)
                 //   this.setMaxId(this.ELEMENTS.maxId + 1);
                 console.log(1);
             },
             saveElem(number) {
-                this.saveElemData.parentId = this.ELEMENTS_UPDATE.id;
+                this.saveElemData.parentId = this.ELEMENTS_TREE.id;
                 this.listNewElem = this.LISTNEWELEM;
                 this.listNewElem.push(this.saveElemData);
                 this.setListNewElem(this.listNewElem);
@@ -285,7 +287,7 @@
                     elemId: this.elemId,
                     auto_id: this.auto_id,
                     name: null,
-                    nameElemId: this.ELEMENTS_UPDATE.maxId + 1,
+                    nameElemId: this.ELEMENTS_TREE.maxId + 1,
                     units: null,
                     doubleMin: null,
                     doubleMax: null,
@@ -295,14 +297,14 @@
                     status: null,
                     editRow: true
                 });
-                this.setMaxId(this.ELEMENTS_UPDATE.maxId + 1);
+                this.setMaxId(this.ELEMENTS_TREE.maxId + 1);
                 console.log(number)
             },
 
             async addNewBlock(number) {
-                let elmTreeTemp = this.ELEMENTS_UPDATE;
+                let elmTreeTemp = this.ELEMENTS_TREE;
                 elmTreeTemp.elementsCh.push({
-                        id: this.ELEMENTS_UPDATE.maxId,
+                        id: this.ELEMENTS_TREE.maxId,
                         elementsCh: [{
                             id: 0,
                             elementsCh: [],
@@ -320,12 +322,12 @@
                 this.listNewElem = this.LISTNEWELEM;
                 this.listNewElem.push({
                     parentId: 0,
-                    elemId: this.ELEMENTS_UPDATE.maxId,
+                    elemId: this.ELEMENTS_TREE.maxId,
                     paramNameFk: this.newBlock.data
                 });
                 this.setElemTree(elmTreeTemp);
                 this.setListNewElem(this.listNewElem);
-                this.setMaxId(this.ELEMENTS_UPDATE.maxId + 1);
+                this.setMaxId(this.ELEMENTS_TREE.maxId + 1);
                 console.log(number)
             },
             getParamtrs(nav, number, link) {

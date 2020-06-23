@@ -91,6 +91,9 @@ export default {
     },
     ELEMENTS_LOAD: (state) => {
         return state.elementsLoad;
-    }
+    },
+    ELEMENTS_TREE: (state ) => {
+       return  state.elemTree  ;
+    },
 
 }

@@ -161,7 +161,7 @@
                 'LISTNEWELEM',
                 'ELEMENTS_AND_MAX_ID',
                 'ELEMENTS',
-                'ELEMENTS_UPDATE',
+                'ELEMENTS_TREE',
                 'PARAM_NAME'
             ]),
             isFolder: function () {
@@ -189,7 +189,7 @@
             addElement: function (number) {
                 this.isOpen = true;
                 this.item.elementsCh.push({
-                        id: this.ELEMENTS_UPDATE.maxId,
+                        id: this.ELEMENTS_TREE.maxId,
                         elementsCh: [{
                             id: 0,
                             elementsCh: [],
@@ -203,7 +203,7 @@
                         parametersIsExistInChilda: true
                     }
                 );
-                this.setMaxId(this.ELEMENTS_UPDATE.maxId + 1);
+                this.setMaxId(this.ELEMENTS_TREE.maxId + 1);
                 console.log(number);
             },
             saveElem(number) {
@@ -211,14 +211,14 @@
                 this.item.name = this.PARAM_NAME.find(item => item.id === this.saveElemData.paramNameFk).data;
                 this.saveElemData.parentId = this.idParentElem;
 
-                this.saveElemData.elemId = this.ELEMENTS_UPDATE.maxId + 1;
+                this.saveElemData.elemId = this.ELEMENTS_TREE.maxId + 1;
 
-                this.item.id = this.ELEMENTS_UPDATE.maxId + 1;
+                this.item.id = this.ELEMENTS_TREE.maxId + 1;
 
                 this.listNewElem = this.LISTNEWELEM;
                 this.listNewElem.push(this.saveElemData);
                 this.setListNewElem(this.listNewElem);
-                this.setMaxId(this.ELEMENTS_UPDATE.maxId + 1);
+                this.setMaxId(this.ELEMENTS_TREE.maxId + 1);
                 this.listElem.push(this.saveElemData)
                 console.log(number);
             },
@@ -243,7 +243,7 @@
             }
         },
         mounted() {
-            this.maxId = this.ELEMENTS_UPDATE.maxId;
+            this.maxId = this.ELEMENTS_TREE.maxId;
             this.elementsCh = this.item.elementsCh;
         }
     }

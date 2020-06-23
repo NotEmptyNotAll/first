@@ -218,6 +218,24 @@ export default {
                 return error
             })
     },
+    async GET_ELEMENTS_TREE({commit}) {
+        commit('SET_ELEMENTS_LOAD', true)
+        return await axios({
+            method: 'POST',
+            url: urlApi + 'getElements',
+            data: {id: 3},
+            responseType: 'json'
+        }).then(resp => {
+            commit('SET_ELEMENTS_TREE', resp.data)
+            commit('SET_ELEMENTS_LOAD', false)
+            return resp;
+        })
+            .catch((error) => {
+                commit('SET_ELEMENTS_LOAD', false)
+                console.log(error);
+                return error
+            })
+    },
     async GET_ELEMENTS_AND_MAX_ID({commit}, number) {
         commit('SET_LOAD_TREE_UPDATE', true);
 
