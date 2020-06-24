@@ -68,6 +68,12 @@ export default {
     SET_ELEMENTS_TREE: (state, elementsLoad) => {
         state.elemTree = elementsLoad;
     },
+    SET_ELEMENTS_TREE_MAXID: (state, maxId) => {
+        state.elemTree.maxId = maxId;
+    },
+    SET_ELEMENTS_TREE_LOAD: (state, elem_tree_load) => {
+        state.elem_tree_load = elem_tree_load;
+    },
     SET_LOAD_UPDATE_PARAMETERS: (state, loadSave) => {
         state.loadUpdate.parameters = loadSave;
     },

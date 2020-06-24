@@ -106,7 +106,7 @@
     import AddEngineDataPanel from "./add-engine-data-panel";
     import AddAutoEngineDataPanel from "./add-auto-engine-panel";
     import TwoParamSavePanel from "./two-param-save-panel";
-    import ErrorPage from "./Error/error-page";
+    import ErrorPage from "../Error/error-page";
 
     export default {
         name: "savePage",

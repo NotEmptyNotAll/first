@@ -172,7 +172,7 @@
             ...mapMutations({
                 setElements: 'SET_ELEMENTS',
                 setListNewElem: 'SET_LIST_NEW_PARAM',
-                setMaxId: 'SET_MAX_ID'
+                setMaxId: 'SET_ELEMENTS_TREE_MAXID'
             }),
             deleteInPatent(id) {
                 this.saveElemData = {

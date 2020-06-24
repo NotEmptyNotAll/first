@@ -17,12 +17,12 @@
                 <template class="item-menu" slot="title"><span
                         style="font-size: 130%;">{{$ml.get('word.language')}}</span></template>
                 <el-menu-item align="center"
-                              @click="$ml.change('english')">Eng <img src="../assets/United-Kingdom.png">
+                              @click="$ml.change('english')">Eng <img src="../../assets/United-Kingdom.png">
                 </el-menu-item>
                 <el-menu-item align="center" @click="$ml.change('russian')">Рус <img
-                        src="../assets/Russia.png"></el-menu-item>
+                        src="../../assets/Russia.png"></el-menu-item>
                 <el-menu-item align="center" @click="$ml.change('ukraine')">Укр <img
-                        src="../assets/Ukraine.png"></el-menu-item>
+                        src="../../assets/Ukraine.png"></el-menu-item>
             </el-submenu>
             <el-menu-item class="item-menu" v-if="!currentUser" index="/login" style="position: absolute; right: 0vw">
                 {{$ml.get('word.login')}}
@@ -38,11 +38,11 @@
 <script>
 
     import Router from "vue-router";
-    import searchEng from "./SearchPage/searchEng";
-    import testSave from "./AddDadaPage/vue-save-update-page";
-    import login from "./login";
-    import registration from "./Register";
-    import treeEdit from "./tree-page";
+    import searchEng from "../SearchPage/searchEng";
+    import testSave from "../AddDadaPage/vue-save-update-page";
+    import login from "../login/login";
+    import registration from "../registration/Register";
+    import treeEdit from "../TreeEditPage/tree-page";
 
     export default {
         name: "navbar",

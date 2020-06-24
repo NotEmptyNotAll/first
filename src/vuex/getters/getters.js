@@ -92,6 +92,9 @@ export default {
     ELEMENTS_LOAD: (state) => {
         return state.elementsLoad;
     },
+    ELEMENTS_TREE_LOAD: (state) => {
+        return state.elem_tree_load;
+    },
     ELEMENTS_TREE: (state ) => {
        return  state.elemTree  ;
     },

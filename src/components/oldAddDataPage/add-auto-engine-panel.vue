@@ -232,8 +232,8 @@
 
 <script>
     import {mapGetters, mapActions} from "vuex";
-    import SearchEnginePanel from "./SearchPage/search-engine-panel";
-    import VueDatalist from "./input/vue-datalist";
+    import SearchEnginePanel from "../SearchPage/search-engine-panel";
+    import VueDatalist from "../input/vue-datalist";
     //import InputField from "./input-field";
 
 

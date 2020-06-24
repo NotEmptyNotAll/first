@@ -208,7 +208,7 @@ export default {
             data: {id: number},
             responseType: 'json'
         }).then(resp => {
-            commit('SET_ELEMENTS_UPDATE', resp.data)
+            commit('SET_ELEMENTS_TREE_LOAD', resp.data)
             commit('SET_ELEMENTS_LOAD', false)
             return resp;
         })
@@ -219,7 +219,8 @@ export default {
             })
     },
     async GET_ELEMENTS_TREE({commit}) {
-        commit('SET_ELEMENTS_LOAD', true)
+        commit('SET_ELEMENTS_TREE_LOAD', true)
+
         return await axios({
             method: 'POST',
             url: urlApi + 'getElements',
@@ -227,11 +228,11 @@ export default {
             responseType: 'json'
         }).then(resp => {
             commit('SET_ELEMENTS_TREE', resp.data)
-            commit('SET_ELEMENTS_LOAD', false)
+            commit('SET_ELEMENTS_TREE_LOAD', false)
             return resp;
         })
             .catch((error) => {
-                commit('SET_ELEMENTS_LOAD', false)
+                commit('SET_ELEMENTS_TREE_LOAD', false)
                 console.log(error);
                 return error
             })

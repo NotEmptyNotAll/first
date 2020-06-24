@@ -327,9 +327,9 @@
 </template>
 
 <script>
-    import InputField from "./input/input-field";
+    import InputField from "../input/input-field";
     import {mapGetters, mapMutations, mapActions} from "vuex";
-    import VueDatalist from "./input/vue-datalist";
+    import VueDatalist from "../input/vue-datalist";
 
     export default {
         name: "add-engine-data-panel",

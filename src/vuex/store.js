@@ -33,6 +33,7 @@ let store = new Vuex.Store({
         listParamUp: [],
         listNewElem: [],
         elemTree: [],
+        elem_tree_load: false,
         elementsAndMaxId: null,
         paramNameAndUnits: [],
         elements: null,

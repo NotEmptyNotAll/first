@@ -94,11 +94,29 @@ export default {
                 return error
             })
     },
-    async SAVE_DATA_ELEMENTS({commit}, saveDataObj) {
+    async SAVE_ELEM({commit}, saveDataObj) {
         commit('SET_LOAD_SAVE_ELEMENTS', true);
         return await axios({
             method: 'POST',
             url: urlApi + 'saveElements',
+            data: saveDataObj,
+            responseType: 'json'
+        }).then(resp => {
+            commit('SET_SAVE_STATUS', resp.data)
+            commit('SET_LOAD_SAVE_ELEMENTS', false);
+            return resp;
+        })
+            .catch((error) => {
+                console.log(error);
+                commit('SET_LOAD_SAVE_ELEMENTS', false);
+                return error
+            })
+    },
+    async SAVE_DATA_ELEMENTS({commit}, saveDataObj) {
+        commit('SET_LOAD_SAVE_ELEMENTS', true);
+        return await axios({
+            method: 'POST',
+            url: urlApi + 'saveParamElements',
             data: saveDataObj,
             responseType: 'json'
         }).then(resp => {

@@ -9,7 +9,7 @@
 </template>
 
 <script>
-    import navbar from "./navbar";
+    import navbar from "./navbar/navbar";
 
     export default {
         name: "main-page",

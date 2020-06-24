@@ -21,7 +21,7 @@
                 </button>
             </div>
             <div class="col-md-2">
-                <button v- type="submit" @click="saveElemParam(1)"
+                <button  type="submit" @click="saveElemParam(1)"
                         class="btn  btn-block btn-outline-dark">
                     <span>{{$ml.get('word.update')}}</span>
                 </button>
@@ -68,7 +68,7 @@
 <script>
 
     import {mapActions, mapGetters, mapMutations} from "vuex";
-    import TreeItem from "./tree";
+    import TreeItem from "../tree/tree";
     import VueDataList02 from "../input/vue-datalist";
 
     export default {
@@ -124,6 +124,7 @@
                 'LISTPARAM',
                 'LISTPARAMUP',
                 'PARAM_NAME_AND_UNITS',
+                'ELEMENTS_TREE_LOAD',
                 'SEARCHDATA',
                 'ELEMENTS_TREE',
                 'TREE_ROOT_NAMES',
@@ -141,6 +142,7 @@
         methods: {
             ...mapActions([
                 'GET_PARAMTRS',
+                'SAVE_ELEM',
                 'GET_AUTOENG_BY_PARAM',
                 'GET_PARAM_NAME',
                 'GET_ELEMENTS_AND_MAX_ID',
@@ -160,7 +162,7 @@
                 setElemTree: 'SET_ELEMENTS_TREE',
                 setListParam: 'SET_LISTPARAM_ELEMENT',
                 setListNewElem: 'SET_LIST_NEW_PARAM',
-                setMaxId: 'SET_MAX_ID'
+                setMaxId: 'SET_ELEMENTS_TREE_MAXID'
 
             })
             ,
@@ -344,20 +346,14 @@
                 //     listSaveParam: this.listNewParam.filter(param => (!param.editRow && param.id === 0)),
                 //     listUpdateParam: this.listNewParam.filter(param => (!param.editRow && param.id !== 0))
                 //  };
-                let tempListElem = this.LISTNEWELEM;
-                this.listNewParam.forEach(param => {
-                    tempListElem.push({
-                        elemId: param.nameElemId,
-                        paramNameFk: param.name,
-                        parentId: param.elemId
-                    })
-                })
-                this.SAVE_DATA_ELEMENTS({
-                    listElem: this.LISTNEWELEM,
-                    listSaveParam: this.listNewParam.filter(param => (!param.editRow && param.id === 0)),
-                    listUpdateParam: this.listNewParam.filter(param => (!param.editRow && param.id !== 0))
+                this.SAVE_ELEM({
+                    listElem: this.LISTNEWELEM
                 });
-
+                this.$message({
+                    showClose: true,
+                    message: this.$ml.get('word.dataAddSuccess'),
+                    type: 'success'
+                });
                 console.log(number)
             }
             ,

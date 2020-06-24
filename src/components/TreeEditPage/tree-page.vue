@@ -85,8 +85,8 @@
 
 <script>
     import {mapActions, mapGetters} from 'vuex'
-    import SaveElemTreePage from "./tree/save-elem-tree-page";
-    import SearchEnginePanel from "./SearchPage/search-engine-panel";
+    import SaveElemTreePage from "../tree/save-elem-tree-page";
+    import SearchEnginePanel from "../SearchPage/search-engine-panel";
 
 
     export default {

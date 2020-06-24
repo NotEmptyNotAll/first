@@ -7,7 +7,7 @@
 </template>
 
 <script>
-    import TreeStruct from "./tree/tree-struct";
+    import TreeStruct from "./tree-struct";
     export default {
         name: "tree-struct-page",
         components: {TreeStruct}
