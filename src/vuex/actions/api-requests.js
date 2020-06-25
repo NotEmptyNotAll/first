@@ -208,7 +208,7 @@ export default {
             data: {id: number},
             responseType: 'json'
         }).then(resp => {
-            commit('SET_ELEMENTS_TREE_LOAD', resp.data)
+            commit('SET_ELEMENTS_UPDATE', resp.data)
             commit('SET_ELEMENTS_LOAD', false)
             return resp;
         })
