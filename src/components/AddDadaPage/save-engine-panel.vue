@@ -1002,10 +1002,9 @@
                 this.updateDataObj.horsepower = this.tempData.horsepower
             },
             autocompliteResult() {
-                alert(this.$refs.autocomplete.data.value);
             },
             test(id) {
-                alert(id)
+                console.log(id)
             },
             async link(record) {
                 this.$refs.updateTab.click();
