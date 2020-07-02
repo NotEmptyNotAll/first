@@ -128,6 +128,17 @@
 
 
                     />
+
+                    <vue-datalist
+                            class="col-md-3"
+                            :title-input="$ml.get('word.autoManufacturer')"
+                            :items="ADDITIONAL_DATA.autoManufacture"
+                            :update-obj="saveDataObj"
+                            index="autoManufactureFk"
+                            :holder-num=0
+                            :clean-search="cleanInputList"
+
+                    />
                     <vue-datalist
                             class="col-md-3"
                             :title-input="$ml.get('word.autoModel')"
@@ -137,16 +148,6 @@
                             :holder-num=0
                             :clean-search="cleanInputList"
 
-
-                    />
-                    <vue-datalist
-                            class="col-md-3"
-                            :title-input="$ml.get('word.autoManufacturer')"
-                            :items="ADDITIONAL_DATA.autoManufacture"
-                            :update-obj="saveDataObj"
-                            index="autoManufactureFk"
-                            :holder-num=0
-                            :clean-search="cleanInputList"
 
                     />
                     <div class="input-group col-md-3">
@@ -576,7 +577,7 @@
                             item.autoManufactureFk === v.autoManufactureFk &&
                             item.autoModelFk === v.autoModelFk
                         );
-                    if (temp === undefined) {
+                        if (temp === undefined) {
                             let obj = {}
                             obj.autoManufactureFk = v['autoManufactureFk']
                             obj.autoModelFk = v['autoModelFk']
@@ -593,7 +594,7 @@
                     }
                 )
                 await this.$emit("import-data-api", {list: importList});
-                 this.GET_ALL_ADDITIONAL_DATA();
+                this.GET_ALL_ADDITIONAL_DATA();
                 this.$message({
                     showClose: true,
                     message: this.$ml.get('word.dataAddSuccess'),
@@ -795,14 +796,14 @@
             this.columnOptions = ['№', this.$ml.get('word.engine'), this.$ml.get('word.autoManufacturer'),
                 this.$ml.get('word.autoModel'), this.$ml.get('word.releaseYearFrom'), this.$ml.get('word.releaseYearBy')];
             this.tableColumns = [
-                {key: 'id', label: '№',sortable: true},
+                {key: 'id', label: '№', sortable: true},
                 {key: 'engineFk', label: this.$ml.get('word.engine'), sortable: true},
                 {key: 'autoManufactureFk', label: this.$ml.get('word.autoManufacturer'), sortable: true},
                 {key: 'autoModelFk', label: this.$ml.get('word.autoModel'), sortable: true},
                 {key: 'releaseYearFrom', label: this.$ml.get('word.releaseYearFrom'), sortable: true},
                 {key: 'releaseYearBy', label: this.$ml.get('word.releaseYearBy'), sortable: true}];
             this.allTableColumns = [
-                {key: 'id', label: '№',sortable: true},
+                {key: 'id', label: '№', sortable: true},
                 {key: 'engineFk', label: this.$ml.get('word.engine'), sortable: true},
                 {key: 'autoManufactureFk', label: this.$ml.get('word.autoManufacturer'), sortable: true},
                 {key: 'autoModelFk', label: this.$ml.get('word.autoModel'), sortable: true},
