@@ -626,7 +626,7 @@
                             this.updateDataObj.status = 1;
                         }
 
-                        this.$emit("update-data-api", this.updateDataObj);
+                        await this.$emit("update-data-api", this.updateDataObj);
                         this.$message({
                             showClose: true,
                             message: this.$ml.get('word.dataAddSuccess'),

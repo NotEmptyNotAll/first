@@ -1096,7 +1096,7 @@
                 temp.releaseYearFrom = this.updateDataObj.releaseYearFrom
                 temp.releaseYearBy = this.updateDataObj.releaseYearBy
                 temp.horsepower = this.updateDataObj.horsepower
-                this.$emit("update-data-api", this.updateDataObj)
+                await this.$emit("update-data-api", this.updateDataObj)
                 this.cancel()
                 this.$message({
                     showClose: true,
