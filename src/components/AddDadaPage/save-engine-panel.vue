@@ -817,15 +817,12 @@
                             obj.degreeCompression = v['degreeCompression']
                             obj.releaseYearBy = v['releaseYearBy']
                             obj.releaseYearFrom = v['releaseYearFrom']
-                            alert('1')
                             obj.status = this.PARAM_NAME_AND_UNITS.status.find(item => item.data === v.status).id
-                            alert('1')
 
                             obj.engineManufacturer = this.ADDITIONAL_DATA.engineManufacture.find(item => item.data === v['engineManufacturer']).id
                             obj.cylindersPlacement = this.ADDITIONAL_DATA.cylinders.find(item => item.data === v['cylindersPlacement']).id
                             obj.fuelType = this.ADDITIONAL_DATA.fuelType.find(item => item.data === v[('fuelType')]).id
                             obj.superchargedType = this.ADDITIONAL_DATA.superchargeType.find(item => item.data === v['superchargedType']).id
-                            alert('1')
 
                             this.dataList.push(v)
                             importList.push(obj)
