@@ -590,6 +590,7 @@
                         temp.status = this.PARAM_NAME_AND_UNITS.status.find(item => item.id === this.updateDataObj.status).data;
                         temp.data = this.updateDataObj.updateData;
                         this.listForSearch = this.dataList;
+                        this.cancel()
                     } else {
                         this.$message({
                             showClose: true,

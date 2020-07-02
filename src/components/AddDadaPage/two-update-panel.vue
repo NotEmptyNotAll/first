@@ -637,6 +637,7 @@
                         temp.data = this.updateDataObj.saveData_primary;
                         temp.secondary_data = this.updateDataObj.saveData_secondary;
                         this.listForSearch = this.dataList;
+                        this.cancel()
                     }
                 }
                 console.log(number)
