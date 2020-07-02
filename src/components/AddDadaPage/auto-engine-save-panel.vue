@@ -593,7 +593,7 @@
                     }
                 )
                 await this.$emit("import-data-api", {list: importList});
-                await this.GET_ALL_ADDITIONAL_DATA();
+                 this.GET_ALL_ADDITIONAL_DATA();
                 this.$message({
                     showClose: true,
                     message: this.$ml.get('word.dataAddSuccess'),
