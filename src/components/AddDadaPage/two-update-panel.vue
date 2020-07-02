@@ -435,8 +435,8 @@
                 this.da = null
             },
             async importFile() {
-                let importList = [];
-                this.da.forEach(v => {
+                 let importList = [];
+                await   this.da.forEach(v => {
                         let temp = this.dataList.find(item =>
                             item.data === v.data
                         );
@@ -452,7 +452,7 @@
                 )
 
                 await this.$emit("import-data-api", {list: importList});
-                this.GET_ALL_ADDITIONAL_DATA();
+                await this.GET_ALL_ADDITIONAL_DATA();
                 this.$message({
                     showClose: true,
                     message: this.$ml.get('word.dataAddSuccess'),
