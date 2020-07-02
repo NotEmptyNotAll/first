@@ -735,8 +735,8 @@
                         obj[this.$ml.get('word.powerKwt')] = elem.powerKwt
                         obj[this.$ml.get('word.horsepower')] = elem.horsepower
                         obj[this.$ml.get('word.degreeCompression')] = elem.degreeCompression
-                        obj[this.$ml.get('word.releaseYearBy')] = elem.releaseYearBy
                         obj[this.$ml.get('word.releaseYearFrom')] = elem.releaseYearFrom
+                        obj[this.$ml.get('word.releaseYearBy')] = elem.releaseYearBy
                         obj[this.$ml.get('word.status')] = elem.status
                         arr.push(obj)
                     }
