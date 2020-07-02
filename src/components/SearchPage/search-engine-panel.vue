@@ -315,12 +315,6 @@
                     this.searchData.engineType = this.SEARCHDATA.engineType;
                     this.searchData.fuelType = this.SEARCHDATA.fuelType;
                     this.searchData.engineCapacity = this.SEARCHDATA.engineCapacity;
-                } else {
-                    this.$message({
-                        message: this.$ml.get('word.inccYear'),
-                        showClose: true,
-                        type: 'error'
-                    });
                 }
                 console.log(number)
             }
