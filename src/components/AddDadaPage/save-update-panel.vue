@@ -608,11 +608,11 @@
             this.columns = ['№', this.$ml.get('word.name'), this.$ml.get('word.status')];
             this.columnOptions = ['№', this.$ml.get('word.name'), this.$ml.get('word.status')];
             this.tableColumns = [
-                {key: 'index', label: '№', sortable: true},
+                {key: 'id', label: '№', sortable: true},
                 {key: 'data', label: this.$ml.get('word.name'), sortable: true},
                 {key: 'status', label: this.$ml.get('word.status'), sortable: true}];
             this.allTableColumns = [
-                {key: 'index', label: '№', sortable: true},
+                {key: 'id', label: '№', sortable: true},
                 {key: 'data', label: this.$ml.get('word.name'), sortable: true},
                 {key: 'status', label: this.$ml.get('word.status'), sortable: true}];
         }

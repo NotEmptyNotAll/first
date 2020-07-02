@@ -794,14 +794,14 @@
             this.columnOptions = ['№', this.$ml.get('word.engine'), this.$ml.get('word.autoManufacturer'),
                 this.$ml.get('word.autoModel'), this.$ml.get('word.releaseYearFrom'), this.$ml.get('word.releaseYearBy')];
             this.tableColumns = [
-                {key: 'index', label: '№'},
+                {key: 'id', label: '№',sortable: true},
                 {key: 'engineFk', label: this.$ml.get('word.engine'), sortable: true},
                 {key: 'autoManufactureFk', label: this.$ml.get('word.autoManufacturer'), sortable: true},
                 {key: 'autoModelFk', label: this.$ml.get('word.autoModel'), sortable: true},
                 {key: 'releaseYearFrom', label: this.$ml.get('word.releaseYearFrom'), sortable: true},
                 {key: 'releaseYearBy', label: this.$ml.get('word.releaseYearBy'), sortable: true}];
             this.allTableColumns = [
-                {key: 'index', label: '№'},
+                {key: 'id', label: '№',sortable: true},
                 {key: 'engineFk', label: this.$ml.get('word.engine'), sortable: true},
                 {key: 'autoManufactureFk', label: this.$ml.get('word.autoManufacturer'), sortable: true},
                 {key: 'autoModelFk', label: this.$ml.get('word.autoModel'), sortable: true},

@@ -1136,7 +1136,7 @@
                 this.$ml.get('word.superchargedType'), this.$ml.get('word.releaseYearFrom'),
                 this.$ml.get('word.releaseYearBy'), this.$ml.get('word.degreeCompression')];
             this.tableColumns = [
-                {key: 'index', label: '№', sortable: true},
+                {key: 'id', label: '№', sortable: true},
                 {key: 'data', label: this.$ml.get('word.engine'), sortable: true},
                 {key: 'engineManufacturer', label: this.$ml.get('word.engineManufacture'), sortable: true},
                 {key: 'cylindersPlacement', label: this.$ml.get('word.cylinders'), sortable: true},
@@ -1146,7 +1146,7 @@
                 {key: 'releaseYearBy', label: this.$ml.get('word.releaseYearBy'), sortable: true},
                 {key: 'status', label: this.$ml.get('word.status'), sortable: true}];
             this.allTableColumns = [
-                {key: 'index', label: '№', sortable: true},
+                {key: 'id', label: '№', sortable: true},
                 {key: 'data', label: this.$ml.get('word.engine'), sortable: true},
                 {key: 'engineManufacturer', label: this.$ml.get('word.engineManufacture'), sortable: true},
                 {key: 'cylindersPlacement', label: this.$ml.get('word.cylinders'), sortable: true},
