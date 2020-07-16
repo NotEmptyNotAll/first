@@ -48,11 +48,10 @@
                         </span>
                         </button>
                     </div>
-                    <div class=" btn-group  " style="display: flex;">
                         <el-button circle v-show="changeMod==='off'"
                                    v-if=" !linkOnThisButt.isPressed && item.parametersIsExistInChild"
-                                   v-on:click="pressed" type="success"
-                                   class=" posLeft  btn-posit"
+                                   v-on:click="pressed" type="info"
+                                   class="   btn-posit"
                                    @click="getParamtrs(nav,item.id,linkOnThisButt)"
                                    style="max-width: 3vw" icon="el-icon-d-arrow-right"
                                    size="small">
@@ -60,10 +59,10 @@
                         <el-button disabled v-show="changeMod==='off'"
                                    circle size="small"
                                    v-if=" linkOnThisButt.isPressed && item.parametersIsExistInChild"
-                                   class=" posLeft btn-posit  " type="success"
+                                   class="  btn-posit  " type="info"
                                    style="max-width: 3vw" icon="el-icon-d-arrow-right">
                         </el-button>
-                    </div>
+
 
                     <div class=" btn-group  " v-show="item.name!='' && changeMod==='tree'" role="group"
                          style=" position: relative; top: 0.5vh; left: 6vw;padding: 1vh">
@@ -288,5 +287,9 @@
         top: 1.4em;
     }
 
-
+    .btn-posit{
+        position: relative;
+        left: .5em;
+        top: .5em;
+    }
 </style>

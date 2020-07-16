@@ -137,9 +137,6 @@
         }),
         //All requests will be transferred to the vuex for convenience.
         mounted() {
-            this.GET_START_PARAM();
-            this.GET_PARAM_NAME();
-            this.GET_ALL_PARAM_NAME();
 
         },
         computed: {

@@ -708,17 +708,21 @@
 
             },
             async save(number) {
-                let dupAutoM = this.ADDITIONAL_DATA.autoManufacture.find(item =>
-                    item.id === this.saveDataObj.engineType
-                );
-                let dupAutoModel = this.ADDITIONAL_DATA.autoModel.find(item =>
-                    item.id === this.saveDataObj.engineType
-                );
-                let dupEngine = this.ADDITIONAL_DATA.engine.find(item =>
-                    item.id === this.saveDataObj.engineType
-                );
+                let temp = this.ADDITIONAL_DATA.autoEng.find(elem => {
+                        let dupAutoM = elem.autoManufactureFk===this.ADDITIONAL_DATA.autoManufacture.find(item =>
+                            item.id === this.saveDataObj.autoManufactureFk
+                        ).data;
+                        let dupAutoModel = elem.autoModelFk=== this.ADDITIONAL_DATA.autoModel.find(item =>
+                            item.id === this.saveDataObj.autoModelFk
+                        ).data;
+                        let dupEngine = elem.engineFk===this.ADDITIONAL_DATA.engine.find(item =>
+                            item.id === this.saveDataObj.engineFk
+                        ).data;
+                        return dupAutoM && dupAutoModel && dupEngine
+                    }
+                )
 
-                if (dupAutoM === undefined && dupAutoModel === undefined && dupEngine === undefined) {
+                if (temp === undefined) {
                     this.showErr = false
                     await this.SAVE_DATA_AUTOMOBILE_ENGINE(this.saveDataObj)
                     this.$message({

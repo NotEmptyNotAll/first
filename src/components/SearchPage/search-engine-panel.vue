@@ -115,7 +115,7 @@
                     </button>
                 </div>
                 <div v-if="searchData.paramList.length===1" class="col col-md-3">
-                    <input v-model="param.parameterNumber" class="form-control" type="number"
+                    <input v-model="param.parameterNumber" class="form-control" type="text"
                            value="" :placeholder="$ml.get('word.data')"
                     >
                 </div>
@@ -203,8 +203,12 @@
             advanceSearch: false
         }),
         mounted() {
-            this.GET_START_PARAM()
+          //lo  this.GET_START_PARAM();
+           // this.GET_PARAM_NAME();
+            this.GET_ALL_PARAM_NAME();
+            this.GET_ENGDATA_BY_PARAM(this.searchData);
             this.GET_TREE_ELEMENTS()
+            this.clear(1)
 
         },
         watch:{
@@ -231,6 +235,7 @@
             ...mapActions([
                 'GET_START_PARAM',
                 'GET_AUTOENG_BY_PARAM',
+                'GET_ALL_PARAM_NAME',
                 'GET_PARAMTRS',
                 'GET_PARAM_NAME',
                 'GET_TREE_ELEMENTS',

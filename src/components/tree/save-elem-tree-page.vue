@@ -3,17 +3,17 @@
          style="width: 98vw;   border-style: solid;border-top-color: lightslategrey;border-width: 15px 0px 0px 0px;">
         <br/>
         <div class="search-logo" id="treelogo">
-            <div class="head-text deepshd " >
+            <div class="head-text deepshd ">
                  <span v-if="LOAD_SAVE_ELEMENTS"><div
                          class="lds-dual-ring " style="margin-left: 47%"></div></span>
                 <h4 v-if="!LOAD_SAVE_ELEMENTS"
-                    style="width: 60%; margin-left: 20%; margin-right: 20%;text-align: center">
+                    style="width: 90%; margin-left: 5%; margin-right: 5%;text-align: center">
                     {{ELEMENTS_UPDATE.name}}</h4>
             </div>
         </div>
         <br/>
         <br/>
-        <div class="row" style="width: 100%;" >
+        <div class="row" style="width: 100%;">
             <div class="col-md-4">
             </div>
             <div class="col-md-4">
@@ -72,13 +72,12 @@
                             <div class="vl"></div>
                         </div>
                         <div class="col-md-8">
-                            <table class="table table-hover" style="min-height: 10vh">
+                            <table class="table table-hover">
                                 <thead>
                                 <tr>
                                     <th>{{$ml.get('word.name')}}</th>
                                     <th>{{$ml.get('word.units')}}</th>
-                                    <th>{{$ml.get('word.from')}}</th>
-                                    <th>{{$ml.get('word.by')}}</th>
+                                    <th>{{$ml.get('word.type')}}</th>
                                     <th>{{$ml.get('word.value')}}</th>
                                     <th>{{$ml.get('word.status')}}</th>
                                     <th>{{$ml.get('word.source')}}</th>
@@ -94,7 +93,7 @@
                                     </td>
                                     <td v-if="current.editRow">
                                         <VueDatalist
-                                                :items="PARAM_NAME.filter(elem=>{return !elem.tree_node})"
+                                                :items="paramList"
                                                 :update-obj="current"
                                                 index="name"
                                                 :hide-title="true"
@@ -117,25 +116,63 @@
                                         />
                                     </td>
                                     <td v-if="!current.editRow">
-                                        <span v-if="current.doubleMin!==null">{{Number(current.doubleMin).toFixed(4)}}</span>
-                                        <span v-else></span>
+                                        <span v-if="current.select===3">
+                                            {{$ml.get('word.range')}}
+                                        </span>
+                                        <span v-else-if="current.select===2">
+                                            {{$ml.get('word.number')}}
+                                        </span>
+                                        <span v-else-if="current.select===1">
+                                            {{$ml.get('word.text')}}
+                                        </span>
                                     </td>
                                     <td v-if="current.editRow">
-                                        <input type="number" class="form-control" v-model="current.doubleMin">
+                                        <el-select v-model="current.select"
+                                                   :placeholder="$ml.get('word.choose')">
+                                            <el-option
+                                                    :label="$ml.get('word.text')"
+                                                    :value="1">
+                                            </el-option>
+                                            <el-option
+                                                    :label="$ml.get('word.number')"
+                                                    :value="2">
+                                            </el-option>
+                                            <el-option
+                                                    :label="$ml.get('word.range')"
+                                                    :value="3">
+                                            </el-option>
+                                        </el-select>
                                     </td>
                                     <td v-if="!current.editRow">
-                                        <span v-if="current.doubleMax!==null">{{Number(current.doubleMax).toFixed(4)}}</span>
+                                        <span v-if="current.select===3">
+                                            {{Number(current.doubleMin).toFixed(4)}}-{{Number(current.doubleMax).toFixed(4)}}
+                                        </span>
+                                        <span v-else-if="current.select===2">
+                                            <span v-if="current.doubleNum!==null">
+                                                {{Number(current.doubleNum).toFixed(4)}}
+                                            </span>
+                                              <span v-else>
+                                            </span>
+
+                                        </span>
+                                        <span v-else-if="current.select===1">
+                                            {{current.textData}}
+                                        </span>
                                         <span v-else></span>
                                     </td>
                                     <td v-if="current.editRow">
-                                        <input type="number" class="form-control" v-model="current.doubleMax">
-                                    </td>
-                                    <td v-if="!current.editRow">
-                                        <span v-if="current.doubleNum!==null">{{Number(current.doubleNum).toFixed(4)}}</span>
-                                        <span v-else></span>
-                                    </td>
-                                    <td v-if="current.editRow">
-                                        <input type="number" class="form-control"  v-model="current.doubleNum">
+                                        <span v-if="current.select===3">
+                                            <div class="inp-grp">
+                                            <input type="number" class="form-control" v-model="current.doubleMin">
+                                            <input type="number" class="form-control" v-model="current.doubleMax">
+                                        </div>
+                                        </span>
+                                        <span v-else-if="current.select===2">
+                                            <input type="number" class="form-control" v-model="current.doubleNum">
+                                        </span>
+                                        <span v-else-if="current.select===1">
+                                            <input type="text" class="form-control" v-model="current.textData">
+                                        </span>
                                     </td>
                                     <td v-if="!current.editRow">{{PARAM_NAME_AND_UNITS.status.find(unit=>
                                         unit.id===current.status).data}}
@@ -183,7 +220,7 @@
                                     </td>
                                     <td v-if="current.editRow">
                                         <VueDatalist
-                                                :items="PARAM_NAME.filter(elem=>{return !elem.tree_node})"
+                                                :items="paramList"
                                                 :update-obj="current"
                                                 index="name"
                                                 :hide-title="true"
@@ -205,25 +242,58 @@
                                         />
                                     </td>
                                     <td v-if="!current.editRow">
-                                        <span v-if="current.doubleMin!==null">{{Number(current.doubleMin).toFixed(4)}}</span>
-                                        <span v-else></span></td>
+                                        <span v-if="current.select===3">
+                                            {{$ml.get('word.range')}}
+                                        </span>
+                                        <span v-else-if="current.select===2">
+                                            {{$ml.get('word.number')}}
+                                        </span>
+                                        <span v-else-if="current.select===1">
+                                            {{$ml.get('word.text')}}
+                                        </span>
+                                    </td>
                                     <td v-if="current.editRow">
-                                        <input type="number" class="form-control" v-model="current.doubleMin">
+                                        <el-select v-model="current.select"
+                                                   :placeholder="$ml.get('word.choose')">
+                                            <el-option
+                                                    :label="$ml.get('word.text')"
+                                                    :value="1">
+                                            </el-option>
+                                            <el-option
+                                                    :label="$ml.get('word.number')"
+                                                    :value="2">
+                                            </el-option>
+                                            <el-option
+                                                    :label="$ml.get('word.range')"
+                                                    :value="3">
+                                            </el-option>
+                                        </el-select>
                                     </td>
                                     <td v-if="!current.editRow">
-                                        <span v-if="current.doubleMax!==null">{{Number(current.doubleMax).toFixed(4)}}</span>
-                                        <span v-else></span></td>
-                                    <td v-if="current.editRow">
-                                        <input type="number" class="form-control" v-model="current.doubleMax">
-
-                                    </td>
-                                    <td v-if="!current.editRow">
-                                        <span v-if="current.doubleNum!==null">{{Number(current.doubleNum).toFixed(4)}}</span>
+                                        <span v-if="current.select===3">
+                                            {{Number(current.doubleMin).toFixed(4)}}-{{Number(current.doubleMax).toFixed(4)}}
+                                        </span>
+                                        <span v-else-if="current.select===2">
+                                            {{Number(current.doubleNum).toFixed(4)}}
+                                        </span>
+                                        <span v-else-if="current.select===1">
+                                            {{current.textData}}
+                                        </span>
                                         <span v-else></span>
                                     </td>
                                     <td v-if="current.editRow">
-                                        <input type="number" class="form-control" v-model="current.doubleNum">
-
+                                        <span v-if="current.select===3">
+                                            <div class="inp-grp">
+                                            <input type="number" class="form-control" v-model="current.doubleMin">
+                                            <input type="number" class="form-control" v-model="current.doubleMax">
+                                        </div>
+                                        </span>
+                                        <span v-else-if="current.select===2">
+                                            <input type="number" class="form-control" v-model="current.doubleNum">
+                                        </span>
+                                        <span v-else-if="current.select===1">
+                                            <input type="text" class="form-control" v-model="current.textData">
+                                        </span>
                                     </td>
                                     <td v-if="!current.editRow">{{PARAM_NAME_AND_UNITS.status.find(unit=>
                                         unit.id===current.status).data}}
@@ -318,6 +388,7 @@
             updateDataObj: {
                 id: null
             },
+            paramList:[],
             errorMessage: '',
             nowPressed: {
                 linkOnButt: {
@@ -393,20 +464,20 @@
                         }
                     }
                 )
-                if(ind!==null){
+                if (ind !== null) {
 
 
-                this.saveListParam[ind]={
-                    id: current.id,
-                    elemId: current.elemId,
-                    name: current.name,
-                    units: current.units,
-                    doubleMin: current.doubleMin,
-                    doubleMax: current.doubleMax,
-                    doubleNum: current.doubleNum,
-                    source: current.source
-                }
-                }else {
+                    this.saveListParam[ind] = {
+                        id: current.id,
+                        elemId: current.elemId,
+                        name: current.name,
+                        units: current.units,
+                        doubleMin: current.doubleMin,
+                        doubleMax: current.doubleMax,
+                        doubleNum: current.doubleNum,
+                        source: current.source
+                    }
+                } else {
                     this.saveListParam.push({
                         id: current.id,
                         elemId: current.elemId,
@@ -422,7 +493,7 @@
             },
             updateOldParam(current) {
                 let ind = null;
-                this.saveListParam.forEach(
+                this.listNewParam.forEach(
                     (param, index) => {
                         if (param.id === current.id) {
                             ind = index;
@@ -437,6 +508,7 @@
                         elemId: current.elemId,
                         name: current.name,
                         units: current.units,
+                        textData: current.textData,
                         doubleMin: current.doubleMin,
                         doubleMax: current.doubleMax,
                         doubleNum: current.doubleNum,
@@ -451,6 +523,7 @@
                         id: current.id,
                         elemId: current.elemId,
                         name: current.name,
+                        textData: current.textData,
                         units: current.units,
                         doubleMin: current.doubleMin,
                         doubleMax: current.doubleMax,
@@ -464,8 +537,8 @@
                 console.log(1)
             },
             deleteElem(id) {
-                this.ELEMENTS_UPDATE.elementsCh.map(items=>{
-                    items.elementsCh= items.elementsCh.filter(elem => elem.id !== id)
+                this.ELEMENTS_UPDATE.elementsCh.map(items => {
+                        items.elementsCh = items.elementsCh.filter(elem => elem.id !== id)
                     }
                 )
                 console.log(id)
@@ -486,7 +559,7 @@
                         paramIsNotEmpty: true,
                         parametersIsExistInChilda: true
                     }
-            );
+                );
 
                 //this.setElemTree(elmTreeTemp);
                 this.setMaxId(this.ELEMENTS_UPDATE.maxId + 1)
@@ -504,11 +577,13 @@
 
                 this.listNewParam.push({
                     id: 0,
+                    select: 1,
                     elemId: this.elemId,
                     auto_id: this.auto_id,
                     name: null,
                     nameElemId: this.ELEMENTS_UPDATE.maxId + 1,
                     units: null,
+                    textData: null,
                     doubleMin: null,
                     doubleMax: null,
                     doubleNum: null,
@@ -550,14 +625,31 @@
                 this.setMaxId(this.ELEMENTS_UPDATE.maxId + 1);
                 console.log(number)
             },
-            getParamtrs(nav, number, link) {
+            async getParamtrs(nav, number, link) {
                 this.nowPressed.linkOnButt.isPressed = false;
                 this.nowPressed.linkOnButt = link;
-                this.GET_PARAMTRS({id: number, auto_id: this.auto_id});
                 this.elemId = number;
+                await this.GET_PARAMTRS({id: number, auto_id: this.auto_id});
+                let templist =this.LISTPARAM
+                templist.map(item=>{
+                    if(item.doubleNum!==null){
+                        item.select=2;
+                    }else if(item.textData!==null){
+                        item.select=1;
+                    }else if(item.doubleMin!==null){
+                        item.select=3;
+                    }else {
+                        item.select=2;
+                    }
+                })
+                this.paramList=this.PARAM_NAME.filter(elem=>{
+                    return  !elem.tree_node && this.LISTPARAM.find(item=>elem.id===item.name)===undefined
+                })
+                this.setListParam(templist)
                 console.log(number);
 
             },
+
             async saveElemParam(number) {
                 // this.saveElemParamV = {
                 //    listElem: this.LISTNEWELEM,
@@ -577,7 +669,13 @@
                     listSaveParam: this.listNewParam.filter(param => (!param.editRow && param.id === 0)),
                     listUpdateParam: this.listNewParam.filter(param => (!param.editRow && param.id !== 0))
                 });
-
+                let templist = this.LISTPARAM
+                this.listNewParam.forEach(item => {
+                    if (item.id === 0 && item.elemId === this.elemId)
+                        templist.push(item)
+                })
+                this.listNewParam = []
+                this.setListParam(templist)
                 console.log(number)
             }
             ,
@@ -633,6 +731,11 @@
         position: absolute;
         bottom: 50%;
         top: 0;
+    }
+
+    .inp-grp {
+        display: flex;
+
     }
 
     .rad-bottom {
