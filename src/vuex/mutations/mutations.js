@@ -8,6 +8,12 @@ export default {
     SET_TREE_ELEMENTS: (state, treeElemets) => {
         state.treeElemets = treeElemets;
     },
+    SET_ALL_AUTO_ENG: (state, allAutoEng) => {
+        state.allAutoEng = allAutoEng;
+    },
+    SET_LOAD_ALL_AUTO_ENG: (state, loadAllAutoEng) => {
+        state.loadAllAutoEng = loadAllAutoEng;
+    },
     SET_ELEMENTS_UPDATE(state, engData) {
          state.elementsUpdate=engData;
     },

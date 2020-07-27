@@ -3,6 +3,30 @@ let urlApi = 'https://newenginedb.herokuapp.com/';
 //let urlApi = 'http://localhost:5050/';
 
 export default {
+    async GET_ALL_AUTO({commit}) {
+        commit('SET_LOAD_ALL_AUTO_ENG', true);
+        return axios(urlApi + 'getAllAutoEngAndParam', {
+            method: 'GET'
+        })
+            .then((resp) => {
+               /*let data=resp.data
+                let obj={}
+                data.map(elem=>{
+                    obj=elem.paramMap
+                    obj.forEach(item=>{
+                        elem.push(item)
+                    })
+                })*/
+                commit('SET_ALL_AUTO_ENG', resp.data)
+                commit('SET_LOAD_ALL_AUTO_ENG', false);
+                return resp;
+            })
+            .catch((error) => {
+                console.log(error);
+                commit('SET_LOAD_ALL_AUTO_ENG', false);
+                return error
+            })
+    },
     GET_START_PARAM({commit}) {
         return axios(urlApi + 'start', {
             method: 'GET'

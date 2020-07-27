@@ -10,6 +10,7 @@
                 text-color="#fff"
                 active-text-color="#ffd04b">
             <el-menu-item class="item-menu" index="/">{{$ml.get('word.search')}}</el-menu-item>
+            <el-menu-item class="item-menu" index="/newsearch">{{$ml.get('word.parameters')}}</el-menu-item>
             <el-menu-item class="item-menu" index="/addData">{{$ml.get('word.updateData')}}</el-menu-item>
             <el-menu-item class="item-menu" index="/edittree">{{$ml.get('word.setParameter')}}</el-menu-item>
             <el-menu-item class="item-menu" index="/treeStruct">{{$ml.get('word.treeStruct')}}</el-menu-item>

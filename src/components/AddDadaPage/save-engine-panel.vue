@@ -670,7 +670,7 @@
             da: null,
             dalen: 0,
             testlist: [],
-            checkedColumns: [],
+                checkedColumns: [],
             isIndeterminate: true,
             checkAll: false,
             tableColumns: [],

@@ -11,6 +11,12 @@ export default {
     SHOW_LOAD(state) {
         return state.showLoad;
     },
+    ALL_AUTO_ENG: (state) => {
+        return state.allAutoEng;
+    },
+    LOAD_ALL_AUTO_ENG: (state) => {
+        return state.loadAllAutoEng ;
+    },
     LISTPARAM(state) {
         return state.listParam;
     },
