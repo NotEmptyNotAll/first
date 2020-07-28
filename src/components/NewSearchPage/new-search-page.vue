@@ -5,11 +5,11 @@
             <div class="row" style="padding-top: 3vh">
                 <div class=" col-md-1">
                 </div>
-                <div class="title-bord col-md-1">
+                <div class="title-bord col-md-1 param-navbar">
                     <h4> {{$ml.get('word.parameters')}}</h4>
                 </div>
 
-                <div class="col-md-1">
+                <div class="col-md-1 param-navbar">
                     <el-dropdown style="width: 100%" :hide-on-click="false">
                         <el-button size="medium" type="primary" style="width: 100%; font-size: 16px">
                             {{$ml.get('word.column')}}
@@ -25,13 +25,27 @@
                         </el-dropdown-menu>
                     </el-dropdown>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 param-navbar">
                     <el-button size="medium" plain type="danger" style="width: 100%; font-size: 16px"
                                v-on:click="onexport">
                         clear
                     </el-button>
                 </div>
-                <div class="col-md-7">
+                <div class=" col-md-2 "  >
+                    <el-dropdown id="dropdown"  split-button @command="changePageSize" type="warning">
+                        {{$ml.get('word.numRowOnPage')}}{{pageSetting.pageSize}}
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item command="1"> 1</el-dropdown-item>
+                            <el-dropdown-item command="3"> 3</el-dropdown-item>
+                            <el-dropdown-item command="5"> 5</el-dropdown-item>
+                            <el-dropdown-item command="10"> 10</el-dropdown-item>
+                            <el-dropdown-item command="15"> 15</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
+                </div>
+
+
+                <div class="col-md-5 param-navbar">
                     <el-button-group>
                         <el-button v-for="current in ALL_AUTO_ENG.columnParam" v-bind:key="current"
                                    plain type="info" v-on:click="setEngineParamData(current.columnResponseList)">
@@ -50,6 +64,7 @@
             <br/>
             <div v-if="!LOAD_ALL_AUTO_ENG" class="table-cont">
                 <el-table
+                        :empty-text="$ml.get('word.empty')"
                         border
                         :data="ALL_AUTO_ENG.engineData"
                         style="width: 100%"
@@ -89,9 +104,11 @@
                 </el-table>
                 <el-pagination
                         class="pagin-st"
+                        @current-change="handleCurrentPage"
                         background
+                        :current-page.sync="pageSetting.initRecordFrom"
                         layout="prev, pager, next"
-                        :total="1000">
+                        :total="ALL_AUTO_ENG.countResults*10">
                 </el-pagination>
             </div>
 
@@ -106,10 +123,30 @@
 
     export default {
         name: "new-search-page",
+        data() {
+            return {
+                columnOptions: [],
+                columns: [],
+                checkAll: false,
+                tableColumns: [],
+                checkedColumns: [],
+                allTableColumns: [],
+                engineParamData: null,
+                isIndeterminate: true,
+                pageSetting: {
+                    initRecordFrom: 1,
+                    pageSize: 3,
+                }
+            }
+        },
         methods: {
             ...mapActions([
                 'GET_ALL_AUTO'
             ]),
+            handleCurrentPage(val){
+                this.pageSetting.initRecordFrom=val
+                this.GET_ALL_AUTO(this.pageSetting)
+            },
             // eslint-disable-next-line no-unused-vars
             tableRowClassName({row, rowIndex}) {
                 return 'header-st';
@@ -130,6 +167,11 @@
             },
             setEngineParamData(data) {
                 this.engineParamData = data
+            },
+            changePageSize(value) {
+                this.pageSetting.pageSize = value
+                this.pageSetting.initRecordFrom = 1
+                this.GET_ALL_AUTO(this.pageSetting)
             }
         },
         computed: {
@@ -141,7 +183,7 @@
         mounted() {
 
             if (this.ALL_AUTO_ENG.length === 0) {
-                this.GET_ALL_AUTO();
+                this.GET_ALL_AUTO(this.pageSetting);
             }
             this.checkedColumns = [
                 '№', this.$ml.get('word.engine'), this.$ml.get('word.autoManufacturer'),
@@ -170,41 +212,29 @@
                 this.$ml.get('word.superchargedType')
             ];
             this.tableColumns = [
-                {key: 'id', label: '№', widthSmall: 30,widthLarge: 40},
-                {key: 'engineType', label: this.$ml.get('word.engine'), widthSmall: 110,widthLarge: 200},
-                {key: 'autoManufacture', label: this.$ml.get('word.autoManufacturer'), widthSmall: 80,widthLarge: 70},
-                {key: 'modelName', label: this.$ml.get('word.autoModel'), widthSmall: 80,widthLarge: 70},
-                {key: 'releaseYear', label: this.$ml.get('word.releaseYear'), widthSmall: 80,widthLarge: 60},
-                {key: 'fuelType', label: this.$ml.get('word.fuelType'), widthSmall: 80,widthLarge: 70},
-                {key: 'cylinderPlace', label: this.$ml.get('word.cylinders'), widthSmall: 110,widthLarge: 70},
-                {key: 'flapNumber', label: this.$ml.get('word.flapNumber'), widthSmall: 80,widthLarge: 90},
-                {key: 'superchargedType', label: this.$ml.get('word.superchargedType'),widthSmall: 80,widthLarge: 90}]
+                {key: 'id', label: '№', widthSmall: 30, widthLarge: 40},
+                {key: 'engineType', label: this.$ml.get('word.engine'), widthSmall: 110, widthLarge: 200},
+                {key: 'autoManufacture', label: this.$ml.get('word.autoManufacturer'), widthSmall: 80, widthLarge: 70},
+                {key: 'modelName', label: this.$ml.get('word.autoModel'), widthSmall: 80, widthLarge: 70},
+                {key: 'releaseYear', label: this.$ml.get('word.releaseYear'), widthSmall: 80, widthLarge: 60},
+                {key: 'fuelType', label: this.$ml.get('word.fuelType'), widthSmall: 80, widthLarge: 70},
+                {key: 'cylinderPlace', label: this.$ml.get('word.cylinders'), widthSmall: 110, widthLarge: 70},
+                {key: 'flapNumber', label: this.$ml.get('word.flapNumber'), widthSmall: 80, widthLarge: 90},
+                {key: 'superchargedType', label: this.$ml.get('word.superchargedType'), widthSmall: 80, widthLarge: 90}]
             this.allTableColumns = [
-                {key: 'id', label: '№', widthSmall: 30,widthLarge: 40},
-                {key: 'engineType', label: this.$ml.get('word.engine'), widthSmall: 110,widthLarge: 200},
-                {key: 'autoManufacture', label: this.$ml.get('word.autoManufacturer'), widthSmall: 140,widthLarge: 70},
-                {key: 'modelName', label: this.$ml.get('word.autoModel'), widthSmall: 80,widthLarge: 70},
-                {key: 'releaseYear', label: this.$ml.get('word.releaseYear'), widthSmall: 80,widthLarge: 60},
-                {key: 'fuelType', label: this.$ml.get('word.fuelType'), widthSmall: 80,widthLarge: 70},
-                {key: 'cylinderPlace', label: this.$ml.get('word.cylinders'), widthSmall: 110,widthLarge: 70},
-                {key: 'flapNumber', label: this.$ml.get('word.flapNumber'), widthSmall: 80,widthLarge: 90},
-                {key: 'pistonDiameter', label: this.$ml.get('word.pistonDiameter'), widthSmall: 90,widthLarge: 70},
-                {key: 'pistonStroke', label: this.$ml.get('word.pistonStroke'), widthSmall: 80,widthLarge: 70},
-                {key: 'engineCapacity', label: this.$ml.get('word.engineCapacity'), widthSmall: 80,widthLarge: 70},
-                {key: 'powerKwt', label: this.$ml.get('word.powerKwt'),widthSmall: 80,widthLarge: 70},
-                {key: 'superchargedType', label: this.$ml.get('word.superchargedType'),widthSmall: 80,widthLarge: 90}]
-        },
-        data() {
-            return {
-                columnOptions: [],
-                columns: [],
-                checkAll: false,
-                tableColumns: [],
-                checkedColumns: [],
-                allTableColumns: [],
-                engineParamData: null,
-                isIndeterminate:true
-            }
+                {key: 'id', label: '№', widthSmall: 30, widthLarge: 40},
+                {key: 'engineType', label: this.$ml.get('word.engine'), widthSmall: 110, widthLarge: 200},
+                {key: 'autoManufacture', label: this.$ml.get('word.autoManufacturer'), widthSmall: 140, widthLarge: 70},
+                {key: 'modelName', label: this.$ml.get('word.autoModel'), widthSmall: 80, widthLarge: 70},
+                {key: 'releaseYear', label: this.$ml.get('word.releaseYear'), widthSmall: 80, widthLarge: 60},
+                {key: 'fuelType', label: this.$ml.get('word.fuelType'), widthSmall: 80, widthLarge: 70},
+                {key: 'cylinderPlace', label: this.$ml.get('word.cylinders'), widthSmall: 110, widthLarge: 70},
+                {key: 'flapNumber', label: this.$ml.get('word.flapNumber'), widthSmall: 80, widthLarge: 90},
+                {key: 'pistonDiameter', label: this.$ml.get('word.pistonDiameter'), widthSmall: 90, widthLarge: 70},
+                {key: 'pistonStroke', label: this.$ml.get('word.pistonStroke'), widthSmall: 80, widthLarge: 70},
+                {key: 'engineCapacity', label: this.$ml.get('word.engineCapacity'), widthSmall: 80, widthLarge: 70},
+                {key: 'powerKwt', label: this.$ml.get('word.powerKwt'), widthSmall: 80, widthLarge: 70},
+                {key: 'superchargedType', label: this.$ml.get('word.superchargedType'), widthSmall: 80, widthLarge: 90}]
         }
     }
 </script>
@@ -228,6 +258,16 @@
         background: #f5f6fa;
     }
 
+    .param-navbar {
+        display: flex;
+        justify-content: center;
+        flex-direction:  column;
+    }
+    #dropdown{
+        position: relative;
+        top:4px;
+
+    }
     .title-bord {
         text-align: center;
         position: relative;

@@ -249,7 +249,7 @@
                 </div>
                 <hr/>
                 <el-table
-                        empty-text="пусто"
+                        :empty-text="$ml.get('word.empty')"
                         height="600" :data="da"
                         :row-class-name="tableRowClassName">
                     <el-table-column prop="id" label="№">

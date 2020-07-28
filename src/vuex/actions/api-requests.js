@@ -3,10 +3,13 @@ let urlApi = 'https://newenginedb.herokuapp.com/';
 //let urlApi = 'http://localhost:5050/';
 
 export default {
-    async GET_ALL_AUTO({commit}) {
+    async GET_ALL_AUTO({commit},response) {
         commit('SET_LOAD_ALL_AUTO_ENG', true);
-        return axios(urlApi + 'getAllAutoEngAndParam', {
-            method: 'GET'
+        return await axios({
+            method: 'POST',
+            url: urlApi + 'getAllAutoEngAndParam',
+            data: response,
+            responseType: 'json'
         })
             .then((resp) => {
                /*let data=resp.data
