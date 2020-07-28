@@ -3,36 +3,24 @@
 
 
         <div class="input-group">
-            <el-input v-show="!number"
+            <el-input
                       v-model="saveParameters[index]"
-                      :placeholder="$ml.get('word.data')"
-                      clearable>
-                <template slot="prepend"><strong class="title" style="font-size: 15px">{{nameInput}}</strong></template>
+                      :placeholder="$ml.get('word.filter')"
+                      size="small"
+                      prefix-icon="el-icon-search"
+                      clearable
+                      @change="onInputAction"
+            >
             </el-input>
 
         </div>
-
-        <div class="input-group">
-            <el-input v-show="number"
-                      :max="max"
-                      :min="min"
-                      type="number"
-                      v-model="saveParameters[index]"
-                      :placeholder="placeHold"
-                      clearable>
-                <template slot="prepend" ><strong class="title" style="font-size: 15px">{{nameInput}}</strong>
-                </template>
-            </el-input>
-
-        </div>
-
 
     </div>
 </template>
 
 <script>
     export default {
-        name: "input-field",
+        name: "filter-input",
         components: {},
         data: () => ({
             saveDataObj: {
@@ -64,7 +52,11 @@
             cleanSearch: null
         },
         computed: {},
+
         methods: {
+            onInputAction(){
+                this.$emit("on-input-action");
+            },
             async saveEngManufacture(number) {
                 if (this.saveDataObj.saveData != null) {
                     this.$emit("save-data-api", this.saveDataObj)
@@ -85,6 +77,8 @@
 </script>
 
 <style scoped>
+
+
     .title {
         color: dimgrey;
     }

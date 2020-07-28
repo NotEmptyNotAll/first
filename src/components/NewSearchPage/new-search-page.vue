@@ -25,14 +25,14 @@
                         </el-dropdown-menu>
                     </el-dropdown>
                 </div>
-                <div class="col-md-1 param-navbar">
-                    <el-button size="medium" plain type="danger" style="width: 100%; font-size: 16px"
-                               v-on:click="onexport">
-                        clear
+                <div class="col-md-2 param-navbar">
+                    <el-button size="medium" class="fix-position" plain type="danger"
+                               style="width: 100%; font-size: 16px"
+                               v-on:click="clearFilter">{{$ml.get('word.clearAllFilter')}}
                     </el-button>
                 </div>
-                <div class=" col-md-2 "  >
-                    <el-dropdown id="dropdown"  split-button @command="changePageSize" type="warning">
+                <div class=" col-md-2 ">
+                    <el-dropdown class="fix-position" split-button @command="changePageSize"  type="warning">
                         {{$ml.get('word.numRowOnPage')}}{{pageSetting.pageSize}}
                         <el-dropdown-menu slot="dropdown">
                             <el-dropdown-item command="1"> 1</el-dropdown-item>
@@ -54,6 +54,7 @@
                         <el-button plain type="info"
                                    v-show="ALL_AUTO_ENG.length!==0"
                                    icon="el-icon-close"
+                                   @click="setCurrent()"
                                    v-on:click="setEngineParamData(null)">
                         </el-button>
                     </el-button-group>
@@ -66,7 +67,10 @@
                 <el-table
                         :empty-text="$ml.get('word.empty')"
                         border
+                        ref="paramTable"
                         :data="ALL_AUTO_ENG.engineData"
+                        highlight-current-row
+                        @current-change="handleCurrentChange"
                         style="width: 100%"
                 >
                     <el-table-column
@@ -79,6 +83,19 @@
                             :prop="clmn.key"
                             :label="clmn.label"
                     >
+
+                        <template slot="header">
+                            <h5>{{clmn.label}}</h5>
+                            <filter-input
+                                    v-show="clmn.key!=='id'"
+                                    :place-hold="$ml.get('word.filter')"
+                                    :save-parameters="pageSetting"
+                                    :index="clmn.key"
+                                    @on-input-action="getAutoEngByFilter"
+                            />
+
+
+                        </template>
                     </el-table-column>
                     <el-table-column resizable align="center"
                                      v-show="engineParamData!==null"
@@ -120,9 +137,13 @@
 
 <script>
     import {mapActions, mapGetters} from "vuex";
+    import InputField from "../input/input-field";
+    import FilterInput from "../input/filter-input";
 
     export default {
         name: "new-search-page",
+        // eslint-disable-next-line vue/no-unused-components
+        components: {FilterInput, InputField},
         data() {
             return {
                 columnOptions: [],
@@ -134,22 +155,78 @@
                 engineParamData: null,
                 isIndeterminate: true,
                 pageSetting: {
+                    id: null,
+                    flapNumber: null,
+                    fuelType: null,
+                    cylindersNumber: null,
+                    autoManufacture: null,
+                    engineManufacture: null,
+                    powerKWT: null,
+                    engineCapacity: null,
+                    horsepower: null,
+                    pistonStoke: null,
+                    pistonDiameter: null,
+                    modelName: null,
+                    engineType: null,
+                    releaseYear: null,
+                    elemID: null,
+                    cylinderNum: null,
+                    cylinderPlace: null,
+                    superchargedType: null,
+                    degreeCompression: null,
                     initRecordFrom: 1,
-                    pageSize: 3,
-                }
+                    pageSize: 3
+                },
+                inputFilds: []
             }
         },
         methods: {
             ...mapActions([
                 'GET_ALL_AUTO'
             ]),
-            handleCurrentPage(val){
-                this.pageSetting.initRecordFrom=val
+            handleCurrentPage(val) {
+                this.pageSetting.initRecordFrom = val
                 this.GET_ALL_AUTO(this.pageSetting)
             },
             // eslint-disable-next-line no-unused-vars
             tableRowClassName({row, rowIndex}) {
                 return 'header-st';
+
+            },
+            setCurrent(row) {
+                this.$refs.paramTable.setCurrentRow(row);
+            },
+            clearFilter() {
+                this.pageSetting = {
+                    id: null,
+                    flapNumber: null,
+                    fuelType: null,
+                    cylindersNumber: null,
+                    autoManufacture: null,
+                    engineManufacture: null,
+                    powerKWT: null,
+                    engineCapacity: null,
+                    horsepower: null,
+                    pistonStoke: null,
+                    pistonDiameter: null,
+                    modelName: null,
+                    engineType: null,
+                    releaseYear: null,
+                    elemID: null,
+                    cylinderNum: null,
+                    cylinderPlace: null,
+                    superchargedType: null,
+                    degreeCompression: null,
+                    initRecordFrom: this.pageSetting.initRecordFrom,
+                    pageSize: this.pageSetting.pageSize
+                }
+                this.GET_ALL_AUTO(this.pageSetting);
+            },
+            handleCurrentChange(val) {
+                this.currentRow = val;
+            },
+            getAutoEngByFilter() {
+                this.GET_ALL_AUTO(this.pageSetting);
 
             },
             handleCheckedColumnChange(value) {
@@ -181,7 +258,6 @@
             ])
         },
         mounted() {
-
             if (this.ALL_AUTO_ENG.length === 0) {
                 this.GET_ALL_AUTO(this.pageSetting);
             }
@@ -261,13 +337,16 @@
     .param-navbar {
         display: flex;
         justify-content: center;
-        flex-direction:  column;
+        flex-direction: column;
     }
-    #dropdown{
+
+    .fix-position {
         position: relative;
-        top:4px;
+        top: 4px;
 
     }
+
+
     .title-bord {
         text-align: center;
         position: relative;

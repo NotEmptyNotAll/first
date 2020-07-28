@@ -180,7 +180,7 @@
                                  index="pistonStroke"
                     />
                     <input-field class="col-md-3"
-                                 :name-input="$ml.get('word.engineCapacity')"
+                                 :aria-placeholder="$ml.get('word.engineCapacity')"
                                  :save-parameters="saveDataObj"
                                  index="engineCapacity"
 
