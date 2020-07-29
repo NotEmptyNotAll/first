@@ -10,7 +10,12 @@
     import TreeStruct from "./tree-struct";
     export default {
         name: "tree-struct-page",
-        components: {TreeStruct}
+        components: {TreeStruct},
+        mounted() {
+            document.body.oncontextmenu = function () {
+                return true;
+            };
+        }
     }
 </script>
 

@@ -408,6 +408,9 @@
             elemId: null
         }),
         mounted() {
+            document.body.oncontextmenu = function () {
+                return true;
+            };
             this.GET_TREE_ROOT_NAMES();
 
         },

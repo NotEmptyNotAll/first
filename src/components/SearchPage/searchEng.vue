@@ -137,7 +137,9 @@
         }),
         //All requests will be transferred to the vuex for convenience.
         mounted() {
-
+            document.body.oncontextmenu = function () {
+                return true;
+            };
         },
         computed: {
             currentUser() {

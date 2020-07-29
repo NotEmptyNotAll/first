@@ -1,7 +1,14 @@
 <template>
     <div>
-
         <div class="container search-border tab  rounded bg-white rad">
+
+            <vue-context-menu
+                    :elementId="'myFirstMenu'"
+                    :options="ALL_AUTO_ENG.columnParam"
+                    :ref="'vueSimpleContextMenu1'"
+                    @option-clicked="optionClicked1"
+            ></vue-context-menu>
+
             <div class="row" style="padding-top: 3vh">
                 <div class=" col-md-1">
                 </div>
@@ -25,23 +32,26 @@
                         </el-dropdown-menu>
                     </el-dropdown>
                 </div>
+                <div class=" col-md-2 ">
+                    <el-dropdown class="fix-position" @command="changePageSize">
+                        <el-button size="medium" type="warning" style="width: 100%; font-size: 16px">
+                            {{$ml.get('word.numRowOnPage')}}{{pageSetting.pageSize}}
+                            <i class="el-icon-arrow-down el-icon--right"></i>
+                        </el-button>
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item command="1"> 1 {{$ml.get('word.rows')}}</el-dropdown-item>
+                            <el-dropdown-item command="3"> 3{{$ml.get('word.rows')}}</el-dropdown-item>
+                            <el-dropdown-item command="5"> 5{{$ml.get('word.rows')}}</el-dropdown-item>
+                            <el-dropdown-item command="10"> 10{{$ml.get('word.rows')}}</el-dropdown-item>
+                            <el-dropdown-item command="15"> 15{{$ml.get('word.rows')}}</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
+                </div>
                 <div class="col-md-2 param-navbar">
                     <el-button size="medium" class="fix-position" plain type="danger"
                                style="width: 100%; font-size: 16px"
                                v-on:click="clearFilter">{{$ml.get('word.clearAllFilter')}}
                     </el-button>
-                </div>
-                <div class=" col-md-2 ">
-                    <el-dropdown class="fix-position" split-button @command="changePageSize"  type="warning">
-                        {{$ml.get('word.numRowOnPage')}}{{pageSetting.pageSize}}
-                        <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item command="1"> 1</el-dropdown-item>
-                            <el-dropdown-item command="3"> 3</el-dropdown-item>
-                            <el-dropdown-item command="5"> 5</el-dropdown-item>
-                            <el-dropdown-item command="10"> 10</el-dropdown-item>
-                            <el-dropdown-item command="15"> 15</el-dropdown-item>
-                        </el-dropdown-menu>
-                    </el-dropdown>
                 </div>
 
 
@@ -65,12 +75,14 @@
             <br/>
             <div v-if="!LOAD_ALL_AUTO_ENG" class="table-cont">
                 <el-table
+                        id="lol"
                         :empty-text="$ml.get('word.empty')"
                         border
                         ref="paramTable"
                         :data="ALL_AUTO_ENG.engineData"
                         highlight-current-row
                         @current-change="handleCurrentChange"
+                        @row-contextmenu="handleClick1($event, row)"
                         style="width: 100%"
                 >
                     <el-table-column
@@ -139,16 +151,46 @@
     import {mapActions, mapGetters} from "vuex";
     import InputField from "../input/input-field";
     import FilterInput from "../input/filter-input";
+    import vueSimpleContextMenu from 'vue-simple-context-menu'
+    import VueContextMenu from "../ContextMenu/vue-context-menu";
 
     export default {
         name: "new-search-page",
         // eslint-disable-next-line vue/no-unused-components
-        components: {FilterInput, InputField},
+        components: {VueContextMenu, FilterInput, vueSimpleContextMenu, InputField},
         data() {
             return {
                 columnOptions: [],
                 columns: [],
+                itemArray1: [
+                    {
+                        name: 'Jim',
+                        job: 'Salesman'
+                    },
+                    {
+                        name: 'Dwight',
+                        job: 'Assistant to the Regional Manager'
+                    },
+                    {
+                        name: 'Pam',
+                        job: 'Receptionist'
+                    }
+                ],
                 checkAll: false,
+                optionsArray1: [
+                    {
+                        name: 'Duplicate',
+                        slug: 'duplicate'
+                    },
+                    {
+                        name: 'Edit',
+                        slug: 'edit'
+                    },
+                    {
+                        name: 'Delete',
+                        slug: 'delete'
+                    }
+                ],
                 tableColumns: [],
                 checkedColumns: [],
                 allTableColumns: [],
@@ -222,6 +264,12 @@
                 }
                 this.GET_ALL_AUTO(this.pageSetting);
             },
+            handleClick1(event, item) {
+                this.$refs.vueSimpleContextMenu1.showMenu(event, item)
+            },
+            optionClicked1(event) {
+                window.alert(JSON.stringify(event))
+            },
             handleCurrentChange(val) {
                 this.currentRow = val;
             },
@@ -258,6 +306,11 @@
             ])
         },
         mounted() {
+            // eslint-disable-next-line no-unused-vars
+            document.body.oncontextmenu = function () {
+                return false;
+            };
+
             if (this.ALL_AUTO_ENG.length === 0) {
                 this.GET_ALL_AUTO(this.pageSetting);
             }
@@ -316,6 +369,7 @@
 </script>
 
 <style>
+
     .table-cont {
         padding-bottom: 10px;
         width: 100%;
@@ -357,4 +411,5 @@
         border-color: lightgray;
         border-width: 0px 2px 0px 0px;
     }
+
 </style>

@@ -15,7 +15,7 @@
             <div class="container search-border tab  rounded bg-white rad" id="contTable" style=" display: flex;
 	flex-direction: row; height: auto">
                 <table class=" table  rounded table-hover " style="height: auto;align-items: flex-start; ">
-                    <thead >
+                    <thead>
                     <tr>
                         <th>{{$ml.get('word.engine')}}</th>
                         <th>{{$ml.get('word.autoManufacturer')}}</th>
@@ -130,6 +130,9 @@
         }),
         //All requests will be transferred to the vuex for convenience.
         mounted() {
+            document.body.oncontextmenu = function () {
+                return true;
+            };
             this.GET_START_PARAM();
             this.GET_PARAM_NAME();
             this.GET_ALL_PARAM_NAME();

@@ -77,6 +77,9 @@
             };
         },
         mounted() {
+            document.body.oncontextmenu = function () {
+                return true;
+            };
             if (this.loggedIn) {
                 this.$router.push("/#/");
             }

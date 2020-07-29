@@ -278,6 +278,9 @@
         },
 
         mounted() {
+            document.body.oncontextmenu = function () {
+                return true;
+            };
             this.GET_PARAM_NAME();
             this.GET_ALL_ADDITIONAL_DATA();
             this.GET_START_PARAM();

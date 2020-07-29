@@ -158,6 +158,9 @@
 
         },
         mounted() {
+            document.body.oncontextmenu = function () {
+                return true;
+            };
         }
 
     }
