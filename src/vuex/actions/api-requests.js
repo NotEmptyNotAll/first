@@ -3,6 +3,24 @@ let urlApi = 'https://newenginedb.herokuapp.com/';
 //let urlApi = 'http://localhost:5050/';
 
 export default {
+    async GET_FILE_LIST_BY_URL({commit},response) {
+        commit('SET_LOAD_LIST_URL', true);
+        return await axios({
+            method: 'POST',
+            url: urlApi + 'getFileUrlById',
+            data: response,
+            responseType: 'json'
+        })
+            .then((resp) => {
+                commit('SET_LOAD_LIST_URL', false);
+                return resp.data;
+            })
+            .catch((error) => {
+                console.log(error);
+                commit('SET_LOAD_LIST_URL', false);
+                return error
+            })
+    },
     async GET_ALL_AUTO({commit},response) {
         commit('SET_LOAD_ALL_AUTO_ENG', true);
         return await axios({
@@ -12,14 +30,6 @@ export default {
             responseType: 'json'
         })
             .then((resp) => {
-               /*let data=resp.data
-                let obj={}
-                data.map(elem=>{
-                    obj=elem.paramMap
-                    obj.forEach(item=>{
-                        elem.push(item)
-                    })
-                })*/
                 commit('SET_ALL_AUTO_ENG', resp.data)
                 commit('SET_LOAD_ALL_AUTO_ENG', false);
                 return resp;
@@ -27,6 +37,25 @@ export default {
             .catch((error) => {
                 console.log(error);
                 commit('SET_LOAD_ALL_AUTO_ENG', false);
+                return error
+            })
+    },
+    async GET_PARAM_SIZE_NAME({commit},response) {
+        commit('SET_LOAD_PARAM_SIZE_NAME', true);
+        return await axios({
+            method: 'POST',
+            url: urlApi + 'getParametersSizeName',
+            data: response,
+            responseType: 'json'
+        })
+            .then((resp) => {
+                commit('SET_PARAM_SIZE_NAME', resp.data)
+                commit('SET_LOAD_PARAM_SIZE_NAME', false);
+                return resp;
+            })
+            .catch((error) => {
+                console.log(error);
+                commit('SET_LOAD_PARAM_SIZE_NAME', false);
                 return error
             })
     },

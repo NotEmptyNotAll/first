@@ -12,7 +12,7 @@
                             <!-- Вертикальное меню -->
                             <ul class="nav  nav-tabs tabs-right  sideways" style="width: 100%">
 
-                                <li class=" act ive  nav-item"><a class="nav-link menu-item " style="border: white;"
+                                <li class=" active  nav-item"><a class="nav-link menu-item " style="border: white;"
                                                                   href="#engine"
                                                                   data-toggle="tab">
                                     <span></span>
@@ -72,6 +72,12 @@
                                                         data-toggle="tab" style="border: white;">
                                     <span></span>
                                     {{$ml.get('word.nameElements')}}
+                                </a></li>
+                                <hr style="position: center; width: 100%;"/>
+                                <li class="nav-item"><a class="nav-link menu-item " href="#nameElementsSize"
+                                                        data-toggle="tab" style="border: white;">
+                                    <span></span>
+                                    {{$ml.get('word.paramSizeName')}}
                                 </a></li>
                             </ul>
                         </div>
@@ -195,6 +201,18 @@
                                         @update-data-api="UPDATE_PARAM_NAME"
                                 />
                             </div>
+                            <div class="tab-pane" id="nameElementsSize">
+                                <two-update-panel
+                                        :name-title="$ml.get('word.paramSizeName')"
+                                        :title_two="$ml.get('word.mark')"
+                                        :load-status="LOAD_SAVE.paramName"
+                                        :data-list="ADDITIONAL_DATA.parameterSizeName"
+                                        @import-data-api="IMPORT_PARAM_NAME"
+                                        @save-data-api="SAVE_PARAM_NAME"
+                                        @update-data-api="UPDATE_PARAM_NAME"
+                                />
+                            </div>
+
                         </div>
                     </div>
 

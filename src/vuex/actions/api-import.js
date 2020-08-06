@@ -1,9 +1,31 @@
 import axios from "axios";
 
-let urlApi = 'https://newenginedb.herokuapp.com/import/';
+let urlApi = 'http://newenginedb.herokuapp.com/import/';
 //let urlApi = 'http://localhost:5050/import/';
+const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/notempty/upload';
+const CLOUDINARY_UPLOAD_PRESET = 'itw8wee3';
 
 export default {
+    // eslint-disable-next-line no-unused-vars
+    async UPLOAD_FILE({commit}, file) {
+            let formData = new FormData();
+        formData.append('file', file);
+            formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET)
+            formData.append('folder', 'cloudinary-demo')
+            return axios({
+                url: CLOUDINARY_URL,
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoder'
+                },
+                data: formData
+            }).then(resp => {
+
+                return resp
+            }).catch(err => {
+                return err
+            })
+    },
     async IMPORT_DATA_SUPERCHARGE_TYPE({commit}, saveDataObj) {
         commit('SET_LOAD_SAVE_SUPERCHARGE_TYPE', true);
         return await axios({

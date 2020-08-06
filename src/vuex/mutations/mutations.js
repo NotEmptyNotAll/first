@@ -11,8 +11,18 @@ export default {
     SET_ALL_AUTO_ENG: (state, allAutoEng) => {
         state.allAutoEng = allAutoEng;
     },
+    SET_LOAD_LIST_URL: (state, loadListUrl) => {
+        state.loadListUrl = loadListUrl;
+    },
+
     SET_LOAD_ALL_AUTO_ENG: (state, loadAllAutoEng) => {
         state.loadAllAutoEng = loadAllAutoEng;
+    },
+    SET_PARAM_SIZE_NAME: (state, loadAllAutoEng) => {
+        state.paramSizeName= loadAllAutoEng;
+    },
+    SET_LOAD_PARAM_SIZE_NAME: (state, loadAllAutoEng) => {
+        state.loadParamSizeName = loadAllAutoEng;
     },
     SET_ELEMENTS_UPDATE(state, engData) {
          state.elementsUpdate=engData;

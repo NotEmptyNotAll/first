@@ -14,6 +14,15 @@ export default {
     ALL_AUTO_ENG: (state) => {
         return state.allAutoEng;
     },
+    PARAM_SIZE_NAME: (state) => {
+      return   state.paramSizeName;
+    },
+    LOAD_LIST_URL: (state) => {
+       return  state.loadListUrl ;
+    },
+    LOAD_PARAM_SIZE_NAME: (state) => {
+       return  state.loadParamSizeName ;
+    },
     LOAD_ALL_AUTO_ENG: (state) => {
         return state.loadAllAutoEng ;
     },

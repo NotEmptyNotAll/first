@@ -4,6 +4,22 @@ let urlApi = 'https://newenginedb.herokuapp.com/save/';
 //let urlApi = 'http://localhost:5050/save/';
 
 export default {
+      SAVE_FILE_DATA({commit}, saveDataObj) {
+        return  axios({
+            method: 'POST',
+            url: urlApi + 'saveFileData',
+            data: saveDataObj,
+            responseType: 'json'
+        }).then(resp => {
+            commit('SET_SAVE_STATUS', resp.data)
+            return resp;
+        })
+            .catch((error) => {
+                commit('SET_SAVE_STATUS', error.data)
+                console.log(error);
+                return error
+            })
+    },
     async SAVE_ENGINE_MANUFACTURE({commit}, saveDataObj) {
         commit('SET_LOAD_SAVE_ENGINE_MANUFACTURE', true);
         return await axios({

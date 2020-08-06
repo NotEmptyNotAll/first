@@ -717,6 +717,7 @@
 
                 // export json to Worksheet of Excel
                 // only array possible
+
                 let arr = []
                 this.dataList.map(elem => {
                     let obj = {}

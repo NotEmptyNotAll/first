@@ -12,8 +12,8 @@
                     @click.stop="optionClicked(option)"
                     class="vue-simple-context-menu__item"
                     :class="option.class"
-            >
-                {{option.name}}
+            ><i class="el-icon-s-order"></i>
+                    {{option.name}}
             </li>
         </ul>
     </div>
@@ -23,6 +23,7 @@
 
     import Vue from 'vue'
     import vClickOutside from 'v-click-outside'
+
     Vue.use(vClickOutside)
 
     export default {
@@ -37,7 +38,7 @@
                 required: true
             }
         },
-        data () {
+        data() {
             return {
                 item: null,
                 menuWidth: null,
@@ -45,10 +46,10 @@
             }
         },
         methods: {
-            showMenu (event, item) {
+            showMenu(event, item) {
                 this.item = item
 
-                let menu =  document.getElementById(this.elementId)
+                let menu = document.getElementById(this.elementId)
                 if (!menu) {
                     return
                 }
@@ -62,7 +63,7 @@
 
                 let e = e || window.event
 
-                if (e.pageX == null && e.clientX != null ) {
+                if (e.pageX == null && e.clientX != null) {
                     var html = document.documentElement
                     var body = document.body
 
@@ -84,32 +85,32 @@
 
                 menu.classList.add('vue-simple-context-menu--active')
             },
-            hideContextMenu () {
+            hideContextMenu() {
                 let element = document.getElementById(this.elementId)
                 if (element) {
                     element.classList.remove('vue-simple-context-menu--active');
                 }
             },
-            onClickOutside () {
+            onClickOutside() {
                 this.hideContextMenu()
             },
-            optionClicked (option) {
+            optionClicked(option) {
                 this.hideContextMenu()
                 this.$emit('option-clicked', {
                     item: this.item,
                     option: option
                 })
             },
-            onEscKeyRelease (event) {
+            onEscKeyRelease(event) {
                 if (event.keyCode === 27) {
                     this.hideContextMenu();
                 }
             }
         },
-        mounted () {
+        mounted() {
             document.body.addEventListener('keyup', this.onEscKeyRelease);
         },
-        beforeDestroy () {
+        beforeDestroy() {
             document.removeEventListener('keyup', this.onEscKeyRelease);
         }
     }
@@ -122,7 +123,7 @@
     $white: #fff;
     $black: #333;
 
-    .label{
+    .label {
         color: gray;
         text-align: center;
         border-style: solid;
@@ -130,8 +131,8 @@
         border-width: 0px 0px 1px 0px;
     }
 
-    .label:hover{
-        background:#ecf0f1 ;
+    .label:hover {
+        background: #ecf0f1;
     }
 
     .vue-simple-context-menu {
