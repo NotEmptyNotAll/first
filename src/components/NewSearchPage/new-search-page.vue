@@ -2,8 +2,6 @@
 <template>
     <div>
         <div class="container search-border tab  rounded bg-white rad">
-
-
             <vue-context-menu
                     :elementId="'myFirstMenu'"
                     :options="ALL_AUTO_ENG.columnParam"
@@ -16,7 +14,7 @@
                     <h4> {{$ml.get('word.parameters')}}</h4>
                 </div>
 
-                <div class="col-md-2 param-navbar fix-position">
+                <div class="col-md-1 param-navbar fix-position">
                     <el-dropdown style="width: 100%" :hide-on-click="false">
                         <el-button size="medium" type="primary" style="width: 100%; font-size: 16px">
                             {{$ml.get('word.column')}}
@@ -56,7 +54,7 @@
                 </div>
 
 
-                <div class="col-md-5  border-butt param-navbar">
+                <div class="col-md-6  border-butt param-navbar">
                     <el-divider content-position="right">
                         <el-button-group>
                             <el-button v-for="current in ALL_AUTO_ENG.columnParam" v-bind:key="current"
