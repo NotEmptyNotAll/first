@@ -2,6 +2,8 @@
 <template>
     <div>
         <div class="container search-border tab  rounded bg-white rad">
+
+
             <vue-context-menu
                     :elementId="'myFirstMenu'"
                     :options="ALL_AUTO_ENG.columnParam"
@@ -11,6 +13,7 @@
 
             <div class="row " style="padding-top: 3vh">
                 <div class="title-bord col-md-1 param-navbar">
+
                     <h4> {{$ml.get('word.parameters')}}</h4>
                 </div>
 
@@ -30,7 +33,7 @@
                         </el-dropdown-menu>
                     </el-dropdown>
                 </div>
-                <div class=" col-md-2 fix-position">
+                <div class=" col-md-2 fix-position ">
                     <el-dropdown  @command="changePageSize" style="width: 100%;">
                         <el-button size="medium" type="warning" style="width: 100%; font-size: 16px">
                             {{$ml.get('word.numRowOnPage')}}{{pageSetting.pageSize}}
@@ -45,7 +48,7 @@
                         </el-dropdown-menu>
                     </el-dropdown>
                 </div>
-                <div class="col-md-2 ">
+                <div class="col-md-2   ">
                     <el-button size="medium" class="fix-position" plain type="danger"
                                style="width: 100%; font-size: 16px"
                                v-on:click="clearFilter">{{$ml.get('word.clearAllFilter')}}
@@ -696,6 +699,7 @@
         display: flex;
         justify-content: center;
         flex-direction: column;
+        align-content: center;
         align-items: center;
     }
 
