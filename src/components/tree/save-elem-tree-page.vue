@@ -545,7 +545,7 @@
             },
             canselFileUpload() {
                 this.$refs.upload.clearFiles();
-                this.fileList = null
+                this.fileList = []
                 this.fileSaveList = []
                 this.listFileUrl = []
                 this.dialogPhotoVisible = false
