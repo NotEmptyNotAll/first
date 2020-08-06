@@ -14,7 +14,7 @@
                     <h4> {{$ml.get('word.parameters')}}</h4>
                 </div>
 
-                <div class="col-md-1 param-navbar fix-position">
+                <div class="col-md-1 param-navbar ">
                     <el-dropdown style="width: 100%" :hide-on-click="false">
                         <el-button size="medium" type="primary" style="width: 100%; font-size: 16px">
                             {{$ml.get('word.column')}}
