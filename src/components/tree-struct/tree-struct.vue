@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <div class="row" style="width: 100%;">
             <div class="col-md-2"></div>
             <VueDataList02
@@ -81,23 +80,40 @@
                                            v-model="colors"/>
                             <div class="btn-color-panel" v-show="nowPressed.linkOnButt.isPressed">
                                 <h4>color:</h4>
-                                <div class="colorExmp" :style='{background:colors.hex}'></div>
+                                <div class="colorExmp" :style='{background:colors.hex}'>
+                                    <h4>{{$ml.get('word.text')}}</h4>
+                                </div>
 
                                 <el-button type="danger" @click="nowPressed.linkOnButt.isPressed=false">
                                     {{$ml.get('word.cancel')}}
                                 </el-button>
-                                <el-button type="success" @click="addElemToUpdateList">
-                                    {{$ml.get('word.confirm')}}
-                                </el-button>
+
+                                <el-popover
+                                        style="margin: 15px"
+                                        placement="top"
+                                        width="230"
+                                        trigger="hover">
+                                    <p >
+                                        {{$ml.get('msg.colorConfirmMsg')}}</p>
+                                    <div>
+                                        <el-button size="mini" type="danger" @click="addElemToUpdateList(false)">
+                                            {{$ml.get('word.no')}}
+                                        </el-button>
+                                        <el-button type="primary" size="mini" @click="addElemToUpdateList(true)">
+                                            {{$ml.get('word.yes')}}
+                                        </el-button>
+                                    </div>
+                                    <el-button slot="reference" type="success">
+                                        {{$ml.get('word.confirm')}}
+                                    </el-button>
+                                </el-popover>
+
                             </div>
                         </div>
-
-
                     </div>
                 </el-tab-pane>
 
             </el-tabs>
-
         </div>
     </div>
 </template>
@@ -130,6 +146,7 @@
             updateObj: {
                 units: null
             },
+            visibleConfirmDialog: false,
             dialogTableVisible: false,
             saveListParam: [],
             listNewParam: [],
@@ -346,14 +363,42 @@
                 this.setListNewElem(this.listNewElem);
                 console.log(number)
             },
-            addElemToUpdateList() {
-                this.listElemUpdate.push({
-                    elemId: this.elemId,
-                    parentId: null,
-                    paramNameFk: null,
-                    color: this.colors.hex
+            changeChildColor(childElem) {
+                childElem.forEach(elem => {
+                    let temp = this.listElemUpdate.find(item => item.elemId === elem.id)
+                    if (temp === undefined) {
+                        this.listElemUpdate.push({
+                            elemId: elem.id,
+                            parentId: null,
+                            paramNameFk: null,
+                            color: this.colors.hex
+                        })
+                    } else {
+                        temp.color = this.colors.hex
+                    }
+                    elem.color = this.colors.hex
+                    if (elem.elementsCh.length > 0) {
+                        this.changeChildColor(elem.elementsCh)
+                    }
                 })
+            },
+            addElemToUpdateList(changeChildColor) {
+                let temp = this.listElemUpdate.find(item => item.elemId === this.elemId)
+                if (temp === undefined) {
+                    this.listElemUpdate.push({
+                        elemId: this.elemId,
+                        parentId: null,
+                        paramNameFk: null,
+                        color: this.colors.hex
+                    })
+
+                } else {
+                    temp.color = this.colors.hex
+                }
                 this.tempItem.color = this.colors.hex
+                if (changeChildColor && this.tempItem.elementsCh.length > 0) {
+                    this.changeChildColor(this.tempItem.elementsCh)
+                }
                 this.$message({
                     showClose: true,
                     message: this.$ml.get('msg.colorAdd'),
@@ -411,22 +456,17 @@
                 this.setMaxId(this.ELEMENTS_TREE.maxId + 1);
                 console.log(number)
             },
-            setColorElem(item, color, name, number, link) {
+            setColorElem(item, link) {
                 this.tempItem = item
                 link.isPressed = !link.isPressed
-                this.colors.hex = color
-                this.nameElem = name
+                this.colors.hex = item.color
+                this.nameElem = item.name
                 this.nowPressed.linkOnButt.isPressed = false;
                 this.nowPressed.linkOnButt = link;
-                this.elemId = number;
-                console.log(number);
+                this.elemId = item.number;
+                console.log(item.number);
             },
             async saveElemParam(number) {
-                // this.saveElemParamV = {
-                //    listElem: this.LISTNEWELEM,
-                //     listSaveParam: this.listNewParam.filter(param => (!param.editRow && param.id === 0)),
-                //     listUpdateParam: this.listNewParam.filter(param => (!param.editRow && param.id !== 0))
-                //  };
                 this.SAVE_ELEM({
                     listElem: this.LISTNEWELEM,
                     listUpdateElem: this.listElemUpdate
@@ -504,10 +544,14 @@
     }
 
     .colorExmp {
+        color: #989aa1;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
         margin-left: 1vw;
         margin-right: 3vw;
-        width: 65px;
-        height: 100%;
+        width: 100px;
+        height: 40px;
     }
 
     .btn-color-panel {
