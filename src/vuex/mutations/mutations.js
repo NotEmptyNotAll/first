@@ -15,17 +15,51 @@ export default {
         state.loadListUrl = loadListUrl;
     },
 
+    SET_DATA_PAGE_AUTO_ENGINE: (state, data) => {
+        state.addPageData.automobileEngine=data
+    },
+
+    SET_DATA_PAGE_ENGINE: (state, data) => {
+        state.addPageData.engine=data
+    },
+    SET_DATA_PAGE_AUTO_MODEL: (state, data) => {
+        state.addPageData.autoModel=data
+    },
+    SET_DATA_PAGE_CYLINDERS: (state, data) => {
+        state.addPageData.cylinders=data
+    },
+    SET_DATA_PAGE_PARAM_NAME: (state, data) => {
+        state.addPageData.parameterName=data
+    },
+    SET_DATA_PAGE_PARAM_NAME_SIZE: (state, data) => {
+        state.addPageData.parameterSizeName=data
+    },
+    SET_DATA_PAGE_SUPERCHARGE: (state, data) => {
+        state.addPageData.superchargedType=data
+    },
+    SET_DATA_PAGE_ENGINE_MANUF: (state, data) => {
+        state.addPageData.engineManufacture=data
+    },
+    SET_DATA_PAGE_AUTO_MANUF: (state, data) => {
+        state.addPageData.autoManufacturer=data
+    },
+    SET_DATA_PAGE_FUEL_TYPE: (state, data) => {
+        state.addPageData.fuelType=data
+    },
+    SET_DATA_PAGE_MEASUREMENT_UNITS: (state, data) => {
+        state.addPageData.measurementUnits=data
+    },
     SET_LOAD_ALL_AUTO_ENG: (state, loadAllAutoEng) => {
         state.loadAllAutoEng = loadAllAutoEng;
     },
     SET_PARAM_SIZE_NAME: (state, loadAllAutoEng) => {
-        state.paramSizeName= loadAllAutoEng;
+        state.paramSizeName = loadAllAutoEng;
     },
     SET_LOAD_PARAM_SIZE_NAME: (state, loadAllAutoEng) => {
         state.loadParamSizeName = loadAllAutoEng;
     },
     SET_ELEMENTS_UPDATE(state, engData) {
-         state.elementsUpdate=engData;
+        state.elementsUpdate = engData;
     },
     SET_STARTPARAM: (state, startParam) => {
         state.startParam = startParam;
@@ -63,11 +97,14 @@ export default {
     SET_AUTO_ENGINE_LOAD: (state, autoEngineLoad) => {
         state.loadSave.automobileEngine = autoEngineLoad;
     },
+    SET_DELETE_RESPONSE: (state, deleteResponse) => {
+        state.deleteResponse = deleteResponse;
+    },
     SET_SEARCH_DATA: (state, searchData) => {
         state.searchData = searchData;
     },
     SET_ENGINE: (state, engine) => {
-        return  state.engine=engine;
+        return state.engine = engine;
     },
     SET_LOADPARAM: (state, loadParam) => {
         state.loadParam = loadParam;
@@ -86,6 +123,9 @@ export default {
     },
     SET_ELEMENTS_TREE_MAXID: (state, maxId) => {
         state.elemTree.maxId = maxId;
+    },
+    ELEMENTS_TREE_FOR_SEARCH_LOAD: (state, loadTreeElementsForSearch) => {
+        state.loadTreeElementsForSearch = loadTreeElementsForSearch;
     },
     SET_ELEMENTS_TREE_LOAD: (state, elem_tree_load) => {
         state.elem_tree_load = elem_tree_load;

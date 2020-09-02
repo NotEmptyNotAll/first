@@ -17,6 +17,9 @@ export default {
     PARAM_SIZE_NAME: (state) => {
       return   state.paramSizeName;
     },
+    DATA_PAGE: (state) => {
+        return state.addPageData
+    },
     LOAD_LIST_URL: (state) => {
        return  state.loadListUrl ;
     },
@@ -101,11 +104,17 @@ export default {
     SAVE_STATUS: (state) => {
         return state.saveStatus;
     },
+    DELETE_RESPONSE: (state) => {
+        return state.deleteResponse;
+    },
     UPDATE_ENGINE: (state) => {
         return state.updateDataObj;
     },
     ELEMENTS_LOAD: (state) => {
         return state.elementsLoad;
+    },
+    ELEMENTS_TREE_FOR_SEARCH_LOAD: (state) => {
+        return state.loadTreeElementsForSearch;
     },
     ELEMENTS_TREE_LOAD: (state) => {
         return state.elem_tree_load;

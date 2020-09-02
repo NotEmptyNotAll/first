@@ -101,6 +101,7 @@
                     clearable
                     :placeholder="$ml.get('word.data')"
                     style="width: 100%"
+                    :disabled="load"
                     v-model="value"
                     :options="items"
                     :props="{
@@ -118,6 +119,10 @@
     export default {
         name: "param-elements-input",
         props: {
+            load:{
+                type:Boolean,
+                default:false
+            },
             hideTitle: Boolean,
             titleInput: String,
             paramObj: null,

@@ -1,5 +1,9 @@
 <template>
     <div>
+        <div v-if="ELEMENTS_TREE_LOAD" class="load-panel">
+            <div class="lds-dual-ring-black"></div>
+        </div>
+        <div  v-else>
         <div class="row" style="width: 100%;">
             <div class="col-md-2"></div>
             <VueDataList02
@@ -34,25 +38,24 @@
                 <el-tab-pane v-for="elem in ELEMENTS_TREE.elementsCh" v-bind:key="elem" :label="elem.name"
                              style="width: 100%">
                     <div class="row">
-                        <div class="col-md-1"></div>
-                        <div class="col-md-5">
+                        <div class="col-md-6"  >
                             <scroll-container>
-                                <dev class="tree-st">
+                                <dev class="tree-st" >
                                     <tree-item
-                                            v-for="treeItem in elem.elementsCh"
-                                            v-bind:key="treeItem"
-                                            class="item"
-                                            change-mod="tree"
-                                            :item="treeItem"
-                                            :nav="treeItem.name"
-                                            :choice-param="choiceParam"
-                                            :space="''"
-                                            :nowPressed=nowPressed
-                                            :id-parent-elem="elem.id"
-                                            :show-edit-param="showEditParam"
-                                            @set-color-elem="setColorElem"
-                                            @parent-delete="deleteElem"
-                                            @get-size-param="getParamSizeEelem"
+                                        v-for="treeItem in elem.elementsCh"
+                                        v-bind:key="treeItem"
+                                        change-mod="tree"
+                                        :item="treeItem"
+                                        :nav="treeItem.name"
+                                        :choice-param="choiceParam"
+                                        :space="''"
+                                        :nowPressed=nowPressed
+                                        :id-parent-elem="elem.id"
+                                        :show-edit-param="showEditParam"
+                                        @set-color-elem="setColorElem"
+                                        @parent-delete="deleteElem"
+                                        @add-elem-to-update="addElemFromChildToList"
+                                        @get-size-param="getParamSizeEelem"
                                     />
 
                                     <button type="button"
@@ -66,9 +69,10 @@
                             </scroll-container>
                         </div>
                         <div class="col-md-6 color-pick">
-                            <h2 style="color: gray" v-show="!nowPressed.linkOnButt.isPressed">
-                                {{$ml.get('msg.chooseColor')}}
-                            </h2>
+
+                                <h2 style="color: gray" v-show="!nowPressed.linkOnButt.isPressed">
+                                    {{$ml.get('msg.chooseColor')}}
+                                </h2>
                             <h3 class="title-color"
                                 v-show="nowPressed.linkOnButt.isPressed">{{nameElem}}</h3>
                             <div class="color-item" v-show="nowPressed.linkOnButt.isPressed">
@@ -79,7 +83,7 @@
                             <slider-picker class="color-footer" v-show="nowPressed.linkOnButt.isPressed"
                                            v-model="colors"/>
                             <div class="btn-color-panel" v-show="nowPressed.linkOnButt.isPressed">
-                                <h4>color:</h4>
+                                <h4>{{$ml.get('word.color')+':'}}</h4>
                                 <div class="colorExmp" :style='{background:colors.hex}'>
                                     <h4>{{$ml.get('word.text')}}</h4>
                                 </div>
@@ -93,7 +97,7 @@
                                         placement="top"
                                         width="230"
                                         trigger="hover">
-                                    <p >
+                                    <p>
                                         {{$ml.get('msg.colorConfirmMsg')}}</p>
                                     <div>
                                         <el-button size="mini" type="danger" @click="addElemToUpdateList(false)">
@@ -107,14 +111,15 @@
                                         {{$ml.get('word.confirm')}}
                                     </el-button>
                                 </el-popover>
-
                             </div>
                         </div>
+
                     </div>
                 </el-tab-pane>
 
             </el-tabs>
         </div>
+    </div>
     </div>
 </template>
 
@@ -382,11 +387,25 @@
                     }
                 })
             },
+            addElemFromChildToList(elem){
+                let temp = this.listElemUpdate.find(item => item.elemId === elem.elemId)
+                if (temp === undefined) {
+                    this.listElemUpdate.push({
+                        elemId: elem.elemId,
+                        parentId: null,
+                        sortNumber:elem.sortNumber,
+                        paramNameFk: null
+                    })
+                }else {
+                    temp.sortNumber=elem.sortNumber
+                }
+                console.log(elem)
+            },
             addElemToUpdateList(changeChildColor) {
                 let temp = this.listElemUpdate.find(item => item.elemId === this.elemId)
                 if (temp === undefined) {
                     this.listElemUpdate.push({
-                        elemId: this.elemId,
+                        elemId:  this.tempItem.id,
                         parentId: null,
                         paramNameFk: null,
                         color: this.colors.hex
@@ -509,9 +528,10 @@
 
     scroll-container {
         display: block;
-        width: 650px;
+        width: 700px;
         height: 500px;
-        overflow-y: scroll;
+        overflow-y: auto;
+      overflow-x: hidden;
         scroll-behavior: smooth;
     }
 
@@ -589,6 +609,14 @@
         }
     }
 
+    .load-panel{
+        width: 100%;
+        height: 700px;
+        display: flex;
+        justify-content: center;
+
+        align-items: center;
+    }
 
     @keyframes moveInTop {
         0% {

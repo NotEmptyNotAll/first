@@ -5,10 +5,11 @@ import apiRequset from './actions/api-requests'
 import apiRequsetSave from './actions/api-save-requests'
 import apiImport from './actions/api-import'
 import apiRequsetUpdate from './actions/api-update-request'
+import apiDelete from './actions/api-delete'
 import getters from "./getters/getters";
 import mutations from "./mutations/mutations"
 import {auth} from './auth.module';
-const actions = {...apiRequset, ...apiImport,...apiRequsetSave, ...apiRequsetUpdate}
+const actions = {...apiRequset, ...apiImport,...apiRequsetSave, ...apiRequsetUpdate,...apiDelete}
 
 Vue.use(Vuex);
 let store = new Vuex.Store({
@@ -19,8 +20,10 @@ let store = new Vuex.Store({
         allAutoEng:[],
         paramSizeName:[],
         loadListUrl:false,
+        loadTreeElementsForSearch:false,
         loadParamSizeName:false,
         loadAllAutoEng:false,
+        deleteResponse:null,
         treeElemets:[],
         engdataTree:[],
         elementsLoad:false,
@@ -46,6 +49,19 @@ let store = new Vuex.Store({
         treeRootNames: [],
         loadParam: false,
         allAdditionalData: [],
+        addPageData:{
+            measurementUnits: null,
+            cylinders: null,
+            parameterSizeName: null,
+            parameterName: null,
+            engineManufacture: null,
+            autoManufacturer: null,
+            autoModel: null,
+            fuelType: null,
+            engine: null,
+            automobileEngine: null,
+            superchargedType: null
+        },
         allAdditionalDataLoad: false,
         loadSave: {
             paramName:false,

@@ -90,8 +90,8 @@
                                 <tr v-for="current in LISTPARAM" v-bind:key="current">
 
                                     <td>
-                                        {{PARAM_NAME.find(unit=>
-                                        unit.id===current.name).data}}
+                                        {{current.name!==1?PARAM_NAME.find(unit=>
+                                        unit.id===current.name).data:$ml.get('word.value')}}
                                     </td>
 
                                     <!-- <td v-if="current.editRow">
@@ -114,7 +114,7 @@
                                                 :update-obj="current"
                                                 index="units"
                                                 :hide-title="true"
-                                                :holder-num=0
+                                                :holder-num=current.units
 
                                         />
                                     </td>
@@ -152,7 +152,7 @@
                                             {{Number(current.doubleMin).toFixed(4)}}-{{Number(current.doubleMax).toFixed(4)}}
                                         </span>
                                         <span v-else-if="current.select===2">
-                                            <span v-if="current.doubleNum!==null">
+                                            <span v-if="current.doubleNum!==null && current.doubleNum!==0">
                                                 {{Number(current.doubleNum).toFixed(4)}}
                                             </span>
                                               <span v-else>
@@ -187,7 +187,7 @@
                                                 :update-obj="current"
                                                 index="status"
                                                 :hide-title="true"
-                                                :holder-num=0
+                                                :holder-num=current.status
                                         />
                                     </td>
                                     <td v-if="!current.editRow">{{current.source}}</td>

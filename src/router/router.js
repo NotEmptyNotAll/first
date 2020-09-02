@@ -15,7 +15,7 @@ Vue.use(Router)
 let router = new Router({
     routes: [
         {
-            path: '/',
+           path: '/newsearch',
             component: searchEng
         },
         {
@@ -23,7 +23,7 @@ let router = new Router({
             component: testSave
         },
         {
-            path: '/newsearch',
+            path: '/',
             component: newSearch
         },
         {

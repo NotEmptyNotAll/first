@@ -1,5 +1,5 @@
 <template >
-    <div class="container bord rounded">
+    <div class="container bord rounded" v-if="currentUser.roles.indexOf('MODERATOR')!==-1">
         <tree-struct
 
         />
@@ -11,6 +11,11 @@
     export default {
         name: "tree-struct-page",
         components: {TreeStruct},
+      computed:{
+        currentUser() {
+          return this.$store.state.auth.user;
+        },
+      },
         mounted() {
             document.body.oncontextmenu = function () {
                 return true;

@@ -7,13 +7,6 @@
         <div v-if="currentUser">
             <div class="search-border container  bg-white rounded" id="searchCont" style="  display: flex; flex-direction: column; text-align: center ;">
                 <br/>
-                <div class="search-logo" id="Searchlogo" style=" height: 40px;">
-
-                    <div class="deepshd head-text " >
-                        <h4> {{ $ml.get('word.search')}}</h4>
-                    </div>
-                </div>
-                <br/>
                 <search-engine-panel
                         @submit-function="GET_AUTOENG"
                 />
@@ -89,7 +82,7 @@
     </div>
 </template>
 
-<script>
+<script >
 
     import {mapActions, mapGetters} from 'vuex'
     import AutoEngineFullTree from "../tree/auto-engine-full-tree";
@@ -364,7 +357,7 @@
 
     .search-logo {
 
-        position: absolute;
+        position: relative;
         left: 40%;
         right: 40%;
         top: 0px;
@@ -393,9 +386,6 @@
 
     }
 
-    #Searchlogo{
-
-    }
 
     .trActive {
         background: lightgray;
