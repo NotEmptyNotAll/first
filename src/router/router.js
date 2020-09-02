@@ -13,6 +13,7 @@ import newSearch from '../components/NewSearchPage/new-search-page'
 Vue.use(Router)
 
 let router = new Router({
+    mode: 'history',
     routes: [
         {
            path: '/newsearch',
