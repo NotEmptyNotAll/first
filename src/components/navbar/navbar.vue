@@ -12,9 +12,9 @@
           <el-menu-item class="item-menu" v-if="!currentUser"  ></el-menu-item>
           <el-menu-item class="item-menu" index="/" v-if="currentUser"> <i class="el-icon-s-order"></i>{{$ml.get('word.parameters')}}</el-menu-item>
           <el-menu-item class="item-menu"   index="/newsearch" v-if="currentUser"><i class="el-icon-search"></i> {{$ml.get('word.search')}}</el-menu-item>
-            <el-menu-item class="item-menu" index="/addData" v-if="currentUser.roles.indexOf('MODERATOR')!==-1"> <i class="el-icon-notebook-1"></i>{{$ml.get('word.updateData')}}</el-menu-item>
-            <el-menu-item class="item-menu" index="/edittree" v-if="currentUser.roles.indexOf('MODERATOR')!==-1"><i class="el-icon-edit-outline"></i>{{$ml.get('word.setParameter')}}</el-menu-item>
-            <el-menu-item class="item-menu" index="/treeStruct" v-if="currentUser.roles.indexOf('MODERATOR')!==-1"> {{$ml.get('word.treeStruct')}}</el-menu-item>
+            <el-menu-item class="item-menu" index="/addData" v-if="showModeratorBoard"> <i class="el-icon-notebook-1"></i>{{$ml.get('word.updateData')}}</el-menu-item>
+            <el-menu-item class="item-menu" index="/edittree" v-if="showModeratorBoard"><i class="el-icon-edit-outline"></i>{{$ml.get('word.setParameter')}}</el-menu-item>
+            <el-menu-item class="item-menu" index="/treeStruct" v-if="showModeratorBoard"> {{$ml.get('word.treeStruct')}}</el-menu-item>
             <el-submenu index="2" style="position: absolute; right: 6vw">
                 <template class="item-menu" slot="title"><span
                         style="font-size: 130%;">{{$ml.get('word.language')}}</span></template>
@@ -94,7 +94,7 @@
             },
             showModeratorBoard() {
                 if (this.currentUser) {
-                    return this.currentUser.roles.includes("ROLE_MODERATOR");
+                  return this.currentUser.roles.indexOf('MODERATOR')!==-1
                 }
                 return false;
             }

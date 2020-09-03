@@ -17,30 +17,37 @@ let router = new Router({
     routes: [
         {
            path: '/newsearch',
+            name: 'searchEng',
             component: searchEng
         },
         {
             path: '/addData',
+            name: 'testSave',
             component: testSave
         },
         {
             path: '/',
+            name: 'newSearch',
             component: newSearch
         },
         {
             path: '/login',
+            name: 'login',
             component: login
         },
         {
             path: '/registration',
+            name: 'registration',
             component: registration
         },
         {
             path: '/edittree',
+            name: 'treeEdit',
             component: treeEdit
         },
         {
             path: '/treeStruct',
+            name: 'treeStruct',
             component: treeStruct
         }
     ]

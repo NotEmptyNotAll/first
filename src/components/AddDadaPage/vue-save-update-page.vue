@@ -1,10 +1,9 @@
 <template>
   <div id="vue-save-update-page">
-    <error-page
-        v-if="!currentUser.roles.indexOf('MODERATOR')!==-1"
-    />
+
     <!-- Tab panes -->
-    <div v-if="currentUser.roles.indexOf('MODERATOR')!==-1" class="search-border rounded main-tab">
+   <!-- <div v-if="currentUser.roles.indexOf('MODERATOR')!==-1" class="search-border rounded main-tab">-->
+    <div  v-if="showModeratorBoard" class="search-border rounded main-tab">
       <el-tabs type="border-card" class="  shadow-lg page" style=" height: 85vh;" tab-position="left">
         <el-tab-pane :label="$ml.get('word.engine')">
           <div class="tab-pane">
@@ -265,6 +264,12 @@ export default {
       'GET_AUTO_MANUF_PAGINATION',
       'GET_PARAM_NAME'
     ]),
+    showModeratorBoard() {
+      if (this.currentUser) {
+        return this.currentUser.roles.indexOf('MODERATOR')!==-1
+      }
+      return false;
+    }
   },
 
   mounted() {
