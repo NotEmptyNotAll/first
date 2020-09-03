@@ -165,7 +165,11 @@
           </div>
         </el-tab-pane>
       </el-tabs>
+      <div v-if="LOAD_ADDITIONAL_DATA" class="load-panel">
+      <div class="lds-dual-ring-black"></div>
     </div>
+    </div>
+
   </div>
 
 </template>
@@ -348,6 +352,15 @@ export default {
     border-color: white;
 
     transition: 0.5s;
+  }
+
+  .load-panel{
+    width: 100%;
+    height: 700px;
+    display: flex;
+    justify-content: center;
+
+    align-items: center;
   }
 
   .menu-item span:after {

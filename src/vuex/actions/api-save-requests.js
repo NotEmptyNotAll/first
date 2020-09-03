@@ -1,7 +1,7 @@
 import axios from "axios";
 
 //let urlApi = 'https://enginefinal.herokuapp.com/save/';
-let urlApi = 'http://10.102.0.1:5050/save/';
+let urlApi = 'http://localhost:5050/save/';
 
 export default {
       SAVE_FILE_DATA({commit}, saveDataObj) {
