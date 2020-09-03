@@ -1,7 +1,8 @@
 `
 <template>
   <div>
-    <div class="container search-border tab  rounded bg-white rad">
+
+    <div v-if="showModeratorBoard" class="container search-border tab  rounded bg-white rad">
       <vue-context-menu
           :elementId="'myFirstMenu'"
           :options="ALL_AUTO_ENG.columnParam"
@@ -302,6 +303,12 @@ export default {
     showImage(list) {
       this.listFileUrl = list
       this.dialogFormVisible = true
+    },
+    showModeratorBoard() {
+      if (this.currentUser) {
+        return this.currentUser.roles.indexOf('MODERATOR')!==-1
+      }
+      return false;
     },
     // eslint-disable-next-line no-unused-vars
     handleHeaderStyle({row, column, rowIndex, columnIndex}) {
