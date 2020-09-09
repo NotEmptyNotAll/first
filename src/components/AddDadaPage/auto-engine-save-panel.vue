@@ -591,7 +591,7 @@ export default {
       // export json to Worksheet of Excel
       // only array possible
       let arr = []
-      this.dataList.map(elem => {
+      this.DATA_PAGE.automobileEngine.data.map(elem => {
         let obj = {}
         if (elem.data !== "не задано") {
           obj['№'] = elem.id

@@ -58,7 +58,7 @@
             :empty-text="$ml.get('word.empty')"
             ref="paramTable"
             :data="DATA_PAGE.engine.data"
-            max-height="570"
+            max-height="560"
             @row-dblclick="link"
             style="width: 100%"
         >
@@ -786,7 +786,7 @@ export default {
       // only array possible
 
       let arr = []
-      this.dataList.map(elem => {
+      this.DATA_PAGE.engine.data.map(elem => {
         let obj = {}
         if (elem.data !== "не задано") {
           obj['№'] = elem.id
