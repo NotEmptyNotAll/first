@@ -8,6 +8,10 @@ export default {
     SET_TREE_ELEMENTS: (state, treeElemets) => {
         state.treeElemets = treeElemets;
     },
+    SET_ALL_AUTO_ENG_PARAM_NULL: (state) => {
+        state.allAutoEng.countResults = 1;
+        state.allAutoEng.engineData = null;
+    },
     SET_ALL_AUTO_ENG: (state, allAutoEng) => {
         state.allAutoEng = allAutoEng;
     },

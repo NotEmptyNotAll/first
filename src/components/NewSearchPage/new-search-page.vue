@@ -289,6 +289,7 @@ export default {
   },
   methods: {
     ...mapActions([
+      'GET_COLUMN_PARAM',
       'GET_ALL_AUTO'
     ]),
     handleCurrentPage(val) {
@@ -318,7 +319,6 @@ export default {
       this.$refs.paramTable.setCurrentRow(row);
     },
     clearFilter() {
-
       this.pageSetting = {
         id: null,
         flapNumber: null,
@@ -631,8 +631,7 @@ export default {
     }
   },
   computed: {
-    ...
-        mapGetters([
+    ...mapGetters([
           'ALL_AUTO_ENG',
           'LOAD_ALL_AUTO_ENG'
         ])
@@ -644,8 +643,11 @@ export default {
       return false;
     };
 
-    if (this.ALL_AUTO_ENG.length === 0) {
+
+
+    if (this.ALL_AUTO_ENG.columnParam=== null) {
       this.GET_ALL_AUTO(this.pageSetting);
+     // this.GET_COLUMN_PARAM();
     }
     this.checkedColumns = [
       '№', this.$ml.get('word.engine'), this.$ml.get('word.autoManufacturer'),

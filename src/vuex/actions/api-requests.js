@@ -2,8 +2,27 @@ import axios from "axios";
 
 //let urlApi = 'https://enginefinal.herokuapp.com/';
 let urlApi = 'http://10.102.0.1:5050/';
+//let urlApi = 'http://localhost:5050/';
 
 export default {
+    async GET_COLUMN_PARAM({commit}) {
+        commit('SET_LOAD_ALL_AUTO_ENG', true);
+        return await axios({
+            method: 'GET',
+            url: urlApi + 'getColumnParam',
+            responseType: 'json'
+        })
+            .then((resp) => {
+                commit('SET_ALL_COLUMN_PARAM', resp.data)
+                commit('SET_LOAD_ALL_AUTO_ENG', false);
+                return resp.data;
+            })
+            .catch((error) => {
+                console.log(error);
+                commit('SET_LOAD_ALL_AUTO_ENG', false);
+                return error
+            })
+    },
     async GET_AUTO_ENG_PAGINATION({commit}, request) {
         commit('SET_LOAD_ADDITIONAL_DATA', true);
         return await axios({
@@ -246,6 +265,7 @@ export default {
                 return resp;
             })
             .catch((error) => {
+                commit('SET_ALL_AUTO_ENG_PARAM_NULL')
                 console.log(error);
                 commit('SET_LOAD_ALL_AUTO_ENG', false);
                 return error

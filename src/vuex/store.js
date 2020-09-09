@@ -17,7 +17,11 @@ let store = new Vuex.Store({
         auth
     },
     state: {
-        allAutoEng:[],
+        allAutoEng:{
+            columnParam:null,
+            engineData:null,
+            countResults:null
+        },
         paramSizeName:[],
         loadListUrl:false,
         loadTreeElementsForSearch:false,
