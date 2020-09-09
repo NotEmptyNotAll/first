@@ -646,6 +646,7 @@ export default {
 
 
     if (this.ALL_AUTO_ENG.columnParam=== null) {
+      this.GET_COLUMN_PARAM();
       this.GET_ALL_AUTO(this.pageSetting);
      // this.GET_COLUMN_PARAM();
     }

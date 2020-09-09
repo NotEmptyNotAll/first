@@ -12,8 +12,12 @@ export default {
         state.allAutoEng.countResults = 1;
         state.allAutoEng.engineData = null;
     },
+    SET_ALL_COLUMN_PARAM: (state, allAutoEng) => {
+        state.allAutoEng.columnParam = allAutoEng;
+    },
     SET_ALL_AUTO_ENG: (state, allAutoEng) => {
-        state.allAutoEng = allAutoEng;
+        state.allAutoEng.countResults = allAutoEng.countResults;
+        state.allAutoEng.engineData = allAutoEng.engineData;
     },
     SET_LOAD_LIST_URL: (state, loadListUrl) => {
         state.loadListUrl = loadListUrl;
