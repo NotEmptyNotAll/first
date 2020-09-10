@@ -6,7 +6,7 @@ let urlApi = 'http://10.102.0.1:5050/';
 
 export default {
     async GET_COLUMN_PARAM({commit}) {
-        commit('SET_LOAD_ALL_AUTO_ENG', true);
+      //  commit('SET_LOAD_ALL_AUTO_ENG', true);
         return await axios({
             method: 'GET',
             url: urlApi + 'getColumnParam',
@@ -14,12 +14,12 @@ export default {
         })
             .then((resp) => {
                 commit('SET_ALL_COLUMN_PARAM', resp.data)
-                commit('SET_LOAD_ALL_AUTO_ENG', false);
+       //         commit('SET_LOAD_ALL_AUTO_ENG', false);
                 return resp.data;
             })
             .catch((error) => {
                 console.log(error);
-                commit('SET_LOAD_ALL_AUTO_ENG', false);
+   //             commit('SET_LOAD_ALL_AUTO_ENG', false);
                 return error
             })
     },
