@@ -82,7 +82,7 @@
             ref="paramTable"
             :data="ALL_AUTO_ENG.engineData"
             highlight-current-row
-            max-height="600"
+            :max-height="tableHeight"
             @current-change="handleCurrentChange"
             @row-contextmenu="handleClick1"
             :header-cell-style="handleHeaderStyle"
@@ -219,6 +219,7 @@ export default {
       ],
       options: {},
       listFileUrl: [],
+      tableHeight:600,
       columnOptions: [],
       cleanSearch: 1,
       dialogFormVisible: false,
@@ -620,7 +621,11 @@ export default {
     }
     ,
     setEngineParamData(data) {
-
+      if(this.tableHeight===600){
+        this.tableHeight=601
+      }else {
+        this.tableHeight=600
+      }
       this.engineParamData = data.columnResponseList
     }
     ,
@@ -786,6 +791,7 @@ export default {
 .dialog-photo {
   border-radius: 30px;
   background: #E4E7ED;
+
 }
 
 .image {
