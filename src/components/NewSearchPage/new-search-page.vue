@@ -101,7 +101,9 @@
           >
 
             <template slot="header">
-              <h5>{{ clmn.label }}</h5>
+
+              <h5 v-if="engineParamData===null">{{ clmn.label }}</h5>
+              <h6 v-else>{{ clmn.label }}</h6>
               <filter-input
                   :bus="bus"
                   :clean-search="cleanSearch"
@@ -681,10 +683,10 @@ export default {
       this.$ml.get('word.superchargedType')
     ];
     this.tableColumns = [
-      {key: 'id', label: '№', widthSmall: 40, widthLarge: 40},
+      {key: 'id', label: '№', widthSmall: 70, widthLarge: 40},
       {key: 'engineType', label: this.$ml.get('word.engine'), widthSmall: 110, widthLarge: 200},
       {key: 'autoManufacture', label: this.$ml.get('word.autoManufacturer'), widthSmall: 110, widthLarge: 70},
-      {key: 'modelName', label: this.$ml.get('word.autoModel'), widthSmall: 110, widthLarge: 70},
+      {key: 'modelName', label: this.$ml.get('word.autoModel'), widthSmall: 130, widthLarge: 70},
       {key: 'releaseYear', label: this.$ml.get('word.releaseYear'), widthSmall: 110, widthLarge: 60},
       {key: 'fuelType', label: this.$ml.get('word.fuelType'), widthSmall: 110, widthLarge: 70},
       {
@@ -693,14 +695,14 @@ export default {
         widthSmall: 130,
         widthLarge: 70
       },
-      {key: 'engineCapacity', label: this.$ml.get('word.engineCapacity'), widthSmall: 110, widthLarge: 70},
+      {key: 'engineCapacity', label: this.$ml.get('word.engineCapacity'), widthSmall: 130, widthLarge: 70},
       {key: 'powerKWT', label: this.$ml.get('word.powerKwt'), widthSmall: 110, widthLarge: 70}
      ]
     this.allTableColumns = [
-      {key: 'id', label: '№', widthSmall: 30, widthLarge: 40},
+      {key: 'id', label: '№', widthSmall: 70, widthLarge: 40},
       {key: 'engineType', label: this.$ml.get('word.engine'), widthSmall: 110, widthLarge: 200},
       {key: 'autoManufacture', label: this.$ml.get('word.autoManufacturer'), widthSmall: 140, widthLarge: 70},
-      {key: 'modelName', label: this.$ml.get('word.autoModel'), widthSmall: 110, widthLarge: 70},
+      {key: 'modelName', label: this.$ml.get('word.autoModel'), widthSmall: 130, widthLarge: 70},
       {key: 'releaseYear', label: this.$ml.get('word.releaseYear'), widthSmall: 110, widthLarge: 60},
       {key: 'fuelType', label: this.$ml.get('word.fuelType'), widthSmall: 110, widthLarge: 70},
       {key: 'cylinderPlace', label: this.$ml.get('word.cylinders'), widthSmall: 110, widthLarge: 70},
@@ -711,7 +713,7 @@ export default {
         widthSmall: 130,
         widthLarge: 70
       },
-      {key: 'engineCapacity', label: this.$ml.get('word.engineCapacity'), widthSmall: 110, widthLarge: 70},
+      {key: 'engineCapacity', label: this.$ml.get('word.engineCapacity'), widthSmall: 130, widthLarge: 70},
       {key: 'powerKWT', label: this.$ml.get('word.powerKwt'), widthSmall: 110, widthLarge: 70},
       {
         key: 'superchargedType',
