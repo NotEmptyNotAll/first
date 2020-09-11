@@ -1,8 +1,8 @@
 import axios from "axios";
 
 //let urlApi = 'https://enginefinal.herokuapp.com/';
-let urlApi = 'http://10.102.0.1:5050/';
-//let urlApi = 'http://localhost:5050/';
+//let urlApi = 'http://10.102.0.1:5050/';
+let urlApi = 'http://localhost:5050/';
 
 export default {
     async GET_COLUMN_PARAM({commit}) {
