@@ -62,8 +62,10 @@
                                 </thead>
                                 <tbody>
                                 <tr  v-for="current in LISTPARAM" v-bind:key="current">
-                                    <td> {{PARAM_NAME.find(unit=>
-                                        unit.id===current.name).data}}</td>
+                                  <td>
+                                    {{current.name!==1?PARAM_NAME.find(unit=>
+                                      unit.id===current.name).data:$ml.get('word.value')}}
+                                  </td>
                                     <td>{{PARAM_NAME_AND_UNITS.units.find(unit=>
                                         unit.id===current.units).data}}</td>
                                     <td>

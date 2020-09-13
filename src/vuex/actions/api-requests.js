@@ -1,8 +1,8 @@
 import axios from "axios";
 
 //let urlApi = 'https://enginefinal.herokuapp.com/';
-//let urlApi = 'http://10.102.0.1:5050/';
-let urlApi = 'http://localhost:5050/';
+let urlApi = 'http://10.102.0.1:5050/';
+//let urlApi = 'http://localhost:5050/';
 
 export default {
     async GET_COLUMN_PARAM({commit}) {
@@ -434,6 +434,7 @@ export default {
             data: number,
             responseType: 'json'
         }).then(listParam => {
+            alert(JSON.stringify(listParam.data))
             commit('SET_LOAD_PARAM_FOR_TREE', false);
             commit('SET_LISTPARAM_ELEMENT', listParam.data)
             return listParam;
@@ -512,9 +513,8 @@ export default {
         commit('SET_ELEMENTS_TREE_LOAD', true)
 
         return await axios({
-            method: 'POST',
-            url: urlApi + 'getElements',
-            data: {id: 3},
+            method: 'GET',
+            url: urlApi + 'getElementsStruct',
             responseType: 'json'
         }).then(resp => {
             commit('SET_ELEMENTS_TREE', resp.data)

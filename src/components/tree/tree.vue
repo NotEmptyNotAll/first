@@ -50,7 +50,7 @@
             </button>
           </div>
           <el-button circle v-show="changeMod==='off'"
-                     v-if=" !linkOnThisButt.isPressed && item.parametersIsExistInChild"
+                     v-if=" !linkOnThisButt.isPressed && item.paramIsNotEmpty"
                      v-on:click="pressed" type="info"
                      class="   btn-posit"
                      @click="getParamtrs(nav,item.id,linkOnThisButt)"
@@ -59,7 +59,7 @@
           </el-button>
           <el-button disabled v-show="changeMod==='off'"
                      circle size="small"
-                     v-if=" linkOnThisButt.isPressed && item.parametersIsExistInChild"
+                     v-if=" linkOnThisButt.isPressed && item.paramIsNotEmpty"
                      class="  btn-posit  " type="info"
                      style="max-width: 3vw" icon="el-icon-d-arrow-right">
           </el-button>
