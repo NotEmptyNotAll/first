@@ -434,7 +434,6 @@ export default {
             data: number,
             responseType: 'json'
         }).then(listParam => {
-            alert(JSON.stringify(listParam.data))
             commit('SET_LOAD_PARAM_FOR_TREE', false);
             commit('SET_LISTPARAM_ELEMENT', listParam.data)
             return listParam;
