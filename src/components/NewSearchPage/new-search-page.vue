@@ -263,6 +263,7 @@ export default {
       pageSetting: {
         id: null,
         flapNumber: null,
+        pistonDiameterAndStoke:null,
         fuelType: null,
         cylindersNumber: null,
         autoManufacture: null,
@@ -332,6 +333,7 @@ export default {
       this.pageSetting.engineManufacture = null;
       this.pageSetting.powerKWT = null;
       this.pageSetting.engineCapacity = null;
+      this.pageSetting.pistonDiameterAndStoke = null;
       this.pageSetting.horsepower = null;
       this.pageSetting.pistonStoke = null;
       this.pageSetting.pistonDiameter = null;
