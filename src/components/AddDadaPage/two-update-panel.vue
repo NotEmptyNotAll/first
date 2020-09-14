@@ -425,6 +425,7 @@ export default {
   computed: {
     ...mapGetters([
       'PARAM_NAME_AND_UNITS',
+      'DELETE_RESPONSE',
       'LOAD_ADDITIONAL_DATA'
 
     ])
@@ -765,7 +766,6 @@ export default {
         this.listForSearch = this.dataList.data;
     },
     DELETE_RESPONSE: function (val) {
-      alert(JSON.stringify(val))
       if (this.deleteLoadId !== -1) {
         if (val.resp) {
           this.$message({

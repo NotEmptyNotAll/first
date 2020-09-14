@@ -523,7 +523,7 @@
                 this.file = this.$refs.file.files[0];
             },
             async uploadFile() {
-                this.fullscreenLoading = true
+              this.fullscreenLoading = true
                 for (const elem of this.fileSaveList) {
                     let temp = await this.UPLOAD_FILE(elem)
                     this.listFileUrl.push(temp.data.url.substr(48))
