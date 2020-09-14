@@ -63,6 +63,15 @@
             style="width: 100%"
         >
           <el-table-column
+              type="index"
+              label="№"
+              label-class-name="header-st"
+              sortable
+              :index="indexMethod"
+              resizable align="left"
+              width="50">
+          </el-table-column>
+          <el-table-column
               v-for="clmn in tableColumns"
               v-bind:key="clmn"
               label-class-name="header-st"
@@ -644,6 +653,9 @@ export default {
     },
     setDataList(tempList) {
       this.dataList.data = tempList;
+    },
+    indexMethod(index){
+      return (this.pageSetting.initRecordFrom-1)*this.pageSetting.pageSize+index
     },
     async link(record) {
       this.activeName = '2'

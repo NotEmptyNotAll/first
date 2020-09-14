@@ -63,6 +63,15 @@
             style="width: 100%"
         >
           <el-table-column
+              type="index"
+              label="№"
+              label-class-name="header-st"
+              sortable
+              :index="indexMethod"
+              resizable align="left"
+              width="50">
+          </el-table-column>
+          <el-table-column
               v-for="clmn in tableColumns"
               v-bind:key="clmn"
               label-class-name="header-st"
@@ -586,6 +595,9 @@ export default {
         return 'success-row';
       }
     },
+    indexMethod(index){
+      return (this.pageSetting.initRecordFrom-1)*this.pageSetting.pageSize+index
+    },
     onexport() { // On Click Excel download button
 
       // export json to Worksheet of Excel
@@ -910,21 +922,19 @@ export default {
     }
   },
   mounted() {
-    this.checkedColumns = ['№', this.$ml.get('word.engine'), this.$ml.get('word.autoManufacturer'),
+    this.checkedColumns = [ this.$ml.get('word.engine'), this.$ml.get('word.autoManufacturer'),
       this.$ml.get('word.autoModel'), this.$ml.get('word.releaseYearFrom'), this.$ml.get('word.releaseYearBy')];
-    this.columns = ['№', this.$ml.get('word.engine'), this.$ml.get('word.autoManufacturer'),
+    this.columns = [ this.$ml.get('word.engine'), this.$ml.get('word.autoManufacturer'),
       this.$ml.get('word.autoModel'), this.$ml.get('word.releaseYearFrom'), this.$ml.get('word.releaseYearBy')];
-    this.columnOptions = ['№', this.$ml.get('word.engine'), this.$ml.get('word.autoManufacturer'),
+    this.columnOptions = [ this.$ml.get('word.engine'), this.$ml.get('word.autoManufacturer'),
       this.$ml.get('word.autoModel'), this.$ml.get('word.releaseYearFrom'), this.$ml.get('word.releaseYearBy')];
     this.tableColumns = [
-      {key: 'id', label: '№', sortable: true},
       {key: 'engineFk', label: this.$ml.get('word.engine'), sortable: true},
       {key: 'autoManufactureFk', label: this.$ml.get('word.autoManufacturer'), sortable: true},
       {key: 'autoModelFk', label: this.$ml.get('word.autoModel'), sortable: true},
       {key: 'releaseYearFrom', label: this.$ml.get('word.releaseYearFrom'), sortable: true},
       {key: 'releaseYearBy', label: this.$ml.get('word.releaseYearBy'), sortable: true}];
     this.allTableColumns = [
-      {key: 'id', label: '№', sortable: true},
       {key: 'engineFk', label: this.$ml.get('word.engine'), sortable: true},
       {key: 'autoManufactureFk', label: this.$ml.get('word.autoManufacturer'), sortable: true},
       {key: 'autoModelFk', label: this.$ml.get('word.autoModel'), sortable: true},

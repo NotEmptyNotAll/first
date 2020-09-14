@@ -63,6 +63,15 @@
             style="width: 100%"
         >
           <el-table-column
+              type="index"
+              label="№"
+              label-class-name="header-st"
+              sortable
+              :index="indexMethod"
+              resizable align="left"
+              width="50">
+          </el-table-column>
+          <el-table-column
               v-for="clmn in tableColumns"
               v-bind:key="clmn"
               label-class-name="header-st"
@@ -191,7 +200,7 @@
           <vue-datalist
               class="col-md-4"
               :title-input="$ml.get('word.fuelType')"
-              :items="ADDITIONAL_DATA.fuelType"
+              :items="DATA_PAGE.fuelType.data"
               :update-obj="saveDataObj"
               index="fuelTypeFk"
               :holder-num=0
@@ -199,7 +208,7 @@
           <vue-datalist
               class="col-md-4"
               :title-input="$ml.get('word.engineManufacture')"
-              :items="ADDITIONAL_DATA.engineManufacture"
+              :items="DATA_PAGE.engineManufacture.data"
               :update-obj="saveDataObj"
               index="engineManufacturerFk"
               :holder-num=0
@@ -211,7 +220,7 @@
           <vue-datalist
               class="col-md-3"
               :title-input="$ml.get('word.cylinders')"
-              :items="ADDITIONAL_DATA.cylinders"
+              :items="DATA_PAGE.cylinders.data"
               :update-obj="saveDataObj"
               :holder-num=0
               index="cylindersPlacementFk"
@@ -219,7 +228,7 @@
           <vue-datalist
               class="col-md-3"
               :title-input="$ml.get('word.superchargedType')"
-              :items="ADDITIONAL_DATA.superchargeType"
+              :items="DATA_PAGE.superchargedType.data"
               :update-obj="saveDataObj"
               index="superchargedTypeFk"
               :holder-num=0
@@ -355,7 +364,7 @@
           <vue-datalist
               class="col-md-6"
               :title-input="$ml.get('word.changeTypeOfEngine')"
-              :items="ADDITIONAL_DATA.engine"
+              :items="DATA_PAGE.engine.data"
               :update-obj="updateDataObj"
               index="objToBeChanged"
               :holder-num=0
@@ -393,17 +402,18 @@
           <vue-datalist
               class="col-md-4"
               :title-input="$ml.get('word.cylinders')"
-              :items="ADDITIONAL_DATA.cylinders"
+              :items="DATA_PAGE.cylinders.data"
               :update-obj="updateDataObj"
               :holderNum="tempData.cylindersPlacementFk"
               index="cylindersPlacementFk"
               :clean-search="cleanInputList"
 
           />
+
           <vue-datalist
               class="col-md-4"
               :title-input="$ml.get('word.engineManufacture')"
-              :items="ADDITIONAL_DATA.engineManufacture"
+              :items="DATA_PAGE.engineManufacture.data"
               :update-obj="updateDataObj"
               :holderNum="tempData.engineManufacturerFk"
               index="engineManufacturerFk"
@@ -415,7 +425,7 @@
           <vue-datalist
               class="col-md-3"
               :title-input="$ml.get('word.fuelType')"
-              :items="ADDITIONAL_DATA.fuelType"
+              :items="DATA_PAGE.fuelType.data"
               :update-obj="updateDataObj"
               :holderNum="tempData.fuelTypeFk"
               index="fuelTypeFk"
@@ -424,7 +434,7 @@
           <vue-datalist
               class="col-md-3"
               :title-input="$ml.get('word.superchargedType')"
-              :items="ADDITIONAL_DATA.superchargeType"
+              :items="DATA_PAGE.superchargedType.data"
               :update-obj="updateDataObj"
               :holderNum="tempData.superchargedTypeFk"
               index="superchargedTypeFk"
@@ -761,6 +771,9 @@ export default {
       this.confirmText = this.$ml.get('msg.deleteConfirm')
       this.confirmOk = this.$ml.get('word.confirm')
       this.confirmNo = this.$ml.get('word.cancel')
+    },
+    indexMethod(index){
+      return (this.pageSetting.initRecordFrom-1)*this.pageSetting.pageSize+index
     },
     // eslint-disable-next-line no-unused-vars
     tableRowClassName({row, rowIndex}) {
@@ -1226,13 +1239,13 @@ export default {
 
 
     this.checkedColumns = [
-      '№', this.$ml.get('word.engine'), this.$ml.get('word.engineManufacture'),
+      this.$ml.get('word.engine'), this.$ml.get('word.engineManufacture'),
       this.$ml.get('word.cylinders'), this.$ml.get('word.fuelType'),
       this.$ml.get('word.status'),
       this.$ml.get('word.superchargedType'), this.$ml.get('word.releaseYearFrom'), this.$ml.get('word.releaseYearBy')
     ];
     this.columns = [
-      '№', this.$ml.get('word.engine'), this.$ml.get('word.engineManufacture'),
+      this.$ml.get('word.engine'), this.$ml.get('word.engineManufacture'),
       this.$ml.get('word.cylinders'), this.$ml.get('word.fuelType'),
       this.$ml.get('word.powerKwt'), this.$ml.get('word.status'),
       this.$ml.get('word.engineCapacity'), this.$ml.get('word.flapNumber'),
@@ -1241,7 +1254,7 @@ export default {
       this.$ml.get('word.releaseYearBy'), this.$ml.get('word.degreeCompression')
     ];
     this.columnOptions = [
-      '№', this.$ml.get('word.engine'), this.$ml.get('word.engineManufacture'),
+     this.$ml.get('word.engine'), this.$ml.get('word.engineManufacture'),
       this.$ml.get('word.cylinders'), this.$ml.get('word.fuelType'),
       this.$ml.get('word.powerKwt'), this.$ml.get('word.status'),
       this.$ml.get('word.engineCapacity'), this.$ml.get('word.flapNumber'),
@@ -1249,7 +1262,6 @@ export default {
       this.$ml.get('word.superchargedType'), this.$ml.get('word.releaseYearFrom'),
       this.$ml.get('word.releaseYearBy'), this.$ml.get('word.degreeCompression')];
     this.tableColumns = [
-      {key: 'id', label: '№', sortable: true},
       {key: 'data', label: this.$ml.get('word.engine'), sortable: true},
       {key: 'engineManufacturer', label: this.$ml.get('word.engineManufacture'), sortable: true},
       {key: 'cylindersPlacement', label: this.$ml.get('word.cylinders'), sortable: true},
@@ -1259,7 +1271,6 @@ export default {
       {key: 'releaseYearBy', label: this.$ml.get('word.releaseYearBy'), sortable: true},
       {key: 'status', label: this.$ml.get('word.status'), sortable: true}];
     this.allTableColumns = [
-      {key: 'id', label: '№', sortable: true},
       {key: 'data', label: this.$ml.get('word.engine'), sortable: true},
       {key: 'engineManufacturer', label: this.$ml.get('word.engineManufacture'), sortable: true},
       {key: 'cylindersPlacement', label: this.$ml.get('word.cylinders'), sortable: true},

@@ -221,7 +221,7 @@ export default {
       ],
       options: {},
       listFileUrl: [],
-      tableHeight:600,
+      tableHeight: 600,
       columnOptions: [],
       cleanSearch: 1,
       dialogFormVisible: false,
@@ -310,7 +310,7 @@ export default {
     },
     showModeratorBoard() {
       if (this.currentUser) {
-        return this.currentUser.roles.indexOf('MODERATOR')!==-1
+        return this.currentUser.roles.indexOf('MODERATOR') !== -1
       }
       return false;
     },
@@ -322,31 +322,26 @@ export default {
       this.$refs.paramTable.setCurrentRow(row);
     },
     clearFilter() {
-      this.pageSetting = {
-        id: null,
-        flapNumber: null,
-        fuelType: null,
-        cylindersNumber: null,
-        autoManufacture: null,
-        engineManufacture: null,
-        powerKWT: null,
-        engineCapacity: null,
-        horsepower: null,
-        pistonStoke: null,
-        pistonDiameter: null,
-        modelName: null,
-        engineType: null,
-        releaseYear: null,
-        elemID: null,
-        cylinderNum: null,
-        cylinderPlace: null,
-        superchargedType: null,
-        degreeCompression: null,
-        paramList: [],
-        initRecordFrom: this.pageSetting.initRecordFrom,
-        pageSize: this.pageSetting.pageSize
-      }
-
+      this.pageSetting.id = null;
+      this.pageSetting.flapNumber = null;
+      this.pageSetting.fuelType = null;
+      this.pageSetting.cylindersNumber = null;
+      this.pageSetting.autoManufacture = null;
+      this.pageSetting.engineManufacture = null;
+      this.pageSetting.powerKWT = null;
+      this.pageSetting.engineCapacity = null;
+      this.pageSetting.horsepower = null;
+      this.pageSetting.pistonStoke = null;
+      this.pageSetting.pistonDiameter = null;
+      this.pageSetting.modelName = null;
+      this.pageSetting.engineType = null;
+      this.pageSetting.releaseYear = null;
+      this.pageSetting.elemID = null;
+      this.pageSetting.cylinderNum = null;
+      this.pageSetting.cylinderPlace = null;
+      this.pageSetting.superchargedType = null;
+      this.pageSetting.degreeCompression = null;
+      this.pageSetting.paramList = [];
       this.bus.$emit('clear')
       this.GET_ALL_AUTO(this.pageSetting);
     },
@@ -623,10 +618,10 @@ export default {
     }
     ,
     setEngineParamData(data) {
-      if(this.tableHeight===600){
-        this.tableHeight=601
-      }else {
-        this.tableHeight=600
+      if (this.tableHeight === 600) {
+        this.tableHeight = 601
+      } else {
+        this.tableHeight = 600
       }
       this.engineParamData = data.columnResponseList
     }
@@ -639,9 +634,9 @@ export default {
   },
   computed: {
     ...mapGetters([
-          'ALL_AUTO_ENG',
-          'LOAD_ALL_AUTO_ENG'
-        ])
+      'ALL_AUTO_ENG',
+      'LOAD_ALL_AUTO_ENG'
+    ])
   }
   ,
   mounted() {
@@ -651,11 +646,10 @@ export default {
     };
 
 
-
-    if (this.ALL_AUTO_ENG.columnParam=== null) {
+    if (this.ALL_AUTO_ENG.columnParam === null) {
       this.GET_COLUMN_PARAM();
       this.GET_ALL_AUTO(this.pageSetting);
-     // this.GET_COLUMN_PARAM();
+      // this.GET_COLUMN_PARAM();
     }
     this.checkedColumns = [
       '№', this.$ml.get('word.engine'), this.$ml.get('word.autoManufacturer'),
@@ -691,13 +685,13 @@ export default {
       {key: 'fuelType', label: this.$ml.get('word.fuelType'), widthSmall: 110, widthLarge: 70},
       {
         key: 'pistonDiameterAndStoke',
-        label: this.$ml.get('word.diamAndStroke') ,
+        label: this.$ml.get('word.diamAndStroke'),
         widthSmall: 130,
         widthLarge: 70
       },
       {key: 'engineCapacity', label: this.$ml.get('word.engineCapacity'), widthSmall: 130, widthLarge: 70},
       {key: 'powerKWT', label: this.$ml.get('word.powerKwt'), widthSmall: 110, widthLarge: 70}
-     ]
+    ]
     this.allTableColumns = [
       {key: 'id', label: '№', widthSmall: 70, widthLarge: 40},
       {key: 'engineType', label: this.$ml.get('word.engine'), widthSmall: 110, widthLarge: 200},
@@ -709,7 +703,7 @@ export default {
       {key: 'flapNumber', label: this.$ml.get('word.flapNumber'), widthSmall: 110, widthLarge: 90},
       {
         key: 'pistonDiameterAndStoke',
-        label: this.$ml.get('word.diamAndStroke') ,
+        label: this.$ml.get('word.diamAndStroke'),
         widthSmall: 130,
         widthLarge: 70
       },

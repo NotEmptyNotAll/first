@@ -64,6 +64,15 @@
             style="width: 100%"
         >
           <el-table-column
+              type="index"
+              label="№"
+              label-class-name="header-st"
+              sortable
+              :index="indexMethod"
+              resizable align="left"
+              width="50">
+          </el-table-column>
+          <el-table-column
               sortable
               v-for="clmn in tableColumns"
               v-bind:key="clmn"
@@ -200,7 +209,7 @@
           <vue-datalist
               class="col-md-3"
               :title-input="$ml.get('word.dataChange')"
-              :items="dataList"
+              :items="dataList.data"
               :update-obj="updateDataObj"
               :clean-search="cleanInputList"
               index="objToBeChanged"
@@ -510,6 +519,9 @@ export default {
       })
       return;
     },
+    indexMethod(index){
+      return (this.pageSetting.initRecordFrom-1)*this.pageSetting.pageSize+index
+    },
     // eslint-disable-next-line no-unused-vars
     handleRemove(file, fileList) {
       this.fileTemp = null
@@ -687,15 +699,13 @@ export default {
     this.$emit("load-data", this.pageSetting)
 
    // this.listForSearch = this.dataList.data;
-    this.checkedColumns = ['№', this.$ml.get('word.name'), this.$ml.get('word.status')];
-    this.columns = ['№', this.$ml.get('word.name'), this.$ml.get('word.status')];
-    this.columnOptions = ['№', this.$ml.get('word.name'), this.$ml.get('word.status')];
+    this.checkedColumns = [ this.$ml.get('word.name'), this.$ml.get('word.status')];
+    this.columns = [ this.$ml.get('word.name'), this.$ml.get('word.status')];
+    this.columnOptions = [ this.$ml.get('word.name'), this.$ml.get('word.status')];
     this.tableColumns = [
-      {key: 'id', label: '№', sortable: true},
       {key: 'data', label: this.$ml.get('word.name'), sortable: true},
       {key: 'status', label: this.$ml.get('word.status'), sortable: true}];
     this.allTableColumns = [
-      {key: 'id', label: '№', sortable: true},
       {key: 'data', label: this.$ml.get('word.name'), sortable: true},
       {key: 'status', label: this.$ml.get('word.status'), sortable: true}];
   }

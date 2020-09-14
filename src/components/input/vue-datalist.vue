@@ -10,14 +10,12 @@
         :fetch-suggestions="querySearch"
         :placeholder="$ml.get('word.data')"
         @select="handleSelect"
-        :trigger-on-focus="false"
     >
       <template v-if="!hideTitle" slot="prepend">
         <strong class="title" style="font-size: 15px">{{ titleInput }}</strong>
       </template>
     </el-autocomplete>
     <el-autocomplete
-        :trigger-on-focus="false"
         v-if="holderNum!==0"
         clearable
         style="width: 100%"
