@@ -6,6 +6,7 @@
         clearable
         style="width: 100%"
         class="inline-input"
+        :trigger-on-focus="false"
         v-model="state1"
         :fetch-suggestions="querySearch"
         :placeholder="$ml.get('word.data')"
@@ -18,6 +19,7 @@
     <el-autocomplete
         v-if="holderNum!==0"
         clearable
+        :trigger-on-focus="false"
         style="width: 100%"
         class="inline-input"
         v-model="state1"

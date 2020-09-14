@@ -19,6 +19,7 @@
                       type="number"
                       v-model="saveParameters[index]"
                       :placeholder="placeHold"
+
                       clearable>
                 <template slot="prepend" ><strong class="title" style="font-size: 15px">{{nameInput}}</strong>
                 </template>
