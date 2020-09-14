@@ -3,7 +3,7 @@ import axios from "axios";
 //let urlApi = 'https://enginefinal.herokuapp.com/delete/';
 //let urlApi = 'http://10.102.0.1:5050/delete/';
 let urlApi = 'http://10.102.200.11:5050/delete/';
-//let urlApi = 'http://localhost:5050/delete';
+//let urlApi = 'http://localhost:5050/delete/';
 
 
 export default {
@@ -35,6 +35,7 @@ export default {
             data: {id: number},
             responseType: 'json'
         }).then(listParam => {
+
             if (listParam.data.listDependencyElements!==null) {
                 commit('SET_DELETE_RESPONSE', {resp:false, id:number})//Exception from backend
             } else {

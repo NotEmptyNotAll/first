@@ -322,6 +322,8 @@ export default {
       this.$refs.paramTable.setCurrentRow(row);
     },
     clearFilter() {
+      this.bus.$emit('clear')
+
       this.pageSetting.id = null;
       this.pageSetting.flapNumber = null;
       this.pageSetting.fuelType = null;
@@ -342,7 +344,6 @@ export default {
       this.pageSetting.superchargedType = null;
       this.pageSetting.degreeCompression = null;
       this.pageSetting.paramList = [];
-      this.bus.$emit('clear')
       this.GET_ALL_AUTO(this.pageSetting);
     },
     handleClick1(row, column, event) {

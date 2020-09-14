@@ -765,6 +765,7 @@ export default {
         this.listForSearch = this.dataList.data;
     },
     DELETE_RESPONSE: function (val) {
+      alert(JSON.stringify(val))
       if (this.deleteLoadId !== -1) {
         if (val.resp) {
           this.$message({
