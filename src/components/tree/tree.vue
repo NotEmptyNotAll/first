@@ -16,7 +16,7 @@
             class="col-md-8"
             v-show="item.name===''"
             title-input="дані для зміни"
-            :items="PARAM_NAME.filter(elem=>{return elem.tree_node})"
+            :items="PARAM_NAME.filter(elem=>{return !elem.tree_node})"
             :show-title="true"
             :update-obj="saveElemData"
             index="paramNameFk"

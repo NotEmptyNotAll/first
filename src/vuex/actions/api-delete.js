@@ -2,7 +2,8 @@ import axios from "axios";
 
 //let urlApi = 'https://enginefinal.herokuapp.com/delete/';
 //let urlApi = 'http://10.102.0.1:5050/delete/';
-let urlApi = 'http://10.102.200.11:5050/';
+let urlApi = 'http://10.102.200.11:5050/delete';
+//let urlApi = 'http://localhost:5050/delete';
 
 
 export default {

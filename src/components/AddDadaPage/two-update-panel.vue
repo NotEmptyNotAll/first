@@ -788,16 +788,14 @@ export default {
   },
   mounted() {
     this.$emit("load-data", this.pageSetting)
-    this.checkedColumns = ['№', this.$ml.get('word.fullName'), this.$ml.get('word.shortName'), this.$ml.get('word.status')];
-    this.columns = ['№', this.$ml.get('word.fullName'), this.$ml.get('word.shortName'), this.$ml.get('word.status')];
-    this.columnOptions = ['№', this.$ml.get('word.fullName'), this.$ml.get('word.shortName'), this.$ml.get('word.status')];
+    this.checkedColumns = [ this.$ml.get('word.fullName'), this.$ml.get('word.shortName'), this.$ml.get('word.status')];
+    this.columns = [ this.$ml.get('word.fullName'), this.$ml.get('word.shortName'), this.$ml.get('word.status')];
+    this.columnOptions = [ this.$ml.get('word.fullName'), this.$ml.get('word.shortName'), this.$ml.get('word.status')];
     this.tableColumns = [
-      {key: 'id', label: '№', sortable: true},
       {key: 'data', label: this.$ml.get('word.fullName'), sortable: true},
       {key: 'secondary_data', label: this.$ml.get('word.shortName'), sortable: true},
       {key: 'status', label: this.$ml.get('word.status'), sortable: true}];
     this.allTableColumns = [
-      {key: 'id', label: '№', sortable: true},
       {key: 'data', label: this.$ml.get('word.fullName'), sortable: true},
       {key: 'secondary_data', label: this.$ml.get('word.shortName'), sortable: true},
       {key: 'status', label: this.$ml.get('word.status'), sortable: true}];
