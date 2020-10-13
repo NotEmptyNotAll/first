@@ -11,7 +11,7 @@
                 active-text-color="#ffd04b">
           <el-menu-item class="item-menu" v-if="!currentUser"  ></el-menu-item>
           <el-menu-item class="item-menu" index="/" v-if="currentUser"> <i class="el-icon-s-order"></i>{{$ml.get('word.parameters')}}</el-menu-item>
-          <el-menu-item class="item-menu"   index="/newsearch" v-if="currentUser"><i class="el-icon-search"></i> {{$ml.get('word.search')}}</el-menu-item>
+          <el-menu-item class="item-menu"   index="/newsearch" v-if="showModeratorBoard"><i class="el-icon-search"></i> {{$ml.get('word.search')}}</el-menu-item>
             <el-menu-item class="item-menu" index="/addData" v-if="showModeratorBoard"> <i class="el-icon-notebook-1"></i>{{$ml.get('word.updateData')}}</el-menu-item>
             <el-menu-item class="item-menu" index="/edittree" v-if="showModeratorBoard"><i class="el-icon-edit-outline"></i>{{$ml.get('word.setParameter')}}</el-menu-item>
             <el-menu-item class="item-menu" index="/treeStruct" v-if="showModeratorBoard"> {{$ml.get('word.treeStruct')}}</el-menu-item>

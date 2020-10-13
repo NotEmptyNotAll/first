@@ -293,6 +293,7 @@
                 });
                 console.log(number)
             },
+
             mapTreeElem(treeElem) {
                 treeElem.map(elem => {
                         if (elem.elementsCh.length === 0) {

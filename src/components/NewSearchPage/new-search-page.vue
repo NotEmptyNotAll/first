@@ -151,7 +151,11 @@
                 <span v-show="column.columnList[0]!==undefined && scope.row[col.id]!==undefined"
                       v-for="col in column.columnList"
                       v-bind:key="col">
-                                    <h6><strong>{{ col.name + ": " }}</strong>{{ scope.row[col.id] }}</h6><hr>
+                                    <h6><strong v-if="(col.name!=='std' && col.name!=='Std' && col.name!=='знач.' )"
+
+                                    >{{ col.name + ": " }}</strong>
+                                      {{ scope.row[col.id] }}
+                                    </h6><hr>
                                 </span>
                 <el-button size="medium" v-show="scope.row['listImage'+column.id]!==undefined"
                            type="text" @click="showImage(scope.row['listImage'+column.id])">
@@ -263,7 +267,7 @@ export default {
       pageSetting: {
         id: null,
         flapNumber: null,
-        pistonDiameterAndStoke:null,
+        pistonDiameterAndStoke: null,
         fuelType: null,
         cylindersNumber: null,
         autoManufacture: null,
@@ -305,6 +309,7 @@ export default {
       return 'header-st';
 
     },
+
     showImage(list) {
       this.listFileUrl = list
       this.dialogFormVisible = true
