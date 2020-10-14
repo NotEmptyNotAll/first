@@ -291,6 +291,7 @@ export default {
       },
       lengHeadNameArr: 0,
       test: null,
+      temp: null,
       test1: null,
       inputFilds: []
     }
@@ -385,71 +386,93 @@ export default {
             let clmns = []
             let tempHeadName = []
             let headNameParamClmns = []
+            let tempHeadNameIdArr = []
             let widthClmns = [100];
             let lengHeadNameArr = 0
             elem.columnList.map(item => {
               item.columnList.map(e => {
-                if (headNameParamClmns.find(t => t.text === e.name) === undefined && event.item[e.id] !== undefined) {
+
+                if (headNameParamClmns.find(t => t.text.toString() === e.name.toString()) === undefined && event.item[e.id] !== undefined) {
                   headNameParamClmns.push({text: e.name, id: e.id})
+                  tempHeadNameIdArr.push({name: e.name, arr: [{parentId: item.id, id: e.id}]})
                   lengHeadNameArr++
+                } else if (headNameParamClmns.find(t => t.text.toString() !== e.name.toString()) !== undefined && event.item[e.id] !== undefined) {
+
+                      if(tempHeadNameIdArr.find(elm => elm.name === e.name)!==undefined){
+                        tempHeadNameIdArr.find(elm => elm.name ===  e.name).arr.push({parentId: item.id, id: e.id})
+                      }
                 }
               })
             })
-            if (lengHeadNameArr === 0) {
-              lengHeadNameArr = 1
-            }
-            for (let i = 0; i < lengHeadNameArr; i++) {
-              widthClmns.push('*')
-            }
-            let row = [{
-              text: elem.name,
-              colSpan: lengHeadNameArr + 1,
-              style: 'headBlock'
-            }]
-            for (let i = 0; i < lengHeadNameArr; i++) {
-              row.push({})
-            }
-            clmns.push(row)
-            if (headNameParamClmns.length > 0) {
-              tempHeadName.push({text: this.getGeneralName(headNameParamClmns), style: 'nameElem'})
-              headNameParamClmns.map(elment => {
-                tempHeadName.push({text: elment.text, style: 'nameElem'})
+            this.temp = tempHeadNameIdArr
+        if(tempHeadNameIdArr.length>0) {
+          if (lengHeadNameArr === 0) {
+            lengHeadNameArr = 1
+          }
+          for (let i = 0; i < lengHeadNameArr; i++) {
+            widthClmns.push('*')
+          }
+          let row = [{
+            text: elem.name,
+            colSpan: lengHeadNameArr + 1,
+            style: 'headBlock'
+          }]
+          for (let i = 0; i < lengHeadNameArr; i++) {
+            row.push({})
+          }
+          clmns.push(row)
+          if (headNameParamClmns.length > 0) {
+            tempHeadName.push({text: '', style: 'nameElem'})
+            headNameParamClmns.map(elment => {
+              tempHeadName.push({text: elment.text, style: 'nameElem'})
+            })
+          } else {
+            tempHeadName.push({text: "", style: 'nameElem'})
+            tempHeadName.push({text: "Значення"})
+          }
+          clmns.push(tempHeadName)
+          elem.columnList.map(item => {
+            let tempArr = []
+            tempArr.push({text: item.name, style: 'nameElem'})
+            if (item.columnList.length > 0) {
+              headNameParamClmns.map(e => {
+                let tempVar = tempHeadNameIdArr
+                    .find(elmn => elmn.name === e.text)
+                if (tempVar !== undefined) {
+                  let resultId = tempVar.arr.find(elmnt => elmnt.parentId === item.id)
+                  if (resultId !== undefined) {
+                    tempArr.push({text: event.item[resultId.id], bold: true})
+                  } else {
+                    tempArr.push({text: '', bold: true})
+                  }
+                } else {
+                  tempArr.push({text: '', bold: true})
+                }
               })
             } else {
-              tempHeadName.push({text: "", style: 'nameElem'})
-              tempHeadName.push({text: "Значення"})
+              tempArr.push({text: event.item[item.id], bold: true, colSpan: lengHeadNameArr,})
             }
-            clmns.push(tempHeadName)
-            elem.columnList.map(item => {
-              let tempArr = []
-              tempArr.push({text: item.name, style: 'nameElem'})
-              if (item.columnList.length > 0) {
-                headNameParamClmns.map(e => {
-                  tempArr.push({text: event.item[e.id], bold: true})
-                })
-              } else {
-                tempArr.push({text: event.item[item.id], bold: true, colSpan: lengHeadNameArr,})
-              }
-              clmns.push(tempArr)
-              tempArr = []
-            })
-            tables.push({
-              margin: [0, 0, 0, 0],
-              table: {
-                widths: widthClmns,
-                body: clmns,
-                headerRows: 1
+            clmns.push(tempArr)
+            tempArr = []
+          })
+          tables.push({
+            margin: [0, 0, 0, 0],
+            table: {
+              widths: widthClmns,
+              body: clmns,
+              headerRows: 1
+            },
+            layout: {
+              hLineColor: function (i) {
+                if (i === 0 && index !== 0) {
+                  return 'lightgrey';
+                }
+                return 'grey';
               },
-              layout: {
-                hLineColor: function (i) {
-                  if (i === 0 && index !== 0) {
-                    return 'lightgrey';
-                  }
-                  return 'grey';
-                },
-                vLineColor: 'grey'
-              },
-            })
+              vLineColor: 'grey'
+            },
+          })
+        }
           }
       )
       this.test = tables
