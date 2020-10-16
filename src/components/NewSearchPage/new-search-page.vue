@@ -122,6 +122,7 @@
                            :prop="mainColumn.color"
           >
             <el-table-column
+
                 resizable
                 align="center"
                 v-for="column in mainColumn.columnList"
@@ -131,7 +132,7 @@
                 min-width="310">
               <template slot="header">
                 <div>
-                  <h5>{{ column.name }}</h5>
+                  <h6>{{ column.name }}</h6>
                 </div>
                 <filter-input
                     :bus="bus"
@@ -145,9 +146,9 @@
                 />
               </template>
               <template slot-scope="scope">
-                <span v-show="column.columnList[0]===undefined" style="margin-left: 10px"><h4>{{
+                <span v-show="column.columnList[0]===undefined" style="margin-left: 10px"><h6>{{
                     scope.row[column.id]
-                  }}</h4></span>
+                  }}</h6></span>
                 <span v-show="column.columnList[0]!==undefined && scope.row[col.id]!==undefined"
                       v-for="col in column.columnList"
                       v-bind:key="col">
@@ -486,28 +487,6 @@ export default {
         pageSize: 'A4',
         pageOrientation: 'portrait',//'portrait'
         pageMargins: [15, 10, 15, 30],
-        footer: function (currentPage, pageCount) {
-          if (currentPage === pageCount) {
-            return {
-              margin: [0, 0, 0, 0],
-              table: {
-                widths: [50, '*', 50, '*', 50, "*", 50],
-                body: [
-                  [{text: ""}, {text: 'П.І.Б___________'}, {text: ""}, {text: "Підпис___________"}, {text: ""}, {text: "Дата___________"}, {text: ""},]
-                ],
-                headerRows: 1
-              },
-              layout: {
-                hLineColor: 'white',
-                vLineColor: 'white'
-              },
-            }
-          } else {
-            return {
-              text: ''
-            }
-          }
-        },
         content: [
           {
             text: 'Параметри обробки до замовлення №79930',
@@ -586,6 +565,20 @@ export default {
             text: 'З параметрами обробки ознайомлений та згоден',
             style: 'header'
           },
+          {
+            margin: [0, 0, 0, 0],
+            table: {
+              widths: [50, '*', 50, '*', 50, "*", 50],
+              body: [
+                [{text: ""}, {text: 'П.І.Б___________'}, {text: ""}, {text: "Підпис___________"}, {text: ""}, {text: "Дата___________"}, {text: ""},]
+              ],
+              headerRows: 1
+            },
+            layout: {
+              hLineColor: 'white',
+              vLineColor: 'white'
+            },
+          }
 
         ],
         styles: {
