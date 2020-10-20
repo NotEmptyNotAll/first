@@ -8,6 +8,7 @@
         size="small"
         prefix-icon="el-icon-search"
         clearable
+
         @change="onInputAction"
     >
     </el-input>
@@ -21,6 +22,7 @@
               :placeholder="$ml.get('word.filter')"
               size="small"
               clearable
+              @clear="clear"
               @change="onInputAction"
     >
       <el-select slot="prepend" v-model="paramSize"
@@ -41,6 +43,7 @@
               size="small"
               prefix-icon="el-icon-search"
               clearable
+              @clear="clear"
               @change="onInputAction"
     >
     </el-input>
@@ -117,7 +120,7 @@ export default {
           }
         } else if (this.paramSizeList.length === 1) {
           let temp = this.saveParameters.paramList.find(item =>
-              item.parameterChildId === this.paramSizeList[0].id && item.parameterChildId === this.index)
+              item.parameterChildId === this.paramSizeList[0].id && item.parameterNodeId === this.index)
           if (temp === undefined) {
             this.saveParameters.paramList.push({
               parameterChildId: this.paramSizeList[0].id,

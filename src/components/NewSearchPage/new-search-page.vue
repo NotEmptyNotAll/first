@@ -1,7 +1,5 @@
-`
 <template>
   <div>
-
     <div v-if="showModeratorBoard" class="container search-border tab  rounded bg-white rad">
       <vue-context-menu
           :elementId="'myFirstMenu'"
