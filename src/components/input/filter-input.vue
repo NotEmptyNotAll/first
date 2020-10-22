@@ -14,7 +14,7 @@
     </el-input>
   </div>
   <div v-else class="input-group">
-    <el-input v-if="paramSizeList.length>1"
+    <!--<el-input v-if="paramSizeList.length>1"
               ref="inp2"
               v-model="inputValue"
               :disabled="paramSize===''"
@@ -35,8 +35,8 @@
             :value="item.id">
         </el-option>
       </el-select>
-    </el-input>
-    <el-input v-else
+    </el-input>-->
+    <el-input
               ref="inp3"
               v-model="inputValue"
               :placeholder="$ml.get('word.filter')"

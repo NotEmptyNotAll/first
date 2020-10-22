@@ -7,7 +7,7 @@
           :ref="'vueSimpleContextMenu1'"
           @option-clicked="optionClicked1"
       ></vue-context-menu>
-      <div class="row " style="padding-top: 3vh">
+      <div class="row " style="padding-top: 0vh;padding-bottom: 0vh">
         <div class="title-bord col-md-1 param-navbar">
 
           <h4> {{ $ml.get('word.parameters') }}</h4>
@@ -35,11 +35,11 @@
               <i class="el-icon-arrow-down el-icon--right"></i>
             </el-button>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="1"> 1 {{ $ml.get('word.rows') }}</el-dropdown-item>
-              <el-dropdown-item command="3"> 3{{ $ml.get('word.rows') }}</el-dropdown-item>
-              <el-dropdown-item command="5"> 5{{ $ml.get('word.rows') }}</el-dropdown-item>
+              <el-dropdown-item command="5"> 5 {{ $ml.get('word.rows') }}</el-dropdown-item>
               <el-dropdown-item command="10"> 10{{ $ml.get('word.rows') }}</el-dropdown-item>
               <el-dropdown-item command="15"> 15{{ $ml.get('word.rows') }}</el-dropdown-item>
+              <el-dropdown-item command="25"> 25{{ $ml.get('word.rows') }}</el-dropdown-item>
+              <el-dropdown-item command="35"> 35{{ $ml.get('word.rows') }}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>
@@ -69,7 +69,6 @@
         </div>
       </div>
       <hr/>
-      <br/>
       <div class="table-cont">
         <el-table
             v-loading="LOAD_ALL_AUTO_ENG"
@@ -224,7 +223,7 @@ export default {
       ],
       options: {},
       listFileUrl: [],
-      tableHeight: 600,
+      tableHeight: 635,
       columnOptions: [],
       cleanSearch: 1,
       dialogFormVisible: false,
@@ -285,7 +284,7 @@ export default {
         superchargedType: null,
         degreeCompression: null,
         initRecordFrom: 1,
-        pageSize: 3,
+        pageSize: 15,
         paramList: []
       },
       lengHeadNameArr: 0,
@@ -640,10 +639,10 @@ export default {
     }
     ,
     setEngineParamData(data) {
-      if (this.tableHeight === 600) {
-        this.tableHeight = 601
+      if (this.tableHeight === 635) {
+        this.tableHeight = 634
       } else {
-        this.tableHeight = 600
+        this.tableHeight = 635
       }
       this.engineParamData = data.columnResponseList
     }
