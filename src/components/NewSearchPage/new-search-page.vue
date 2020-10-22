@@ -80,6 +80,7 @@
             :data="ALL_AUTO_ENG.engineData"
             highlight-current-row
             :max-height="tableHeight"
+
             @current-change="handleCurrentChange"
             @row-contextmenu="handleClick1"
             :header-cell-style="handleHeaderStyle"
@@ -153,7 +154,7 @@
 
                                     >{{ col.name + ": " }}</strong>
                                       {{ scope.row[col.id] }}
-                                    </h6><hr>
+                                    </h6>
                                 </span>
                 <el-button size="medium" v-show="scope.row['listImage'+column.id]!==undefined"
                            type="text" @click="showImage(scope.row['listImage'+column.id])">
