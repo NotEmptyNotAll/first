@@ -261,7 +261,10 @@ export default {
             responseType: 'json'
         })
             .then((resp) => {
+                if(resp.engineData===null){
+                    resp.engineData=[]
 
+                }
                 commit('SET_ALL_AUTO_ENG', resp.data)
                 commit('SET_LOAD_ALL_AUTO_ENG', false);
                 return resp;
