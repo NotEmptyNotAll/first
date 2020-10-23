@@ -12,6 +12,7 @@ export default new MLCreate({
                 table: 'table',
                 showPhoto:'show images',
                 titlePhoto: 'photo gallery',
+                selectSearchPercent: 'select percent: ',
                 text: "text",
                 yes:'yes',
                 no:'no',
@@ -126,6 +127,7 @@ export default new MLCreate({
             word: {
                 text: "текст",
                 number: "число",
+                selectSearchPercent: 'выберите процент: ',
                 range: "диапазон",
                 confirm: "Подтвердить",
                 selectBlock: "виберіть блок:  ",
@@ -241,6 +243,7 @@ export default new MLCreate({
                 parameters: 'параметри',
                 type: "тип",
                 showPhoto:'показати зображення',
+                selectSearchPercent: 'виберіть відсоток: ',
                 text: "текст",
                 yes:'так',
                 no:'ні',

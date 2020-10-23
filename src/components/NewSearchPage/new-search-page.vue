@@ -43,13 +43,27 @@
             </el-dropdown-menu>
           </el-dropdown>
         </div>
+        <div class=" col-md-2 fix-position ">
+          <el-dropdown @command="changeSearchPercent" style="width: 100%;">
+            <el-button size="medium" type="warning" style="width: 100%; font-size: 16px">
+              {{ $ml.get('word.selectSearchPercent') }}{{ pageSetting.searchPercent +'%'}}
+              <i class="el-icon-arrow-down el-icon--right"></i>
+            </el-button>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="0"> 0%</el-dropdown-item>
+              <el-dropdown-item command="5"> 5%</el-dropdown-item>
+              <el-dropdown-item command="10"> 10%</el-dropdown-item>
+              <el-dropdown-item command="15"> 15%</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
         <div class="col-md-2   ">
           <el-button size="medium" class="fix-position" plain type="danger"
                      style="width: 100%; font-size: 16px"
                      v-on:click="clearFilter">{{ $ml.get('word.clearAllFilter') }}
           </el-button>
         </div>
-        <div class="col-md-6  border-butt param-navbar">
+        <div class="col-md-4  border-butt param-navbar">
           <el-divider content-position="right">
             <el-button-group>
               <el-button v-for="current in ALL_AUTO_ENG.columnParam" v-bind:key="current"
@@ -286,6 +300,7 @@ export default {
         degreeCompression: null,
         initRecordFrom: 1,
         pageSize: 15,
+        searchPercent: 0,
         paramList: []
       },
       lengHeadNameArr: 0,
@@ -652,7 +667,13 @@ export default {
       this.pageSetting.pageSize = value
       this.pageSetting.initRecordFrom = 1
       this.GET_ALL_AUTO(this.pageSetting)
+    },
+    changeSearchPercent(value) {
+      this.pageSetting.searchPercent = value
+      this.pageSetting.initRecordFrom = 1
+      this.GET_ALL_AUTO(this.pageSetting)
     }
+
   },
   computed: {
     ...mapGetters([
@@ -716,9 +737,9 @@ export default {
     ]
     this.allTableColumns = [
       {key: 'id', label: '№', widthSmall: 70, widthLarge: 40},
-      {key: 'engineType', label: this.$ml.get('word.engine'), widthSmall: 110, widthLarge: 200},
       {key: 'autoManufacture', label: this.$ml.get('word.autoManufacturer'), widthSmall: 140, widthLarge: 70},
       {key: 'modelName', label: this.$ml.get('word.autoModel'), widthSmall: 130, widthLarge: 70},
+      {key: 'engineType', label: this.$ml.get('word.engine'), widthSmall: 110, widthLarge: 200},
       {key: 'releaseYear', label: this.$ml.get('word.releaseYear'), widthSmall: 110, widthLarge: 60},
       {key: 'fuelType', label: this.$ml.get('word.fuelType'), widthSmall: 110, widthLarge: 70},
       {key: 'cylinderPlace', label: this.$ml.get('word.cylinders'), widthSmall: 110, widthLarge: 70},
@@ -729,14 +750,15 @@ export default {
         widthSmall: 130,
         widthLarge: 70
       },
-      {key: 'engineCapacity', label: this.$ml.get('word.engineCapacity'), widthSmall: 130, widthLarge: 70},
       {key: 'powerKWT', label: this.$ml.get('word.powerKwt'), widthSmall: 110, widthLarge: 70},
       {
         key: 'superchargedType',
         label: this.$ml.get('word.superchargedType'),
         widthSmall: 110,
         widthLarge: 90
-      }]
+      },
+      {key: 'engineCapacity', label: this.$ml.get('word.engineCapacity'), widthSmall: 130, widthLarge: 70}
+    ]
   }
 }
 </script>

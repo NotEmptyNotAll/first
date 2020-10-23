@@ -1,9 +1,9 @@
 import axios from "axios";
 
 //let urlApi = 'https://enginefinal.herokuapp.com/';
-let urlApi = 'http://10.102.200.11:5050/';
 //let urlApi = 'http://10.102.200.11:5050/';
-//let urlApi = 'http://localhost:5050/';
+//let urlApi = 'http://10.102.200.11:5050/';
+let urlApi = 'http://localhost:5050/';
 
 export default {
     async GET_COLUMN_PARAM({commit}) {
@@ -269,7 +269,9 @@ export default {
                 return resp;
             })
             .catch((error) => {
-                commit('SET_ALL_AUTO_ENG_PARAM_NULL')
+
+                commit('SET_ALL_AUTO_ENG', {countResults:1,engineData:[]})
+
                 console.log(error);
                 commit('SET_LOAD_ALL_AUTO_ENG', false);
                 return error
