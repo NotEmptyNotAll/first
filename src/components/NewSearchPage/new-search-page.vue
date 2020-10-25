@@ -46,14 +46,14 @@
         <div class=" col-md-2 fix-position ">
           <el-dropdown @command="changeSearchPercent" style="width: 100%;">
             <el-button size="medium" type="warning" style="width: 100%; font-size: 16px">
-              {{ $ml.get('word.selectSearchPercent') }}{{ pageSetting.searchPercent +'%'}}
+              {{ $ml.get('word.selectSearchPercent') }}&#177;{{ pageSetting.searchPercent + '%' }}
               <i class="el-icon-arrow-down el-icon--right"></i>
             </el-button>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="0"> 0%</el-dropdown-item>
-              <el-dropdown-item command="5"> 5%</el-dropdown-item>
-              <el-dropdown-item command="10"> 10%</el-dropdown-item>
-              <el-dropdown-item command="15"> 15%</el-dropdown-item>
+              <el-dropdown-item command="0"> &#177;0%</el-dropdown-item>
+              <el-dropdown-item command="5"> &#177;5%</el-dropdown-item>
+              <el-dropdown-item command="10"> &#177;10%</el-dropdown-item>
+              <el-dropdown-item command="15"> &#177;15%</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>
@@ -412,81 +412,81 @@ export default {
                   lengHeadNameArr++
                 } else if (headNameParamClmns.find(t => t.text.toString() !== e.name.toString()) !== undefined && event.item[e.id] !== undefined) {
 
-                      if(tempHeadNameIdArr.find(elm => elm.name === e.name)!==undefined){
-                        tempHeadNameIdArr.find(elm => elm.name ===  e.name).arr.push({parentId: item.id, id: e.id})
-                      }
+                  if (tempHeadNameIdArr.find(elm => elm.name === e.name) !== undefined) {
+                    tempHeadNameIdArr.find(elm => elm.name === e.name).arr.push({parentId: item.id, id: e.id})
+                  }
                 }
               })
             })
             this.temp = tempHeadNameIdArr
-        if(tempHeadNameIdArr.length>0) {
-          if (lengHeadNameArr === 0) {
-            lengHeadNameArr = 1
-          }
-          for (let i = 0; i < lengHeadNameArr; i++) {
-            widthClmns.push('*')
-          }
-          let row = [{
-            text: elem.name,
-            colSpan: lengHeadNameArr + 1,
-            style: 'headBlock'
-          }]
-          for (let i = 0; i < lengHeadNameArr; i++) {
-            row.push({})
-          }
-          clmns.push(row)
-          if (headNameParamClmns.length > 0) {
-            tempHeadName.push({text: '', style: 'nameElem'})
-            headNameParamClmns.map(elment => {
-              tempHeadName.push({text: elment.text, style: 'nameElem'})
-            })
-          } else {
-            tempHeadName.push({text: "", style: 'nameElem'})
-            tempHeadName.push({text: "Значення"})
-          }
-          clmns.push(tempHeadName)
-          elem.columnList.map(item => {
-            let tempArr = []
-            tempArr.push({text: item.name, style: 'nameElem'})
-            if (item.columnList.length > 0) {
-              headNameParamClmns.map(e => {
-                let tempVar = tempHeadNameIdArr
-                    .find(elmn => elmn.name === e.text)
-                if (tempVar !== undefined) {
-                  let resultId = tempVar.arr.find(elmnt => elmnt.parentId === item.id)
-                  if (resultId !== undefined) {
-                    tempArr.push({text: event.item[resultId.id], bold: true})
-                  } else {
-                    tempArr.push({text: '', bold: true})
-                  }
+            if (tempHeadNameIdArr.length > 0) {
+              if (lengHeadNameArr === 0) {
+                lengHeadNameArr = 1
+              }
+              for (let i = 0; i < lengHeadNameArr; i++) {
+                widthClmns.push('*')
+              }
+              let row = [{
+                text: elem.name,
+                colSpan: lengHeadNameArr + 1,
+                style: 'headBlock'
+              }]
+              for (let i = 0; i < lengHeadNameArr; i++) {
+                row.push({})
+              }
+              clmns.push(row)
+              if (headNameParamClmns.length > 0) {
+                tempHeadName.push({text: '', style: 'nameElem'})
+                headNameParamClmns.map(elment => {
+                  tempHeadName.push({text: elment.text, style: 'nameElem'})
+                })
+              } else {
+                tempHeadName.push({text: "", style: 'nameElem'})
+                tempHeadName.push({text: "Значення"})
+              }
+              clmns.push(tempHeadName)
+              elem.columnList.map(item => {
+                let tempArr = []
+                tempArr.push({text: item.name, style: 'nameElem'})
+                if (item.columnList.length > 0) {
+                  headNameParamClmns.map(e => {
+                    let tempVar = tempHeadNameIdArr
+                        .find(elmn => elmn.name === e.text)
+                    if (tempVar !== undefined) {
+                      let resultId = tempVar.arr.find(elmnt => elmnt.parentId === item.id)
+                      if (resultId !== undefined) {
+                        tempArr.push({text: event.item[resultId.id], bold: true})
+                      } else {
+                        tempArr.push({text: '', bold: true})
+                      }
+                    } else {
+                      tempArr.push({text: '', bold: true})
+                    }
+                  })
                 } else {
-                  tempArr.push({text: '', bold: true})
+                  tempArr.push({text: event.item[item.id], bold: true, colSpan: lengHeadNameArr,})
                 }
+                clmns.push(tempArr)
+                tempArr = []
               })
-            } else {
-              tempArr.push({text: event.item[item.id], bold: true, colSpan: lengHeadNameArr,})
+              tables.push({
+                margin: [0, 0, 0, 0],
+                table: {
+                  widths: widthClmns,
+                  body: clmns,
+                  headerRows: 1
+                },
+                layout: {
+                  hLineColor: function (i) {
+                    if (i === 0 && index !== 0) {
+                      return 'lightgrey';
+                    }
+                    return 'grey';
+                  },
+                  vLineColor: 'grey'
+                },
+              })
             }
-            clmns.push(tempArr)
-            tempArr = []
-          })
-          tables.push({
-            margin: [0, 0, 0, 0],
-            table: {
-              widths: widthClmns,
-              body: clmns,
-              headerRows: 1
-            },
-            layout: {
-              hLineColor: function (i) {
-                if (i === 0 && index !== 0) {
-                  return 'lightgrey';
-                }
-                return 'grey';
-              },
-              vLineColor: 'grey'
-            },
-          })
-        }
           }
       )
       this.test = tables
@@ -704,19 +704,19 @@ export default {
     ];
     this.columns = [
       '№', this.$ml.get('word.autoManufacturer'),
-      this.$ml.get('word.autoModel'),  this.$ml.get('word.engine'),this.$ml.get('word.releaseYear'),
+      this.$ml.get('word.autoModel'), this.$ml.get('word.engine'), this.$ml.get('word.releaseYear'),
       this.$ml.get('word.fuelType'),
       this.$ml.get('word.cylinders'), this.$ml.get('word.flapNumber'),
       this.$ml.get('word.diamAndStroke'),
-    this.$ml.get('word.powerKwt'),   this.$ml.get('word.engineCapacity'),
+      this.$ml.get('word.powerKwt'), this.$ml.get('word.engineCapacity'),
       this.$ml.get('word.superchargedType')
     ];
     this.columnOptions = [
-      '№',  this.$ml.get('word.autoManufacturer'),
-      this.$ml.get('word.autoModel'), this.$ml.get('word.engine'),this.$ml.get('word.releaseYear'),
+      '№', this.$ml.get('word.autoManufacturer'),
+      this.$ml.get('word.autoModel'), this.$ml.get('word.engine'), this.$ml.get('word.releaseYear'),
       this.$ml.get('word.fuelType'),
       this.$ml.get('word.flapNumber'),
-     this.$ml.get('word.powerKwt'), this.$ml.get('word.engineCapacity'),
+      this.$ml.get('word.powerKwt'), this.$ml.get('word.engineCapacity'),
       this.$ml.get('word.superchargedType')
     ];
     this.tableColumns = [
@@ -733,7 +733,7 @@ export default {
         widthSmall: 130,
         widthLarge: 70
       },
-      {key: 'powerKWT', label: this.$ml.get('word.powerKwt'), widthSmall: 110, widthLarge: 70} ,
+      {key: 'powerKWT', label: this.$ml.get('word.powerKwt'), widthSmall: 110, widthLarge: 70},
       {key: 'engineCapacity', label: this.$ml.get('word.engineCapacity'), widthSmall: 130, widthLarge: 70},
 
     ]

@@ -1,7 +1,8 @@
 import axios from "axios";
 
 //let urlApi = 'https://enginefinal.herokuapp.com/import/';
-let urlApi = 'http://10.102.200.11:5050/import/';
+//let urlApi = 'http://10.102.200.11:5050/import/';
+let urlApi = 'http://eng-test.24x7tools.com:5050/import/';
 //let urlApi = 'http://10.102.200.11:5050/import/';
 //let urlApi = 'http://localhost:5050/import';
 
