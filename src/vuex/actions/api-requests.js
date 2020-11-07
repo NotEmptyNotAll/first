@@ -3,12 +3,12 @@ import axios from "axios";
 //let urlApi = 'https://enginefinal.herokuapp.com/';
 //let urlApi = 'http://10.102.200.11:5050/';
 //let urlApi = 'http://eng-test.24x7tools.com:5050/';
-//let urlApi = 'http://10.102.200.11:5050/';
-let urlApi = 'http://localhost:5050/';
+let urlApi = 'http://10.102.200.11:5050/';
+//let urlApi = 'http://localhost:5050/';
 
 export default {
     async GET_COLUMN_PARAM({commit}) {
-      //  commit('SET_LOAD_ALL_AUTO_ENG', true);
+        //  commit('SET_LOAD_ALL_AUTO_ENG', true);
         return await axios({
             method: 'GET',
             url: urlApi + 'getColumnParam',
@@ -16,12 +16,12 @@ export default {
         })
             .then((resp) => {
                 commit('SET_ALL_COLUMN_PARAM', resp.data)
-       //         commit('SET_LOAD_ALL_AUTO_ENG', false);
+                //         commit('SET_LOAD_ALL_AUTO_ENG', false);
                 return resp.data;
             })
             .catch((error) => {
                 console.log(error);
-   //             commit('SET_LOAD_ALL_AUTO_ENG', false);
+                //             commit('SET_LOAD_ALL_AUTO_ENG', false);
                 return error
             })
     },
@@ -262,8 +262,8 @@ export default {
             responseType: 'json'
         })
             .then((resp) => {
-                if(resp.data.engineData===null){
-                    resp.engineData=[]
+                if (resp.data.engineData === null) {
+                    resp.engineData = []
                 }
                 commit('SET_ALL_AUTO_ENG', resp.data)
                 commit('SET_LOAD_ALL_AUTO_ENG', false);
@@ -271,7 +271,7 @@ export default {
             })
             .catch((error) => {
 
-                commit('SET_ALL_AUTO_ENG', {countResults:1,engineData:[]})
+                commit('SET_ALL_AUTO_ENG', {countResults: 1, engineData: []})
 
                 console.log(error);
                 commit('SET_LOAD_ALL_AUTO_ENG', false);

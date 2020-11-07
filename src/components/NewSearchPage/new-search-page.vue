@@ -2,7 +2,7 @@
   <div>
     <div v-if="showModeratorBoard" class="container search-border tab  rounded bg-white rad" >
       <vue-context-menu
-
+          :pageSetting="pageSetting"
           :elementId="'myFirstMenu'"
           :options="ALL_AUTO_ENG.columnParam"
           :ref="'vueSimpleContextMenu1'"

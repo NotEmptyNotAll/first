@@ -140,6 +140,9 @@ export default {
     VueDatalist
   },
   props: {
+    pageSetting:{
+      type:Object
+    },
     elementId: {
       type: String,
       required: true
@@ -151,6 +154,7 @@ export default {
   },
   data() {
     return {
+
       paramList: [],
       paraSaveList: [],
       typeParamSelect: 1,
@@ -208,14 +212,17 @@ export default {
       }
     },
     ...mapActions([
-      'SAVE_FAST_PARAM_DATA'
+      'SAVE_FAST_PARAM_DATA',
+      'GET_ALL_AUTO'
     ]),
     openAutoDialog() {
       this.dialogFormVisible = true
       this.dialogAutoFormVisible = true
     },
-    saveAllParam() {
-      this.SAVE_FAST_PARAM_DATA(this.paraSaveList)
+    async saveAllParam() {
+      let param = await this.SAVE_FAST_PARAM_DATA(this.paraSaveList)
+      console.log(param)
+      this.GET_ALL_AUTO(this.pageSetting);
       this.dialogFormVisible = false
     },
     addNewParamToList() {
