@@ -10,12 +10,13 @@ export default new MLCreate({
         new MLanguage('english').create({
             word: {
                 table: 'table',
-                showPhoto:'show images',
+                showPhoto: 'show images',
                 titlePhoto: 'photo gallery',
                 selectSearchPercent: 'select percent: ',
+                editing: 'editing',
                 text: "text",
-                yes:'yes',
-                no:'no',
+                yes: 'yes',
+                no: 'no',
                 paramSizeName: "repair dimensions",
                 number: "number",
                 range: "range",
@@ -55,7 +56,7 @@ export default new MLCreate({
                 units: "ed.",
                 min: "min",
                 max: "max",
-                color:'color',
+                color: 'color',
                 value: "value",
                 author: 'author',
                 source: "source",
@@ -111,7 +112,7 @@ export default new MLCreate({
                 chooseColor: 'select element from the tree to change the color',
                 authErr: "Authorization Error",
                 deleteConfirm: "Are you sure to delete this?",
-                colorConfirmMsg:"do you want to change  the color of all child components of this element?",
+                colorConfirmMsg: "do you want to change  the color of all child components of this element?",
                 duplicateValue: 'duplicate value'
             },
             errPage: {
@@ -132,8 +133,8 @@ export default new MLCreate({
                 confirm: "Подтвердить",
                 selectBlock: "виберіть блок:  ",
                 type: "тип",
-                yes:'да',
-                no:'нет',
+                yes: 'да',
+                no: 'нет',
                 table: 'таблица',
                 engine: "тип двигателя",
                 numRowOnPage: 'кол-во строк: ',
@@ -150,6 +151,7 @@ export default new MLCreate({
                 releaseYear: "год выпуска",
                 from: "от",
                 empty: "пусто",
+                editing: 'редактарование',
                 by: 'до',
                 releaseYearFrom: "год вып, с",
                 downlandBlank: 'скачать бланк',
@@ -207,7 +209,7 @@ export default new MLCreate({
                 dataAddSuccess: 'данные успешно добавлены',
                 fullName: 'полное название',
                 importFile: 'импорт',
-                showPhoto:'показать изображения',
+                showPhoto: 'показать изображения',
                 exportFile: 'экспортировать файл',
                 rows: ' шт.',
                 clickToUpload: "нажмите, чтобы загрузить",
@@ -216,7 +218,7 @@ export default new MLCreate({
                 treeStruct: 'структура дерева',
                 setParameter: 'изменение параметров',
                 noRecordsInDB: 'в базе нет записей',
-                color:'цвет'
+                color: 'цвет'
             },
             msg: {
                 passwordErr: "Пароль необходим!",
@@ -226,7 +228,7 @@ export default new MLCreate({
                 userNamedErr: "Имя пользователя необходимо!",
                 authErr: "Ошибка авторизации",
                 deleteConfirm: "Вы действительно хотите удалить это?",
-                colorConfirmMsg:"вы хотите изменить цвет всех дочерних компонентов этого элемента?",
+                colorConfirmMsg: "вы хотите изменить цвет всех дочерних компонентов этого элемента?",
                 duplicateValue: 'дублированное значение'
             },
             errPage: {
@@ -242,13 +244,14 @@ export default new MLCreate({
             word: {
                 parameters: 'параметри',
                 type: "тип",
-                showPhoto:'показати зображення',
+                showPhoto: 'показати зображення',
                 selectSearchPercent: 'виберіть відсоток: ',
                 text: "текст",
-                yes:'так',
-                no:'ні',
+                yes: 'так',
+                no: 'ні',
                 number: "число",
-                color:'колір',
+                color: 'колір',
+                editing: 'редагування',
                 numRowOnPage: 'к-cть рядків: ',
                 selectBlock: "выберите блок: ",
                 paramSizeName: "ремонтні розміри",
@@ -341,7 +344,7 @@ export default new MLCreate({
                 authErr: 'Помилка авторизації',
                 deleteConfirm: "Ви впевнені, що хочете видалити це?",
                 deleteSuccess: 'видалення пройшло успішно',
-                colorConfirmMsg:"ви хочете змінити колір всіх дочірніх компонентів цього елемента?",
+                colorConfirmMsg: "ви хочете змінити колір всіх дочірніх компонентів цього елемента?",
                 duplicateValue: 'повторюване значення',
                 formatIsIncorrect: "Формат вкладених файлів невірний. Видаліть і повторно завантажте!"
             },

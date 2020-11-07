@@ -223,6 +223,9 @@ export default {
     SET_SAVE_STATUS: (state, saveStatus) => {
         state.saveStatus = saveStatus;
     },
+    SET_SAVE_FAST_PARAM_STATUS: (state, saveStatus) => {
+        state.fastSaveLoading = saveStatus;
+    },
     //set update param
     SET_UPDATE_ENGINE_TYPE: (state, loadSave) => {
         state.updateDataObj.engineType = loadSave;

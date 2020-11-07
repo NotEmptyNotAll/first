@@ -22,6 +22,7 @@ let store = new Vuex.Store({
             engineData:null,
             countResults:null
         },
+        fastSaveLoading:false,
         paramSizeName:[],
         loadListUrl:false,
         loadTreeElementsForSearch:false,

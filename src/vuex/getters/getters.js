@@ -14,20 +14,23 @@ export default {
     ALL_AUTO_ENG: (state) => {
         return state.allAutoEng;
     },
+    SAVE_FAST_PARAM_STATUS: (state) => {
+        return state.fastSaveLoading;
+    },
     PARAM_SIZE_NAME: (state) => {
-      return   state.paramSizeName;
+        return state.paramSizeName;
     },
     DATA_PAGE: (state) => {
         return state.addPageData
     },
     LOAD_LIST_URL: (state) => {
-       return  state.loadListUrl ;
+        return state.loadListUrl;
     },
     LOAD_PARAM_SIZE_NAME: (state) => {
-       return  state.loadParamSizeName ;
+        return state.loadParamSizeName;
     },
     LOAD_ALL_AUTO_ENG: (state) => {
-        return state.loadAllAutoEng ;
+        return state.loadAllAutoEng;
     },
     LISTPARAM(state) {
         return state.listParam;
@@ -63,7 +66,7 @@ export default {
         return state.listNewElem;
     },
     TREE_ELEMENTS: (state) => {
-       return  state.treeElemets;
+        return state.treeElemets;
     },
     LOAD_TREE_UPDATE(state) {
         return state.loadTreeUpdate;
@@ -119,8 +122,8 @@ export default {
     ELEMENTS_TREE_LOAD: (state) => {
         return state.elem_tree_load;
     },
-    ELEMENTS_TREE: (state ) => {
-       return  state.elemTree  ;
+    ELEMENTS_TREE: (state) => {
+        return state.elemTree;
     },
 
 }

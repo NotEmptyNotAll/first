@@ -1,7 +1,8 @@
 <template>
   <div>
-    <div v-if="showModeratorBoard" class="container search-border tab  rounded bg-white rad">
+    <div v-if="showModeratorBoard" class="container search-border tab  rounded bg-white rad" >
       <vue-context-menu
+
           :elementId="'myFirstMenu'"
           :options="ALL_AUTO_ENG.columnParam"
           :ref="'vueSimpleContextMenu1'"
@@ -85,6 +86,7 @@
       <hr/>
       <div class="table-cont">
         <el-table
+
             v-loading="LOAD_ALL_AUTO_ENG"
             id="lol"
             stripe
@@ -94,14 +96,12 @@
             :data="ALL_AUTO_ENG.engineData"
             highlight-current-row
             :max-height="tableHeight"
-
             @current-change="handleCurrentChange"
             @row-contextmenu="handleClick1"
             :header-cell-style="handleHeaderStyle"
-            style="width: 100%"
+            style="width: 100%; font-size: 0.8rem"
         >
           <el-table-column
-
               v-for="clmn in tableColumns"
               v-bind:key="clmn"
               label-class-name="header-st"
@@ -110,13 +110,16 @@
               :min-width="clmn.widthSmall"
               :prop="clmn.key"
               :label="clmn.label"
+
           >
 
-            <template slot="header">
+            <template slot="header"               style="font-size: 0.8rem"
+            >
 
-              <h5 v-if="engineParamData===null">{{ clmn.label }}</h5>
+              <h6 v-if="engineParamData===null">{{ clmn.label }}</h6>
               <h6 v-else>{{ clmn.label }}</h6>
               <filter-input
+                  style="font-size: 0.8rem"
                   :bus="bus"
                   :clean-search="cleanSearch"
                   v-show="clmn.key!=='id'"
@@ -134,17 +137,18 @@
                            :prop="mainColumn.color"
           >
             <el-table-column
-
+style="height: 10px"
                 resizable
                 align="center"
                 v-for="column in mainColumn.columnList"
                 v-bind:key="column"
                 :label="column.name"
                 :prop="column.color"
+                :index="column"
                 min-width="310">
               <template slot="header">
                 <div>
-                  <h6>{{ column.name }}</h6>
+                  {{ column.name }}
                 </div>
                 <filter-input
                     :bus="bus"
@@ -158,18 +162,17 @@
                 />
               </template>
               <template slot-scope="scope">
-                <span v-show="column.columnList[0]===undefined" style="margin-left: 10px"><h6>{{
+                <span v-show="column.columnList[0]===undefined" style="margin-left: 10px">{{
                     scope.row[column.id]
-                  }}</h6></span>
+                  }}</span>
                 <span v-show="column.columnList[0]!==undefined && scope.row[col.id]!==undefined"
                       v-for="col in column.columnList"
                       v-bind:key="col">
-                                    <h6><strong v-if="(col.name!=='std' && col.name!=='Std' && col.name!=='знач.' )"
+                                   <strong v-if="(col.name!=='std' && col.name!=='Std' && col.name!=='знач.' )"
 
                                     >{{ col.name + ": " }}</strong>
                                       {{ scope.row[col.id] }}
-                                    </h6>
-                                </span>
+                                                                 </span>
                 <el-button size="medium" v-show="scope.row['listImage'+column.id]!==undefined"
                            type="text" @click="showImage(scope.row['listImage'+column.id])">
                   <i style="font-size: 25px" class="el-icon-camera-solid"></i>
@@ -337,7 +340,7 @@ export default {
     },
     // eslint-disable-next-line no-unused-vars
     handleHeaderStyle({row, column, rowIndex, columnIndex}) {
-      return 'background-color: ' + column.property + ';'
+      return 'background-color: ' + column.property + ';'+'padding:3px;'
     },
     setCurrent(row) {
       this.$refs.paramTable.setCurrentRow(row);
@@ -369,7 +372,7 @@ export default {
       this.GET_ALL_AUTO(this.pageSetting);
     },
     handleClick1(row, column, event) {
-      this.$refs.vueSimpleContextMenu1.showMenu(event, row)
+      this.$refs.vueSimpleContextMenu1.showMenu(event, row,column)
     },
     // eslint-disable-next-line no-unused-vars
     closeDialog() {
@@ -834,6 +837,11 @@ export default {
   border-radius: 30px;
   background: #E4E7ED;
 
+}
+
+.header-st{
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
 }
 
 .image {

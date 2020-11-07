@@ -1,6 +1,6 @@
 <template>
 
-  <div v-if="!paramListMod" class="input-group">
+  <div v-if="!paramListMod" class="input-group" >
     <el-input
         v-model="saveParameters[index]"
         ref="inp1"
@@ -8,7 +8,7 @@
         size="small"
         prefix-icon="el-icon-search"
         clearable
-
+        class="input-f"
         @change="onInputAction"
     >
     </el-input>
@@ -43,6 +43,7 @@
               size="small"
               prefix-icon="el-icon-search"
               clearable
+              class="input-f"
               @clear="clear"
               @change="onInputAction"
     >
@@ -181,6 +182,9 @@ export default {
 
 .input-with-select .el-input-group__prepend {
   background-color: #fff;
+}
+.input-f>input{
+  height: 30px !important;
 }
 
 .title {
