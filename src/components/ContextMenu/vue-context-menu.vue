@@ -109,7 +109,9 @@
         <el-input style="position: absolute; top: 25px;left: 350px;width: 50%" type="text"
                   v-model="param.textData"></el-input>
       </div>
-      <el-button type="info " @click="addNewParamToList" plain style="width: 100%">Primary</el-button>
+      <el-button type="info " @click="addNewParamToList" plain style="width: 100%">
+        {{ $ml.get('word.add') }}
+      </el-button>
       <hr/>
       <div class="dialog-foot">
         <el-button style="justify-items: start" type="danger" @click="dialogFormVisible = false">
