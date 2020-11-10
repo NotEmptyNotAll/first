@@ -33,12 +33,85 @@
     <el-dialog :title=" $ml.get('word.autoEngine') +': №'+row_id+' \\ '+ $ml.get('word.parameter')+': '+column_name"
                :visible.sync="dialogFormVisible">
       <div v-if="dialogAutoFormVisible" style="height: 300px">
+        <div class="row">
+
+
+          <h5 style="padding-left:40% ">
+            {{$ml.get('word.add')+' '+$ml.get('word.newData')}}
+          </h5>
+          <hr style="width: 80%"/>
+
+        </div>
+        <div class="row">
+          <vue-datalist
+              class="col-md-6"
+              :alert-mess="alertMess"
+              :title-input="$ml.get('word.autoManufacturer')"
+              :items="searchParamsLists.engineManufacture"
+              :update-obj="autoDataSave"
+              :holderNum="0"
+              :clean-search="cleanField"
+              index="autoManufacturer"
+              @change-meth="getEngDataByParam"
+              @alert-meth="showAlert"
+          />
+          <vue-datalist
+              class="col-md-6"
+              :alert-mess="alertMess"
+              :title-input="$ml.get('word.autoModel')"
+              :items="searchParamsLists.autoModel"
+              :update-obj="autoDataSave"
+              :clean-search="cleanField"
+              :holderNum="0"
+              index="modelNameId"
+              @alert-meth="showAlert"
+              @change-meth="getEngDataByParam"
+          />
+        </div>
+        <hr/>
+        <div class="row">
+          <vue-datalist
+              class="col-md-6"
+              :alert-mess="alertMess"
+              :title-input="$ml.get('word.engine')"
+              :items="searchParamsLists.engineType"
+              :clean-search="cleanField"
+              :update-obj="autoDataSave"
+              :holderNum="0"
+              @change-meth="getEngDataByParam"
+              @alert-meth="showAlert"
+              index="engineTypeId"
+          />
+          <div class="col-md-6">
+            <el-input :placeholder="$ml.get('word.from')"
+                      v-model="autoDataSave.releaseYearFrom"
+                      style="width: 65%"
+                      max="2020"
+                      min="1895"
+                      type="number"
+                      clearable
+            >
+              <template slot="prepend">
+                <strong class="title" style="font-size: 15px">{{ $ml.get('word.releaseYear') }}</strong>
+              </template>
+            </el-input>
+            <el-input :placeholder="$ml.get('word.by')"
+                      clearable
+                      max="2020"
+                      min="1895"
+                      type="number"
+                      style="width: 35%"
+                      v-model="autoDataSave.releaseYearBy"
+            >
+            </el-input>
+          </div>
+        </div>
 
       </div>
       <div style="min-height: 100px;width: 100%;" v-else-if="column.index.key === undefined">
         <div class="row" v-for="param in paramList" v-bind:key="param.id">
           <div v-if="param.elemName!==''" class="col-lg-3">
-            <h6 style="position:relative; top:10px">
+            <h6 style="position:relative; top:10px" >
               {{ param.elemName }}
             </h6>
           </div>
@@ -107,18 +180,43 @@
       && keyValue!=='modelName' && keyValue!=='autoManufacture'"
            style="height: 100px">
 
-        <h5 style="position: absolute; top: 30px;left: 100px">
+
+        <span v-if="keyValue!=='fuelType' && keyValue!=='superchargedType' && keyValue!=='pistonDiameterAndStoke'">
+          <h5 style="position: absolute; top: 30px;left: 100px">
           {{ $ml.get('word.update') + ' ' + $ml.get('word.value') }}
         </h5>
-        <span v-if="keyValue!=='fuelType' && keyValue!=='superchargedType'">
-        <el-input style="position: absolute; top: 25px;left: 350px;width: 50%"
-                  :placeholder="item[keyValue]" v-model="autoDataSave[keyValue]"
+          <el-input style="position: absolute; top: 25px;left: 350px;width: 50%"
+                    :placeholder="item[keyValue]" v-model="autoDataSave[keyValue]"
+                    clearable type="text"
+          ></el-input>
+        </span>
+        <span v-else-if="keyValue==='pistonDiameterAndStoke'">
+          <div class="row">
+          <div class="col-md-4">
+            <h5>
+          {{ $ml.get('word.update') + ' ' + $ml.get('word.value') }}
+        </h5>
+            <h6>{{ '(' + item[keyValue] + ')' }}</h6>
+          </div>
+          <div class="col-md-4">
+              <el-input
+                  :placeholder="$ml.get('word.pistonStroke')" v-model="autoDataSave.pistonStoke"
                   clearable type="text"
-        ></el-input>
+              ></el-input>
+          </div>
+          <div class="col-md-4">
+              <el-input
+                  :placeholder="$ml.get('word.pistonDiameter')" v-model="autoDataSave.pistonDiameter"
+                  clearable type="text"
+              ></el-input>
+          </div>
+        </div>
         </span>
         <span v-else>
+            <h5 style="position: absolute; top: 30px;left: 100px">
+          {{ $ml.get('word.update') + ' ' + $ml.get('word.value') }}
+        </h5>
         <vue-datalist
-
             style="position: absolute; top: 25px;left: 350px;width: 50%"
             :title-input="$ml.get('word.'+keyValue)"
             :place-holder="item[keyValue]"
@@ -405,10 +503,14 @@ export default {
           && this.STARTPARAM.autoModel[0].id === this.autoDataSave.modelNameId
           && this.STARTPARAM.engineManufacture[0].id === this.autoDataSave.autoManufacture)) {
         if (this.column.index.key === undefined) {
+
           let param = await this.SAVE_FAST_PARAM_DATA(this.paraSaveList)
           console.log(param)
         } else {
-
+          if(    this.dialogFormVisible === true &&
+              this.dialogAutoFormVisible === true){
+              this.autoDataSave.id=-1
+          }
           let param = await this.SAVE_FAST_AUTO_ENGINE_DATA(this.autoDataSave)
           console.log(param)
         }
@@ -499,6 +601,13 @@ export default {
       if (this.paramList.length === 0) {
         this.addNewParamToList()
       }
+      if(this.listParmName.filter(item=> {
+        return item.data.toLowerCase()!=='std'
+      }).length === 0 && column.index.key === undefined){
+        this.paramList[0].elemId=this.listParmName[0].id
+        this.paramList[0].elemName=this.$ml.get('word.value')
+      }
+
       let menu = document.getElementById(this.elementId)
       if (!menu) {
         return
@@ -542,6 +651,8 @@ export default {
       }
     },
     clearData() {
+      this.dialogFormVisible =false
+      this.dialogAutoFormVisible = false
       this.cleanField = !this.cleanField
       this.paramList = []
       this.alertMess = {
