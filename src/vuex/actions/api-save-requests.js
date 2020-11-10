@@ -1,30 +1,50 @@
 import axios from "axios";
+//import fa from "element-ui/src/locale/lang/fa";
 
 //let urlApi = 'https://enginefinal.herokuapp.com/save/';
 //let urlApi = 'http://10.102.200.11:5050/save/';
 //let urlApi = 'http://eng-test.24x7tools.com:5050/save/';
-let urlApi = 'http://10.102.200.11:5050/save/';
-//let urlApi = 'http://localhost:5050/save/';
+//let urlApi = 'http://10.102.200.11:5050/save/';
+let urlApi = 'http://localhost:5050/save/';
 
 export default {
     SAVE_FAST_PARAM_DATA({commit}, saveDataObj) {
-        return  axios({
+        commit('SET_SAVE_FAST_PARAM_STATUS', true)
+        return axios({
             method: 'POST',
             url: urlApi + 'fastSaveParam',
             data: saveDataObj,
             responseType: 'json'
         }).then(resp => {
-            commit('SET_SAVE_FAST_PARAM_STATUS', resp.data)
+            commit('SET_SAVE_FAST_PARAM_STATUS', false)
             return resp;
         })
             .catch((error) => {
                 commit('SET_SAVE_FAST_PARAM_STATUS', error.data)
                 console.log(error);
+                commit('SET_SAVE_FAST_PARAM_STATUS', false)
                 return error
             })
     },
-      SAVE_FILE_DATA({commit}, saveDataObj) {
-        return  axios({
+    SAVE_FAST_AUTO_ENGINE_DATA({commit}, saveDataObj) {
+        commit('SET_SAVE_FAST_PARAM_STATUS', true)
+        return axios({
+            method: 'POST',
+            url: urlApi + 'fastSaveAutoData',
+            data: saveDataObj,
+            responseType: 'json'
+        }).then(resp => {
+            commit('SET_SAVE_FAST_PARAM_STATUS', false)
+            return resp;
+        })
+            .catch((error) => {
+                commit('SET_SAVE_FAST_PARAM_STATUS', false)
+                console.log(error);
+                return error
+            })
+    },
+    SAVE_FILE_DATA({commit}, saveDataObj) {
+        return axios({
             method: 'POST',
             url: urlApi + 'saveFileData',
             data: saveDataObj,

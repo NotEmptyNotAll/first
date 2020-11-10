@@ -9,7 +9,7 @@
         :trigger-on-focus="false"
         v-model="state1"
         :fetch-suggestions="querySearch"
-        :placeholder="$ml.get('word.data')"
+        :placeholder="placeHolder===''?$ml.get('word.data'):placeHolder"
         @select="handleSelect"
     >
       <template v-if="!hideTitle" slot="prepend">
@@ -42,6 +42,18 @@ export default {
   name: "vue-data-list-02",
 
   props: {
+    placeHolder: {
+      type: String,
+      default: () => ''
+    },
+    paramWhenExist: {
+      type: String,
+      default: () => ''
+    },
+    alertMess: {
+      type: Object,
+      default: () => ''
+    },
     holderNum: Number,
     hideTitle: Boolean,
     titleInput: String,
@@ -67,6 +79,7 @@ export default {
   data() {
     return {
       state1: '',
+      limitRows: 50,
       state2: '',
       isOpen: false,
       results: [],
@@ -82,13 +95,16 @@ export default {
 
     querySearch(queryString, cb) {
       var results = [];
-      this.items.filter((item) => {
+      let temp = this.items.filter((item) => {
         return item[this.indexItem].toLowerCase().indexOf(queryString.toLowerCase()) > -1;
-      }).map(elem => {
-        let obj = {}
-        obj.value = elem[this.indexItem]
-        results.push(obj)
       })
+      let limit = this.limitRows > temp.length ? temp.length : this.limitRows
+      for (let i = 0; i < limit; i++) {
+        let obj = {}
+        obj.value = temp[i][this.indexItem]
+        results.push(obj)
+      }
+
 
       // call callback function to return suggestions
 
@@ -109,10 +125,33 @@ export default {
         let temp = this.items.find(elem => elem[this.indexItem] === val)
         if (temp !== undefined) {
           this.updateObj[this.index] = temp.id
+          if (this.paramWhenExist !== '') {
+            this.updateObj[this.paramWhenExist] = null
+            this.alertMess.alertParamList = this.alertMess.alertParamList.filter(item => {
+              item !== this.titleInput
+            })
+            this.$emit("alert-meth",1);
+          }
           this.$emit("change-meth", 1);
+        } else {
+          if (this.paramWhenExist !== '') {
+            this.updateObj[this.paramWhenExist] = val
+            if(this.alertMess.alertParamList.indexOf(this.titleInput)===-1){
+              this.alertMess.alertParamList.push(this.titleInput)
+            }
+            this.$emit("alert-meth",1);
+          }
+          this.updateObj[this.index] = null
         }
       } else {
         this.updateObj[this.index] = null
+        if (this.paramWhenExist !== '') {
+          this.updateObj[this.paramWhenExist] = null
+        }
+        this.alertMess.alertParamList = this.alertMess.alertParamList.filter(item => {
+          item !== this.titleInput
+        })
+        this.$emit("alert-meth",1);
         this.$emit("change-meth", 1);
       }
     },

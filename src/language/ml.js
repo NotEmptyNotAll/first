@@ -105,6 +105,8 @@ export default new MLCreate({
 
             },
             msg: {
+                alertParamWarn:"warning",
+                inNextParam: "New entries will be created in the following parameters: ",
                 passwordErr: 'password is required!',
                 usernamedErr: 'Username is required!',
                 colorAdd: "color changed",
@@ -221,7 +223,9 @@ export default new MLCreate({
                 color: 'цвет'
             },
             msg: {
+                alertParamWarn:"предупреждение",
                 passwordErr: "Пароль необходим!",
+                inNextParam: "В следующих параметрах будут созданы новые записи: ",
                 colorAdd: "цвет изменен",
                 deleteSuccess: 'удаление прошло успешно',
                 chooseColor: 'для изменения цвета выберите элемент из дерева',
@@ -337,6 +341,8 @@ export default new MLCreate({
                 noRecordsInDB: 'в базі немає записів'
             },
             msg: {
+                alertParamWarn:"попередження",
+                inNextParam: "У наступних параметрах будуть створені нові записи: ",
                 passwordErr: 'Пароль необхідний!',
                 chooseColor: 'для зміни кольору виберіть елемент з дерева',
                 userNamedErr: 'Ім\'я користувача обов\'язкове!',

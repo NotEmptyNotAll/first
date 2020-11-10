@@ -110,6 +110,7 @@
               :min-width="clmn.widthSmall"
               :prop="clmn.key"
               :label="clmn.label"
+              :index="clmn"
 
           >
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ul style="background: white; min-width: 250px;"
+    <ul style="background: white; width: 250px;"
         :id="elementId"
         v-show="!dialogFormVisible"
         class="vue-simple-context-menu"
@@ -35,7 +35,7 @@
       <div v-if="dialogAutoFormVisible" style="height: 300px">
 
       </div>
-      <div style="min-height: 100px;width: 100%;" v-else-if="column_id!==undefined">
+      <div style="min-height: 100px;width: 100%;" v-else-if="column.index.key === undefined">
         <div class="row" v-for="param in paramList" v-bind:key="param.id">
           <div v-if="param.elemName!==''" class="col-lg-3">
             <h6 style="position:relative; top:10px">
@@ -88,10 +88,12 @@
               <span v-else-if="param.select===2">
           <el-input type="number" @change="onChangeData(param)"
                     :placeholder="param.doubleNum"
+                    clearable
                     v-model="param.doubleNum"></el-input>
               </span>
               <span v-else-if="param.select===1">
           <el-input type="text" @change="onChangeData(param)"
+                    clearable
                     :placeholder="param.textData" v-model="param.textData"
                     maxlength="120"
                     show-word-limit></el-input>
@@ -101,18 +103,126 @@
         </div>
       </div>
 
-      <div v-else style="height: 100px">
+      <div v-else-if="keyValue!=='releaseYear' && keyValue!=='engineType'
+      && keyValue!=='modelName' && keyValue!=='autoManufacture'"
+           style="height: 100px">
 
         <h5 style="position: absolute; top: 30px;left: 100px">
           {{ $ml.get('word.update') + ' ' + $ml.get('word.value') }}
         </h5>
-        <el-input style="position: absolute; top: 25px;left: 350px;width: 50%" type="text"
-                  v-model="param.textData"></el-input>
+        <span v-if="keyValue!=='fuelType' && keyValue!=='superchargedType'">
+        <el-input style="position: absolute; top: 25px;left: 350px;width: 50%"
+                  :placeholder="item[keyValue]" v-model="autoDataSave[keyValue]"
+                  clearable type="text"
+        ></el-input>
+        </span>
+        <span v-else>
+        <vue-datalist
+
+            style="position: absolute; top: 25px;left: 350px;width: 50%"
+            :title-input="$ml.get('word.'+keyValue)"
+            :place-holder="item[keyValue]"
+            :items="searchParamsLists[keyValue]"
+            :update-obj="autoDataSave"
+            :holderNum="0"
+            :clean-search="cleanField"
+            @change-meth="getEngDataByParam"
+            @alert-meth="showAlert"
+            :alert-mess="alertMess"
+            :index="keyValue"
+        /></span>
       </div>
-      <el-button type="info " @click="addNewParamToList" plain style="width: 100%">
+      <div v-else>
+        <div class="row">
+          <vue-datalist
+              :place-holder="item['autoManufacture']"
+              class="col-md-6"
+              :alert-mess="alertMess"
+              :title-input="$ml.get('word.autoManufacturer')"
+              :items="searchParamsLists.engineManufacture"
+              :update-obj="autoDataSave"
+              :holderNum="0"
+              :clean-search="cleanField"
+              param-when-exist="autoManufactureName"
+              index="autoManufacturer"
+              @change-meth="getEngDataByParam"
+              @alert-meth="showAlert"
+          />
+          <vue-datalist
+              class="col-md-6"
+              :alert-mess="alertMess"
+              :place-holder="item['modelName']"
+              :title-input="$ml.get('word.autoModel')"
+              :items="searchParamsLists.autoModel"
+              :update-obj="autoDataSave"
+              :clean-search="cleanField"
+              :holderNum="0"
+              param-when-exist="modelName"
+              index="modelNameId"
+              @alert-meth="showAlert"
+              @change-meth="getEngDataByParam"
+          />
+        </div>
+        <hr/>
+        <div class="row">
+          <vue-datalist
+              class="col-md-6"
+              :alert-mess="alertMess"
+              :place-holder="item['engineType']"
+              :title-input="$ml.get('word.engine')"
+              :items="searchParamsLists.engineType"
+              :clean-search="cleanField"
+              :update-obj="autoDataSave"
+              param-when-exist="engineType"
+              :holderNum="0"
+              @change-meth="getEngDataByParam"
+              @alert-meth="showAlert"
+              index="engineTypeId"
+          />
+          <div class="col-md-6">
+            <el-input :placeholder="$ml.get('word.from')"
+                      v-model="autoDataSave.releaseYearFrom"
+                      style="width: 65%"
+                      max="2020"
+                      min="1895"
+                      type="number"
+                      clearable
+            >
+              <template slot="prepend">
+                <strong class="title" style="font-size: 15px">{{ $ml.get('word.releaseYear') }}</strong>
+              </template>
+            </el-input>
+            <el-input :placeholder="$ml.get('word.by')"
+                      clearable
+                      max="2020"
+                      min="1895"
+                      type="number"
+                      style="width: 35%"
+                      v-model="autoDataSave.releaseYearBy"
+            >
+            </el-input>
+          </div>
+        </div>
+
+      </div>
+      <transition name="el-zoom-in-top">
+
+        <el-alert
+            v-show="alertMess.showMess"
+            :title="$ml.get('msg.alertParamWarn')"
+            type="warning"
+            :closable="false"
+            center
+            :description="$ml.get('msg.inNextParam')+alertMess.textAlert"
+            show-icon>
+        </el-alert>
+      </transition>
+      <el-button type="info "
+                 v-show="column.index.key === undefined"
+                 @click="addNewParamToList" plain style="width: 100%">
         {{ $ml.get('word.add') }}
       </el-button>
-      <hr/>
+      <hr style="width: 80%"/>
       <div class="dialog-foot">
         <el-button style="justify-items: start" type="danger" @click="dialogFormVisible = false">
           {{ $ml.get('word.cancel') }}
@@ -142,8 +252,8 @@ export default {
     VueDatalist
   },
   props: {
-    pageSetting:{
-      type:Object
+    pageSetting: {
+      type: Object
     },
     elementId: {
       type: String,
@@ -156,7 +266,48 @@ export default {
   },
   data() {
     return {
-
+      searchData: {
+        engineType: null,
+        autoManufacturer: null,
+        autoModel: null,
+        produceYear: null,
+      },
+      alertMess: {
+        titleAlert: '',
+        textAlert: '',
+        alertParamList: [],
+        showMess: false
+      },
+      cleanField: false,
+      searchParamsLists: null,
+      autoDataSave: {
+        id: -1,
+        flapNumber: null,
+        pistonDiameterAndStoke: null,
+        fuelType: null,
+        cylindersNumber: null,
+        engineTypeId: null,
+        autoManufactureName: null,
+        autoManufacture: null,
+        engineManufactureName: null,
+        releaseYearBy: null,
+        releaseYearFrom: null,
+        engineManufacture: null,
+        modelNameId: null,
+        powerKWT: null,
+        engineCapacity: null,
+        horsepower: null,
+        pistonStoke: null,
+        pistonDiameter: null,
+        modelName: null,
+        engineType: null,
+        releaseYear: null,
+        elemID: null,
+        cylinderNum: null,
+        cylinderPlace: null,
+        superchargedType: null,
+        degreeCompression: null
+      },
       paramList: [],
       paraSaveList: [],
       typeParamSelect: 1,
@@ -167,6 +318,7 @@ export default {
       menuWidth: null,
       menuHeight: null,
       column_id: -1,
+      keyValue: null,
       column_name: '',
       listParmName: [],
       row_id: -1
@@ -181,6 +333,7 @@ export default {
       'ENGDATA',
       'LISTPARAM',
       'LOAD_LIST_URL',
+      'STARTPARAM',
       'LISTPARAMUP',
       'PARAM_NAME_AND_UNITS',
       'SEARCHDATA',
@@ -197,6 +350,27 @@ export default {
   },
 
   methods: {
+    showAlert() {
+      this.alertMess.textAlert = ''
+      if (this.alertMess.alertParamList.length > 0) {
+        this.alertMess.alertParamList.forEach(item => {
+          this.alertMess.textAlert += item + ', '
+        })
+        this.alertMess.showMess = true
+      } else {
+        this.alertMess.showMess = false
+      }
+      console.log(1)
+    },
+    async getEngDataByParam() {
+      this.GET_ENGDATA_BY_PARAM({
+        engineType: this.autoDataSave.engineTypeId,
+        autoManufacturer: this.autoDataSave.autoManufacture,
+        autoModel: this.autoDataSave.modelNameId,
+        produceYear: this.autoDataSave.releaseYearFrom,
+      });
+      console.log(1)
+    },
     onChangeData(param) {
       let temp = this.paraSaveList.find(item =>
           (item.elemId === param.elemId && param.nameElemId === -1) ||
@@ -215,6 +389,8 @@ export default {
     },
     ...mapActions([
       'SAVE_FAST_PARAM_DATA',
+      'GET_ENGDATA_BY_PARAM',
+      'SAVE_FAST_AUTO_ENGINE_DATA',
       'GET_ALL_AUTO'
     ]),
     openAutoDialog() {
@@ -222,10 +398,29 @@ export default {
       this.dialogAutoFormVisible = true
     },
     async saveAllParam() {
-      let param = await this.SAVE_FAST_PARAM_DATA(this.paraSaveList)
-      console.log(param)
-      this.GET_ALL_AUTO(this.pageSetting);
-      this.dialogFormVisible = false
+      // eslint-disable-next-line no-constant-condition
+      if (!(this.STARTPARAM.autoModel.length === 1 && this.STARTPARAM.engineManufacture.length === 1
+          && this.STARTPARAM.engineType.length === 1
+          && this.STARTPARAM.engineType[0].id === this.autoDataSave.engineTypeId
+          && this.STARTPARAM.autoModel[0].id === this.autoDataSave.modelNameId
+          && this.STARTPARAM.engineManufacture[0].id === this.autoDataSave.autoManufacture)) {
+        if (this.column.index.key === undefined) {
+          let param = await this.SAVE_FAST_PARAM_DATA(this.paraSaveList)
+          console.log(param)
+        } else {
+
+          let param = await this.SAVE_FAST_AUTO_ENGINE_DATA(this.autoDataSave)
+          console.log(param)
+        }
+        this.GET_ALL_AUTO(this.pageSetting);
+        this.dialogFormVisible = false
+      } else {
+        this.$message({
+          showClose: true,
+          message: this.$ml.get('msg.duplicateValue'),
+          type: 'error'
+        });
+      }
     },
     addNewParamToList() {
       let param = {
@@ -246,12 +441,13 @@ export default {
       this.paramList.push(param)
     },
     showMenu(event, item, column) {
+      console.log(column)
       this.clearData();
       this.row_id = item.id;
       this.column_name = column.label
       this.item = item
       this.column = column
-      if (column.index !== undefined) {
+      if (column.index.key === undefined) {
         this.listParmName = []
         this.column_id = column.index.id;
         column.index.columnList.map(elem => {
@@ -289,8 +485,20 @@ export default {
             this.paramList.push(param)
           }
         })
+      } else {
+        if (this.searchParamsLists === null) {
+          this.searchParamsLists = this.STARTPARAM
+        }
+        this.keyValue = column.index.key
+        this.autoDataSave.id = item.id
+        if (item.engineType !== '' || item.engineType !== null) {
+          this.autoDataSave.engineTypeId = this.STARTPARAM
+              .engineType.find(elem => elem.data === item.engineType).id
+        }
       }
-
+      if (this.paramList.length === 0) {
+        this.addNewParamToList()
+      }
       let menu = document.getElementById(this.elementId)
       if (!menu) {
         return
@@ -334,7 +542,42 @@ export default {
       }
     },
     clearData() {
+      this.cleanField = !this.cleanField
       this.paramList = []
+      this.alertMess = {
+        titleAlert: '',
+        textAlert: '',
+        alertParamList: [],
+        showMess: false
+      }
+      this.autoDataSave = {
+        id: -1,
+        flapNumber: null,
+        pistonDiameterAndStoke: null,
+        fuelType: null,
+        cylindersNumber: null,
+        engineTypeId: null,
+        autoManufactureName: null,
+        autoManufacture: null,
+        engineManufactureName: null,
+        releaseYearBy: null,
+        releaseYearFrom: null,
+        engineManufacture: null,
+        modelNameId: null,
+        powerKWT: null,
+        engineCapacity: null,
+        horsepower: null,
+        pistonStoke: null,
+        pistonDiameter: null,
+        modelName: null,
+        engineType: null,
+        releaseYear: null,
+        elemID: null,
+        cylinderNum: null,
+        cylinderPlace: null,
+        superchargedType: null,
+        degreeCompression: null
+      }
     },
     onClickOutside() {
       this.hideContextMenu()
@@ -353,6 +596,7 @@ export default {
     }
   },
   mounted() {
+    this.GET_ENGDATA_BY_PARAM(this.searchData);
     document.body.addEventListener('keyup', this.onEscKeyRelease);
   },
   beforeDestroy() {
@@ -436,6 +680,7 @@ $black: #333;
   }
 
   .vue-simple-context-menu__item {
+    width: 250px;
     padding-left: 30px;
     padding-top: 10px;
     padding-bottom: 10px;
