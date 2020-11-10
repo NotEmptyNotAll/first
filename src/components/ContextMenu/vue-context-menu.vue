@@ -18,17 +18,19 @@
       </li>
       <li class="label">{{ $ml.get('word.editing') }}</li>
       <li style="text-align: center"
-          @click="openAutoDialog()"
-          class="vue-simple-context-menu__item">
-        <i class="el-icon-plus" style="padding-right:5px "></i>
-        {{ $ml.get('word.add') + ' ' + $ml.get('word.newData') }}
-      </li>
-      <li style="text-align: center"
+
           @click="dialogFormVisible=true"
           class="vue-simple-context-menu__item">
         <i class="el-icon-edit" style="padding-right:5px "></i>
-        {{ $ml.get('word.add') + ' ' + $ml.get('word.parameter') }}
+        {{ $ml.get('word.setParameter') }}
       </li>
+      <li style="text-align: center"
+          @click="openAutoDialog()"
+          class="vue-simple-context-menu__item">
+        <i class="el-icon-plus" style="padding-right:5px "></i>
+        {{ $ml.get('word.addRow') }}
+      </li>
+
     </ul>
     <el-dialog :title=" $ml.get('word.autoEngine') +': №'+row_id+' \\ '+ $ml.get('word.parameter')+': '+column_name"
                :visible.sync="dialogFormVisible">
@@ -37,7 +39,7 @@
 
 
           <h5 style="padding-left:40% ">
-            {{$ml.get('word.add')+' '+$ml.get('word.newData')}}
+            {{ $ml.get('word.add') + ' ' + $ml.get('word.newData') }}
           </h5>
           <hr style="width: 80%"/>
 
@@ -111,7 +113,7 @@
       <div style="min-height: 100px;width: 100%;" v-else-if="column.index.key === undefined">
         <div class="row" v-for="param in paramList" v-bind:key="param.id">
           <div v-if="param.elemName!==''" class="col-lg-3">
-            <h6 style="position:relative; top:10px" >
+            <h6 style="position:relative; top:10px">
               {{ param.elemName }}
             </h6>
           </div>
@@ -507,9 +509,9 @@ export default {
           let param = await this.SAVE_FAST_PARAM_DATA(this.paraSaveList)
           console.log(param)
         } else {
-          if(    this.dialogFormVisible === true &&
-              this.dialogAutoFormVisible === true){
-              this.autoDataSave.id=-1
+          if (this.dialogFormVisible === true &&
+              this.dialogAutoFormVisible === true) {
+            this.autoDataSave.id = -1
           }
           let param = await this.SAVE_FAST_AUTO_ENGINE_DATA(this.autoDataSave)
           console.log(param)
@@ -543,7 +545,6 @@ export default {
       this.paramList.push(param)
     },
     showMenu(event, item, column) {
-      console.log(column)
       this.clearData();
       this.row_id = item.id;
       this.column_name = column.label
@@ -601,11 +602,11 @@ export default {
       if (this.paramList.length === 0) {
         this.addNewParamToList()
       }
-      if(this.listParmName.filter(item=> {
-        return item.data.toLowerCase()!=='std'
-      }).length === 0 && column.index.key === undefined){
-        this.paramList[0].elemId=this.listParmName[0].id
-        this.paramList[0].elemName=this.$ml.get('word.value')
+      if (this.listParmName.filter(item => {
+        return item.data.toLowerCase() !== 'std'
+      }).length === 0 && column.index.key === undefined) {
+        this.paramList[0].elemId = this.listParmName[0].id
+        this.paramList[0].elemName = this.$ml.get('word.value')
       }
 
       let menu = document.getElementById(this.elementId)
@@ -651,10 +652,15 @@ export default {
       }
     },
     clearData() {
-      this.dialogFormVisible =false
+      this.row_id = null;
+      this.column_name = null
+      this.item = null
+      this.column = null
+      this.dialogFormVisible = false
       this.dialogAutoFormVisible = false
       this.cleanField = !this.cleanField
       this.paramList = []
+      this.paraSaveList = []
       this.alertMess = {
         titleAlert: '',
         textAlert: '',
