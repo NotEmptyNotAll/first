@@ -32,18 +32,10 @@
       </li>
 
     </ul>
-    <el-dialog :title=" $ml.get('word.autoEngine') +': №'+row_id+' \\ '+ $ml.get('word.parameter')+': '+column_name"
+    <el-dialog :title="titleDialog"
                :visible.sync="dialogFormVisible">
-      <div v-if="dialogAutoFormVisible" style="height: 300px">
-        <div class="row">
+      <div v-if="dialogAutoFormVisible" >
 
-
-          <h5 style="padding-left:40% ">
-            {{ $ml.get('word.add') + ' ' + $ml.get('word.newData') }}
-          </h5>
-          <hr style="width: 80%"/>
-
-        </div>
         <div class="row">
           <vue-datalist
               class="col-md-6"
@@ -53,7 +45,8 @@
               :update-obj="autoDataSave"
               :holderNum="0"
               :clean-search="cleanField"
-              index="autoManufacturer"
+              index="autoManufacture"
+              param-when-exist="autoManufactureName"
               @change-meth="getEngDataByParam"
               @alert-meth="showAlert"
           />
@@ -64,6 +57,7 @@
               :items="searchParamsLists.autoModel"
               :update-obj="autoDataSave"
               :clean-search="cleanField"
+              param-when-exist="modelName"
               :holderNum="0"
               index="modelNameId"
               @alert-meth="showAlert"
@@ -79,6 +73,7 @@
               :items="searchParamsLists.engineType"
               :clean-search="cleanField"
               :update-obj="autoDataSave"
+              param-when-exist="engineType"
               :holderNum="0"
               @change-meth="getEngDataByParam"
               @alert-meth="showAlert"
@@ -410,6 +405,7 @@ export default {
       },
       paramList: [],
       paraSaveList: [],
+      titleDialog: '',
       typeParamSelect: 1,
       dialogAutoFormVisible: false,
       dialogFormVisible: false,
@@ -494,6 +490,8 @@ export default {
       'GET_ALL_AUTO'
     ]),
     openAutoDialog() {
+      this.titleDialog=this.$ml.get('word.addRow')
+      this.autoDataSave.engineTypeId=null
       this.dialogFormVisible = true
       this.dialogAutoFormVisible = true
     },
@@ -560,7 +558,7 @@ export default {
           })
           if (item[elem.id] !== undefined) {
             let param = {
-              id: 1,
+              id: 0,
               select: 1,
               elemId: elem.id,
               nameElemId: -1,
@@ -589,15 +587,16 @@ export default {
           }
         })
       } else {
-        if (this.searchParamsLists === null) {
-          this.searchParamsLists = this.STARTPARAM
-        }
+
         this.keyValue = column.index.key
         this.autoDataSave.id = item.id
         if (item.engineType !== '' || item.engineType !== null) {
           this.autoDataSave.engineTypeId = this.STARTPARAM
               .engineType.find(elem => elem.data === item.engineType).id
         }
+      }
+      if (this.searchParamsLists === null) {
+        this.searchParamsLists = this.STARTPARAM
       }
       if (this.paramList.length === 0) {
         this.addNewParamToList()
@@ -608,6 +607,10 @@ export default {
         this.paramList[0].elemId = this.listParmName[0].id
         this.paramList[0].elemName = this.$ml.get('word.value')
       }
+
+        this.titleDialog = this.$ml.get('word.autoEngine') +
+            ': №' + this.row_id + ' \\ ' + this.$ml.get('word.parameter') +
+            ': ' + this.column_name
 
       let menu = document.getElementById(this.elementId)
       if (!menu) {
