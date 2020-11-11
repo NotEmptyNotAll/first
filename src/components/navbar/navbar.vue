@@ -11,10 +11,10 @@
                 active-text-color="#ffd04b">
           <el-menu-item class="item-menu" v-if="!currentUser"  ></el-menu-item>
           <el-menu-item class="item-menu" index="/" v-if="currentUser"> <i class="el-icon-s-order"></i>{{$ml.get('word.parameters')}}</el-menu-item>
-          <el-menu-item class="item-menu"   index="/newsearch" v-if="showModeratorBoard"><i class="el-icon-search"></i> {{$ml.get('word.search')}}</el-menu-item>
-            <el-menu-item class="item-menu" index="/addData" v-if="showModeratorBoard"> <i class="el-icon-notebook-1"></i>{{$ml.get('word.updateData')}}</el-menu-item>
-            <el-menu-item class="item-menu" index="/edittree" v-if="showModeratorBoard"><i class="el-icon-edit-outline"></i>{{$ml.get('word.setParameter')}}</el-menu-item>
-            <el-menu-item class="item-menu" index="/treeStruct" v-if="showModeratorBoard"> {{$ml.get('word.treeStruct')}}</el-menu-item>
+          <el-menu-item class="item-menu"   index="/newsearch" v-if="showAdminBoard"><i class="el-icon-search"></i> {{$ml.get('word.search')}}</el-menu-item>
+            <el-menu-item class="item-menu" index="/addData" v-if="showAdminBoard"> <i class="el-icon-notebook-1"></i>{{$ml.get('word.updateData')}}</el-menu-item>
+            <el-menu-item class="item-menu" index="/edittree" v-if="showAdminBoard"><i class="el-icon-edit-outline"></i>{{$ml.get('word.setParameter')}}</el-menu-item>
+            <el-menu-item class="item-menu" index="/treeStruct" v-if="showAdminBoard"> {{$ml.get('word.treeStruct')}}</el-menu-item>
             <el-submenu index="2" style="position: absolute; right: 6vw">
                 <template class="item-menu" slot="title"><span
                         style="font-size: 130%;">{{$ml.get('word.language')}}</span></template>
@@ -88,7 +88,7 @@
             },
             showAdminBoard() {
                 if (this.currentUser) {
-                    return this.currentUser.roles.includes("ROLE_ADMIN");
+                    return this.currentUser.roles.includes("ADMIN");
                 }
                 return false;
             },

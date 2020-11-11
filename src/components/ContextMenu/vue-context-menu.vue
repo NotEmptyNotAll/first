@@ -16,15 +16,17 @@
       ><i class="el-icon-s-order"></i>
         {{ option.name }}
       </li>
-      <li class="label">{{ $ml.get('word.editing') }}</li>
+      <li            v-show="showModeratorBoard"
+                      class="label">{{ $ml.get('word.editing') }}</li>
       <li style="text-align: center"
-
+          v-show="showModeratorBoard"
           @click="dialogFormVisible=true"
           class="vue-simple-context-menu__item">
         <i class="el-icon-edit" style="padding-right:5px "></i>
         {{ $ml.get('word.setParameter') }}
       </li>
       <li style="text-align: center"
+          v-show="showModeratorBoard"
           @click="openAutoDialog()"
           class="vue-simple-context-menu__item">
         <i class="el-icon-plus" style="padding-right:5px "></i>
@@ -35,7 +37,6 @@
     <el-dialog :title="titleDialog"
                :visible.sync="dialogFormVisible">
       <div v-if="dialogAutoFormVisible" >
-
         <div class="row">
           <vue-datalist
               class="col-md-6"
@@ -195,18 +196,19 @@
         </h5>
             <h6>{{ '(' + item[keyValue] + ')' }}</h6>
           </div>
+            <div class="col-md-4">
+              <el-input
+                  :placeholder="$ml.get('word.pistonDiameter')" v-model="autoDataSave.pistonDiameter"
+                  clearable type="text"
+              ></el-input>
+          </div>
           <div class="col-md-4">
               <el-input
                   :placeholder="$ml.get('word.pistonStroke')" v-model="autoDataSave.pistonStoke"
                   clearable type="text"
               ></el-input>
           </div>
-          <div class="col-md-4">
-              <el-input
-                  :placeholder="$ml.get('word.pistonDiameter')" v-model="autoDataSave.pistonDiameter"
-                  clearable type="text"
-              ></el-input>
-          </div>
+
         </div>
         </span>
         <span v-else>
@@ -239,7 +241,7 @@
               :holderNum="0"
               :clean-search="cleanField"
               param-when-exist="autoManufactureName"
-              index="autoManufacturer"
+              index="autoManufacture"
               @change-meth="getEngDataByParam"
               @alert-meth="showAlert"
           />
@@ -424,6 +426,12 @@ export default {
     currentUser() {
       return this.$store.state.auth.user;
     },
+    showModeratorBoard() {
+      if (this.currentUser) {
+        return this.currentUser.roles.indexOf('MODERATOR')!==-1
+      }
+      return false;
+    },
     ...mapGetters([
       'SAVE_FAST_PARAM_STATUS',
       'ENGDATA',
@@ -503,7 +511,6 @@ export default {
           && this.STARTPARAM.autoModel[0].id === this.autoDataSave.modelNameId
           && this.STARTPARAM.engineManufacture[0].id === this.autoDataSave.autoManufacture)) {
         if (this.column.index.key === undefined) {
-
           let param = await this.SAVE_FAST_PARAM_DATA(this.paraSaveList)
           console.log(param)
         } else {
@@ -602,7 +609,7 @@ export default {
         this.addNewParamToList()
       }
       if (this.listParmName.filter(item => {
-        return item.data.toLowerCase() !== 'std'
+        return item.data.toLowerCase() !== 'std' && item.data.toLowerCase() !== 'знач.'
       }).length === 0 && column.index.key === undefined) {
         this.paramList[0].elemId = this.listParmName[0].id
         this.paramList[0].elemName = this.$ml.get('word.value')

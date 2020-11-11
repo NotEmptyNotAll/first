@@ -1,7 +1,7 @@
 <template>
     <div>
         <error-page
-            v-if="!currentUser.roles.indexOf('MODERATOR')!==-1"
+            v-if="!currentUser.roles.indexOf('ADMIN')!==-1"
         />
         <div         v-if="currentUser.roles.indexOf('MODERATOR')!==-1">
             <div class="search-border container  bg-white rounded" id="searchCont" style="text-align: center">

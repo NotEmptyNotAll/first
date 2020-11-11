@@ -1,5 +1,5 @@
 <template >
-    <div class="container bord rounded" v-if="currentUser.roles.indexOf('MODERATOR')!==-1">
+    <div class="container bord rounded" v-if="currentUser.roles.indexOf('ADMIN')!==-1">
         <tree-struct
 
         />

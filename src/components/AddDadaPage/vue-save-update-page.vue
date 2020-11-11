@@ -270,7 +270,7 @@ export default {
     ]),
     showModeratorBoard() {
       if (this.currentUser) {
-        return this.currentUser.roles.indexOf('MODERATOR')!==-1
+        return this.currentUser.roles.indexOf('ADMIN')!==-1
       }
       return false;
     }
