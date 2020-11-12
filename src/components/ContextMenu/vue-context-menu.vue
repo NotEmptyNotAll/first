@@ -16,8 +16,9 @@
       ><i class="el-icon-s-order"></i>
         {{ option.name }}
       </li>
-      <li            v-show="showModeratorBoard"
-                      class="label">{{ $ml.get('word.editing') }}</li>
+      <li v-show="showModeratorBoard"
+          class="label">{{ $ml.get('word.editing') }}
+      </li>
       <li style="text-align: center"
           v-show="showModeratorBoard"
           @click="dialogFormVisible=true"
@@ -36,7 +37,7 @@
     </ul>
     <el-dialog :title="titleDialog"
                :visible.sync="dialogFormVisible">
-      <div v-if="dialogAutoFormVisible" >
+      <div v-if="dialogAutoFormVisible">
         <div class="row">
           <vue-datalist
               class="col-md-6"
@@ -428,7 +429,7 @@ export default {
     },
     showModeratorBoard() {
       if (this.currentUser) {
-        return this.currentUser.roles.indexOf('MODERATOR')!==-1
+        return this.currentUser.roles.indexOf('MODERATOR') !== -1
       }
       return false;
     },
@@ -467,12 +468,12 @@ export default {
       console.log(1)
     },
     async getEngDataByParam() {
-      this.GET_ENGDATA_BY_PARAM({
+     /* this.GET_ENGDATA_BY_PARAM({
         engineType: this.autoDataSave.engineTypeId,
         autoManufacturer: this.autoDataSave.autoManufacture,
         autoModel: this.autoDataSave.modelNameId,
         produceYear: this.autoDataSave.releaseYearFrom,
-      });
+      });*/
       console.log(1)
     },
     onChangeData(param) {
@@ -498,8 +499,8 @@ export default {
       'GET_ALL_AUTO'
     ]),
     openAutoDialog() {
-      this.titleDialog=this.$ml.get('word.addRow')
-      this.autoDataSave.engineTypeId=null
+      this.titleDialog = this.$ml.get('word.addRow')
+      this.autoDataSave.engineTypeId = null
       this.dialogFormVisible = true
       this.dialogAutoFormVisible = true
     },
@@ -579,15 +580,23 @@ export default {
               status: 2,
               textData: null
             };
-            if (item[elem.id].match('^[0-9]*$')) {
+            if (item[elem.id].match('^[0-9]*.[0-9]*$')) {
               param.doubleNum = item[elem.id]
+              param.doubleMin = null
+              param.doubleMax = null
+              param.textData = null
               param.select = 2
             } else if (item[elem.id].match('^[0-9]*.[0-9]*\\s*-\\s*[0-9]*.[0-9]*$')) {
               param.doubleMin = item[elem.id].substr(0, item[elem.id].indexOf('-'))
               param.doubleMax = item[elem.id].substr(item[elem.id].indexOf('-') + 1, item[elem.id].length)
+              param.doubleNum = null
+              param.textData = null
               param.select = 3
             } else {
               param.textData = item[elem.id]
+              param.doubleMin = null
+              param.doubleNum = null
+              param.doubleMax = null
               param.select = 1
             }
             this.paramList.push(param)
@@ -615,9 +624,9 @@ export default {
         this.paramList[0].elemName = this.$ml.get('word.value')
       }
 
-        this.titleDialog = this.$ml.get('word.autoEngine') +
-            ': №' + this.row_id + ' \\ ' + this.$ml.get('word.parameter') +
-            ': ' + this.column_name
+      this.titleDialog = this.$ml.get('word.autoEngine') +
+          ': №' + this.row_id + ' \\ ' + this.$ml.get('word.parameter') +
+          ': ' + this.column_name
 
       let menu = document.getElementById(this.elementId)
       if (!menu) {
