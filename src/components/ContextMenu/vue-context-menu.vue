@@ -128,7 +128,9 @@
           <div class="col-lg-3">
             <el-select v-model="param.select"
                        style="width: 100% !important;"
-                       :placeholder="$ml.get('word.choose')">
+                       :placeholder="$ml.get('word.choose')"
+
+            >
               <el-option
                   :label="$ml.get('word.text')"
                   :value="1">
@@ -362,6 +364,7 @@ export default {
       required: true
     }
   },
+
   data() {
     return {
       searchData: {
@@ -468,12 +471,12 @@ export default {
       console.log(1)
     },
     async getEngDataByParam() {
-     /* this.GET_ENGDATA_BY_PARAM({
-        engineType: this.autoDataSave.engineTypeId,
-        autoManufacturer: this.autoDataSave.autoManufacture,
-        autoModel: this.autoDataSave.modelNameId,
-        produceYear: this.autoDataSave.releaseYearFrom,
-      });*/
+      /* this.GET_ENGDATA_BY_PARAM({
+         engineType: this.autoDataSave.engineTypeId,
+         autoManufacturer: this.autoDataSave.autoManufacture,
+         autoModel: this.autoDataSave.modelNameId,
+         produceYear: this.autoDataSave.releaseYearFrom,
+       });*/
       console.log(1)
     },
     onChangeData(param) {
@@ -481,10 +484,23 @@ export default {
           (item.elemId === param.elemId && param.nameElemId === -1) ||
           (item.nameElemId === param.nameElemId && param.elemId === -1)
       )
+      if (param.select === 1) {
+        param.doubleMin = null
+        param.doubleMax = null
+        param.doubleNum = null
+      } else if (param.select === 2) {
+        param.textData = null
+        param.doubleMin = null
+        param.doubleMax = null
+      } else if (param.select === 3) {
+        param.textData = null
+        param.doubleNum = null
+      }
       if (temp === undefined) {
         param.name = this.column.index.columnList.find(item => item.id === param.elemId).nameId
         this.paraSaveList.push(param)
       } else {
+
         temp.name = this.column.index.columnList.find(item => item.id === param.elemId).nameId
         temp.doubleNum = param.doubleNum
         temp.doubleMax = param.doubleMax
