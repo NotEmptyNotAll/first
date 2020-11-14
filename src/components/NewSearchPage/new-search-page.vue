@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div v-if="showModeratorBoard" class="container search-border tab  rounded bg-white rad" >
+    <div v-if="showModeratorBoard" class="container search-border tab  rounded bg-white rad">
       <vue-context-menu
           :pageSetting="pageSetting"
           :elementId="'myFirstMenu'"
           :options="ALL_AUTO_ENG.columnParam"
           :ref="'vueSimpleContextMenu1'"
-          @option-clicked="optionClicked1"
+          @option-clicked="onNewExport"
       ></vue-context-menu>
       <div class="row " style="padding-top: 0vh;padding-bottom: 0vh">
         <div class="title-bord col-md-1 param-navbar">
@@ -114,7 +114,7 @@
 
           >
 
-            <template slot="header"               style="font-size: 0.8rem"
+            <template slot="header" style="font-size: 0.8rem"
             >
 
               <h6 v-if="engineParamData===null">{{ clmn.label }}</h6>
@@ -138,7 +138,7 @@
                            :prop="mainColumn.color"
           >
             <el-table-column
-style="height: 10px"
+                style="height: 10px"
                 resizable
                 align="center"
                 v-for="column in mainColumn.columnList"
@@ -171,7 +171,7 @@ style="height: 10px"
                       v-bind:key="col">
                                    <strong v-if="(col.name!=='std' && col.name!=='Std' && col.name!=='знач.' )"
 
-                                    >{{ col.name + ": " }}</strong>
+                                   >{{ col.name + ": " }}</strong>
                                       {{ scope.row[col.id] }}
                                                                  </span>
                 <el-button size="medium" v-show="scope.row['listImage'+column.id]!==undefined"
@@ -215,10 +215,13 @@ import VueContextMenu from "../ContextMenu/vue-context-menu";
 import xl from "excel4node";
 // eslint-disable-next-line no-unused-vars
 import XLSX from "xlsx";
+import { saveAs } from 'file-saver'
 // eslint-disable-next-line no-unused-vars
 import json2xls from "json2xls";
 // eslint-disable-next-line no-unused-vars
 import fs from "fs";
+import ExcelJS from 'exceljs/dist/es5/exceljs.browser.js'
+
 // eslint-disable-next-line no-unused-vars
 import pdfMake from "pdfmake/build/pdfmake";
 import Vue from "vue"
@@ -307,6 +310,20 @@ export default {
         searchPercent: 0,
         paramList: []
       },
+      fillHead : {
+        type: 'gradient',
+        gradient: 'path',
+        center:{left:0.5,right:0.5},
+        stops: [
+          {position:0, color:{argb:'d2d1d1'}},
+          {position:1, color:{argb:'d2d1d1'}}
+        ]},
+      fontHead : {
+        name: 'Arial Black',
+        family: 2,
+        size: 14,
+        italic: false
+      },
       lengHeadNameArr: 0,
       test: null,
       temp: null,
@@ -341,7 +358,7 @@ export default {
     },
     // eslint-disable-next-line no-unused-vars
     handleHeaderStyle({row, column, rowIndex, columnIndex}) {
-      return 'background-color: ' + column.property + ';'+'padding:3px;'
+      return 'background-color: ' + column.property + ';' + 'padding:3px;'
     },
     setCurrent(row) {
       this.$refs.paramTable.setCurrentRow(row);
@@ -373,7 +390,7 @@ export default {
       this.GET_ALL_AUTO(this.pageSetting);
     },
     handleClick1(row, column, event) {
-      this.$refs.vueSimpleContextMenu1.showMenu(event, row,column)
+      this.$refs.vueSimpleContextMenu1.showMenu(event, row, column)
     },
     // eslint-disable-next-line no-unused-vars
     closeDialog() {
@@ -635,6 +652,122 @@ export default {
       this.currentRow = val;
     }
     ,
+    // eslint-disable-next-line no-unused-vars
+    findMaxColumns(event) {
+      let max = 0
+      event.option.columnResponseList.forEach(item => {
+        if (item.columnList.length > max) {
+          max = item.columnList.length
+        }
+      })
+      return max
+    },
+    // eslint-disable-next-line no-unused-vars
+    async onNewExport(event){
+     // const ExcelJS = require('exceljs');
+   //   const ExcelJS = require('exceljs/dist/es5');
+      let lengPage=this.findMaxColumns(event)+1
+      let lengH=8
+      const workbook = new ExcelJS.Workbook();
+      workbook.creator = 'Me';
+      workbook.lastModifiedBy = 'Her';
+      workbook.created = new Date();
+      workbook.modified = new Date();
+      workbook.lastPrinted = new Date();
+      workbook.calcProperties.fullCalcOnLoad = true;
+      workbook.views = [
+        {
+          x: 0, y: 0, width: 10000, height: 20000,
+          firstSheet: 0, activeTab: 1, visibility: 'visible'
+        }
+      ]
+      const worksheet = workbook.addWorksheet('My Sheet', {properties:{tabColor:{argb:'5f9740'}}});
+      worksheet.pageSetup.margins = {
+        left: 5.7, right: 5.7,
+        top: 0.75, bottom: 0.75,
+        header: 0.3, footer: 0.3
+      };
+      let arrW=[]
+      for (let i = 0; i <lengPage; i++) {
+        arrW.push({width:20})
+      }
+      worksheet.columns=arrW
+      const row = worksheet.addRow(['Параметри обробки до замовлення №75555'])
+      row.style={color:'red'}
+      const row1= worksheet.addRow(['Данні автомобіля'])
+
+
+       worksheet.addRow([ this.$ml.get('word.autoManufacturer'), this.$ml.get('word.autoModel'),
+         this.$ml.get('word.engine'),this.$ml.get('word.releaseYear'), this.$ml.get('word.engineCapacity'),
+         this.$ml.get('word.pistonDiameter'),this.$ml.get('word.flapNumber')])
+
+       worksheet.addRow([event.item.autoManufacture, event.item.engineType,
+         event.item.autoManufacture,event.item.releaseYear,event.item.engineCapacity,
+         event.item.pistonDiameter,event.item.flapNumber])
+       worksheet.addRow([''])
+      worksheet.addRow(['Параметри обробки'])
+
+      row.font = { bold: true }
+      row1.font = { bold: true }
+      worksheet.mergeCells('A1:'+String.fromCharCode(64+lengPage)+'1');
+      worksheet.mergeCells('A2:'+String.fromCharCode(64+lengPage)+'2');
+      worksheet.mergeCells('A6:'+String.fromCharCode(64+lengPage)+'6');
+      for (let i = 1; i <lengH; i++) {
+        worksheet.getCell(String.fromCharCode(64+i)+'4').font=this.fontHead
+        worksheet.getCell(String.fromCharCode(64+i)+'4').fill=this.fillHead
+        worksheet.getCell(String.fromCharCode(64+i)+'3').font=this.fontHead
+        worksheet.getCell(String.fromCharCode(64+i)+'3').fill=this.fillHead
+        worksheet.getCell(String.fromCharCode(64+i)+'3').alignment= { vertical: 'middle', horizontal: 'center' };
+        worksheet.getCell(String.fromCharCode(64+i)+'4').alignment= { vertical: 'middle', horizontal: 'center' };
+      }
+      worksheet.getCell('A1').font=this.fontHead
+      worksheet.getCell('A1').alignment= { vertical: 'middle', horizontal: 'center' };
+      worksheet.getCell('A1').font.italic=true
+      worksheet.getCell('A1').fill=this.fillHead
+      worksheet.getCell('A2').alignment= { vertical: 'middle', horizontal: 'center' };
+      worksheet.getCell('A6').alignment= { vertical: 'middle', horizontal: 'center' };
+
+      const buf = await workbook.xlsx.writeBuffer()
+
+     // worksheet.pageSetup.printArea = 'A1:G20';
+      saveAs(new Blob([buf]), 'abc.xlsx')
+    },
+    onexport(event) { // On Click Excel download button
+      // export json to Worksheet of Excel
+      // only array possible
+      this.test = event
+      // eslint-disable-next-line no-unused-vars
+      let arrMerdes = []
+      let dataArr = []
+      // eslint-disable-next-line no-unused-vars
+      let lengPage=this.findMaxColumns(event)+1
+      arrMerdes.push({s: {r: 1, c: 0}, e: {r: 1, c: lengPage}})
+      let obj={}
+      obj[0]='Параметри обробки до замовлення №75555'
+      dataArr.push(obj)
+      var wscols = [
+        {wpx: 50}, // "pixels"
+        {wpx: 200}, // "pixels"
+        {wpx: 200}, // "pixels"
+        {wpx: 100} // "pixels"
+      ];
+      var animalWS = XLSX.utils.json_to_sheet(dataArr)
+      animalWS["!cols"] = wscols
+      animalWS["!rows"] = [{hidden: true}]
+      animalWS["!merges"] =arrMerdes
+
+      // A workbook is the name given to an Excel file
+      var wb = XLSX.utils.book_new() // make Workbook of Excel
+
+      // add Worksheet to Workbook
+      // Workbook contains one or more worksheets
+      XLSX.utils.book_append_sheet(wb, animalWS, 'sheet1') // sheetAName is name of Worksheet
+
+      // export Excel file
+      XLSX.writeFile(wb, this.nameTitle + '.xlsx') // name of the file is 'book.xlsx'
+
+    },
+
     getAutoEngByFilter() {
       if (this.pageSetting.releaseYear === '') {
         this.pageSetting.releaseYear = null
@@ -840,7 +973,7 @@ export default {
 
 }
 
-.header-st{
+.header-st {
   padding-top: 2px !important;
   padding-bottom: 2px !important;
 }

@@ -44,9 +44,9 @@
             </el-dropdown>
           </div>
           <div class="input-group col-md-4">
-            <el-input :placeholder="$ml.get('word.search')"  v-model="pageSetting.data"
+            <el-input :placeholder="$ml.get('word.search')" v-model="pageSetting.data"
                       v-on:change="onChange"
-                     class="input-with-select" clearable>
+                      class="input-with-select" clearable>
               <el-button slot="prepend" icon="el-icon-search"></el-button>
             </el-input>
           </div>
@@ -146,15 +146,15 @@
              </tbody>
          </table>-->
         <div class="pagin-content">
-        <el-pagination
-            class="pagin-st"
-            @current-change="handleCurrentPage"
-            background
-            :current-page.sync="pageSetting.initRecordFrom"
-            layout="prev, pager, next"
-            :total="dataList.countResults*10">
-        </el-pagination>
-      </div>
+          <el-pagination
+              class="pagin-st"
+              @current-change="handleCurrentPage"
+              background
+              :current-page.sync="pageSetting.initRecordFrom"
+              layout="prev, pager, next"
+              :total="dataList.countResults*10">
+          </el-pagination>
+        </div>
       </el-tab-pane>
 
       <el-tab-pane :label="$ml.get('word.save')" name="1">
@@ -406,7 +406,7 @@ export default {
     pageSetting: {
       initRecordFrom: 1,
       pageSize: 50,
-      data:null
+      data: null
     },
     allTableColumns: []
   }),
@@ -466,14 +466,22 @@ export default {
           arr.push(obj)
         }
       });
+      var wscols = [
+        {wpx: 50}, // "pixels"
+        {wpx: 200}, // "pixels"
+        {wpx: 200}, // "pixels"
+        {wpx: 100}, // "pixels"
+
+      ];
       var animalWS = XLSX.utils.json_to_sheet(arr)
+      animalWS["!cols"] = wscols
 
       // A workbook is the name given to an Excel file
       var wb = XLSX.utils.book_new() // make Workbook of Excel
 
       // add Worksheet to Workbook
       // Workbook contains one or more worksheets
-      XLSX.utils.book_append_sheet(wb, animalWS, 'animals') // sheetAName is name of Worksheet
+      XLSX.utils.book_append_sheet(wb, animalWS, 'blank') // sheetAName is name of Worksheet
 
       // export Excel file
       XLSX.writeFile(wb, this.nameTitle + '.xlsx') // name of the file is 'book.xlsx'
@@ -655,8 +663,8 @@ export default {
     setDataList(tempList) {
       this.dataList.data = tempList;
     },
-    indexMethod(index){
-      return (this.pageSetting.initRecordFrom-1)*this.pageSetting.pageSize+index
+    indexMethod(index) {
+      return (this.pageSetting.initRecordFrom - 1) * this.pageSetting.pageSize + index
     },
     async link(record) {
       this.activeName = '2'
@@ -789,9 +797,9 @@ export default {
   },
   mounted() {
     this.$emit("load-data", this.pageSetting)
-    this.checkedColumns = [ this.$ml.get('word.fullName'), this.$ml.get('word.shortName'), this.$ml.get('word.status')];
-    this.columns = [ this.$ml.get('word.fullName'), this.$ml.get('word.shortName'), this.$ml.get('word.status')];
-    this.columnOptions = [ this.$ml.get('word.fullName'), this.$ml.get('word.shortName'), this.$ml.get('word.status')];
+    this.checkedColumns = [this.$ml.get('word.fullName'), this.$ml.get('word.shortName'), this.$ml.get('word.status')];
+    this.columns = [this.$ml.get('word.fullName'), this.$ml.get('word.shortName'), this.$ml.get('word.status')];
+    this.columnOptions = [this.$ml.get('word.fullName'), this.$ml.get('word.shortName'), this.$ml.get('word.status')];
     this.tableColumns = [
       {key: 'data', label: this.$ml.get('word.fullName'), sortable: true},
       {key: 'secondary_data', label: this.$ml.get('word.shortName'), sortable: true},
@@ -820,6 +828,7 @@ a {
   color: #272e38;
   font-weight: bold;
 }
+
 .pagin-st {
   position: relative;
   top: 15px;
@@ -834,6 +843,7 @@ a {
   justify-content: center;
   align-items: center;
 }
+
 .title-bord {
   text-align: center;
   position: relative;
