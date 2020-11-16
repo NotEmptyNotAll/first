@@ -58,7 +58,7 @@
             </el-dropdown-menu>
           </el-dropdown>
         </div>
-        <div class="col-md-2   ">
+        <div class="col-md-2">
           <el-button size="medium" class="fix-position" plain type="danger"
                      style="width: 100%; font-size: 16px"
                      v-on:click="clearFilter">{{ $ml.get('word.clearAllFilter') }}
@@ -87,7 +87,7 @@
       <div class="table-cont">
         <el-table
 
-            v-loading="LOAD_ALL_AUTO_ENG"
+            v-loading="LOAD_ALL_AUTO_ENG && LOADPARAM"
             id="lol"
             stripe
             :empty-text="$ml.get('word.empty')"
@@ -215,7 +215,7 @@ import VueContextMenu from "../ContextMenu/vue-context-menu";
 import xl from "excel4node";
 // eslint-disable-next-line no-unused-vars
 import XLSX from "xlsx";
-import { saveAs } from 'file-saver'
+import {saveAs} from 'file-saver'
 // eslint-disable-next-line no-unused-vars
 import json2xls from "json2xls";
 // eslint-disable-next-line no-unused-vars
@@ -284,6 +284,19 @@ export default {
       allTableColumns: [],
       engineParamData: null,
       isIndeterminate: true,
+      heightRowExls: 40,
+      borderTable: {
+        top: {style: 'thin', color: {argb: '7b7a7a'}},
+        left: {style: 'thin', color: {argb: '7b7a7a'}},
+        bottom: {style: 'thin', color: {argb: '7b7a7a'}},
+        right: {style: 'thin', color: {argb: '7b7a7a'}}
+      },
+      searchData: {
+        engineType: null,
+        autoManufacturer: null,
+        autoModel: null,
+        produceYear: null,
+      },
       pageSetting: {
         id: null,
         flapNumber: null,
@@ -310,18 +323,19 @@ export default {
         searchPercent: 0,
         paramList: []
       },
-      fillHead : {
+      fillHead: {
         type: 'gradient',
         gradient: 'path',
-        center:{left:0.5,right:0.5},
+        center: {left: 0.5, right: 0.5},
         stops: [
-          {position:0, color:{argb:'d2d1d1'}},
-          {position:1, color:{argb:'d2d1d1'}}
-        ]},
-      fontHead : {
+          {position: 0, color: {argb: 'd2d1d1'}},
+          {position: 1, color: {argb: 'd2d1d1'}}
+        ]
+      },
+      fontHead: {
         name: 'Arial Black',
         family: 2,
-        size: 14,
+        size: 10,
         italic: false
       },
       lengHeadNameArr: 0,
@@ -334,6 +348,7 @@ export default {
   methods: {
     ...mapActions([
       'GET_COLUMN_PARAM',
+      'GET_ENGDATA_BY_PARAM',
       'GET_ALL_AUTO'
     ]),
     handleCurrentPage(val) {
@@ -362,6 +377,52 @@ export default {
     },
     setCurrent(row) {
       this.$refs.paramTable.setCurrentRow(row);
+    },
+    autoMergeTableExls(arr, worksheet, leng, startCodeChar, rowNum, firstRowMergeNum) {
+      console.log(arr)
+      if (arr.length !== leng) {
+        let tempArr = []
+        let arrLeng = arr.length
+        let temp = 1
+        let startIndex = 0
+        if (firstRowMergeNum !== -1) {
+          startIndex = 2
+          temp = 3
+          leng+=2
+          tempArr.push(arr[0])
+          tempArr.push(arr[1])
+        }
+        for (let i = startIndex; i < arrLeng; i++) {
+          let k = ((leng - arrLeng) - i) > 0 ? 1 + Math.floor((leng - arrLeng - i) / arrLeng) : 0
+          tempArr.push(arr[i])
+          for (let j = 0; j < k; j++) {
+            tempArr.push('')
+          }
+        }
+       const row =worksheet.addRow(tempArr)
+           row.height = this.heightRowExls
+           row.border = this.borderTable
+      row.alignment = {vertical: 'middle', horizontal: 'center'};
+        for (let i = startIndex; i < arrLeng; i++) {
+          let k = ((leng - arrLeng) - i) > 0 ? 1 + Math.floor((leng - arrLeng - i) / arrLeng) : 0
+          console.log(leng +'_' +arrLeng +'_'+ i+' '+k + ' ' + temp + ' ' + rowNum)
+          if(firstRowMergeNum !== -1 && (temp+k)<(leng-2) && i===arrLeng-1){
+          k+=(leng-2)-(temp+k)
+          }
+          worksheet
+              .mergeCells(String.fromCharCode(startCodeChar + temp) + rowNum + ':'
+                  + String.fromCharCode(startCodeChar + (temp + k)) + rowNum);
+          temp += k + 1
+
+
+        }
+
+      } else {
+       const row= worksheet.addRow(arr)
+           row.height = this.heightRowExls
+           row.border = this.borderTable
+        row.alignment = {vertical: 'middle', horizontal: 'center'};
+      }
     },
     clearFilter() {
       this.bus.$emit('clear')
@@ -396,6 +457,28 @@ export default {
     closeDialog() {
       this.listFileUrl = []
       this.dialogFormVisible = false
+    },
+    getMaxListParamFromColumnList(columnList) {
+      let index = 0;
+      let kol = 0;
+      let max = 0;
+      columnList.forEach((item) => {
+        if (item.columnList.length > max) {
+          index = kol
+          max = item.columnList.length
+        }
+        kol++
+      })
+      return columnList[index].columnList
+    },
+    isEmptyRow(row) {
+      let flag = true;
+      for (let i = 2; i < row.length; i++) {
+        if (row[i] !== '') {
+          flag = false;
+        }
+      }
+      return flag;
     },
     getGeneralName(arr) {
       let generalIndex = 0;
@@ -663,11 +746,11 @@ export default {
       return max
     },
     // eslint-disable-next-line no-unused-vars
-    async onNewExport(event){
-     // const ExcelJS = require('exceljs');
-   //   const ExcelJS = require('exceljs/dist/es5');
-      let lengPage=this.findMaxColumns(event)+1
-      let lengH=8
+    async onNewExport(event) {
+      // const ExcelJS = require('exceljs');
+      //   const ExcelJS = require('exceljs/dist/es5');
+      let lengPage = this.findMaxColumns(event) + 2
+      this.test = event
       const workbook = new ExcelJS.Workbook();
       workbook.creator = 'Me';
       workbook.lastModifiedBy = 'Her';
@@ -681,55 +764,125 @@ export default {
           firstSheet: 0, activeTab: 1, visibility: 'visible'
         }
       ]
-      const worksheet = workbook.addWorksheet('My Sheet', {properties:{tabColor:{argb:'5f9740'}}});
+      const worksheet = workbook.addWorksheet('My Sheet', {properties: {tabColor: {argb: '5f9740'}}});
       worksheet.pageSetup.margins = {
         left: 5.7, right: 5.7,
         top: 0.75, bottom: 0.75,
         header: 0.3, footer: 0.3
       };
-      let arrW=[]
-      for (let i = 0; i <lengPage; i++) {
-        arrW.push({width:20})
+      let arrW = []
+      for (let i = 0; i < lengPage; i++) {
+        arrW.push({width: 15})
       }
-      worksheet.columns=arrW
+      worksheet.columns = arrW
       const row = worksheet.addRow(['Параметри обробки до замовлення №75555'])
-      row.style={color:'red'}
-      const row1= worksheet.addRow(['Данні автомобіля'])
+      row.height = this.heightRowExls
+      const row1 = worksheet.addRow(['Данні автомобіля'])
+      row1.height = this.heightRowExls - 10
+
+      let arrNameAutoCell = [this.$ml.get('word.autoManufacturer'), this.$ml.get('word.autoModel'),
+        this.$ml.get('word.engine'), this.$ml.get('word.releaseYear'), this.$ml.get('word.engineCapacity'),
+        this.$ml.get('word.pistonDiameter'), this.$ml.get('word.flapNumber')]
+      this.autoMergeTableExls(arrNameAutoCell, worksheet, lengPage, 64, 3, -1)
+      let arrDataAutoCell = [event.item.autoManufacture, event.item.engineType,
+        event.item.engineType, event.item.releaseYear, event.item.engineCapacity,
+        event.item.pistonDiameter, event.item.flapNumber]
+      this.autoMergeTableExls(arrDataAutoCell, worksheet, lengPage, 64, 4, -1)
+
+      worksheet.addRow([''])
+      worksheet.addRow(['Параметри обробки']).height = this.heightRowExls
+
+      row.font = {bold: true}
+      row1.font = {bold: true}
+      let startRow = 7
+      let tempArr = []
+      let kolIter = 0
+      event.option.columnResponseList.forEach(item => {
+        kolIter = 0
+        tempArr.push(item.name)
+        tempArr.push('рем. размеры')
+        let listParam = this.getMaxListParamFromColumnList(item.columnList)
+        item.columnList.forEach(elem => {
+          tempArr.push(elem.name)
+        })
 
 
-       worksheet.addRow([ this.$ml.get('word.autoManufacturer'), this.$ml.get('word.autoModel'),
-         this.$ml.get('word.engine'),this.$ml.get('word.releaseYear'), this.$ml.get('word.engineCapacity'),
-         this.$ml.get('word.pistonDiameter'),this.$ml.get('word.flapNumber')])
+        // worksheet.addRow(tempArr)
+        this.autoMergeTableExls(tempArr, worksheet, lengPage, 64, startRow, 1)
+        let emptyRow = []
+        for (let i = 0; i < tempArr.length; i++) {
+          emptyRow.push(' ')
+        }
+        tempArr = []
+        for (let i = 1; i < lengPage + 1; i++) {
+          worksheet.getCell(String.fromCharCode(64 + i) + startRow).font = this.fontHead
+          worksheet.getCell(String.fromCharCode(64 + i) + startRow).fill = this.fillHead
+          worksheet.getCell(String.fromCharCode(64 + i) + startRow).border = this.borderTable
+        }
 
-       worksheet.addRow([event.item.autoManufacture, event.item.engineType,
-         event.item.autoManufacture,event.item.releaseYear,event.item.engineCapacity,
-         event.item.pistonDiameter,event.item.flapNumber])
-       worksheet.addRow([''])
-      worksheet.addRow(['Параметри обробки'])
+        listParam.forEach(elem => {
+          tempArr.push('')
+          tempArr.push(elem.name)
+          item.columnList.forEach(e => {
+            let temp = e.columnList.find(elm => elm.nameId === elem.nameId)
+            if (temp !== undefined && event.item[temp.id] !== undefined) {
+              tempArr.push(event.item[temp.id])
+            } else {
+              tempArr.push('')
+            }
+          })
+          if (!this.isEmptyRow(tempArr)) {
+            ++kolIter
+            this.autoMergeTableExls(tempArr, worksheet, lengPage, 64, startRow + kolIter, 1)
+            // worksheet.addRow(tempArr)
+          }
+          tempArr = []
+        })
+        ++kolIter
+        this.autoMergeTableExls(emptyRow, worksheet, lengPage, 64, startRow + kolIter, 1)
+        worksheet.getCell('A' + startRow).font = this.fontHead
+        worksheet.getCell('A' + startRow).fill = this.fillHead
+        worksheet.mergeCells('A' + startRow + ':A' + (startRow + kolIter));
+        startRow += kolIter + 1
 
-      row.font = { bold: true }
-      row1.font = { bold: true }
-      worksheet.mergeCells('A1:'+String.fromCharCode(64+lengPage)+'1');
-      worksheet.mergeCells('A2:'+String.fromCharCode(64+lengPage)+'2');
-      worksheet.mergeCells('A6:'+String.fromCharCode(64+lengPage)+'6');
-      for (let i = 1; i <lengH; i++) {
-        worksheet.getCell(String.fromCharCode(64+i)+'4').font=this.fontHead
-        worksheet.getCell(String.fromCharCode(64+i)+'4').fill=this.fillHead
-        worksheet.getCell(String.fromCharCode(64+i)+'3').font=this.fontHead
-        worksheet.getCell(String.fromCharCode(64+i)+'3').fill=this.fillHead
-        worksheet.getCell(String.fromCharCode(64+i)+'3').alignment= { vertical: 'middle', horizontal: 'center' };
-        worksheet.getCell(String.fromCharCode(64+i)+'4').alignment= { vertical: 'middle', horizontal: 'center' };
+      })
+      let tempArrFoot=[]
+      worksheet.addRow([])
+      tempArrFoot=['З параметрами обробки ознайомлений та згоден']
+      this.autoMergeTableExls(tempArrFoot, worksheet, lengPage-1, 64, startRow + 1, -1)
+      worksheet.addRow([])
+      tempArrFoot=['П.І.Б___________________','Підпис______________','Підпис______________']
+      this.autoMergeTableExls(tempArrFoot, worksheet, lengPage-1, 64, startRow + 3, -1)
+      worksheet.getCell('A'+(startRow + kolIter-2)).font = this.fontHead
+      worksheet.getCell('A'+(startRow + kolIter-2)).alignment = {vertical: 'middle', horizontal: 'center'};
+      worksheet.getRow(startRow + kolIter).alignment = {vertical: 'middle', horizontal: 'center'};
+
+
+      worksheet.mergeCells('A1:' + String.fromCharCode(64 + lengPage) + '1');
+      worksheet.mergeCells('A2:' + String.fromCharCode(64 + lengPage) + '2');
+      worksheet.mergeCells('A6:' + String.fromCharCode(64 + lengPage) + '6');
+      for (let i = 1; i < lengPage + 1; i++) {
+        worksheet.getCell(String.fromCharCode(64 + i) + '4').font = this.fontHead
+      //  worksheet.getCell(String.fromCharCode(64 + i) + '4').fill = this.fillHead
+        worksheet.getCell(String.fromCharCode(64 + i) + '4').border = this.borderTable
+        worksheet.getCell(String.fromCharCode(64 + i) + '3').font = this.fontHead
+        worksheet.getCell(String.fromCharCode(64 + i) + '3').fill = this.fillHead
+        worksheet.getCell(String.fromCharCode(64 + i) + '3').border = this.borderTable
+        worksheet.getCell(String.fromCharCode(64 + i) + '3').alignment = {vertical: 'middle', horizontal: 'center'};
+        worksheet.getCell(String.fromCharCode(64 + i) + '4').alignment = {vertical: 'middle', horizontal: 'center'};
       }
-      worksheet.getCell('A1').font=this.fontHead
-      worksheet.getCell('A1').alignment= { vertical: 'middle', horizontal: 'center' };
-      worksheet.getCell('A1').font.italic=true
-      worksheet.getCell('A1').fill=this.fillHead
-      worksheet.getCell('A2').alignment= { vertical: 'middle', horizontal: 'center' };
-      worksheet.getCell('A6').alignment= { vertical: 'middle', horizontal: 'center' };
+      worksheet.getCell('A1').font = this.fontHead
+      worksheet.getCell('A1').border = this.borderTable
+      worksheet.getCell('A1').alignment = {vertical: 'middle', horizontal: 'center'};
+      worksheet.getCell('A1').font.italic = true
+      worksheet.getCell('A1').fill = this.fillHead
+      worksheet.getCell('A1').border = this.borderTable
+      worksheet.getCell('A2').alignment = {vertical: 'middle', horizontal: 'center'};
+      worksheet.getCell('A6').alignment = {vertical: 'middle', horizontal: 'center'};
 
       const buf = await workbook.xlsx.writeBuffer()
 
-     // worksheet.pageSetup.printArea = 'A1:G20';
+      // worksheet.pageSetup.printArea = 'A1:G20';
       saveAs(new Blob([buf]), 'abc.xlsx')
     },
     onexport(event) { // On Click Excel download button
@@ -740,10 +893,10 @@ export default {
       let arrMerdes = []
       let dataArr = []
       // eslint-disable-next-line no-unused-vars
-      let lengPage=this.findMaxColumns(event)+1
+      let lengPage = this.findMaxColumns(event) + 1
       arrMerdes.push({s: {r: 1, c: 0}, e: {r: 1, c: lengPage}})
-      let obj={}
-      obj[0]='Параметри обробки до замовлення №75555'
+      let obj = {}
+      obj[0] = 'Параметри обробки до замовлення №75555'
       dataArr.push(obj)
       var wscols = [
         {wpx: 50}, // "pixels"
@@ -754,7 +907,7 @@ export default {
       var animalWS = XLSX.utils.json_to_sheet(dataArr)
       animalWS["!cols"] = wscols
       animalWS["!rows"] = [{hidden: true}]
-      animalWS["!merges"] =arrMerdes
+      animalWS["!merges"] = arrMerdes
 
       // A workbook is the name given to an Excel file
       var wb = XLSX.utils.book_new() // make Workbook of Excel
@@ -815,6 +968,7 @@ export default {
   computed: {
     ...mapGetters([
       'ALL_AUTO_ENG',
+      'LOADPARAM',
       'LOAD_ALL_AUTO_ENG'
     ])
   }
@@ -824,6 +978,7 @@ export default {
     document.body.oncontextmenu = function () {
       return false;
     };
+    this.GET_ENGDATA_BY_PARAM(this.searchData);
 
 
     if (this.ALL_AUTO_ENG.columnParam === null) {

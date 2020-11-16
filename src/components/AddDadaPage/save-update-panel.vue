@@ -58,7 +58,7 @@
             stripe
             :empty-text="$ml.get('word.empty')"
             ref="paramTable"
-            :data="dataList.data.filter(elem=>{return elem.data!=='не задано'})"
+            :data="dataList.data.filter(elem=>{return elem.data!=='NA'})"
             max-height="560"
             @row-dblclick="link"
             style="width: 100%"

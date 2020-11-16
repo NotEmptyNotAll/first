@@ -169,8 +169,8 @@
           <el-input type="text" @change="onChangeData(param)"
                     clearable
                     :placeholder="param.textData" v-model="param.textData"
-                    maxlength="120"
-                    show-word-limit></el-input>
+                    maxlength="250"
+                    ></el-input>
               </span>
             </div>
           </div>
@@ -530,6 +530,7 @@ export default {
         if (this.column.index.key === undefined) {
           let param = await this.SAVE_FAST_PARAM_DATA(this.paraSaveList)
           console.log(param)
+          this.GET_ENGDATA_BY_PARAM(this.searchData)
         } else {
           if (this.dialogFormVisible === true &&
               this.dialogAutoFormVisible === true) {
@@ -537,8 +538,10 @@ export default {
           }
           let param = await this.SAVE_FAST_AUTO_ENGINE_DATA(this.autoDataSave)
           console.log(param)
+          this.GET_ENGDATA_BY_PARAM(this.searchData)
         }
         this.GET_ALL_AUTO(this.pageSetting);
+
         this.dialogFormVisible = false
       } else {
         this.$message({
@@ -640,7 +643,7 @@ export default {
         this.paramList[0].elemName = this.$ml.get('word.value')
       }
 
-      this.titleDialog = this.$ml.get('word.autoEngine') +
+      this.titleDialog = this.$ml.get('word.row') +
           ': №' + this.row_id + ' \\ ' + this.$ml.get('word.parameter') +
           ': ' + this.column_name
 
@@ -748,7 +751,6 @@ export default {
     }
   },
   mounted() {
-    this.GET_ENGDATA_BY_PARAM(this.searchData);
     document.body.addEventListener('keyup', this.onEscKeyRelease);
   },
   beforeDestroy() {

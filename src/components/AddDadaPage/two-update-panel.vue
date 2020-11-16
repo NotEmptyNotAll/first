@@ -58,7 +58,7 @@
             max-height="560"
             :empty-text="$ml.get('word.empty')"
             ref="paramTable"
-            :data="dataList.data.filter(elem=>{return elem.data!=='не задано'})"
+            :data="dataList.data.filter(elem=>{return elem.data!=='NA'})"
             @row-dblclick="link"
             style="width: 100%"
         >

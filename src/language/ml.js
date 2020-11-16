@@ -22,6 +22,7 @@ export default new MLCreate({
                 range: "range",
                 engine: "engine type",
                 type: "type",
+                row:'row',
                 cylinders: "cylinders",
                 fuelType: "fuel type",
                 superchargedType: "supercharged types",
@@ -154,6 +155,7 @@ export default new MLCreate({
                 releaseYear: "год выпуска",
                 from: "от",
                 empty: "пусто",
+
                 editing: 'редактарование',
                 by: 'до',
                 releaseYearFrom: "год вып, с",
@@ -216,6 +218,7 @@ export default new MLCreate({
                 showPhoto: 'показать изображения',
                 exportFile: 'экспортировать файл',
                 rows: ' шт.',
+                row:'ряд',
                 clickToUpload: "нажмите, чтобы загрузить",
                 column: "столбцы",
                 inccYear: 'Вы некорректно ввели год',
@@ -250,6 +253,7 @@ export default new MLCreate({
             word: {
                 parameters: 'параметри',
                 type: "тип",
+                row:'рядок',
                 showPhoto: 'показати зображення',
                 selectSearchPercent: 'виберіть відсоток: ',
                 text: "текст",

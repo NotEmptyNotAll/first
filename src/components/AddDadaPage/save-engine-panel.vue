@@ -440,15 +440,17 @@
               index="superchargedTypeFk"
           />
           <input-field class="col-md-3"
+                       :name-input="$ml.get('word.pistonDiameter')"
+                       :save-parameters="updateDataObj"
+                       index="pistonDiameter"
+          />
+          <input-field class="col-md-3"
                        :name-input="$ml.get('word.pistonStroke')"
                        :save-parameters="updateDataObj"
                        index="pistonStroke"
           />
-          <input-field class="col-md-3"
-                       :name-input="$ml.get('word.engineCapacity')"
-                       :save-parameters="updateDataObj"
-                       index="engineCapacity"
-          />
+
+
 
         </div>
         <div class=" row">
@@ -480,9 +482,9 @@
                        index="degreeCompression"
           />
           <input-field class="col-md-4"
-                       :name-input="$ml.get('word.pistonDiameter')"
+                       :name-input="$ml.get('word.engineCapacity')"
                        :save-parameters="updateDataObj"
-                       index="pistonDiameter"
+                       index="engineCapacity"
           />
           <div class="input-group col-md-4">
             <el-input :placeholder="$ml.get('word.from')"
