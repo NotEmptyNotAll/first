@@ -784,7 +784,7 @@ export default {
         this.$ml.get('word.engine'), this.$ml.get('word.releaseYear'), this.$ml.get('word.engineCapacity'),
         this.$ml.get('word.pistonDiameter'), this.$ml.get('word.flapNumber')]
       this.autoMergeTableExls(arrNameAutoCell, worksheet, lengPage, 64, 3, -1)
-      let arrDataAutoCell = [event.item.autoManufacture, event.item.engineType,
+      let arrDataAutoCell = [event.item.autoManufacture, event.item.modelName,
         event.item.engineType, event.item.releaseYear, event.item.engineCapacity,
         event.item.pistonDiameter, event.item.flapNumber]
       this.autoMergeTableExls(arrDataAutoCell, worksheet, lengPage, 64, 4, -1)
