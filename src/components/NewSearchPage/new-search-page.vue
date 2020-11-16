@@ -883,7 +883,7 @@ export default {
       const buf = await workbook.xlsx.writeBuffer()
 
       // worksheet.pageSetup.printArea = 'A1:G20';
-      saveAs(new Blob([buf]), 'abc.xlsx')
+      saveAs(new Blob([buf]), event.option.name+'.xlsx')
     },
     onexport(event) { // On Click Excel download button
       // export json to Worksheet of Excel
