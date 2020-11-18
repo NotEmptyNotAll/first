@@ -130,6 +130,10 @@
                   @on-input-action="getAutoEngByFilter"
               />
             </template>
+            <template slot-scope="scope">
+              {{ String(scope.row[scope.column.property]).indexOf('NA') === -1?scope.row[scope.column.property]:'' }}
+            </template>
+
           </el-table-column>
           <el-table-column resizable align="center"
                            v-show="engineParamData!==null"
@@ -284,7 +288,7 @@ export default {
       allTableColumns: [],
       engineParamData: null,
       isIndeterminate: true,
-      heightRowExls: 40,
+      heightRowExls: 30,
       borderTable: {
         top: {style: 'thin', color: {argb: '7b7a7a'}},
         left: {style: 'thin', color: {argb: '7b7a7a'}},
@@ -332,10 +336,11 @@ export default {
           {position: 1, color: {argb: 'd2d1d1'}}
         ]
       },
+      lengTextForMoveLine: 10,
       fontHead: {
         name: 'Arial Black',
         family: 2,
-        size: 10,
+        size: 8,
         italic: false
       },
       lengHeadNameArr: 0,
@@ -378,8 +383,17 @@ export default {
     setCurrent(row) {
       this.$refs.paramTable.setCurrentRow(row);
     },
+    moveLineInText(arr) {
+      for (let i = 0; i < arr.length; i++) {
+        if (String(arr[i]).length > this.lengTextForMoveLine) {
+          arr[i] = arr[i].replace(' ', '\n');
+        }
+      }
+      return arr
+    },
     autoMergeTableExls(arr, worksheet, leng, startCodeChar, rowNum, firstRowMergeNum) {
       console.log(arr)
+      arr = this.moveLineInText(arr)
       if (arr.length !== leng) {
         let tempArr = []
         let arrLeng = arr.length
@@ -388,7 +402,7 @@ export default {
         if (firstRowMergeNum !== -1) {
           startIndex = 2
           temp = 3
-          leng+=2
+          leng += 2
           tempArr.push(arr[0])
           tempArr.push(arr[1])
         }
@@ -399,15 +413,17 @@ export default {
             tempArr.push('')
           }
         }
-       const row =worksheet.addRow(tempArr)
-           row.height = this.heightRowExls
-           row.border = this.borderTable
-      row.alignment = {vertical: 'middle', horizontal: 'center'};
+        const row = worksheet.addRow(tempArr)
+        row.height = this.heightRowExls
+        row.border = this.borderTable
+        row.alignment = {vertical: 'middle', horizontal: 'center'};
+        row.font = this.fontHead
+
         for (let i = startIndex; i < arrLeng; i++) {
           let k = ((leng - arrLeng) - i) > 0 ? 1 + Math.floor((leng - arrLeng - i) / arrLeng) : 0
-          console.log(leng +'_' +arrLeng +'_'+ i+' '+k + ' ' + temp + ' ' + rowNum)
-          if(firstRowMergeNum !== -1 && (temp+k)<(leng-2) && i===arrLeng-1){
-          k+=(leng-2)-(temp+k)
+          console.log(leng + '_' + arrLeng + '_' + i + ' ' + k + ' ' + temp + ' ' + rowNum)
+          if (firstRowMergeNum !== -1 && (temp + k) < (leng - 2) && i === arrLeng - 1) {
+            k += (leng - 2) - (temp + k)
           }
           worksheet
               .mergeCells(String.fromCharCode(startCodeChar + temp) + rowNum + ':'
@@ -418,9 +434,10 @@ export default {
         }
 
       } else {
-       const row= worksheet.addRow(arr)
-           row.height = this.heightRowExls
-           row.border = this.borderTable
+        const row = worksheet.addRow(arr)
+        row.height = this.heightRowExls
+        row.border = this.borderTable
+        row.font = this.fontHead
         row.alignment = {vertical: 'middle', horizontal: 'center'};
       }
     },
@@ -760,19 +777,25 @@ export default {
       workbook.calcProperties.fullCalcOnLoad = true;
       workbook.views = [
         {
-          x: 0, y: 0, width: 10000, height: 20000,
+          x: 0, y: 0, width: 1000, height: 2000,
           firstSheet: 0, activeTab: 1, visibility: 'visible'
         }
       ]
-      const worksheet = workbook.addWorksheet('My Sheet', {properties: {tabColor: {argb: '5f9740'}}});
+      const worksheet = workbook.addWorksheet('My Sheet',
+          {pageSetup: {paperSize: 1, orientation: 'landscape'}});
       worksheet.pageSetup.margins = {
-        left: 5.7, right: 5.7,
+        left: 0.1, right: 0.1,
         top: 0.75, bottom: 0.75,
         header: 0.3, footer: 0.3
       };
+      // Set Print Area for a sheet
+      //worksheet.pageSetup.printArea = 'A1:G20';
+
+      // Repeat specific rows on every printed page
+      worksheet.pageSetup.printTitlesRow = '1:3';
       let arrW = []
       for (let i = 0; i < lengPage; i++) {
-        arrW.push({width: 15})
+        arrW.push({width: 10})
       }
       worksheet.columns = arrW
       const row = worksheet.addRow(['Параметри обробки до замовлення №75555'])
@@ -846,15 +869,15 @@ export default {
         startRow += kolIter + 1
 
       })
-      let tempArrFoot=[]
+      let tempArrFoot = []
       worksheet.addRow([])
-      tempArrFoot=['З параметрами обробки ознайомлений та згоден']
-      this.autoMergeTableExls(tempArrFoot, worksheet, lengPage-1, 64, startRow + 1, -1)
+      tempArrFoot = ['З параметрами обробки ознайомлений та згоден']
+      this.autoMergeTableExls(tempArrFoot, worksheet, lengPage - 1, 64, startRow + 1, -1)
       worksheet.addRow([])
-      tempArrFoot=['П.І.Б___________________','Підпис______________','Підпис______________']
-      this.autoMergeTableExls(tempArrFoot, worksheet, lengPage-1, 64, startRow + 3, -1)
-      worksheet.getCell('A'+(startRow + kolIter-2)).font = this.fontHead
-      worksheet.getCell('A'+(startRow + kolIter-2)).alignment = {vertical: 'middle', horizontal: 'center'};
+      tempArrFoot = ['П.І.Б___________________', 'Підпис______________', 'Підпис______________']
+      this.autoMergeTableExls(tempArrFoot, worksheet, lengPage - 1, 64, startRow + 3, -1)
+      worksheet.getCell('A' + (startRow + kolIter - 2)).font = this.fontHead
+      worksheet.getCell('A' + (startRow + kolIter - 2)).alignment = {vertical: 'middle', horizontal: 'center'};
       worksheet.getRow(startRow + kolIter).alignment = {vertical: 'middle', horizontal: 'center'};
 
 
@@ -863,7 +886,7 @@ export default {
       worksheet.mergeCells('A6:' + String.fromCharCode(64 + lengPage) + '6');
       for (let i = 1; i < lengPage + 1; i++) {
         worksheet.getCell(String.fromCharCode(64 + i) + '4').font = this.fontHead
-      //  worksheet.getCell(String.fromCharCode(64 + i) + '4').fill = this.fillHead
+        //  worksheet.getCell(String.fromCharCode(64 + i) + '4').fill = this.fillHead
         worksheet.getCell(String.fromCharCode(64 + i) + '4').border = this.borderTable
         worksheet.getCell(String.fromCharCode(64 + i) + '3').font = this.fontHead
         worksheet.getCell(String.fromCharCode(64 + i) + '3').fill = this.fillHead
@@ -882,10 +905,10 @@ export default {
 
       const buf = await workbook.xlsx.writeBuffer()
 
-      // worksheet.pageSetup.printArea = 'A1:G20';
-      saveAs(new Blob([buf]), event.option.name+'.xlsx')
+      saveAs(new Blob([buf]), event.option.name + '.xlsx')
     },
-    onexport(event) { // On Click Excel download button
+    onexport(event) {
+      // On Click Excel download button
       // export json to Worksheet of Excel
       // only array possible
       this.test = event
@@ -898,14 +921,9 @@ export default {
       let obj = {}
       obj[0] = 'Параметри обробки до замовлення №75555'
       dataArr.push(obj)
-      var wscols = [
-        {wpx: 50}, // "pixels"
-        {wpx: 200}, // "pixels"
-        {wpx: 200}, // "pixels"
-        {wpx: 100} // "pixels"
-      ];
+
       var animalWS = XLSX.utils.json_to_sheet(dataArr)
-      animalWS["!cols"] = wscols
+      // animalWS["!cols"] = wscols
       animalWS["!rows"] = [{hidden: true}]
       animalWS["!merges"] = arrMerdes
 
