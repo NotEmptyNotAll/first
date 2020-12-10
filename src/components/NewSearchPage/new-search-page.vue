@@ -777,7 +777,7 @@ export default {
       workbook.calcProperties.fullCalcOnLoad = true;
       workbook.views = [
         {
-          x: 0, y: 0, width: 1000, height: 2000,
+          x: 0, y: 0, width: 1000, height: 3000,
           firstSheet: 0, activeTab: 1, visibility: 'visible'
         }
       ]
@@ -785,8 +785,8 @@ export default {
           {pageSetup: {paperSize: 1, orientation: 'landscape'}});
       worksheet.pageSetup.margins = {
         left: 0.1, right: 0.1,
-        top: 0.75, bottom: 0.75,
-        header: 0.3, footer: 0.3
+        top: 0, bottom: 0,
+        header: 0, footer: 0
       };
       // Set Print Area for a sheet
       //worksheet.pageSetup.printArea = 'A1:G20';
@@ -798,7 +798,7 @@ export default {
         arrW.push({width: 10})
       }
       worksheet.columns = arrW
-      const row = worksheet.addRow(['Параметри обробки до замовлення №75555'])
+      const row = worksheet.addRow(['Параметри обробки до замовлення №'])
       row.height = this.heightRowExls
       const row1 = worksheet.addRow(['Данні автомобіля'])
       row1.height = this.heightRowExls - 10
