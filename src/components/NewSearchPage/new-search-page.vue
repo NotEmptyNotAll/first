@@ -797,7 +797,7 @@ export default {
       // worksheet.pageSetup.printTitlesRow = '1:3';
       let arrW = []
       for (let i = 0; i < lengPage; i++) {
-        arrW.push({width: 110/lengPage })
+        arrW.push({width: 100/lengPage })
       }
       worksheet.columns = arrW
       const row = worksheet.addRow(['Параметри обробки до замовлення №'])
