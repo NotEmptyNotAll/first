@@ -338,7 +338,7 @@ export default {
           {position: 1, color: {argb: 'd2d1d1'}}
         ]
       },
-      lengTextForMoveLine: 10,
+      lengTextForMoveLine: 20,
       fontHead: {
         name: 'Arial Black',
         family: 2,
@@ -388,7 +388,7 @@ export default {
     moveLineInText(arr) {
       for (let i = 0; i < arr.length; i++) {
         if (String(arr[i]).length > this.lengTextForMoveLine) {
-          arr[i] = arr[i].replaceAll(' ', '\n');
+          arr[i] = arr[i].replace(/ /g, '\n');
         }
       }
       return arr
