@@ -388,7 +388,7 @@ export default {
     moveLineInText(arr) {
       for (let i = 0; i < arr.length; i++) {
         if (String(arr[i]).length > this.lengTextForMoveLine) {
-          arr[i] = arr[i].replace(' ', '\n');
+          arr[i] = arr[i].replaceAll(' ', '\n');
         }
       }
       return arr
