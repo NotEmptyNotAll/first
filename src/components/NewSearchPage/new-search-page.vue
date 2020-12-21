@@ -131,7 +131,9 @@
               />
             </template>
             <template slot-scope="scope">
-              {{ String(scope.row[scope.column.property]).indexOf('NA') === -1?scope.row[scope.column.property]:'' }}
+              {{
+                String(scope.row[scope.column.property]).indexOf('NA') === -1 ? scope.row[scope.column.property] : ''
+              }}
             </template>
 
           </el-table-column>
@@ -429,8 +431,6 @@ export default {
               .mergeCells(String.fromCharCode(startCodeChar + temp) + rowNum + ':'
                   + String.fromCharCode(startCodeChar + (temp + k)) + rowNum);
           temp += k + 1
-
-
         }
 
       } else {
@@ -792,10 +792,10 @@ export default {
       //worksheet.pageSetup.printArea = 'A1:G20';
 
       // Repeat specific rows on every printed page
-      worksheet.pageSetup.printTitlesRow = '1:3';
+      // worksheet.pageSetup.printTitlesRow = '1:3';
       let arrW = []
       for (let i = 0; i < lengPage; i++) {
-        arrW.push({width: 10})
+        arrW.push({width: lengPage * 0.01 * 160})
       }
       worksheet.columns = arrW
       const row = worksheet.addRow(['Параметри обробки до замовлення №'])
@@ -862,7 +862,9 @@ export default {
           tempArr = []
         })
         ++kolIter
-        this.autoMergeTableExls(emptyRow, worksheet, lengPage, 64, startRow + kolIter, 1)
+        if (kolIter===1) {
+          this.autoMergeTableExls(emptyRow, worksheet, lengPage, 64, startRow + kolIter, 1)
+        }
         worksheet.getCell('A' + startRow).font = this.fontHead
         worksheet.getCell('A' + startRow).fill = this.fillHead
         worksheet.mergeCells('A' + startRow + ':A' + (startRow + kolIter));
