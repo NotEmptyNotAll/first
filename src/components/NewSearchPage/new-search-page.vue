@@ -393,9 +393,11 @@ export default {
       }
       return arr
     },
-    autoMergeTableExls(arr, worksheet, leng, startCodeChar, rowNum, firstRowMergeNum) {
+    autoMergeTableExls(arr, worksheet, leng, startCodeChar, rowNum, firstRowMergeNum, textConvert) {
       console.log(arr)
-      arr = this.moveLineInText(arr)
+      if (textConvert) {
+        arr = this.moveLineInText(arr)
+      }
       if (arr.length !== leng) {
         let tempArr = []
         let arrLeng = arr.length
@@ -795,7 +797,7 @@ export default {
       // worksheet.pageSetup.printTitlesRow = '1:3';
       let arrW = []
       for (let i = 0; i < lengPage; i++) {
-        arrW.push({width: lengPage * 0.01 * 160})
+        arrW.push({width: 110/lengPage })
       }
       worksheet.columns = arrW
       const row = worksheet.addRow(['Параметри обробки до замовлення №'])
@@ -806,18 +808,18 @@ export default {
       let arrNameAutoCell = [this.$ml.get('word.autoManufacturer'), this.$ml.get('word.autoModel'),
         this.$ml.get('word.engine'), this.$ml.get('word.releaseYear'), this.$ml.get('word.engineCapacity'),
         this.$ml.get('word.pistonDiameter'), this.$ml.get('word.flapNumber')]
-      this.autoMergeTableExls(arrNameAutoCell, worksheet, lengPage, 64, 3, -1)
+      this.autoMergeTableExls(arrNameAutoCell, worksheet, lengPage, 64, 3, -1,true)
       let arrDataAutoCell = [event.item.autoManufacture, event.item.modelName,
         event.item.engineType, event.item.releaseYear, event.item.engineCapacity,
         event.item.pistonDiameter, event.item.flapNumber]
-      this.autoMergeTableExls(arrDataAutoCell, worksheet, lengPage, 64, 4, -1)
+      this.autoMergeTableExls(arrDataAutoCell, worksheet, lengPage, 64, 4, -1,true)
 
-      worksheet.addRow([''])
+      // worksheet.addRow([''])
       worksheet.addRow(['Параметри обробки']).height = this.heightRowExls
 
       row.font = {bold: true}
       row1.font = {bold: true}
-      let startRow = 7
+      let startRow = 6
       let tempArr = []
       let kolIter = 0
       event.option.columnResponseList.forEach(item => {
@@ -831,7 +833,7 @@ export default {
 
 
         // worksheet.addRow(tempArr)
-        this.autoMergeTableExls(tempArr, worksheet, lengPage, 64, startRow, 1)
+        this.autoMergeTableExls(tempArr, worksheet, lengPage, 64, startRow, 1,true)
         let emptyRow = []
         for (let i = 0; i < tempArr.length; i++) {
           emptyRow.push(' ')
@@ -856,28 +858,28 @@ export default {
           })
           if (!this.isEmptyRow(tempArr)) {
             ++kolIter
-            this.autoMergeTableExls(tempArr, worksheet, lengPage, 64, startRow + kolIter, 1)
+            this.autoMergeTableExls(tempArr, worksheet, lengPage, 64, startRow + kolIter, 1,true)
             // worksheet.addRow(tempArr)
           }
           tempArr = []
         })
-        ++kolIter
-        if (kolIter===1) {
-          this.autoMergeTableExls(emptyRow, worksheet, lengPage, 64, startRow + kolIter, 1)
+        if (kolIter === 0) {
+          kolIter++
+          this.autoMergeTableExls(emptyRow, worksheet, lengPage, 64, startRow + kolIter, 1,true)
         }
         worksheet.getCell('A' + startRow).font = this.fontHead
         worksheet.getCell('A' + startRow).fill = this.fillHead
         worksheet.mergeCells('A' + startRow + ':A' + (startRow + kolIter));
-        startRow += kolIter + 1
+        startRow += kolIter+1
 
       })
       let tempArrFoot = []
-      worksheet.addRow([])
+      // worksheet.addRow([])
       tempArrFoot = ['З параметрами обробки ознайомлений та згоден']
-      this.autoMergeTableExls(tempArrFoot, worksheet, lengPage - 1, 64, startRow + 1, -1)
-      worksheet.addRow([])
+      this.autoMergeTableExls(tempArrFoot, worksheet, lengPage - 1, 64, startRow , -1,false)
+      // worksheet.addRow([])
       tempArrFoot = ['П.І.Б___________________', 'Підпис______________', 'Підпис______________']
-      this.autoMergeTableExls(tempArrFoot, worksheet, lengPage - 1, 64, startRow + 3, -1)
+      this.autoMergeTableExls(tempArrFoot, worksheet, lengPage - 1, 64, startRow + 1, -1,true)
       worksheet.getCell('A' + (startRow + kolIter - 2)).font = this.fontHead
       worksheet.getCell('A' + (startRow + kolIter - 2)).alignment = {vertical: 'middle', horizontal: 'center'};
       worksheet.getRow(startRow + kolIter).alignment = {vertical: 'middle', horizontal: 'center'};
@@ -885,7 +887,7 @@ export default {
 
       worksheet.mergeCells('A1:' + String.fromCharCode(64 + lengPage) + '1');
       worksheet.mergeCells('A2:' + String.fromCharCode(64 + lengPage) + '2');
-      worksheet.mergeCells('A6:' + String.fromCharCode(64 + lengPage) + '6');
+      worksheet.mergeCells('A5:' + String.fromCharCode(64 + lengPage) + '5');
       for (let i = 1; i < lengPage + 1; i++) {
         worksheet.getCell(String.fromCharCode(64 + i) + '4').font = this.fontHead
         //  worksheet.getCell(String.fromCharCode(64 + i) + '4').fill = this.fillHead
@@ -903,11 +905,10 @@ export default {
       worksheet.getCell('A1').fill = this.fillHead
       worksheet.getCell('A1').border = this.borderTable
       worksheet.getCell('A2').alignment = {vertical: 'middle', horizontal: 'center'};
-      worksheet.getCell('A6').alignment = {vertical: 'middle', horizontal: 'center'};
+      worksheet.getCell('A5').alignment = {vertical: 'middle', horizontal: 'center'};
 
       const buf = await workbook.xlsx.writeBuffer()
-
-      saveAs(new Blob([buf]), event.option.name + '.xlsx')
+      saveAs(new Blob([buf]),event.option.name+'_'+event.item.autoManufacture+'_'+event.item.engineType + '.xlsx')
     },
     onexport(event) {
       // On Click Excel download button
