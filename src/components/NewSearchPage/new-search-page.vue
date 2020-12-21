@@ -338,7 +338,7 @@ export default {
           {position: 1, color: {argb: 'd2d1d1'}}
         ]
       },
-      lengTextForMoveLine: 20,
+      lengTextForMoveLine: 10,
       fontHead: {
         name: 'Arial Black',
         family: 2,
