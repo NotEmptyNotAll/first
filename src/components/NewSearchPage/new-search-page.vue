@@ -132,7 +132,7 @@
             </template>
             <template slot-scope="scope">
               {{
-                String(scope.row[scope.column.property]).indexOf('NA') === -1 ? scope.row[scope.column.property] : ''
+                String(scope.row[scope.column.property]).indexOf('NA') !== 0 ? scope.row[scope.column.property] : ''
               }}
             </template>
 
