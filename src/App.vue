@@ -34,22 +34,18 @@
     .container {
         margin-top: 10px;
         margin-bottom: 30px;
-        transition: all .8s;
-        -webkit-box-shadow: 0px 0px 60px -25px rgba(0, 0, 0, 0.75);
-        -moz-box-shadow: 0px 0px 60px -25px rgba(0, 0, 0, 0.75);
-        box-shadow: 0px 0px 60px -25px rgba(0, 0, 0, 0.75);
+        transition: all .3s;
+        -webkit-box-shadow: 0px 0px 40px -15px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: 0px 0px 40px -15px rgba(0, 0, 0, 0.75);
+        box-shadow: 0px 0px 40px -15px rgba(0, 0, 0, 0.75);
         background-color: white;
     }
 
-    .rad {
-        border-radius: 30px;
-
-    }
 
     .container:hover {
-        -webkit-box-shadow: 0px 6px 66px -12px rgba(0, 0, 0, 0.75);
-        -moz-box-shadow: 0px 6px 66px -12px rgba(0, 0, 0, 0.75);
-        box-shadow: 0px 6px 66px -12px rgba(0, 0, 0, 0.75);
+        -webkit-box-shadow: 0px 0px 55px -15px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: 0px 55px 63px -15px rgba(0, 0, 0, 0.75);
+        box-shadow: 0px 0px 55px -15px rgba(0, 0, 0, 0.75);
     }
 
     li:hover {
@@ -88,13 +84,7 @@
         box-shadow: 0px 0px 60px -25px rgba(0, 0, 0, 0.75);
     }
 
-    .card:hover {
-        border-top-left-radius: 50px;
-        border-top-right-radius: 50px;
-        -webkit-box-shadow: 0px 6px 66px -12px rgba(0, 0, 0, 0.75);
-        -moz-box-shadow: 0px 6px 66px -12px rgba(0, 0, 0, 0.75);
-        box-shadow: 0px 6px 66px -12px rgba(0, 0, 0, 0.75);
-    }
+
 
     .btn {
         max-height: 38px;

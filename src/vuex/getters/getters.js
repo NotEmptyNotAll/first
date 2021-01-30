@@ -38,6 +38,9 @@ export default {
     LISTPARAMUP(state) {
         return state.listParamUp;
     },
+    REGISTRATION_LOADING(state) {
+        return state.registrationLoading;
+    },
     PARAM_NAME_AND_UNITS(state) {
         return state.paramNameAndUnits;
     },

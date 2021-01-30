@@ -2,11 +2,37 @@ import axios from "axios";
 
 //let urlApi = 'https://enginefinal.herokuapp.com/';
 //let urlApi = 'http://10.102.200.11:5050/';
-let urlApi = 'http://eng-test.24x7tools.com:5050/';
+//let urlApi = 'http://eng-test.24x7tools.com:5050/';
 //let urlApi = 'http://10.102.200.11:5050/';
-//let urlApi = 'http://localhost:5050/';
+let urlApi = 'http://localhost:5050/';
 
 export default {
+    SIGNIN({commit}, data) {
+        commit('SET_SHOW_LOAD', true)
+        return axios({
+            method: 'POST',
+            url: urlApi + 'signin',
+            data: data,
+            responseType: 'json'
+        }).then(resp => {
+            commit('SET_SHOW_LOAD', false)
+            return resp;
+        })
+            .catch((error) => {
+                console.log(error);
+                commit('SET_SHOW_LOAD', false)
+                return error
+            })
+    },
+    REGISTRATION({commit}, saveDataObj) {
+        commit('SET_REGISTRATION_LOADING', true)
+        return axios({
+            method: 'POST',
+            url: urlApi + 'user/registration',
+            data: saveDataObj,
+            responseType: 'json'
+        })
+    },
     async GET_COLUMN_PARAM({commit}) {
         //  commit('SET_LOAD_ALL_AUTO_ENG', true);
         return await axios({

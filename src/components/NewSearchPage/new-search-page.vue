@@ -1002,11 +1002,11 @@ export default {
     this.GET_ENGDATA_BY_PARAM(this.searchData);
 
 
-    if (this.ALL_AUTO_ENG.columnParam === null) {
+    // if (this.ALL_AUTO_ENG.columnParam === null) {
       this.GET_COLUMN_PARAM();
       this.GET_ALL_AUTO(this.pageSetting);
       // this.GET_COLUMN_PARAM();
-    }
+    // }
     this.checkedColumns = [
       '№', this.$ml.get('word.autoManufacturer'),
       this.$ml.get('word.autoModel'), this.$ml.get('word.engine'), this.$ml.get('word.releaseYear'),

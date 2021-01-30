@@ -3,11 +3,12 @@ import axios from "axios";
 
 //let urlApi = 'https://enginefinal.herokuapp.com/save/';
 //let urlApi = 'http://10.102.200.11:5050/save/';
-let urlApi = 'http://eng-test.24x7tools.com:5050/save/';
+//let urlApi = 'http://eng-test.24x7tools.com:5050/save/';
 //let urlApi = 'http://10.102.200.11:5050/save/';
-//let urlApi = 'http://localhost:5050/save/';
+let urlApi = 'http://localhost:5050/save/';
 
 export default {
+
     SAVE_FAST_PARAM_DATA({commit}, saveDataObj) {
         commit('SET_SAVE_FAST_PARAM_STATUS', true)
         return axios({

@@ -24,38 +24,38 @@ export default {
     },
 
     SET_DATA_PAGE_AUTO_ENGINE: (state, data) => {
-        state.addPageData.automobileEngine=data
+        state.addPageData.automobileEngine = data
     },
 
     SET_DATA_PAGE_ENGINE: (state, data) => {
-        state.addPageData.engine=data
+        state.addPageData.engine = data
     },
     SET_DATA_PAGE_AUTO_MODEL: (state, data) => {
-        state.addPageData.autoModel=data
+        state.addPageData.autoModel = data
     },
     SET_DATA_PAGE_CYLINDERS: (state, data) => {
-        state.addPageData.cylinders=data
+        state.addPageData.cylinders = data
     },
     SET_DATA_PAGE_PARAM_NAME: (state, data) => {
-        state.addPageData.parameterName=data
+        state.addPageData.parameterName = data
     },
     SET_DATA_PAGE_PARAM_NAME_SIZE: (state, data) => {
-        state.addPageData.parameterSizeName=data
+        state.addPageData.parameterSizeName = data
     },
     SET_DATA_PAGE_SUPERCHARGE: (state, data) => {
-        state.addPageData.superchargedType=data
+        state.addPageData.superchargedType = data
     },
     SET_DATA_PAGE_ENGINE_MANUF: (state, data) => {
-        state.addPageData.engineManufacture=data
+        state.addPageData.engineManufacture = data
     },
     SET_DATA_PAGE_AUTO_MANUF: (state, data) => {
-        state.addPageData.autoManufacturer=data
+        state.addPageData.autoManufacturer = data
     },
     SET_DATA_PAGE_FUEL_TYPE: (state, data) => {
-        state.addPageData.fuelType=data
+        state.addPageData.fuelType = data
     },
     SET_DATA_PAGE_MEASUREMENT_UNITS: (state, data) => {
-        state.addPageData.measurementUnits=data
+        state.addPageData.measurementUnits = data
     },
     SET_LOAD_ALL_AUTO_ENG: (state, loadAllAutoEng) => {
         state.loadAllAutoEng = loadAllAutoEng;
@@ -83,6 +83,9 @@ export default {
     },
     SET_ELEMENTS: (state, elements) => {
         state.elements = elements;
+    },
+    SET_REGISTRATION_LOADING: (state, loading) => {
+        state.registrationLoading = loading;
     },
     SET_TREE_ROOT_NAMES: (state, treeRootNames) => {
         state.treeRootNames = treeRootNames;

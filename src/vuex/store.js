@@ -34,6 +34,7 @@ let store = new Vuex.Store({
         elementsLoad:false,
         paramName:[],
         showEditParam:false,
+        registrationLoading:false,
         engine:null,
         loadParamForTree:false,
         showLoad: false,
