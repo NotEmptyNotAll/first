@@ -163,7 +163,7 @@ export default {
                 this.$message({
                   showClose: true,
                   type: 'info',
-                  message: data.message
+                  message: this.$ml.get('msg.userRegist')
                 })
                 console.log(data)
               },

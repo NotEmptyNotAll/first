@@ -111,6 +111,8 @@ export default new MLCreate({
 
             },
             msg: {
+                userRegist: "A message was sent to the mail to confirm the account. Open the message and follow the link",
+
                 alertParamWarn:"warning",
                 inNextParam: "New entries will be created in the following parameters: ",
                 passwordErr: 'password is required!',
@@ -249,6 +251,7 @@ export default new MLCreate({
                 deleteConfirm: "Вы действительно хотите удалить это?",
                 confirmEmail: "Ваша учетная запись была подтверждена. Можете перейти на страницу входа, и авторизоваться.",
                 colorConfirmMsg: "вы хотите изменить цвет всех дочерних компонентов этого элемента?",
+                userRegist: "Для подтверждения учетной записина на  почту было выслано сообщения. Откройте сообщение и перейдите по ссылке",
                 duplicateValue: 'дублированное значение'
             },
             errPage: {
@@ -369,6 +372,7 @@ export default new MLCreate({
                 colorAdd: "колір змінений",
                 wrongMatchPass: "не збігається пароль",
                 authErr: 'Помилка авторизації',
+                userRegist: "Для підтвердження облікової запісіна на пошту було вислано повідомлення. Відкрийте повідомлення та перейдіть за посиланням",
                 deleteConfirm: "Ви впевнені, що хочете видалити це?",
                 deleteSuccess: 'видалення пройшло успішно',
                 colorConfirmMsg: "ви хочете змінити колір всіх дочірніх компонентів цього елемента?",
@@ -493,6 +497,7 @@ export default new MLCreate({
                 userNamedErr: 'Wymagana jest nazwa użytkownika!',
                 colorAdd: "kolor został zmieniony",
                 wrongMatchPass: "hasło nie pasuje",
+                userRegist: "Wiadomość została wysłana na pocztę, aby potwierdzić konto. Otwórz wiadomość i kliknij łącze",
                 authErr: 'Błąd autoryzacji',
                 deleteConfirm: "Czy na pewno chcesz usunąć ten element?",
                 deleteSuccess: 'usunięcie powiodło się',

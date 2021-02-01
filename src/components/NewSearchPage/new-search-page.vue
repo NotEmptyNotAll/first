@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="showModeratorBoard" class="container search-border tab  rounded bg-white rad">
+    <div v-if="this.currentUser.roles.indexOf('USER') !== -1" class="container search-border tab  rounded bg-white rad">
       <vue-context-menu
           :pageSetting="pageSetting"
           :elementId="'myFirstMenu'"
@@ -372,12 +372,13 @@ export default {
       this.listFileUrl = list
       this.dialogFormVisible = true
     },
-    showModeratorBoard() {
-      if (this.currentUser) {
-        return this.currentUser.roles.indexOf('MODERATOR') !== -1
+    showUserBoard() {
+      if (this.currentUser!==undefined) {
+        return this.currentUser.roles.indexOf('USER') !== -1
       }
       return false;
     },
+
     // eslint-disable-next-line no-unused-vars
     handleHeaderStyle({row, column, rowIndex, columnIndex}) {
       return 'background-color: ' + column.property + ';' + 'padding:3px;'
@@ -910,6 +911,7 @@ export default {
       const buf = await workbook.xlsx.writeBuffer()
       saveAs(new Blob([buf]),event.option.name+'_'+event.item.autoManufacture+'_'+event.item.engineType + '.xlsx')
     },
+
     onexport(event) {
       // On Click Excel download button
       // export json to Worksheet of Excel
@@ -979,6 +981,7 @@ export default {
       this.pageSetting.initRecordFrom = 1
       this.GET_ALL_AUTO(this.pageSetting)
     },
+
     changeSearchPercent(value) {
       this.pageSetting.searchPercent = value
       this.pageSetting.initRecordFrom = 1
@@ -987,6 +990,13 @@ export default {
 
   },
   computed: {
+    currentUser() {
+
+      return this.$store.state.auth.user;
+    },
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
+    },
     ...mapGetters([
       'ALL_AUTO_ENG',
       'LOADPARAM',
@@ -995,6 +1005,7 @@ export default {
   }
   ,
   mounted() {
+
     // eslint-disable-next-line no-unused-vars
     document.body.oncontextmenu = function () {
       return false;
