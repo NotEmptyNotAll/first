@@ -15,7 +15,7 @@
             <el-menu-item class="item-menu" index="/addData" v-if="showAdminBoard"> <i class="el-icon-notebook-1"></i>{{$ml.get('word.updateData')}}</el-menu-item>
             <el-menu-item class="item-menu" index="/edittree" v-if="showAdminBoard"><i class="el-icon-edit-outline"></i>{{$ml.get('word.setParameter')}}</el-menu-item>
             <el-menu-item class="item-menu" index="/treeStruct" v-if="showAdminBoard"> {{$ml.get('word.treeStruct')}}</el-menu-item>
-            <el-submenu index="2" style="position: absolute; right: 6vw">
+            <el-submenu index="2" style="position: absolute; right: 7vw">
                 <template class="item-menu" slot="title"><span
                         style="font-size: 130%;">{{$ml.get('word.language')}}</span></template>
                 <el-menu-item align="center"
@@ -24,7 +24,9 @@
                 <el-menu-item align="center" @click="$ml.change('russian')">Рус <img
                         src="../../assets/Russia.png"></el-menu-item>
                 <el-menu-item align="center" @click="$ml.change('ukraine')">Укр <img
-                        src="../../assets/Ukraine.png"></el-menu-item>
+                        src="../../assets/poland.png"></el-menu-item>
+              <el-menu-item align="center" @click="$ml.change('poland')">Plnd <img
+                  src="../../assets/Ukraine.png"></el-menu-item>
             </el-submenu>
             <el-menu-item class="item-menu" v-if="!currentUser" index="/login" style="position: absolute; right: 0vw">
                 {{$ml.get('word.login')}}
