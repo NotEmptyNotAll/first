@@ -1,24 +1,19 @@
-# untitled8
 
-## Project setup
-```
-npm install
-```
+### инсталляция данных
+`npm install`
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+### собрать проект
+`npm run build `
 
-### Compiles and minifies for production
-```
-npm run build
-```
 
-### Lints and fixes files
-```
-npm run lint
-```
+### запускаем  проект
+`npm run serve -- --port 7020` здесь можете указать свой порт
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### изменить api бекенда
+изменить значение urlApi в таких файлах
+`src/vuex/action/api-requests.js`
+`src/vuex/action/api-delete.js`
+`src/vuex/action/api-import.js`
+`src/vuex/action/api-save-requests.js`
+`src/vuex/action/api-update-requests.js`
+`src/service/auth.service.js`

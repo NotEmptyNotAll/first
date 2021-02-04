@@ -759,13 +759,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
-$light-grey: #ecf0f1;
-$grey: darken($light-grey, 15%);
-$blue: #409EFF;
-$white: #fff;
-$black: #333;
-
+<style scoped>
 .label {
   color: gray;
   padding-left: 10px;
@@ -792,64 +786,58 @@ $black: #333;
   list-style: none;
   position: absolute;
   z-index: 1000000;
-  background-color: $light-grey;
+  background-color: #ecf0f1;
   border-bottom-width: 0px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-  "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-  sans-serif;
-  box-shadow: 0 3px 6px 0 rgba($black, 0.2);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  box-shadow: 0 3px 6px 0 rgba(51, 51, 51, 0.2);
   border-radius: 4px;
+}
 
-  &--active {
-    display: block;
-  }
+.vue-simple-context-menu--active {
+  display: block;
+}
 
-  .dialog-foot {
-    display: flex;
-  }
+.vue-simple-context-menu .dialog-foot {
+  display: flex;
+}
 
-  &__item {
-    display: flex;
-    color: $black;
-    cursor: pointer;
-    padding: 5px 15px;
-    align-items: center;
+.vue-simple-context-menu__item {
+  display: flex;
+  color: #333;
+  cursor: pointer;
+  padding: 5px 15px;
+  align-items: center;
+}
 
-    &:hover {
-      background-color: #409EFF;
-      color: $white;
-    }
-  }
+.vue-simple-context-menu__item:hover {
+  background-color: #409EFF;
+  color: #fff;
+}
 
-  .main-row {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-  }
+.vue-simple-context-menu .main-row {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
 
-  el-select {
-    justify-self: left;
-  }
+.vue-simple-context-menu el-select {
+  justify-self: left;
+}
 
-  .vue-simple-context-menu__item {
-    width: 250px;
-    padding-left: 30px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
+.vue-simple-context-menu .vue-simple-context-menu__item {
+  width: 250px;
+  padding-left: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
 
-  // Have to use the element so we can make use of `first-of-type` and
-  // `last-of-type`
-  li {
-    &:first-of-type {
-      margin-top: 4px;
-    }
+.vue-simple-context-menu li:first-of-type {
+  margin-top: 4px;
+}
 
-    &:last-of-type {
-      margin-bottom: 4px;
-    }
-  }
+.vue-simple-context-menu li:last-of-type {
+  margin-bottom: 4px;
 }
 </style>
