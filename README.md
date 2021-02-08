@@ -1,4 +1,7 @@
 
+### установка последней версии vue/cli
+`npm install -g @vue/cli`
+
 ### инсталляция данных
 `npm install`
 
@@ -17,3 +20,6 @@
 `src/vuex/action/api-save-requests.js`
 `src/vuex/action/api-update-requests.js`
 `src/service/auth.service.js`
+
+### ошибки с версиями node
+удалить `package-lock.json`, после запустить `npm install` для инсталяции   
