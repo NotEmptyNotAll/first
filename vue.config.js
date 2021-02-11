@@ -16,5 +16,8 @@ module.exports = {
 module.exports = {
     devServer: {
         https: false,
+    },
+    watchOptions: {
+        ignored: /node_modules/
     }
 }
