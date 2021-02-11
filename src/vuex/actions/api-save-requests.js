@@ -8,7 +8,23 @@ let urlApi = 'http://10.102.200.11:5050/save/';
 //let urlApi = 'http://localhost:5050/save/';
 
 export default {
-
+    async GET_ALL_ADDITIONAL_DATA_BEFORE_SAVE({commit}) {
+                commit('SET_LOAD_ADDITIONAL_DATA', true);
+        return await axios({
+            method: 'GET',
+            url: urlApi + 'getAllAdditionalData',
+            responseType: 'json'
+        }).then(resp => {
+            commit('SET_ADDITIONAL_DATA', resp.data)
+            commit('SET_LOAD_ADDITIONAL_DATA', false);
+            return resp;
+        })
+            .catch((error) => {
+                console.log(error);
+                commit('SET_LOAD_ADDITIONAL_DATA', false);
+                return error
+            })
+    },
     SAVE_FAST_PARAM_DATA({commit}, saveDataObj) {
         commit('SET_SAVE_FAST_PARAM_STATUS', true)
         return axios({
@@ -284,6 +300,7 @@ export default {
             data: saveDataObj,
             responseType: 'json'
         }).then(resp => {
+            commit('GET_ALL_ADDITIONAL_DATA')
             commit('SET_SAVE_STATUS', resp.data)
             commit('SET_LOAD_SAVE_CYLINDERS', false);
             return resp;

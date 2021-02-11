@@ -801,11 +801,11 @@ export default {
         arrW.push({width: 100/lengPage })
       }
       worksheet.columns = arrW
-      const row = worksheet.addRow(['Параметри обробки до замовлення №'])
+      const row = worksheet.addRow([this.$ml.get('word.tableHeader')])
       row.height = this.heightRowExls
-      const row1 = worksheet.addRow(['Данні автомобіля'])
+      const row1 = worksheet.addRow([this.$ml.get('word.tableAutoHeader')])
       row1.height = this.heightRowExls - 10
-
+alert(this.$ml.get('word.autoManufacturer'))
       let arrNameAutoCell = [this.$ml.get('word.autoManufacturer'), this.$ml.get('word.autoModel'),
         this.$ml.get('word.engine'), this.$ml.get('word.releaseYear'), this.$ml.get('word.engineCapacity'),
         this.$ml.get('word.pistonDiameter'), this.$ml.get('word.flapNumber')]
@@ -816,7 +816,7 @@ export default {
       this.autoMergeTableExls(arrDataAutoCell, worksheet, lengPage, 64, 4, -1,true)
 
       // worksheet.addRow([''])
-      worksheet.addRow(['Параметри обробки']).height = this.heightRowExls
+      worksheet.addRow([this.$ml.get('word.tableParamHeader')]).height = this.heightRowExls
 
       row.font = {bold: true}
       row1.font = {bold: true}
@@ -826,7 +826,7 @@ export default {
       event.option.columnResponseList.forEach(item => {
         kolIter = 0
         tempArr.push(item.name)
-        tempArr.push('рем. размеры')
+        tempArr.push(this.$ml.get('word.paramSizeName'))
         let listParam = this.getMaxListParamFromColumnList(item.columnList)
         item.columnList.forEach(elem => {
           tempArr.push(elem.name)
@@ -876,10 +876,13 @@ export default {
       })
       let tempArrFoot = []
       // worksheet.addRow([])
-      tempArrFoot = ['З параметрами обробки ознайомлений та згоден']
+      tempArrFoot = [this.$ml.get('word.tableFooterText')]
       this.autoMergeTableExls(tempArrFoot, worksheet, lengPage - 1, 64, startRow , -1,false)
       // worksheet.addRow([])
-      tempArrFoot = ['П.І.Б___________________', 'Підпис______________', 'Підпис______________']
+
+      tempArrFoot = [this.$ml.get('word.client')+'___________________',
+        this.$ml.get('word.signature')+'______________',
+        this.$ml.get('word.date')+'______________']
       this.autoMergeTableExls(tempArrFoot, worksheet, lengPage - 1, 64, startRow + 1, -1,true)
       worksheet.getCell('A' + (startRow + kolIter - 2)).font = this.fontHead
       worksheet.getCell('A' + (startRow + kolIter - 2)).alignment = {vertical: 'middle', horizontal: 'center'};
@@ -924,7 +927,7 @@ export default {
       let lengPage = this.findMaxColumns(event) + 1
       arrMerdes.push({s: {r: 1, c: 0}, e: {r: 1, c: lengPage}})
       let obj = {}
-      obj[0] = 'Параметри обробки до замовлення №75555'
+      obj[0] = this.$ml.get('word.tableHeader')+'75555'
       dataArr.push(obj)
 
       var animalWS = XLSX.utils.json_to_sheet(dataArr)
@@ -1169,4 +1172,4 @@ export default {
   width: 100%;
   height: 100%;
 }
-</style>`
+</style>

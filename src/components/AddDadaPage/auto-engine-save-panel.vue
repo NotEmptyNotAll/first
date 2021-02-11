@@ -94,7 +94,7 @@
                   icon="el-icon-info"
                   cancelButtonType="danger"
                   iconColor="red"
-                  @onConfirm="deleteObj(scope.$index, scope.row,$event)"
+                  @confirm="deleteObj(scope.$index, scope.row,$event)"
                   :title="confirmText"
               >
                 <el-button
@@ -810,7 +810,8 @@ export default {
 
     },
     async save(number) {
-      let temp = this.ADDITIONAL_DATA.autoEng.find(elem => {
+
+      let temp = this.DATA_PAGE.automobileEngine.data.find(elem => {
             let dupAutoM = elem.autoManufactureFk === this.ADDITIONAL_DATA.autoManufacture.find(item =>
                 item.id === this.saveDataObj.autoManufactureFk
             ).data;
@@ -832,7 +833,7 @@ export default {
           message: this.$ml.get('word.dataAddSuccess'),
           type: 'success'
         });
-        this.GET_ALL_ADDITIONAL_DATA()
+        // this.GET_ALL_ADDITIONAL_DATA()
       } else {
         this.$message({
           showClose: true,
@@ -840,6 +841,8 @@ export default {
           type: 'error'
         });
       }
+      this.GET_AUTO_ENG_PAGINATION(this.pageSetting)
+
       //  this.SAVE_DATA_ENGINE_NUMBER(this.saveDataEngParam);
       console.log(number)
     },
@@ -922,6 +925,7 @@ export default {
     }
   },
   mounted() {
+    this.GET_ALL_ADDITIONAL_DATA();
     this.checkedColumns = [ this.$ml.get('word.engine'), this.$ml.get('word.autoManufacturer'),
       this.$ml.get('word.autoModel'), this.$ml.get('word.releaseYearFrom'), this.$ml.get('word.releaseYearBy')];
     this.columns = [ this.$ml.get('word.engine'), this.$ml.get('word.autoManufacturer'),

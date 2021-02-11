@@ -86,7 +86,7 @@ export default {
         }
       ]
     }),
-    lang: 'EN',
+    lang: 'PL',
     searchLink: false,
     updateDataLink: false,
     treeElemLink: false,
@@ -124,7 +124,7 @@ export default {
   },
   watch: {},
   mounted() {
-    this.$ml.change('english')
+    this.$ml.change('poland')
   }
 }
 </script>

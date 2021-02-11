@@ -43,7 +43,7 @@
             </el-dropdown>
           </div>
           <div class="input-group col-md-4">
-            <el-input :placeholder="$ml.get('word.search')"  v-model="pageSetting.data"
+            <el-input :placeholder="$ml.get('word.search')" v-model="pageSetting.data"
                       v-on:change="onChange"
                       class="input-with-select" clearable>
               <el-button slot="prepend" icon="el-icon-search"></el-button>
@@ -94,7 +94,7 @@
                   icon="el-icon-info"
                   cancelButtonType="danger"
                   iconColor="red"
-                  @onConfirm="deleteObj(scope.$index, scope.row,$event)"
+                  @confirm="deleteObj(scope.$index, scope.row,$event)"
                   :title="confirmText"
               >
                 <el-button
@@ -145,15 +145,15 @@
               </tbody>
           </table>-->
         <div class="pagin-content">
-        <el-pagination
-            class="pagin-st"
-            @current-change="handleCurrentPage"
-            background
-            :current-page.sync="pageSetting.initRecordFrom"
-            layout="prev, pager, next"
-            :total="dataList.countResults*10">
-        </el-pagination>
-      </div>
+          <el-pagination
+              class="pagin-st"
+              @current-change="handleCurrentPage"
+              background
+              :current-page.sync="pageSetting.initRecordFrom"
+              layout="prev, pager, next"
+              :total="dataList.countResults*10">
+          </el-pagination>
+        </div>
       </el-tab-pane>
 
       <el-tab-pane :label="$ml.get('word.save')" name="1">
@@ -180,7 +180,7 @@
 
           />
           <div class="col input-group  col-md-3">
-            <el-button :loading="loadStatus && LOAD_ADDITIONAL_DATA"
+            <el-button :loading="saveLoad"
                        @click="save(1)" plain
                        style="width: 100%"
                        type="success"><span>{{ $ml.get('word.save') }}</span>
@@ -325,12 +325,13 @@ export default {
   name: "save-update-panel",
   components: {InputField, VueDatalist},
   data: () => ({
+    saveLoad:false,
     activeName: '0',
     showErr: false,
     pageSetting: {
       initRecordFrom: 1,
       pageSize: 50,
-      data:null
+      data: null
     },
     listForSearch: [],
     saveDataObj: {
@@ -421,7 +422,7 @@ export default {
       this.$emit("delete-data-api", row.id)
       console.log(index, row);
     },
-   filterResults() {
+    filterResults() {
       // first uncapitalize all the things
       this.listForSearch = this.dataList.data.filter((item) => {
         return item.data.toLowerCase().indexOf(this.search.toLowerCase()) > -1;
@@ -519,8 +520,8 @@ export default {
       })
       return;
     },
-    indexMethod(index){
-      return (this.pageSetting.initRecordFrom-1)*this.pageSetting.pageSize+index
+    indexMethod(index) {
+      return (this.pageSetting.initRecordFrom - 1) * this.pageSetting.pageSize + index
     },
     // eslint-disable-next-line no-unused-vars
     handleRemove(file, fileList) {
@@ -592,23 +593,25 @@ export default {
       console.log(index, row);
     },
     async save(number) {
-
+      this.saveLoad=true
       let temp = this.dataList.data.find(item =>
           item.data === this.saveDataObj.saveData
       );
       if (temp === undefined) {
-        if (this.saveDataObj.saveData != null) {
+        if (this.saveDataObj.saveData !== null) {
           if (this.saveDataObj.status === null) {
             this.saveDataObj.status = 1;
           }
           this.$emit("save-data-api", this.saveDataObj);
-          this.$message({
-            showClose: true,
-            message: this.$ml.get('word.dataAddSuccess'),
-            type: 'success'
-          });
-          await setTimeout(() => console.log('1'), 1500);
-          this.GET_ALL_ADDITIONAL_DATA();
+          setTimeout(() => {
+            this.saveLoad=false
+            this.$message({
+              showClose: true,
+              message: this.$ml.get('word.dataAddSuccess'),
+              type: 'success'
+            });
+            this.$emit("load-data", this.pageSetting)}, 1500);
+
         }
 
       } else {
@@ -698,10 +701,10 @@ export default {
   mounted() {
     this.$emit("load-data", this.pageSetting)
 
-   // this.listForSearch = this.dataList.data;
-    this.checkedColumns = [ this.$ml.get('word.name'), this.$ml.get('word.status')];
-    this.columns = [ this.$ml.get('word.name'), this.$ml.get('word.status')];
-    this.columnOptions = [ this.$ml.get('word.name'), this.$ml.get('word.status')];
+    // this.listForSearch = this.dataList.data;
+    this.checkedColumns = [this.$ml.get('word.name'), this.$ml.get('word.status')];
+    this.columns = [this.$ml.get('word.name'), this.$ml.get('word.status')];
+    this.columnOptions = [this.$ml.get('word.name'), this.$ml.get('word.status')];
     this.tableColumns = [
       {key: 'data', label: this.$ml.get('word.name'), sortable: true},
       {key: 'status', label: this.$ml.get('word.status'), sortable: true}];

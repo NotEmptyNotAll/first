@@ -1,5 +1,4 @@
 <template>
-
   <div>
     <el-tabs v-model="activeName" @tab-click="handleTabsClick">
       <el-tab-pane :label="$ml.get('word.table')" name="0">
@@ -94,7 +93,7 @@
                   icon="el-icon-info"
                   cancelButtonType="danger"
                   iconColor="red"
-                  @onConfirm="deleteObj(scope.$index, scope.row,$event)"
+                  @confirm="deleteObj(scope.$index, scope.row,$event)"
                   :title="confirmText"
               >
                 <el-button
@@ -364,6 +363,7 @@ export default {
   // eslint-disable-next-line vue/no-unused-components
   components: {InputField, VueDatalist},
   data: () => ({
+    saveLoad:false,
     tablePage: true,
     savePage: false,
     updatePage: false,
@@ -674,33 +674,40 @@ export default {
       console.log(1)
     },
     async save(number) {
-
+      this.loadStatus=true
+      this.saveLoad=true
       let temp = this.dataList.data.find(item =>
           item.data === this.saveDataObj.saveData_primary
       );
 
       if (temp === undefined) {
-        this.$message({
-          showClose: true,
-          message: this.$ml.get('word.dataAddSuccess'),
-          type: 'success'
-        });
+        // this.$message({
+        //   showClose: true,
+        //   message: this.$ml.get('word.dataAddSuccess'),
+        //   type: 'success'
+        // });
         if (this.saveDataObj.saveData_primary != null) {
           if (this.saveDataObj.status === null) {
             this.saveDataObj.status = 1;
           }
 
           await this.$emit("save-data-api", this.saveDataObj);
-          this.cancel()
+        //  this.cancel()
 
-          let promise = new Promise((resolve) => {
-            setTimeout(() => resolve("готово!"), 1500)
-          });
-          await promise
-          this.GET_ALL_ADDITIONAL_DATA();
 
-          this.GET_PARAM_NAME();
-          this.cancel()
+          setTimeout(() => {
+            this.saveLoad=false
+            this.loadStatus=false
+            this.$message({
+              showClose: true,
+              message: this.$ml.get('word.dataAddSuccess'),
+              type: 'success'
+            });
+            this.$emit("load-data", this.pageSetting)}, 1500);
+//          this.GET_ALL_ADDITIONAL_DATA();
+
+  //        this.GET_PARAM_NAME();
+    //      this.cancel()
 
         }
       } else {

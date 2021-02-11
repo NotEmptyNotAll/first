@@ -94,7 +94,7 @@
                   icon="el-icon-info"
                   cancelButtonType="danger"
                   iconColor="red"
-                  @onConfirm="deleteObj(scope.$index, scope.row,$event)"
+                  @confirm="deleteObj(scope.$index, scope.row,$event)"
                   :title="confirmText"
               >
                 <el-button
@@ -1136,7 +1136,8 @@ export default {
       console.log(number)
     },
     async saveEngManufacture(number) {
-      let temp = this.ADDITIONAL_DATA.engine.find(item =>
+
+      let temp = this.DATA_PAGE.engine.data.find(item =>
           item.data === this.saveDataObj.engineType
       );
       if (temp === undefined) {
@@ -1150,6 +1151,7 @@ export default {
           message: this.$ml.get('word.dataAddSuccess'),
           type: 'success'
         });
+        this.GET_ENG_PAGINATION(this.pageSetting)
         let obj = {
           cylindersNumber: this.saveDataObj.cylindersNumber,
           cylindersPlacement: this.ADDITIONAL_DATA.cylinders.find(item => item.id === this.saveDataObj.cylindersPlacementFk).data,
