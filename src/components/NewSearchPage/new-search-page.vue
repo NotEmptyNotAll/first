@@ -99,7 +99,7 @@
             @current-change="handleCurrentChange"
             @row-contextmenu="handleClick1"
             :header-cell-style="handleHeaderStyle"
-            style="width: 100%; font-size: 0.8rem"
+            style="width: 100%; font-size: 0.8rem;"
         >
           <el-table-column
               v-for="clmn in tableColumns"
@@ -111,7 +111,6 @@
               :prop="clmn.key"
               :label="clmn.label"
               :index="clmn"
-
           >
 
             <template slot="header" style="font-size: 0.8rem"
@@ -175,7 +174,7 @@
                 <span v-show="column.columnList[0]!==undefined && scope.row[col.id]!==undefined"
                       v-for="col in column.columnList"
                       v-bind:key="col">
-                                   <strong v-if="(col.name!=='std' && col.name!=='Std' && col.name!=='знач.' )"
+                                   <strong v-if="(col.name!=='std' && col.name!=='Std' && col.name!=='знач.' && col.name!=='std.' && col.name!=='dane' )"
 
                                    >{{ col.name + ": " }}</strong>
                                       {{ scope.row[col.id] }}

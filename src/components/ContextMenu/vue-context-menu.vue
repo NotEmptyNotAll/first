@@ -170,7 +170,7 @@
                     clearable
                     :placeholder="param.textData" v-model="param.textData"
                     maxlength="250"
-                    ></el-input>
+          ></el-input>
               </span>
             </div>
           </div>
@@ -522,7 +522,13 @@ export default {
     },
     async saveAllParam() {
       // eslint-disable-next-line no-constant-condition
-      if (!(this.STARTPARAM.autoModel.length === 1 && this.STARTPARAM.engineManufacture.length === 1
+      if ((this.autoDataSave.engineTypeId === null || this.autoDataSave.modelNameId === null || this.autoDataSave.autoManufacture === null) && this.paraSaveList.length===0) {
+        this.$message({
+          showClose: true,
+          message: this.$ml.get('msg.notFullData'),
+          type: 'error'
+        });
+      } else if (!(this.STARTPARAM.autoModel.length === 1 && this.STARTPARAM.engineManufacture.length === 1
           && this.STARTPARAM.engineType.length === 1
           && this.STARTPARAM.engineType[0].id === this.autoDataSave.engineTypeId
           && this.STARTPARAM.autoModel[0].id === this.autoDataSave.modelNameId
@@ -637,7 +643,7 @@ export default {
         this.addNewParamToList()
       }
       if (this.listParmName.filter(item => {
-        return item.data.toLowerCase() !== 'std' && item.data.toLowerCase() !== 'знач.'
+        return item.data.toLowerCase() !== 'std' && item.data.toLowerCase() !== 'знач.' && item.data.toLowerCase() !== 'std.' && item.data.toLowerCase() !== 'dane'
       }).length === 0 && column.index.key === undefined) {
         this.paramList[0].elemId = this.listParmName[0].id
         this.paramList[0].elemName = this.$ml.get('word.value')

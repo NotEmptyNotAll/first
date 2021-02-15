@@ -118,7 +118,7 @@
                     },
                     msg: {
                         userRegist: "A message was sent to the mail to confirm the account. Open the message and follow the link",
-
+                        notFullData: "you entered insufficient data",
                         alertParamWarn: "warning",
                         inNextParam: "New entries will be created in the following parameters: ",
                         passwordErr: 'password is required!',
@@ -261,6 +261,7 @@
                         chooseColor: 'для изменения цвета выберите элемент из дерева',
                         userNamedErr: "Имя пользователя необходимо!",
                         wrongMatchPass: "пароль  не совпадает",
+                        notFullData: "вы ввели недостаточно данных",
                         authErr: "Ошибка авторизации",
                         deleteConfirm: "Вы действительно хотите удалить это?",
                         confirmEmail: "Ваша учетная запись была подтверждена. Можете перейти на страницу входа, и авторизоваться.",
@@ -392,6 +393,7 @@
                         userNamedErr: 'Ім\'я користувача обов\'язкове!',
                         colorAdd: "колір змінений",
                         wrongMatchPass: "не збігається пароль",
+                        notFullData: "ви ввели недостатньо даних",
                         authErr: 'Помилка авторизації',
                         userRegist: "Для підтвердження облікової запісіна на пошту було вислано повідомлення. Відкрийте повідомлення та перейдіть за посиланням",
                         deleteConfirm: "Ви впевнені, що хочете видалити це?",
@@ -524,6 +526,7 @@
                         chooseColor: 'wybierz element drzewa, aby zmienić kolor',
                         userNamedErr: 'Wymagana jest nazwa użytkownika!',
                         colorAdd: "kolor został zmieniony",
+                        notFullData: "wprowadziłeś niewystarczające dane",
                         wrongMatchPass: "hasło nie pasuje",
                         userRegist: "Wiadomość została wysłana na pocztę, aby potwierdzić konto. Otwórz wiadomość i kliknij łącze",
                         authErr: 'Błąd autoryzacji',

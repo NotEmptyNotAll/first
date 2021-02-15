@@ -104,7 +104,7 @@
                 icon="el-icon-info"
                 cancelButtonType="danger"
                 iconColor="red"
-                @onConfirm="deleteElements(item.id)"
+                @confirm="deleteElements(item.id)"
                 :title="confirmText"
                 style="width: 0px"
             >
@@ -181,7 +181,7 @@
         <div class="dialog-number">
           <h2>{{ index + 1 }}</h2>
         </div>
-        <h5 style="margin-left: 50px;">{{ param.name!=='Тест'?param.name:$ml.get('word.value') }}</h5>
+        <h5 style="margin-left: 50px;">{{ param.name !== 'Тест' ? param.name : $ml.get('word.value') }}</h5>
         <div class="arrow-up" @click="upSortNum(param)">
           <i class="el-icon-arrow-up"></i>
         </div>
@@ -195,7 +195,7 @@
             @onConfirm="deleteElementsSize(param.id)"
             :title="confirmText"
         >
-          <div    slot="reference" class="dialog-delete" @click="setConfirmText()">
+          <div slot="reference" class="dialog-delete" @click="setConfirmText()">
           <span v-if="deleteLoadId!==param.id">
             <i class="el-icon-delete-solid"></i>
           </span>
@@ -555,9 +555,9 @@ export default {
       this.$emit("get-photo", id)
     },
     setConfirmText() {
-      this.confirmText=  this.$ml.get('msg.deleteConfirm')
-      this.confirmOk=  this.$ml.get('word.confirm')
-      this.confirmNo=  this.$ml.get('word.cancel')
+      this.confirmText = this.$ml.get('msg.deleteConfirm')
+      this.confirmOk = this.$ml.get('word.confirm')
+      this.confirmNo = this.$ml.get('word.cancel')
     },
     swap(obj1, obj2) {
       let obj = {
@@ -708,6 +708,7 @@ export default {
             elementsCh: [],
             paramNameFk: 0,
             parentId: 0,
+            parametersIsExistInChild: true,
             name: '',
           }
       )
@@ -741,13 +742,14 @@ export default {
         id: this.ELEMENTS_TREE.maxId + 1,
         name: param.name,
         paramIsNotEmpty: true,
-        color: "gray",
+        color: "grey",
         sortNumber: this.ELEMENTS_TREE.maxId + 1,
         parametersIsExistInChilda: false
       })
       this.listSizeParamOnDialog = this.item.elementsCh.filter(elem => {
         return !elem.parametersIsExistInChild
       })
+      this.getParamSizeEelem()
       this.setListNewElem(this.listNewElem);
       this.setMaxId(this.ELEMENTS_TREE.maxId + 1);
     },

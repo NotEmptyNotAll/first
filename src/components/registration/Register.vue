@@ -163,7 +163,7 @@ export default {
                 this.$message({
                   showClose: true,
                   type: 'info',
-                  message: this.$ml.get('msg.userRegist')
+                  message: this.$ml.get('msg.confirmEmail')
                 })
                 console.log(data)
               },
@@ -172,7 +172,7 @@ export default {
                 console.log(error)
                 this.$message({
                   showClose: true,
-                  type: 'info',
+                  type: 'error',
                   message: error.message
                 })
               }
