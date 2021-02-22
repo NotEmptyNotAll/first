@@ -1,20 +1,21 @@
 <template>
   <div id="error-page">
 
-    <div class="rounded error-content   " >
+    <div class="rounded error-content   ">
 
-      <div class="container search-border rad"  >
+      <div class="container search-border rad">
         <div class="row">
           <div class="col-md-12 ">
             <div class="error-text">
               <h3 class="error">
-                <h2>{{$ml.get('word.confirmed')}}</h2>
+                <h2>{{ $ml.get('word.confirmed') }}</h2>
               </h3>
               <br/>
               <br/>
-              <h4>{{$ml.get('msg.confirmEmail')}}</h4>
+              <h4>{{ $ml.get('msg.confirmEmail') }}</h4>
               <br/>
-              <a href="/login" type="button" class="btn btn-outline-dark shadow-lg">{{$ml.get('errPage.buttonText')}}</a>
+              <a @click="$router.push('/login')" type="button"
+                 class="btn btn-outline-dark shadow-lg">{{ $ml.get('errPage.buttonText') }}</a>
 
             </div>
           </div>
@@ -27,7 +28,7 @@
 
 <script>
 export default {
-name: "confirm_email"
+  name: "confirm_email"
 }
 </script>
 
