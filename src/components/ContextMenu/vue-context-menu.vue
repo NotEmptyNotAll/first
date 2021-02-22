@@ -442,6 +442,7 @@ export default {
       'LISTPARAM',
       'LOAD_LIST_URL',
       'STARTPARAM',
+      'LANG',
       'LISTPARAMUP',
       'PARAM_NAME_AND_UNITS',
       'SEARCHDATA',
@@ -522,7 +523,7 @@ export default {
     },
     async saveAllParam() {
       // eslint-disable-next-line no-constant-condition
-      if ((this.autoDataSave.engineTypeId === null || this.autoDataSave.modelNameId === null || this.autoDataSave.autoManufacture === null) && this.paraSaveList.length===0) {
+      if ((this.autoDataSave.engineTypeId === null || this.autoDataSave.modelNameId === null || this.autoDataSave.autoManufacture === null) && this.paraSaveList.length === 0) {
         this.$message({
           showClose: true,
           message: this.$ml.get('msg.notFullData'),
@@ -534,7 +535,7 @@ export default {
           && this.STARTPARAM.autoModel[0].id === this.autoDataSave.modelNameId
           && this.STARTPARAM.engineManufacture[0].id === this.autoDataSave.autoManufacture)) {
         if (this.column.index.key === undefined) {
-          let param = await this.SAVE_FAST_PARAM_DATA(this.paraSaveList)
+          let param = await this.SAVE_FAST_PARAM_DATA({saveList:this.paraSaveList,langId:this.LANG,userId:this.currentUser.id})
           console.log(param)
           this.GET_ENGDATA_BY_PARAM(this.searchData)
         } else {
@@ -643,7 +644,7 @@ export default {
         this.addNewParamToList()
       }
       if (this.listParmName.filter(item => {
-        return item.data.toLowerCase() !== 'std' && item.data.toLowerCase() !== 'знач.' && item.data.toLowerCase() !== 'std.' && item.data.toLowerCase() !== 'dane'
+        return item.data.toLowerCase() !== 'std' && item.data.toLowerCase() !== 'знач.' && item.data.toLowerCase()!=='значення' &&  item.data.toLowerCase() !== 'std.' && item.data.toLowerCase() !== 'dane'
       }).length === 0 && column.index.key === undefined) {
         this.paramList[0].elemId = this.listParmName[0].id
         this.paramList[0].elemName = this.$ml.get('word.value')

@@ -10,6 +10,7 @@
                 // eslint-disable-next-line no-undef
 
                 new MLanguage('english').create({
+                    id:3,
                     word: {
                         table: 'table',
                         showPhoto: 'show images',
@@ -145,6 +146,7 @@
                 }),
 
                 new MLanguage('russian').create({
+                    id:1,
                     word: {
                         text: "текст",
                         number: "число",
@@ -279,6 +281,7 @@
                 }),
 
                 new MLanguage('ukraine').create({
+                    id:2,
                     word: {
                         parameters: 'параметри',
                         type: "тип",
@@ -413,6 +416,7 @@
 
                 }),
                 new MLanguage('poland').create({
+                    id:4,
                     word: {
                         parameters: 'parametry',
                         type: "typ",

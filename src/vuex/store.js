@@ -22,6 +22,7 @@ let store = new Vuex.Store({
             engineData:null,
             countResults:null
         },
+        lang:1,
         fastSaveLoading:false,
         paramSizeName:[],
         loadListUrl:false,

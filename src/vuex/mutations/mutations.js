@@ -57,6 +57,9 @@ export default {
     SET_DATA_PAGE_MEASUREMENT_UNITS: (state, data) => {
         state.addPageData.measurementUnits = data
     },
+    SET_LANG: (state, data) => {
+        state.lang = data
+    },
     SET_LOAD_ALL_AUTO_ENG: (state, loadAllAutoEng) => {
         state.loadAllAutoEng = loadAllAutoEng;
     },

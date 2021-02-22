@@ -160,11 +160,12 @@ export default {
           this.$store.dispatch("auth/register", this.user).then(
               data => {
                 this.loading = false
-                this.$message({
-                  showClose: true,
-                  type: 'info',
-                  message: this.$ml.get('msg.confirmEmail')
-                })
+                this.$router.push("/confirmEmail");
+                // this.$message({
+                //   showClose: true,
+                //   type: 'info',
+                //   message: this.$ml.get('msg.confirmEmail')
+                // })
                 console.log(data)
               },
               error => {

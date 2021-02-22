@@ -277,6 +277,7 @@ export default {
   },
 
   mounted() {
+
     document.body.oncontextmenu = function () {
       return true;
     };

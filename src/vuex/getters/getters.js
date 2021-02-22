@@ -107,6 +107,9 @@ export default {
     PARAM_NAME: (state) => {
         return state.paramName;
     },
+    LANG: (state) => {
+        return state.lang;
+    },
     SAVE_STATUS: (state) => {
         return state.saveStatus;
     },

@@ -35,11 +35,12 @@ export default {
             responseType: 'json'
         })
     },
-    async GET_COLUMN_PARAM({commit}) {
+    async GET_COLUMN_PARAM({commit},data) {
         //  commit('SET_LOAD_ALL_AUTO_ENG', true);
         return await axios({
-            method: 'GET',
+            method: 'POST',
             url: urlApi + 'getColumnParam',
+            data: {id:data},
             responseType: 'json'
         })
             .then((resp) => {

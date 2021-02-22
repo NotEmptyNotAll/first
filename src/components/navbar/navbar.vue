@@ -33,9 +33,9 @@
         <el-menu-item align="center" @click="changeLang('RU','russian')">RU <img
             src="../../assets/Russia.png"></el-menu-item>
         <el-menu-item align="center" @click="changeLang('UA','ukraine')">UA <img
-            src="../../assets/poland.png"></el-menu-item>
+            src="../../assets/Ukraine.png"   ></el-menu-item>
         <el-menu-item align="center" @click="changeLang('PL','poland')">PL <img
-            src="../../assets/Ukraine.png"></el-menu-item>
+            src="../../assets/poland.png"  ></el-menu-item>
       </el-submenu>
       <el-menu-item class="item-menu" v-if="!currentUser" index="/login" style="position: absolute; right: 0vw">
         {{ $ml.get('word.login') }}
@@ -56,6 +56,7 @@ import testSave from "../AddDadaPage/vue-save-update-page";
 import login from "../login/login";
 import registration from "../registration/Register";
 import treeEdit from "../TreeEditPage/tree-page";
+import { mapGetters, mapMutations} from "vuex";
 
 export default {
   name: "navbar",
@@ -86,7 +87,7 @@ export default {
         }
       ]
     }),
-    lang: 'PL',
+    lang: 'RU',
     searchLink: false,
     updateDataLink: false,
     treeElemLink: false,
@@ -95,6 +96,9 @@ export default {
     languageLink: false
   }),
   computed: {
+    ...mapGetters([
+      'LANG'
+    ]),
     currentUser() {
       return this.$store.state.auth.user;
     },
@@ -112,10 +116,13 @@ export default {
     }
   },
   methods: {
-
+    ...mapMutations([
+       'SET_LANG'
+    ]),
     changeLang(titleLang, lang) {
       this.lang = titleLang
       this.$ml.change(lang)
+      this.SET_LANG(this.$ml.get('id'))
     },
     logOut() {
       this.$store.dispatch("auth/logout");
@@ -124,7 +131,7 @@ export default {
   },
   watch: {},
   mounted() {
-    this.$ml.change('poland')
+    this.$ml.change('russian')
   }
 }
 </script>

@@ -174,7 +174,8 @@
                 <span v-show="column.columnList[0]!==undefined && scope.row[col.id]!==undefined"
                       v-for="col in column.columnList"
                       v-bind:key="col">
-                                   <strong v-if="(col.name!=='std' && col.name!=='Std' && col.name!=='знач.' && col.name!=='std.' && col.name!=='dane' )"
+                                   <strong
+                                       v-if="(col.name!=='std' && col.name!=='Std' && col.name!=='знач.' && col.name!=='значення' && col.name!=='std.' && col.name!=='dane' )"
 
                                    >{{ col.name + ": " }}</strong>
                                       {{ scope.row[col.id] }}
@@ -287,6 +288,7 @@ export default {
       tableColumns: [],
       checkedColumns: [],
       allTableColumns: [],
+      chooseBlock: null,
       engineParamData: null,
       isIndeterminate: true,
       heightRowExls: 30,
@@ -325,6 +327,7 @@ export default {
         degreeCompression: null,
         initRecordFrom: 1,
         pageSize: 15,
+        lang: 1,
         searchPercent: 0,
         paramList: []
       },
@@ -372,7 +375,7 @@ export default {
       this.dialogFormVisible = true
     },
     showUserBoard() {
-      if (this.currentUser!==undefined) {
+      if (this.currentUser !== undefined) {
         return this.currentUser.roles.indexOf('USER') !== -1
       }
       return false;
@@ -797,22 +800,22 @@ export default {
       // worksheet.pageSetup.printTitlesRow = '1:3';
       let arrW = []
       for (let i = 0; i < lengPage; i++) {
-        arrW.push({width: 100/lengPage })
+        arrW.push({width: 100 / lengPage})
       }
       worksheet.columns = arrW
       const row = worksheet.addRow([this.$ml.get('word.tableHeader')])
       row.height = this.heightRowExls
       const row1 = worksheet.addRow([this.$ml.get('word.tableAutoHeader')])
       row1.height = this.heightRowExls - 10
-alert(this.$ml.get('word.autoManufacturer'))
+      alert(this.$ml.get('word.autoManufacturer'))
       let arrNameAutoCell = [this.$ml.get('word.autoManufacturer'), this.$ml.get('word.autoModel'),
         this.$ml.get('word.engine'), this.$ml.get('word.releaseYear'), this.$ml.get('word.engineCapacity'),
         this.$ml.get('word.pistonDiameter'), this.$ml.get('word.flapNumber')]
-      this.autoMergeTableExls(arrNameAutoCell, worksheet, lengPage, 64, 3, -1,true)
+      this.autoMergeTableExls(arrNameAutoCell, worksheet, lengPage, 64, 3, -1, true)
       let arrDataAutoCell = [event.item.autoManufacture, event.item.modelName,
         event.item.engineType, event.item.releaseYear, event.item.engineCapacity,
         event.item.pistonDiameter, event.item.flapNumber]
-      this.autoMergeTableExls(arrDataAutoCell, worksheet, lengPage, 64, 4, -1,true)
+      this.autoMergeTableExls(arrDataAutoCell, worksheet, lengPage, 64, 4, -1, true)
 
       // worksheet.addRow([''])
       worksheet.addRow([this.$ml.get('word.tableParamHeader')]).height = this.heightRowExls
@@ -833,7 +836,7 @@ alert(this.$ml.get('word.autoManufacturer'))
 
 
         // worksheet.addRow(tempArr)
-        this.autoMergeTableExls(tempArr, worksheet, lengPage, 64, startRow, 1,true)
+        this.autoMergeTableExls(tempArr, worksheet, lengPage, 64, startRow, 1, true)
         let emptyRow = []
         for (let i = 0; i < tempArr.length; i++) {
           emptyRow.push(' ')
@@ -858,31 +861,31 @@ alert(this.$ml.get('word.autoManufacturer'))
           })
           if (!this.isEmptyRow(tempArr)) {
             ++kolIter
-            this.autoMergeTableExls(tempArr, worksheet, lengPage, 64, startRow + kolIter, 1,true)
+            this.autoMergeTableExls(tempArr, worksheet, lengPage, 64, startRow + kolIter, 1, true)
             // worksheet.addRow(tempArr)
           }
           tempArr = []
         })
         if (kolIter === 0) {
           kolIter++
-          this.autoMergeTableExls(emptyRow, worksheet, lengPage, 64, startRow + kolIter, 1,true)
+          this.autoMergeTableExls(emptyRow, worksheet, lengPage, 64, startRow + kolIter, 1, true)
         }
         worksheet.getCell('A' + startRow).font = this.fontHead
         worksheet.getCell('A' + startRow).fill = this.fillHead
         worksheet.mergeCells('A' + startRow + ':A' + (startRow + kolIter));
-        startRow += kolIter+1
+        startRow += kolIter + 1
 
       })
       let tempArrFoot = []
       // worksheet.addRow([])
       tempArrFoot = [this.$ml.get('word.tableFooterText')]
-      this.autoMergeTableExls(tempArrFoot, worksheet, lengPage - 1, 64, startRow , -1,false)
+      this.autoMergeTableExls(tempArrFoot, worksheet, lengPage - 1, 64, startRow, -1, false)
       // worksheet.addRow([])
 
-      tempArrFoot = [this.$ml.get('word.client')+'___________________',
-        this.$ml.get('word.signature')+'______________',
-        this.$ml.get('word.date')+'______________']
-      this.autoMergeTableExls(tempArrFoot, worksheet, lengPage - 1, 64, startRow + 1, -1,true)
+      tempArrFoot = [this.$ml.get('word.client') + '___________________',
+        this.$ml.get('word.signature') + '______________',
+        this.$ml.get('word.date') + '______________']
+      this.autoMergeTableExls(tempArrFoot, worksheet, lengPage - 1, 64, startRow + 1, -1, true)
       worksheet.getCell('A' + (startRow + kolIter - 2)).font = this.fontHead
       worksheet.getCell('A' + (startRow + kolIter - 2)).alignment = {vertical: 'middle', horizontal: 'center'};
       worksheet.getRow(startRow + kolIter).alignment = {vertical: 'middle', horizontal: 'center'};
@@ -911,7 +914,7 @@ alert(this.$ml.get('word.autoManufacturer'))
       worksheet.getCell('A5').alignment = {vertical: 'middle', horizontal: 'center'};
 
       const buf = await workbook.xlsx.writeBuffer()
-      saveAs(new Blob([buf]),event.option.name+'_'+event.item.autoManufacture+'_'+event.item.engineType + '.xlsx')
+      saveAs(new Blob([buf]), event.option.name + '_' + event.item.autoManufacture + '_' + event.item.engineType + '.xlsx')
     },
 
     onexport(event) {
@@ -926,7 +929,7 @@ alert(this.$ml.get('word.autoManufacturer'))
       let lengPage = this.findMaxColumns(event) + 1
       arrMerdes.push({s: {r: 1, c: 0}, e: {r: 1, c: lengPage}})
       let obj = {}
-      obj[0] = this.$ml.get('word.tableHeader')+'75555'
+      obj[0] = this.$ml.get('word.tableHeader') + '75555'
       dataArr.push(obj)
 
       var animalWS = XLSX.utils.json_to_sheet(dataArr)
@@ -970,6 +973,7 @@ alert(this.$ml.get('word.autoManufacturer'))
     }
     ,
     setEngineParamData(data) {
+      this.chooseBlock = data
       if (this.tableHeight === 635) {
         this.tableHeight = 634
       } else {
@@ -983,7 +987,75 @@ alert(this.$ml.get('word.autoManufacturer'))
       this.pageSetting.initRecordFrom = 1
       this.GET_ALL_AUTO(this.pageSetting)
     },
+    setStartParam() {
+      this.checkedColumns = [
+        '№', this.$ml.get('word.autoManufacturer'),
+        this.$ml.get('word.autoModel'), this.$ml.get('word.engine'), this.$ml.get('word.releaseYear'),
+        this.$ml.get('word.fuelType'),
+        this.$ml.get('word.diamAndStroke'),
+        this.$ml.get('word.powerKwt'),
+        this.$ml.get('word.engineCapacity')
+      ];
+      this.columns = [
+        '№', this.$ml.get('word.autoManufacturer'),
+        this.$ml.get('word.autoModel'), this.$ml.get('word.engine'), this.$ml.get('word.releaseYear'),
+        this.$ml.get('word.fuelType'),
+        this.$ml.get('word.cylinders'), this.$ml.get('word.flapNumber'),
+        this.$ml.get('word.diamAndStroke'),
+        this.$ml.get('word.powerKwt'), this.$ml.get('word.engineCapacity'),
+        this.$ml.get('word.superchargedType')
+      ];
+      this.columnOptions = [
+        '№', this.$ml.get('word.autoManufacturer'),
+        this.$ml.get('word.autoModel'), this.$ml.get('word.engine'), this.$ml.get('word.releaseYear'),
+        this.$ml.get('word.fuelType'),
+        this.$ml.get('word.flapNumber'),
+        this.$ml.get('word.powerKwt'), this.$ml.get('word.engineCapacity'),
+        this.$ml.get('word.superchargedType')
+      ];
+      this.tableColumns = [
+        {key: 'id', label: '№', widthSmall: 70, widthLarge: 40},
+        {key: 'autoManufacture', label: this.$ml.get('word.autoManufacturer'), widthSmall: 110, widthLarge: 70},
+        {key: 'modelName', label: this.$ml.get('word.autoModel'), widthSmall: 130, widthLarge: 70},
+        {key: 'engineType', label: this.$ml.get('word.engine'), widthSmall: 110, widthLarge: 200},
 
+        {key: 'releaseYear', label: this.$ml.get('word.releaseYear'), widthSmall: 110, widthLarge: 60},
+        {key: 'fuelType', label: this.$ml.get('word.fuelType'), widthSmall: 110, widthLarge: 70},
+        {
+          key: 'pistonDiameterAndStoke',
+          label: this.$ml.get('word.diamAndStroke'),
+          widthSmall: 130,
+          widthLarge: 70
+        },
+        {key: 'powerKWT', label: this.$ml.get('word.powerKwt'), widthSmall: 110, widthLarge: 70},
+        {key: 'engineCapacity', label: this.$ml.get('word.engineCapacity'), widthSmall: 130, widthLarge: 70},
+
+      ]
+      this.allTableColumns = [
+        {key: 'id', label: '№', widthSmall: 70, widthLarge: 40},
+        {key: 'autoManufacture', label: this.$ml.get('word.autoManufacturer'), widthSmall: 140, widthLarge: 70},
+        {key: 'modelName', label: this.$ml.get('word.autoModel'), widthSmall: 130, widthLarge: 70},
+        {key: 'engineType', label: this.$ml.get('word.engine'), widthSmall: 110, widthLarge: 200},
+        {key: 'releaseYear', label: this.$ml.get('word.releaseYear'), widthSmall: 110, widthLarge: 60},
+        {key: 'fuelType', label: this.$ml.get('word.fuelType'), widthSmall: 110, widthLarge: 70},
+        {key: 'cylinderPlace', label: this.$ml.get('word.cylinders'), widthSmall: 110, widthLarge: 70},
+        {key: 'flapNumber', label: this.$ml.get('word.flapNumber'), widthSmall: 110, widthLarge: 90},
+        {
+          key: 'pistonDiameterAndStoke',
+          label: this.$ml.get('word.diamAndStroke'),
+          widthSmall: 130,
+          widthLarge: 70
+        },
+        {key: 'powerKWT', label: this.$ml.get('word.powerKwt'), widthSmall: 110, widthLarge: 70},
+        {
+          key: 'superchargedType',
+          label: this.$ml.get('word.superchargedType'),
+          widthSmall: 110,
+          widthLarge: 90
+        },
+        {key: 'engineCapacity', label: this.$ml.get('word.engineCapacity'), widthSmall: 130, widthLarge: 70}
+      ]
+    },
     changeSearchPercent(value) {
       this.pageSetting.searchPercent = value
       this.pageSetting.initRecordFrom = 1
@@ -1002,12 +1074,21 @@ alert(this.$ml.get('word.autoManufacturer'))
     ...mapGetters([
       'ALL_AUTO_ENG',
       'LOADPARAM',
+      'LANG',
       'LOAD_ALL_AUTO_ENG'
     ])
-  }
-  ,
+  },
+  watch: {
+    LANG: function (val) {
+      this.pageSetting.lang = val
+      this.GET_COLUMN_PARAM(this.pageSetting.lang);
+      this.setEngineParamData({columnResponseList: null});
+      this.GET_ALL_AUTO(this.pageSetting);
+      this.setStartParam()
+    }
+  },
   mounted() {
-
+    this.pageSetting.lang = this.LANG
     // eslint-disable-next-line no-unused-vars
     document.body.oncontextmenu = function () {
       return false;
@@ -1016,77 +1097,11 @@ alert(this.$ml.get('word.autoManufacturer'))
 
 
     // if (this.ALL_AUTO_ENG.columnParam === null) {
-      this.GET_COLUMN_PARAM();
-      this.GET_ALL_AUTO(this.pageSetting);
-      // this.GET_COLUMN_PARAM();
+    this.GET_COLUMN_PARAM(this.pageSetting.lang);
+    this.GET_ALL_AUTO(this.pageSetting);
+    // this.GET_COLUMN_PARAM();
     // }
-    this.checkedColumns = [
-      '№', this.$ml.get('word.autoManufacturer'),
-      this.$ml.get('word.autoModel'), this.$ml.get('word.engine'), this.$ml.get('word.releaseYear'),
-      this.$ml.get('word.fuelType'),
-      this.$ml.get('word.diamAndStroke'),
-      this.$ml.get('word.powerKwt'),
-      this.$ml.get('word.engineCapacity')
-    ];
-    this.columns = [
-      '№', this.$ml.get('word.autoManufacturer'),
-      this.$ml.get('word.autoModel'), this.$ml.get('word.engine'), this.$ml.get('word.releaseYear'),
-      this.$ml.get('word.fuelType'),
-      this.$ml.get('word.cylinders'), this.$ml.get('word.flapNumber'),
-      this.$ml.get('word.diamAndStroke'),
-      this.$ml.get('word.powerKwt'), this.$ml.get('word.engineCapacity'),
-      this.$ml.get('word.superchargedType')
-    ];
-    this.columnOptions = [
-      '№', this.$ml.get('word.autoManufacturer'),
-      this.$ml.get('word.autoModel'), this.$ml.get('word.engine'), this.$ml.get('word.releaseYear'),
-      this.$ml.get('word.fuelType'),
-      this.$ml.get('word.flapNumber'),
-      this.$ml.get('word.powerKwt'), this.$ml.get('word.engineCapacity'),
-      this.$ml.get('word.superchargedType')
-    ];
-    this.tableColumns = [
-      {key: 'id', label: '№', widthSmall: 70, widthLarge: 40},
-      {key: 'autoManufacture', label: this.$ml.get('word.autoManufacturer'), widthSmall: 110, widthLarge: 70},
-      {key: 'modelName', label: this.$ml.get('word.autoModel'), widthSmall: 130, widthLarge: 70},
-      {key: 'engineType', label: this.$ml.get('word.engine'), widthSmall: 110, widthLarge: 200},
-
-      {key: 'releaseYear', label: this.$ml.get('word.releaseYear'), widthSmall: 110, widthLarge: 60},
-      {key: 'fuelType', label: this.$ml.get('word.fuelType'), widthSmall: 110, widthLarge: 70},
-      {
-        key: 'pistonDiameterAndStoke',
-        label: this.$ml.get('word.diamAndStroke'),
-        widthSmall: 130,
-        widthLarge: 70
-      },
-      {key: 'powerKWT', label: this.$ml.get('word.powerKwt'), widthSmall: 110, widthLarge: 70},
-      {key: 'engineCapacity', label: this.$ml.get('word.engineCapacity'), widthSmall: 130, widthLarge: 70},
-
-    ]
-    this.allTableColumns = [
-      {key: 'id', label: '№', widthSmall: 70, widthLarge: 40},
-      {key: 'autoManufacture', label: this.$ml.get('word.autoManufacturer'), widthSmall: 140, widthLarge: 70},
-      {key: 'modelName', label: this.$ml.get('word.autoModel'), widthSmall: 130, widthLarge: 70},
-      {key: 'engineType', label: this.$ml.get('word.engine'), widthSmall: 110, widthLarge: 200},
-      {key: 'releaseYear', label: this.$ml.get('word.releaseYear'), widthSmall: 110, widthLarge: 60},
-      {key: 'fuelType', label: this.$ml.get('word.fuelType'), widthSmall: 110, widthLarge: 70},
-      {key: 'cylinderPlace', label: this.$ml.get('word.cylinders'), widthSmall: 110, widthLarge: 70},
-      {key: 'flapNumber', label: this.$ml.get('word.flapNumber'), widthSmall: 110, widthLarge: 90},
-      {
-        key: 'pistonDiameterAndStoke',
-        label: this.$ml.get('word.diamAndStroke'),
-        widthSmall: 130,
-        widthLarge: 70
-      },
-      {key: 'powerKWT', label: this.$ml.get('word.powerKwt'), widthSmall: 110, widthLarge: 70},
-      {
-        key: 'superchargedType',
-        label: this.$ml.get('word.superchargedType'),
-        widthSmall: 110,
-        widthLarge: 90
-      },
-      {key: 'engineCapacity', label: this.$ml.get('word.engineCapacity'), widthSmall: 130, widthLarge: 70}
-    ]
+    this.setStartParam()
   }
 }
 </script>
